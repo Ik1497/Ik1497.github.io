@@ -40,8 +40,10 @@
     --v-blockquote-border-radius: 10px;
   }
   body {
+    padding-top: 1em;
     padding-left: 16em;
     font-family: Poppins;
+    font-size: 20px;
     color: white;
     background-color: #22252b;
   }
@@ -55,9 +57,10 @@
     padding: 0;
   }
   header > p.description {
+    font-size: 16px;
     margin: 0;
     padding: 0;
-    color: #ccc;
+    color: #777;
   }
   footer {
     align-items: center;
@@ -120,7 +123,6 @@
   ul.navbar a {
     text-decoration: none; 
     color: #fff;
-    font-size: 17px;
     transition: all 0.3s;
   }
   .navbar:has(a:hover) a:not(:hover) {
@@ -377,6 +379,7 @@ blockquote {
   color: var(--v-blockquote-color)!important;
   border: 1px solid var(--v-blockquote-border)!important;
   box-shadow: 0 0 2px 0 var(--v-blockquote-box-shadow)!important;
+  font-size: 20px;
 }
 blockquote * {
   color: var(--v-blockquote-color)!important;
