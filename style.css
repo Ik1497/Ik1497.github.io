@@ -1,10 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+}
+:root {
+  --v-blockquote-is-warning-base: rgba(255, 197, 23, 0.05);
+  --v-blockquote-is-warning-border: rgba(255, 197, 23, 0.25);
+  --v-blockquote-is-warning-color: #fcd253;
+  
+  --v-blockquote-is-info-base: rgba(30, 44, 55, 0.55);
+  --v-blockquote-is-info-border: rgba(30, 44, 55, 0.25);
+  --v-blockquote-is-info-color: #53aafc;
+  
+  --v-blockquote-is-success-base: rgba(66, 184, 131, 0.05);
+  --v-blockquote-is-success-border: rgba(66, 184, 131, 0.25);
+  --v-blockquote-is-success-color: #42d392;
+  
+  --v-blockquote-is-danger-base: rgba(237, 60, 80, 0.05);
+  --v-blockquote-is-danger-border: rgba(237, 60, 80, 0.25);
+  --v-blockquote-is-danger-color: #f54e82;
+
+  --v-blockquote-base: rgba(129, 129, 129, 0.1);
+  --v-blockquote-border: rgb(126, 145, 155);
+  --v-blockquote-color: #c0c0c0;
+
+  --v-blockquote-box-shadow: #212121;
+  --v-blockquote-code-base: #141414;
+  --v-blockquote-code-font-weight: 500;
+  --v-blockquote-code-border: #444444;
+  --v-blockquote-ff: Arial;
+}
 body {
     padding-left: 16em;
     font-family: Poppins;
     color: white;
     background-color: #22252b;
+  }
+  header {
+    border-bottom: 1px solid #555;
+    margin-bottom: 1em;
+  }
+  header > p.title {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+  }
+  header > p.description {
+    margin: 0;
+    padding: 0;
+    color: #ccc;
   }
   hr {
     border: none;
@@ -33,7 +79,7 @@ body {
   }
   ul.navbar a {
     text-decoration: none; 
-    color: #bbb;
+    color: #fff;
     font-size: 17px;
     transition: all 0.3s;
   }
@@ -44,9 +90,22 @@ body {
   .navbar > a {
     transition: all 350ms ease!important;
   }
-  ul.navbar a.navbar-current {
-    text-decoration: none; 
-    color: lime;
+  ul.navbar > details {
+    background: #1b1d22;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    border-right: 0.3em solid white;
+    transition: all 0.3s;
+  }
+  ul.navbar > details {
+    cursor: pointer;
+  }
+  ul.navbar > details > a > li {
+    background: #333;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    border-right: 0.3em solid white;
+    transition: all 0.3s;
   }
   a:link {
     color: blue;
@@ -179,57 +238,6 @@ body {
 .tabler > tr {
   transition: all 350ms ease!important;
 }
-/* buttons */
-ul.button-grid {
-  padding: 0;
-  display: grid;
-  gap: 0em 1.3em;
-  grid-template-columns: 1fr 1fr 1fr;
- }
- ul.button-grid a {
-  text-decoration: none;
-  color: white;
- }
- ul.button-grid li {
-  list-style: none;
-  background: #1b1d22;
-  padding: 20px;
-  font-weight: bold;
-  font-size: 22px;
-  border-left: 5px solid white;
-  margin: 10px 0px;
-  border-top: 1px solid #555;
-  border-bottom: 1px solid #555;
-  border-right: 1px solid #555;
-  transition: all 500ms;
-  animation: button-grid-load 750ms ease-in-out;
- }
- ul.button-grid li:hover {
-  box-shadow: #000 3px 3px 10px;
-  transition: all 500ms;
-  border-color: #007FFF;
- }
- .button-grid-text-logo-dev {
-  background: #007FFF;
-  padding: 10px;
-  margin-right: 10px;
- }
- .button-grid-text-logo-fact {
-  background: green;
-  padding: 10px;
-  margin-right: 10px;
- }
- .button-grid-text-description {
-  color: #bbb;
-  font-size: 13px;
- }
- .button-grid-text-description::before {
-  content: "`";
-  background-color: #bbb;
-  color: transparent;
-  text-shadow: none;
-  margin: 0px 5px 0px 6px;
- }
 /* Animaties */
 @keyframes nav-load {
 0% {
@@ -255,6 +263,98 @@ ul.button-grid {
   filter: blur(0px);
 }
 }
-header {
-  border-bottom: 1px solid #555;
+
+/* Blockquotes */
+blockquote.is-warning {
+  background-color: var(--v-blockquote-is-warning-base)!important;
+  color: var(--v-blockquote-is-warning-color)!important;
+  border-color: var(--v-blockquote-is-warning-border)!important;
+  border: 1px solid!important;
+}
+blockquote.is-warning * {
+  color: var(--v-blockquote-is-warning-color)!important;
+}
+blockquote.is-warning code {
+  color: var(--v-blockquote-is-warning-color)!important;
+}
+blockquote.is-warning strong {
+  border-bottom: 2px solid var(--v-blockquote-is-warning-color)!important;
+}
+
+/* < --- > */
+
+blockquote.is-info {
+  background-color: var(--v-blockquote-is-info-base)!important;
+  color: var(--v-blockquote-is-info-color)!important;
+  border-color: var(--v-blockquote-is-info-border)!important;
+  border: 1px solid!important;
+}
+blockquote.is-info * {
+  color: var(--v-blockquote-is-info-color)!important;
+}
+blockquote.is-info code {
+  color: var(--v-blockquote-is-info-color)!important;
+}
+blockquote.is-info strong {
+  border-bottom: 2px solid var(--v-blockquote-is-info-color)!important;
+}
+
+/* < --- > */
+
+blockquote.is-success {
+  background-color: var(--v-blockquote-is-success-base)!important;
+  color: var(--v-blockquote-is-success-color)!important;
+  border-color: var(--v-blockquote-is-success-border)!important;
+  border: 1px solid!important;
+}
+blockquote.is-success * {
+  color: var(--v-blockquote-is-success-color)!important;
+}
+blockquote.is-success code {
+  color: var(--v-blockquote-is-success-color)!important;
+}
+blockquote.is-success strong {
+  border-bottom: 2px solid var(--v-blockquote-is-success-color)!important;
+}
+
+/* < --- > */
+
+blockquote.is-danger {
+  background-color: var(--v-blockquote-is-danger-base)!important;
+  color: var(--v-blockquote-is-danger-color)!important;
+  border-color: var(--v-blockquote-is-danger-border)!important;
+  border: 1px solid!important;
+}
+blockquote.is-danger * {
+  color: var(--v-blockquote-is-danger-color)!important;
+}
+blockquote.is-danger code {
+  color: var(--v-blockquote-is-danger-color)!important;
+}
+blockquote.is-danger strong {
+  border-bottom: 2px solid var(--v-blockquote-is-danger-color)!important;
+}
+
+/* < --- > */
+
+blockquote {
+  background-color: var(--v-blockquote-base)!important;
+  border-radius: 18px!important;
+  color: var(--v-blockquote-color)!important;
+  border: 1px solid var(--v-blockquote-border)!important;
+  box-shadow: 0 0 2px 0 var(--v-blockquote-box-shadow)!important;
+}
+blockquote * {
+  color: var(--v-blockquote-color)!important;
+}
+blockquote code {
+  color: var(--v-blockquote-color)!important;
+}
+blockquote strong {
+  border-bottom: 2px solid var(--v-blockquote-color)!important;
+}
+blockquote {
+  padding: .5rem!important;
+  margin: 1rem 0rem;
+  font-family: var(--v-blockquote-ff);
 }
