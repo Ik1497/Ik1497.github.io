@@ -255,3 +255,6 @@ ul.button-grid {
   filter: blur(0px);
 }
 }
+header {
+  border-bottom: 1px solid #555;
+}
