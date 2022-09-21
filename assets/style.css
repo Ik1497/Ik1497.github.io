@@ -62,6 +62,9 @@
   footer {
     animation: footer-load .75s ease-in-out;
   }
+  div.lower > nav > a:hover {
+    color: #2196f3!important
+  }
   div.upper {
     align-items: center;
     justify-content: center!important;
@@ -87,6 +90,21 @@
   div.lower > nav > a {
     margin: 0em 1em;
     color: white;
+  }
+  details.extensions > summary {
+    background: #1b1d22;
+    border: 1px solid var(--v-accent-lighten1);
+    padding: 0.5em;
+    margin-top: 0.5em;
+    transition: all 0.3s;
+  }
+  details.extensions > div.extensions {
+    background: var(--v-secondary-base);
+    border: 1px solid var(--v-accent-lighten1);
+    padding: 1em;
+    background: #333;
+    padding: 0.5em;
+    transition: all 0.3s;
   }
   ul.navbar {
     list-style-type: none;
@@ -426,14 +444,20 @@ i.mdi {
   font-style: none;
 }
 a {
-  color: #2196f3;
+  color: #0096ff;
   text-decoration: none;
   transition: color .3s ease-in-out;
 }
 a:hover {
-  color: #2196f3!important;
+  color: #0066ff;
   cursor: pointer;
   transition: color .3s ease-in-out;
+}
+a.link {
+  color: #0055ff!important;
+}
+a.link:hover {
+  color: #0096ff!important;
 }
 /* Utility Classes */
 .text--color-youtube {color: #ff0000!important}
