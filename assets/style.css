@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
   * {
    padding: 0;
-    margin: 0;
+   margin: 0;
   }
   :root {
     --v-primary-base: #22252b;
@@ -178,7 +178,7 @@
     padding: 0;
     display: grid;
     gap: 0em 1.3em;
-    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(600px,1fr));
    }
    ul.button-grid a {
     text-decoration: none;
