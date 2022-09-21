@@ -6,7 +6,7 @@ document.write('\
   <a href="/Utility/Formatting_Page.html"><li>Formatting Page</li></a>\
 </details>\
 <details><summary>Socials</summary>\
-  <a href="/Socials/Discord"><li>Discord</li></a>\
+  <a href="/Socials/Discord.html" target="_blank"><li>Discord</li></a>\
 </details>\
 <a href="/About.html"><li>About</li></a>\
 </ul>\
