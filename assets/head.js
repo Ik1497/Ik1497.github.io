@@ -1,5 +1,8 @@
 document.write('\
 \
+<meta charset="UTF-8">\
+<meta http-equiv="X-UA-Compatible" content="IE=edge">\
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\
 <meta name="og:site_name" content="Streamer.bot Actions"/>\
 <meta property="og:type" content="website" />\
 <meta property="og:image" content="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />\
