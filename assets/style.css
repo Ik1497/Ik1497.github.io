@@ -150,7 +150,7 @@
     border-right: 0.3em solid white;
     transition: all 0.3s;
   }
-  @media (max-width: 55em) {
+  @media (min-width: 55em) {
     body {
       padding-top: .5em;
       padding-bottom: 1em;
