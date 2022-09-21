@@ -5,8 +5,8 @@ document.write('\
 <details><summary>Utility Extensions</summary>\
   <a href="/Utility/Formatting_Page.html"><li>Formatting Page</li></a>\
 </details>\
-<details><summary>Discord</summary>\
-  <a href="https://ik1497.github.io/Discord"><li>Invite Link</li></a>\
+<details><summary>Socials</summary>\
+  <a href="/Socials/Discord"><li>Discord</li></a>\
 </details>\
 <a href="/About.html"><li>About</li></a>\
 </ul>\

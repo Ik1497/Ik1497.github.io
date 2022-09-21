@@ -88,14 +88,6 @@
     margin: 0em 1em;
     color: white;
   }
-  a {
-    color: #2196f3;
-    text-decoration: none;
-  }
-  a:hover {
-    color: #2196f3!important;
-    cursor: pointer;
-  }
   ul.navbar {
     list-style-type: none;
     padding: 0;
@@ -432,6 +424,16 @@ hr {
 }
 i.mdi {
   font-style: none;
+}
+a {
+  color: #2196f3;
+  text-decoration: none;
+  transition: color .3s ease-in-out;
+}
+a:hover {
+  color: #2196f3!important;
+  cursor: pointer;
+  transition: color .3s ease-in-out;
 }
 /* Utility Classes */
 .text--color-youtube {color: #ff0000!important}
