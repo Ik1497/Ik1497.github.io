@@ -42,6 +42,7 @@
   body {
     padding-top: 1em;
     padding-left: 16em;
+    padding-right: .5em;
     font-family: Poppins;
     font-size: 20px;
     color: white;
@@ -148,6 +149,27 @@
     padding: 0.5em;
     border-right: 0.3em solid white;
     transition: all 0.3s;
+  }
+  @media only screen and (max-width: 750px) {
+    body {
+      padding-top: .5em;
+      padding-bottom: 1em;
+      padding-left: .5em;
+      padding-right: .5em;
+    }
+    ul.navbar {
+      position: unset;
+      top: auto;
+      left: auto;
+      width: 100%;
+      padding-bottom: 1em;
+    }
+    ul.navbar li {
+      border: none;
+    }
+    ul.navbar > details > summary {
+      border-right: none;
+    }
   }
    address {
     margin-top: 1em;
