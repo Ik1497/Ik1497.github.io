@@ -46,6 +46,12 @@
     color: white;
     background-color: #22252b;
   }
+  @media (min-width: 50em) {
+    body {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+  }
   @media (max-width: 50em) {
     body {
       padding-top: .5em;
@@ -249,7 +255,7 @@
     padding: 0;
     display: grid;
     gap: 0em 1.3em;
-    grid-template-columns: repeat(auto-fit,minmax(600px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(400px,1fr));
    }
    ul.button-grid a {
     text-decoration: none;
@@ -262,14 +268,15 @@
     font-weight: bold;
     font-size: 22px;
     margin: 10px 0px;
-    border: 1px solid #555;
+    border: 2px solid #555;
+    border-radius: .5em;
     transition: all 500ms;
     display: flex;
     animation: button-grid-load 750ms ease-in-out;
    }
    ul.button-grid li:hover {
-    box-shadow: #000 3px 3px 10px;
-    transition: all 500ms;
+    box-shadow: #000 0px 0px 20px;
+    transition: all .3s;
     border-color: #007FFF;
    }
    ul.button-grid > a > li > img {
@@ -279,9 +286,9 @@
    }
    ul.button-grid > a > li > i {
     display: block;
-    font-size: 2rem;
+    font-size: 35px;
     width: 35px;
-    margin-right: 1rem;
+    margin: auto 1rem auto 0em;
    }
    ul.button-grid li > strong {
     display: flex;
@@ -293,13 +300,6 @@
     font-weight: 400;
     color: #888;
     font-size: .6em;
-   }
-   .button-grid-text-description::before {
-    content: "`";
-    background-color: #bbb;
-    color: transparent;
-    text-shadow: none;
-    margin: 0px 5px 0px 6px;
    }
    h2.overige {
     border-bottom: 2px dotted #555;
