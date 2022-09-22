@@ -1,2 +1,2 @@
 # Ik1497.github.io
-Public Pages.
+Public Website for things from Ik1497.
