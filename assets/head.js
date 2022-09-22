@@ -12,6 +12,7 @@ document.write('\
 <link rel="stylesheet" href="/assets/code-styles.css">\
 <link rel="stylesheet" href="/assets/mdi/mdi.css">\
 <script src="/assets/navigation.js"></script>\
-<script src="/assets/mdi/mdi.js"></script>\
+\
+<link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">\
 \
 ');

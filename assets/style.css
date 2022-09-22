@@ -60,11 +60,13 @@
   }
   header > p.title {
     font-size: 24px;
+    font-weight: 600;
     margin: 0;
     padding: 0;
   }
   header > p.description {
     font-size: 16px;
+    font-weight: 400;
     margin: 0;
     padding: 0;
     color: #777;
@@ -259,13 +261,10 @@
     padding: 20px;
     font-weight: bold;
     font-size: 22px;
-    border-left: 5px solid white;
     margin: 10px 0px;
-    border-top: 1px solid #555;
-    border-bottom: 1px solid #555;
-    border-right: 1px solid #555;
+    border: 1px solid #555;
     transition: all 500ms;
-    display: grid;
+    display: flex;
     animation: button-grid-load 750ms ease-in-out;
    }
    ul.button-grid li:hover {
@@ -273,20 +272,27 @@
     transition: all 500ms;
     border-color: #007FFF;
    }
-   .button-grid-text-logo-dev {
-    background: #007FFF;
-    padding: 10px;
-    margin-right: 10px;
+   ul.button-grid > a > li > img {
+    margin: auto 1rem auto 0em;
+    height: 35px;
+    width: 35px;
    }
-   .button-grid-text-logo-fact {
-    background: green;
-    padding: 10px;
-    margin-right: 10px;
+   ul.button-grid > a > li > i {
+    display: block;
+    font-size: 2rem;
+    width: 35px;
+    margin-right: 1rem;
    }
-   ul.button-grid li > em {
+   ul.button-grid li > strong {
+    display: flex;
+    font-weight: 600!important;
+    flex-direction: column;
+   }
+   ul.button-grid li > strong > em {
     font-style: normal;
-    color: #bbb;
-    font-size: 13px;
+    font-weight: 400;
+    color: #888;
+    font-size: .6em;
    }
    .button-grid-text-description::before {
     content: "`";
