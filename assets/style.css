@@ -34,6 +34,8 @@
     --v-blockquote-code-border: #444;
     --v-blockquote-ff: Arial;
     --v-blockquote-border-radius: 10px;
+
+    --v-mobile-width: 50em;
   }
   body {
     padding-top: 1em;
@@ -43,6 +45,14 @@
     font-size: 20px;
     color: white;
     background-color: #22252b;
+  }
+  @media (max-width: 50em) {
+    body {
+      padding-top: .5em;
+      padding-bottom: 1em;
+      padding-left: .5em;
+      padding-right: .5em;
+    }
   }
   header {
     border-bottom: 1px solid #555;
@@ -62,7 +72,7 @@
   footer {
     animation: footer-load .75s ease-in-out;
   }
-  div.lower > nav > a:hover {
+  div.lower > ul > a:hover {
     color: #2196f3!important
   }
   div.upper {
@@ -79,17 +89,29 @@
   div.lower {
     align-items: center;
     justify-content: center!important;
-    display: flex;
-    gap: 0em;
-    flex: 0 1 auto!important;
-    flex-wrap: wrap;
+    text-align: center;
     padding: 0.4em 1em;
     position: relative;
+    list-style: none;
     background-color: var(--v-accent-lighten2)!important;
   }
-  div.lower > nav > a {
-    margin: 0em 1em;
+  div.lower a {
     color: white;
+  }
+  div.lower li {
+    list-style: none;
+  }
+  @media (min-width: 50em) { 
+    div.lower {
+      display: flex;
+      gap: 0em;
+      flex: 0 1 auto!important;
+      flex-wrap: wrap;
+    }
+    div.lower li {
+      display: inline;
+      padding: 0em .5em;
+    }
   }
   details.extensions > summary {
     background: #1b1d22;
@@ -155,6 +177,21 @@
     padding: 0.5em;
     border-right: 0.3em solid white;
     transition: all 0.3s;
+  }
+  @media (max-width: 50em) {
+    ul.navbar {
+      position: unset;
+      top: auto;
+      left: auto;
+      width: 100%;
+      padding-bottom: 1em;
+    }
+    ul.navbar li {
+      border: none;
+    }
+    ul.navbar > details > summary {
+      border-right: none;
+    }
   }
    address {
     margin-top: 1em;
@@ -462,25 +499,3 @@ a.link:hover {
 /* Utility Classes */
 .text--color-youtube {color: #ff0000!important}
 .text--color-discord {color: #5865F2!important}
-/* Media Rules */
-@media (max-width: 55em) {
-  body {
-    padding-top: .5em;
-    padding-bottom: 1em;
-    padding-left: .5em;
-    padding-right: .5em;
-  }
-  ul.navbar {
-    position: unset;
-    top: auto;
-    left: auto;
-    width: 100%;
-    padding-bottom: 1em;
-  }
-  ul.navbar li {
-    border: none;
-  }
-  ul.navbar > details > summary {
-    border-right: none;
-  }
-}

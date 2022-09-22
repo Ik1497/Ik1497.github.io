@@ -11,12 +11,12 @@ document.write('\
 </footer>\
 <footer>\
   <div class="lower">\
-      <nav>\
-        <a href="/Socials/Pull-Requests.html" target="_blank"><i class="mdi mdi-github"></i> Pull Requests</a>\
-        <a href="/Socials/Issues.html" target="_blank"><i class="mdi mdi-github"></i> Issues</a>\
-        <a href="/Socials/Discord.html" target="_blank"><i class="mdi mdi-discord text--color-discord"></i> Discord</a>\
-        <a><i class="mdi mdi-youtube text--color-youtube" target="_blank"></i> YouTube</a>\
-      </nav>\
+      <ul>\
+        <li><a href="/Socials/Pull-Requests.html" target="_blank"><i class="mdi mdi-github"></i> Pull Requests</a></li>\
+        <li><a href="/Socials/Issues.html" target="_blank"><i class="mdi mdi-github"></i> Issues</a></li>\
+        <li><a href="/Socials/Discord.html" target="_blank"><i class="mdi mdi-discord text--color-discord"></i> Discord</a></li>\
+        <li><a><i class="mdi mdi-youtube text--color-youtube" target="_blank"></i> YouTube</a></li>\
+      </ul>\
   </div>\
 </footer>\
 \
