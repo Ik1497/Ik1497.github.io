@@ -3,10 +3,18 @@ document.write('\
 <footer>\
 \
   <div class="upper">\
+    <div class="upper-desktop">\
       <span>© 2022 Streamer.bot Actions. All rights reserved. |&nbsp;</span>\
       <span>Made by\
           <a href="https://github.com/ik1497" target="_blank">Ik1497</a>\
       </span>\
+    </div>\
+    <div class="upper-mobile">\
+    <p>© 2022 Streamer.bot Actions. <br> All rights reserved.&nbsp;\
+    <br>Made by\
+        <a href="https://github.com/ik1497" target="_blank">Ik1497</a>\
+    </p>\
+  </div>\
   </div>\
 </footer>\
 <footer>\

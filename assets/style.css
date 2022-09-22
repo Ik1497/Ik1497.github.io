@@ -101,6 +101,15 @@
   div.lower li {
     list-style: none;
   }
+  div.upper > .upper-mobile {
+    display: normal;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+  }
+  div.upper > .upper-desktop {
+    display: normal;
+  }
   @media (min-width: 50em) { 
     div.lower {
       display: flex;
@@ -111,6 +120,14 @@
     div.lower li {
       display: inline;
       padding: 0em .5em;
+    }
+    div.upper > .upper-mobile {
+      display: none;
+    }
+  }
+  @media (max-width: 50em) {
+    div.upper > .upper-desktop {
+      display: none;
     }
   }
   details.extensions > summary {
