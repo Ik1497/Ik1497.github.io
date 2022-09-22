@@ -251,56 +251,6 @@
     border-radius: 30px;
     transition: all 0.3s;
    }
-   ul.button-grid {
-    padding: 0;
-    display: grid;
-    gap: 0em 1.3em;
-    grid-template-columns: repeat(auto-fit,minmax(400px,1fr));
-   }
-   ul.button-grid a {
-    text-decoration: none;
-    color: white;
-   }
-   ul.button-grid li {
-    list-style: none;
-    background: #1b1d22;
-    padding: 20px;
-    font-weight: bold;
-    font-size: 22px;
-    margin: 10px 0px;
-    border: 2px solid #555;
-    border-radius: .5em;
-    transition: all 500ms;
-    display: flex;
-    animation: button-grid-load 750ms ease-in-out;
-   }
-   ul.button-grid li:hover {
-    box-shadow: #000 0px 0px 20px;
-    transition: all .3s;
-    border-color: #007FFF;
-   }
-   ul.button-grid > a > li > img {
-    margin: auto 1rem auto 0em;
-    height: 35px;
-    width: 35px;
-   }
-   ul.button-grid > a > li > i {
-    display: block;
-    font-size: 35px;
-    width: 35px;
-    margin: auto 1rem auto 0em;
-   }
-   ul.button-grid li > strong {
-    display: flex;
-    font-weight: 600!important;
-    flex-direction: column;
-   }
-   ul.button-grid li > strong > em {
-    font-style: normal;
-    font-weight: 400;
-    color: #888;
-    font-size: .6em;
-   }
    h2.overige {
     border-bottom: 2px dotted #555;
     }
@@ -519,6 +469,74 @@ a.link {
 a.link:hover {
   color: #0096ff!important;
 }
+/* List / Grids */
+ul.button-grid {
+  padding: 0;
+  display: grid;
+  gap: .8em;
+  margin: .8em 0em;
+  grid-template-columns: repeat(auto-fit,minmax(450px,1fr));
+ }
+ ul.list {
+  grid-template-columns: 1fr;
+ }
+ ul.button-grid a {
+  text-decoration: none;
+  color: white;
+ }
+ ul.button-grid li {
+  list-style: none;
+  background: #1b1d22;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 22px;
+  border: 2px solid #555;
+  border-radius: .5em;
+  transition: all 500ms;
+  display: flex;
+  animation: button-grid-load 750ms ease-in-out;
+ }
+ ul.button-grid li:hover {
+  box-shadow: #000 0px 0px 20px;
+  transition: all .3s;
+  border-color: #007FFF;
+ }
+ ul.button-grid > a > li > img {
+  margin: auto 1rem auto 0em;
+  height: 35px;
+  width: 35px;
+ }
+ ul.button-grid > a > li > i {
+  display: block;
+  font-size: 35px;
+  width: 35px;
+  margin: auto 1rem auto 0em;
+ }
+ ul.button-grid li > strong {
+  display: flex;
+  font-weight: 600!important;
+  flex-direction: column;
+ }
+ ul.button-grid li > strong > em {
+  font-style: normal;
+  font-weight: 400;
+  color: #888;
+  font-size: .6em;
+ }
+ ul.grid-list {
+  list-style: none;
+  border: 1px solid #434343;
+  margin: .8em 0em;
+ }
+ ul.grid-list > li {
+  background: var(--v-primary-base);
+  padding: .6rem 1rem;
+ }
+ ul.grid-list > li:nth-child(odd) {
+  background: var(--v-secondary-base);
+  padding: .6rem 1rem;
+ }
 /* Utility Classes */
-.text--color-youtube {color: #ff0000!important}
-.text--color-discord {color: #5865F2!important}
+.text--color-youtube {--color: #ff0000; color: var(--color)!important}
+.text--color-twitch {--color: #6441a5; color: var(--color)!important}
+.text--color-discord {--color: #5865F2; color: var(--color)!important}
