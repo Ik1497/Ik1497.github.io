@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta property="og:title" content="Home" />
+<title>Home  | Streamer.bot Actions</title>
+
+<meta name="og:site_name" content="Streamer.bot Actions"/>
+<meta property="og:image" content="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
+<meta name="theme-color" content="#B80086">
+
+<meta property="og:description" content="I've made a handfull of super handy streamer.bot actions!" />
+
+<script src="/assets/head.js"></script>
+
+<header id="header">
+  <p class="title">Extension Name</p>
+  <p class="description">Extension Description</p>
+</header>
+</head>
+<body>
+  <ul class="import-code">
+    <li><a class="clipboard mdi mdi-content-copy" onclick="importCopyClipboard()"> Copy Import Code</a></li>
+    <li><a href="/files/" class="file" onclick="importDownloadFile()"> Download Import Code <i class="mdi mdi-file-download"></i></a></li>
+  </ul>
+  <ul class="obs-import-code">
+    <li><a class="clipboard mdi mdi-content-copy" onclick="obsImportCopyClipboard()" target="_blank"> Copy OBS Import</a></li>
+    <li><a href="/files/" class="file" onclick="obsImportDownloadFile()" target="_blank"> Download OBS Files <i class="mdi mdi-file-download"></i></a></li>
+  </ul>
+  <h2>Overview</h2>
+  <p>Description</p>
+  <img src="/files/Page_Template/Overview.png" width="70%" alt="Overview Image: Sports Scoreboard">
+  <h2>Installation</h2>
+  <h3>Streamer.bot:</h3>
+  <strong>Copy:</strong>
+  <p>Copy the streamer.bot import code above.</p>
+  <p>In streamer.bot select <code>Import</code> in the top left.</p>
+  <p>Paste the import code in the <code>Import String</code> field.</p>
+  <br>
+  <strong>File:</strong>
+  <p>Download the streamer.bot import file above.</p>
+  <p>In streamer.bot select <code>Import</code> in the top left.</p>
+  <p>Drag and drop the import code in the <code>Import String</code> field.</p>
+  <br>
+  <h2>Configuration</h2>
+
+  <h2>Usage</h2>
+</body>
+</html>
+<script src="/assets/footer.js"></script>
+<script type="text/javascript">
+  function importCopyClipboard() {
+    var text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, excepturi doloremque incidunt earum placeat illo, aspernatur, modi vitae possimus eos perspiciatis asperiores? Distinctio, obcaecati accusantium dicta magni esse dolorum alias eum, ipsum, totam maxime autem iure enim sapiente nemo! Quos iste ut, eaque iusto quo dolorum reprehenderit ad nisi necessitatibus."
+    navigator.clipboard.writeText(text);
+    alert("Copied.");
+  }
+  function importDownloadFile() {
+    alert("Downloading file...");
+  }
+  function obsImportCopyClipboard() {
+    var text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, excepturi doloremque incidunt earum placeat illo, aspernatur, modi vitae possimus eos perspiciatis asperiores? Distinctio, obcaecati accusantium dicta magni esse dolorum alias eum, ipsum, totam maxime autem iure enim sapiente nemo! Quos iste ut, eaque iusto quo dolorum reprehenderit ad nisi necessitatibus."
+    navigator.clipboard.writeText(text);
+    alert("Copied.");
+  }
+  function obsImportDownloadFile() {
+    alert("Downloading file...");
+  }
+  </script>

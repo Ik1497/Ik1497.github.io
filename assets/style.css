@@ -470,26 +470,32 @@ a.link {
 a.link:hover {
   color: #0096ff!important;
 }
+/* Header */
+h2 {
+  font-size: 28px;
+  color: #cfcfcf
+}
 /* Importing */
-.import-code {
+.import-code, .obs-import-code {
   background: none;
   display: grid;
   grid-template-columns: 1fr 1fr;
   list-style: none;
 }
-.import-code span, .import-code a {
-  background: none;
+.import-code a {
   color: var(--v-accent-base)!important;
-  
 }
-.import-code a:hover {
+.obs-import-code a {
+  color: white!important;
+}
+.import-code a:hover, .obs-import-code a:hover {
   color: var(--v-blockquote-is-danger-color)!important;
 }
-.import-code > li:has(.file) {
+.import-code > li:has(.file), .obs-import-code > li:has(.file) {
   text-align: right;
 }
 @media (max-width: 50em) {
-  .import-code { 
+  .import-code, .obs-import-code { 
     display: none;
   }
 }
