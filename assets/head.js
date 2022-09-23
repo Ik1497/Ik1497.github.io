@@ -14,4 +14,8 @@ document.write('\
 <script src="/assets/navigation.js"></script>\
 <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">\
 \
+<script src="/assets/Code-Styles/prism.js"></script>\
+<script src="/assets/Code-Styles/code-copy.js"></script>\
+<link rel="stylesheet" href="/assets/Code-Styles/prism.css">\
+\
 ');

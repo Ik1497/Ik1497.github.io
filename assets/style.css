@@ -253,6 +253,10 @@ ul.navbar li:hover {
   box-shadow: #000 2px 2px 2px;
   transition: all 0.3s;
 }
+ul.navbar > a > li.mdi::before {
+  margin-right: 0.2em;
+  color: #aaa;
+}
 ul.navbar a {
   text-decoration: none; 
   color: #fff;
@@ -453,9 +457,6 @@ hr {
   border-bottom: 1px solid #555;
   margin-bottom: 1em;
   margin-top: 1em;
-}
-i.mdi {
-  font-style: none;
 }
 a {
   color: #0096ff;
