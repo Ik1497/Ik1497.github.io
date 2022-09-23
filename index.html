@@ -18,6 +18,21 @@
 </header>
 </head>
 <body>
+  <ul class="import-code">
+    <li><a onclick="importCopyClipboard()" class="clipboard mdi mdi-content-copy"> Copy Import Code</a></li>
+    <li><a onclick="importDownloadFile()" href="" class="file"> Download Import Code <i class="mdi mdi-file-download"></i></a></li>
+  </ul>
+  <script type="text/javascript">
+  function importCopyClipboard() {
+    var text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, excepturi doloremque incidunt earum placeat illo, aspernatur, modi vitae possimus eos perspiciatis asperiores? Distinctio, obcaecati accusantium dicta magni esse dolorum alias eum, ipsum, totam maxime autem iure enim sapiente nemo! Quos iste ut, eaque iusto quo dolorum reprehenderit ad nisi necessitatibus."
+    navigator.clipboard.writeText(text);
+    alert("Copied.");
+  }
+  function importDownloadFile() {
+    alert("Downloading file...");
+  }
+  </script>
+
     <blockquote>
     <strong>About</strong>
     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. <br> Tenetur doloribus distinctio ratione. Veniam eos quibusdam expedita, veritatis voluptate blanditiis odio.
@@ -41,7 +56,7 @@
   <hr>
   <h2>Extensions</h2>
   <h3></h3>
-  <ul class="button-grid list">
+  <ul class="button-grid">
     <a href="">
       <li>
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/OBS_Studio_Logo.svg/1200px-OBS_Studio_Logo.svg.png">

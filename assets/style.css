@@ -469,6 +469,24 @@ a.link {
 a.link:hover {
   color: #0096ff!important;
 }
+/* Importing */
+.import-code {
+  background: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  list-style: none;
+}
+.import-code span, .import-code a {
+  background: none;
+  color: var(--v-accent-base)!important;
+  
+}
+.import-code a:hover {
+  color: var(--v-blockquote-is-danger-color)!important;
+}
+.import-code > li:has(.file) {
+  text-align: right;
+}
 /* List / Grids */
 ul.button-grid {
   padding: 0;
@@ -537,6 +555,10 @@ ul.button-grid {
   padding: .6rem 1rem;
  }
 /* Utility Classes */
-.text--color-youtube {--color: #ff0000; color: var(--color)!important}
-.text--color-twitch {--color: #6441a5; color: var(--color)!important}
-.text--color-discord {--color: #5865F2; color: var(--color)!important}
+:root {
+  --text--color-youtube: #ff0000,
+  --text--color-twitch: #6441a5,
+  --text--color-discord: #5865F2,}
+.text--color-youtube {--color: var(--text--color-youtube); color: var(--color)!important}
+.text--color-twitch {--color: var(--text--color-twitch); color: var(--color)!important}
+.text--color-discord {--color: var(--text--color-discord); color: var(--color)!important}
