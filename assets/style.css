@@ -45,6 +45,7 @@
     font-size: 20px;
     color: white;
     background-color: #22252b;
+    overflow: hidden visible;
   }
   @media (min-width: 50em) {
     body {
@@ -486,6 +487,11 @@ a.link:hover {
 }
 .import-code > li:has(.file) {
   text-align: right;
+}
+@media (max-width: 50em) {
+  .import-code { 
+    display: none;
+  }
 }
 /* List / Grids */
 ul.button-grid {
