@@ -22,7 +22,7 @@ document.write('\
       <ul>\
         <li><a href="/Socials/Pull-Requests.html" target="_blank"><i class="mdi mdi-github"></i> Pull Requests</a></li>\
         <li><a href="/Socials/Issues.html" target="_blank"><i class="mdi mdi-github"></i> Issues</a></li>\
-        <li><a href="/Socials/Discord.html" target="_blank"><i class="mdi mdi-message-text text--color-discord"></i> Discord</a></li>\
+        <li><a href="/Socials/Discord.html" target="_blank"><i class="mdi mdi-forum text--color-discord"></i> Discord</a></li>\
         <li><a><i class="mdi mdi-youtube text--color-youtube" target="_blank"></i> YouTube</a></li>\
       </ul>\
   </div>\
