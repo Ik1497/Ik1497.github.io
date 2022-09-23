@@ -473,7 +473,11 @@ a.link:hover {
 /* Header */
 h2 {
   font-size: 28px;
-  color: #cfcfcf
+  color: #ccc
+}
+h3 {
+  font-size: 24px;
+  color: #aaa
 }
 /* Importing */
 .import-code, .obs-import-code {
@@ -567,10 +571,6 @@ ul.button-grid {
   padding: .6rem 1rem;
  }
 /* Utility Classes */
-:root {
-  --text--color-youtube: #ff0000,
-  --text--color-twitch: #6441a5,
-  --text--color-discord: #5865F2,}
-.text--color-youtube {--color: var(--text--color-youtube); color: var(--color)!important}
-.text--color-twitch {--color: var(--text--color-twitch); color: var(--color)!important}
-.text--color-discord {--color: var(--text--color-discord); color: var(--color)!important}
+.text--color-youtube {color: #ff0000!important}
+.text--color-twitch {color: #6441a5!important}
+.text--color-discord {color: #5865f2!important}
