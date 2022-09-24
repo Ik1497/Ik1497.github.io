@@ -99,6 +99,8 @@
     position: relative;
     background-color: var(--v-accent-lighten1)!important;
     margin-top: 1em;
+    font-size: 14px;
+    color: #ccc;
   }
 
   div.lower {
@@ -113,6 +115,7 @@
     gap: 0em;
     flex: 0 1 auto!important;
     flex-wrap: wrap;
+    font-size: 14px;
   }
 
   div.lower li {
@@ -121,7 +124,7 @@
   }
 
   div.lower a {
-    color: white;
+    color: #ccc;
   }
 
   div.lower li {
@@ -228,8 +231,6 @@
 ul.navbar > details > summary {
   background: #1b1d22;
   border: 1px solid var(--v-secondary-base);
-  padding: 0.5em;
-  margin-top: 0.5em;
   transition: all 0.3s;
 }
 ul.navbar {
@@ -237,25 +238,25 @@ ul.navbar {
   padding: 0;
   margin: 0;
   position: absolute;
-  top: 2em;
-  left: 1em;
+  top: 0;
+  left: 0;
   width: 14em;
   animation: nav-load 750ms ease-in-out;
+  background: #1b1d22;
+  height: 100%;
 }
 ul.navbar li {
   background: #1b1d22;
-  margin-top: 0.5em;
+  margin-top: 0em;
   padding: 0.5em;
-  border-right: 0.3em solid white;
   transition: all 0.3s;
 }
 ul.navbar li:hover {
-  box-shadow: #000 2px 2px 2px;
+  box-shadow: #000 0 0 8px;
   transition: all 0.3s;
 }
 ul.navbar > a > li.mdi::before {
-  margin-right: 0.2em;
-  color: #aaa;
+  margin-right: 0.4em;
 }
 ul.navbar a {
   text-decoration: none; 
@@ -272,19 +273,45 @@ ul.navbar a {
 ul.navbar > details > summary {
   background: #1b1d22;
   padding: 0.5em;
-  margin-top: 0.5em;
-  border-right: 0.3em solid white;
+  margin-top: 0em;
   transition: all 0.3s;
+  list-style: none;
+}
+ul.navbar > details > summary::after {
+  font-family: "Material Design Icons";
+  content: "\F0704";
+  position: absolute;
+  right: .3em;
+  transform: translateY(20%);
+}
+ul.navbar > details[open] > summary::after {
+  font-family: "Material Design Icons";
+  content: "\F06F2";
+  position: absolute;
+  right: .3em;
+  transform: translateY(20%);
+}
+ul.navbar > details[open] > summary {
+  border-bottom: 0.1em solid #555;
+  transition: box-shadow 0.3s;
+}
+ul.navbar > details > summary:hover {
+  box-shadow: #000 0 0 8px;
+  transition: box-shadow 0.3s;
+}
+ul.navbar > details > a > li.mdi::before {
+  margin-right: 0.4em;
 }
 ul.navbar > details {
   cursor: pointer;
 }
 ul.navbar > details > a > li {
   background: #333;
-  margin: .3em;
   padding: 0.5em;
-  border-right: 0.3em solid white;
   transition: all 0.3s;
+}
+ul.navbar hr {
+  margin: 0;
 }
 @media (max-width: 50em) {
   ul.navbar {
@@ -292,13 +319,18 @@ ul.navbar > details > a > li {
     top: auto;
     left: auto;
     width: 100%;
-    padding-bottom: 1em;
   }
   ul.navbar li {
     border: none;
   }
   ul.navbar > details > summary {
     border-right: none;
+  }
+  ul.navbar > details > summary::after {
+    right: .9em;
+  }
+  ul.navbar > details[open] > summary::after {
+    right: .9em;
   }
 }
 /* Animations */
