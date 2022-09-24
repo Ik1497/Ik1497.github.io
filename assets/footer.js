@@ -1,7 +1,10 @@
-document.write('\
+var editor = "N/A";
+var editDate = "N/A";
+document.write(`\
 \
 <footer>\
 \
+  // <span>Last edited by ${editor} at ${editDate}</span>\
   <div class="upper">\
     <div class="upper-desktop">\
       <span>© 2022 Streamer.bot Actions <kbd>beta</kbd>. All rights reserved. |&nbsp;</span>\
@@ -30,4 +33,4 @@ document.write('\
 <!-- helpers -->\
 <body class="line-numbers">\
 \
-');
+\');
