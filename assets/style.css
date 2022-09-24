@@ -520,30 +520,6 @@ h3 {
   font-size: 24px;
   color: #aaa
 }
-/* Importing */
-.import-code, .obs-import-code {
-  background: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  list-style: none;
-}
-.import-code a {
-  color: var(--v-accent-base)!important;
-}
-.obs-import-code a {
-  color: white!important;
-}
-.import-code a:hover, .obs-import-code a:hover {
-  color: var(--v-blockquote-is-danger-color)!important;
-}
-.import-code > li:has(.file), .obs-import-code > li:has(.file) {
-  text-align: right;
-}
-@media (max-width: 50em) {
-  .import-code, .obs-import-code { 
-    display: none;
-  }
-}
 /* List / Grids */
 ul.button-grid {
   padding: 0;
