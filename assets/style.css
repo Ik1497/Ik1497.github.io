@@ -275,7 +275,10 @@ ul.navbar > details > summary {
   padding: 0.5em;
   margin-top: 0em;
   transition: all 0.3s;
-  list-style: none;
+  /* list-style: none; */
+}
+ul.navbar > details > summary:first-of-type {
+  list-style-type: none;
 }
 ul.navbar > details > summary::after {
   font-family: "Material Design Icons";
