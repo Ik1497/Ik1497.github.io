@@ -27,5 +27,7 @@ document.write('\
       </ul>\
   </div>\
 </footer>\
+<!-- helpers -->\
+<body class="line-numbers">\
 \
 ');
