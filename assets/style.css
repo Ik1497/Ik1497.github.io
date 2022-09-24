@@ -33,7 +33,7 @@
     --v-blockquote-code-font-weight: 500;
     --v-blockquote-code-border: #444;
     --v-blockquote-ff: Arial;
-    --v-blockquote-border-radius: 10px;
+    --v-blockquote-border-radius: 6px;
 
     --v-mobile-width: 50em;
   }
@@ -243,7 +243,7 @@ ul.navbar {
   width: 14em;
   animation: nav-load 750ms ease-in-out;
   background: #1b1d22;
-  height: calc(100vmax - 2.5em);
+  height: 100%;
 }
 ul.navbar li {
   background: #1b1d22;
@@ -558,11 +558,11 @@ ul.button-grid {
  }
  ul.button-grid li {
   list-style: none;
-  padding: 20px;
+  padding: 10px 20px;
   font-weight: bold;
   font-size: 22px;
   border: 2px solid #555;
-  border-radius: .5em;
+  border-radius: var(--v-blockquote-border-radius);
   transition: all 500ms;
   display: flex;
   animation: button-grid-load 750ms ease-in-out;
