@@ -78,6 +78,7 @@ a.item-grid-item {
 a.item-grid-item:hover { 
     border-color: var(--v-color-link);
     box-shadow: 0 0 20px #000;
+    cursor: pointer;
     transition: border-color .3s ease, box-shadow .3s ease;
 }
 a.item-grid-item .item-grid-item-icon::before {
