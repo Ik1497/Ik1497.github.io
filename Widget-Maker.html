@@ -1,0 +1,45 @@
+<script>
+    var date = "25/09/2022";
+    var time = "5:34 PM";
+    var next = null;
+    var previous = null;
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta property="og:title" content="Widget Maker" />
+<title>Widget Maker  | Streamer.bot Actions</title>
+
+<meta name="og:site_name" content="Streamer.bot Actions"/>
+<meta property="og:image" content="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
+<meta name="theme-color" content="#B80086">
+
+<meta property="og:description" content="On this page you can asjust the settings of the widgets!" />
+
+<script src="/assets/head.js"></script>
+
+<header class="page-info">
+    <p class="title">Widget Maker</p>
+    <p class="description">On this page you can asjust the settings of the widgets!</p>
+</header>
+</head>
+<body>
+    <label for="text">Font Size</label>
+    <input type="text" name="" id="fontSize" placeholder="24px"><br>
+    <label for="text">Background Color</label>
+    <input type="text" name="" id="backgroundColor" placeholder="#000000"><br>
+    <span></span>
+    <input type="submit" value="Generate" onclick="sendPayload()" /><span> </span>
+    <pre><code id="widgetUrl" class="language-text">
+        https://ik1497.github.io/Files/Scoreboard.html?fontSize=24px&backgroundColor=#000000
+    </code></pre>
+</body>
+<script src="/assets/footer.js"></script>
+</html>
+<script>
+var fontSize = document.getElementById('fontSize').value;
+var backgroundColor = document.getElementById('backgroundColor').value;
+function sendPayload() {
+document.getElementById('widgetUrl').innerHTML = "https://ik1497.github.io/Files/Scoreboard.html?fontSize=" + fontSize + "&backgroundColor=" + backgroundColor
+}
+</script>
