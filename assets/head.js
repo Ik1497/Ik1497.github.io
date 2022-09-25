@@ -10,6 +10,7 @@ document.write('\
 <meta name="theme-color" content="#B80086">\
 <link rel="stylesheet" href="/assets/style.css">\
 <script src="/assets/navigation.js"></script>\
+<script src="/assets/header.js"></script>\
 <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">\
 \
 <script src="/assets/Code-Styles/prism.js"></script>\
