@@ -153,6 +153,8 @@ footer {
     margin-right: .5em;
     border-radius: 100vmax;
     transition: box-shadow .5s ease;
+    text-decoration: none;
+    color: white;
 }
 .main-buttons a:hover {
     box-shadow: 0 0 15px #000;
