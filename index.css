@@ -91,7 +91,7 @@ body {
     border: 1px solid var(--v-background-soft);
     border-radius: 12px;
     padding: 24px;
-    height: fit-content;
+    height: 140px;
     background-color: var(--v-background-soft);
 }
 
