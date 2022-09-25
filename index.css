@@ -83,8 +83,15 @@ body {
 }
 
 .item-grid-item {
-    /* padding: 8px; */
     width: 100%;
+}
+
+.item-grid-item article:hover {
+    border-color: var(--v-background-accent);
+    box-shadow: 0 0 10px 5px #555;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .item-grid-item article {
@@ -93,6 +100,7 @@ body {
     padding: 24px;
     height: 140px;
     background-color: var(--v-background-soft);
+    transition: all 0.3s ease;
 }
 
 .item-grid-item .icon {
@@ -200,8 +208,8 @@ footer {
 
 .main-buttons a:hover {
     box-shadow: 0 0 15px #000;
-    transition: all .5s ease;
     border-color: black!important;
+    transition: all .5s ease;
 }
 
 h2 {
