@@ -9,8 +9,6 @@ document.write('\
 <link rel="icon" href="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />\
 <meta name="theme-color" content="#B80086">\
 <link rel="stylesheet" href="/assets/style.css">\
-<link rel="stylesheet" href="/assets/code-styles.css">\
-<link rel="stylesheet" href="/assets/mdi/mdi.css">\
 <script src="/assets/navigation.js"></script>\
 <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">\
 \

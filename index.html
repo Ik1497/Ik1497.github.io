@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+</head> 
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="og:site_name" content="Streamer.bot Actions"/>
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
+<link rel="icon" href="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
+<meta name="theme-color" content="#B80086">
 <meta property="og:title" content="Home" />
 <title>Home  | Streamer.bot Actions</title>
 
@@ -10,95 +19,60 @@
 
 <meta property="og:description" content="I've made a handfull of super handy streamer.bot actions!" />
 
-<script src="/assets/head.js"></script>
+<link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
 
-<header  id="header">
-  <p class="title">Home</p>
-  <p class="description">I've made a handfull of super handy streamer.bot actions!</p>
-</header>
+<link rel="stylesheet" href="/index.css">
 </head>
 <body>
-  <blockquote>
-    <strong>About</strong><br>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. <br> Tenetur doloribus distinctio ratione. Veniam eos quibusdam expedita, veritatis voluptate blanditiis odio.
-  </blockquote>
-  <blockquote class="is-warning">
-    <strong>Warning</strong><br>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. <br> Tenetur doloribus distinctio ratione. Veniam eos quibusdam expedita, veritatis voluptate blanditiis odio.
-  </blockquote>
-  <blockquote class="is-info">
-    <strong>Note</strong><br>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. <br> Tenetur doloribus distinctio ratione. Veniam eos quibusdam expedita, veritatis voluptate blanditiis odio.
-  </blockquote>
-  <blockquote class="is-danger">
-    <strong>Danger</strong><br>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. <br> Tenetur doloribus distinctio ratione. Veniam eos quibusdam expedita, veritatis voluptate blanditiis odio.
-  </blockquote>
-  <blockquote class="is-success">
-    <strong>Success</strong><br>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. <br> Tenetur doloribus distinctio ratione. Veniam eos quibusdam expedita, veritatis voluptate blanditiis odio.
-  </blockquote>
-  <hr>
-  <h2>Extensions</h2>
-  <h3></h3>
-  <ul class="button-grid">
-    <a href="">
-      <li>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/OBS_Studio_Logo.svg/1200px-OBS_Studio_Logo.svg.png">
-        <strong>
-          lorem ipsum
-          <em>dolor sit amet consectetur adipisicing elit.</em>
-        </strong>
-      </li>
+  <div class="top-section">
+    <div class="main-text">
+      <div class="title">Streamer.bot Actions</div>
+      <div class="description">Everything you NEED <br>for streaming!</div>
+    </div>
+    <div class="logo">
+      <div class="logo-background"></div>
+      <img class="logo-image" src="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" alt="logo">
+    </div>
+    <div class="main-buttons">
+      <a class="main">Extensions</a>
+      <a class="extra">View on Github</a>
+    </div>
+  </div>
+  <h2>Recent Extensions</h2>
+  <div class="items-grid">
+    <a class="item-grid-item item-1">
+      <i class="item-grid-item-icon mdi mdi-scoreboard"></i>
+      <p class="item-grid-item-title">Scoreboard</p>
+      <p class="item-grid-item-description">Widget for a live scorboard, used for when playing games and more!</p>
     </a>
-    <a href="">
-      <li>
-        <img src="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png">
-        <strong>
-          lorem ipsum
-          <em>dolor sit amet consectetur adipisicing elit.</em>
-        </strong>
-      </li>
+    <a class="item-grid-item item-1">
+      <i class="item-grid-item-icon mdi mdi-folder"></i>
+      <p class="item-grid-item-title">Create/Remove Files</p>
+      <p class="item-grid-item-description">Create/Remove files on your computer with ease!</p>
     </a>
-    <a href="">
-      <li>
-        <i class="mdi mdi-blender-software"></i>
-        <strong>
-          lorem ipsum
-          <em>dolor sit amet consectetur adipisicing elit.</em>
-        </strong>
-      </li>
+    <a class="item-grid-item item-1">
+      <i class="item-grid-item-icon mdi mdi-camera"></i>
+      <p class="item-grid-item-title">Lorem, ipsum.</p>
+      <p class="item-grid-item-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, a?</p>
     </a>
-    <a href="">
-      <li>
-        <img src="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png">
-        <strong>
-          lorem ipsum
-          <em>dolor sit amet consectetur adipisicing elit.</em>
-        </strong>
-      </li>
+    <a class="item-grid-item item-1">
+      <i class="item-grid-item-icon mdi mdi-forum color-discord"></i>
+      <p class="item-grid-item-title">Post to Discord</p>
+      <p class="item-grid-item-description">All the ways to post stuff to Discord with webhooks!</p>
     </a>
-    <a href="">
-      <li>
-        <i class="mdi mdi-youtube-gaming"></i>
-        <strong>
-          lorem ipsum
-          <em>dolor sit amet consectetur adipisicing elit.</em>
-        </strong>
-      </li>
+    <a class="item-grid-item item-1">
+      <i class="item-grid-item-icon mdi mdi-clipboard-outline"></i>
+      <p class="item-grid-item-title">Copy to clipboard</p>
+      <p class="item-grid-item-description">Copy variables and text from streamer.bot to your clipboard!</p>
     </a>
-  </ul>
-  <h2>Other Extensions</h2>
-  <ul class="grid-list">
-    <li><code>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia neque ratione magnam enim nam at.</code></li>
-    <li><code>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia neque ratione magnam enim nam at.</code></li>
-    <li><code>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia neque ratione magnam enim nam at.</code></li>
-    <li><code>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia neque ratione magnam enim nam at.</code></li>
-    <li><code>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia neque ratione magnam enim nam at.</code></li>
-  </ul>
+    <a class="item-grid-item item-1">
+      <i class="item-grid-item-icon mdi mdi-rocket-launch"></i>
+      <p class="item-grid-item-title">Launch Programs on Streamer.bot startup</p>
+      <p class="item-grid-item-description">Launch all your streamer.bot programs when opening streamer.bot!</p>
+    </a>
+  </div>
+  <footer>
+    © 2022 Streamer.bot Actions beta. All rights reserved.
+  </footer>
 </body>
-<script src="/assets/footer.js">
-var editor = "Ik";
-var editDate = "N/A";
-</script>
 </html>
