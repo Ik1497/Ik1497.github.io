@@ -51,7 +51,6 @@
   }
 body {
     padding-top: 1em;
-    max-width: 1200px;
     font-family: Poppins;
     font-size: 16px;
     color: white;
@@ -60,7 +59,11 @@ body {
     margin: auto;
     margin-top: 2em;
 }
-
+@media (min-width: 50em) {
+    body {
+        max-width: 1200px;
+    }
+}
 .color-discord {color: var(--v-color-discord)}
 div.items-grid {
     padding: 0;
@@ -180,11 +183,13 @@ h2 {
     body {
         overflow-x: hidden;
         max-width: unset;
-        width: 98%;
         margin: auto;
     }
     .top-section {
         grid-template-areas: "logo" "main-text";
+    }
+    .top-section .logo {
+        display: none;
     }
     .top-section .main-text .title {
         font-size: 55px;
@@ -196,5 +201,9 @@ h2 {
     }
     div.items-grid {
         grid-template-columns: 1fr;
+        width: 100%;
+    }
+    .item-grid-item {
+        width: 1vw;
     }
 }
