@@ -83,7 +83,7 @@ body {
 }
 
 .item-grid-item {
-    padding: 8px;
+    /* padding: 8px; */
     width: 100%;
 }
 
@@ -127,7 +127,6 @@ footer {
     text-align: center;
     margin-top: 2em;
     color: #ccc;
-    display: none;
 }
 
 /* Top Section */
@@ -216,18 +215,24 @@ h2 {
         margin: auto;
     }
     .top-section {
-        grid-template-areas: "logo" "main-text";
-        display: none;
+        grid-template-areas: "main-text";
     }
     .top-section .logo {
         display: none;
     }
-    .top-section .main-text .title {
+    .top-section .main-text {
         font-size: 55px;
         font-weight: bold;
         width: fit-content;
         background: var(--v-alt-text-gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        display: none;
+    }
+    .main-buttons {
+        text-align: center;
+    }
+    .items-grid {
+        margin: 15px;
     }
 }
