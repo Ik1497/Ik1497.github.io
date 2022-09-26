@@ -58,7 +58,7 @@ body {
     background-color: #22252b;
     overflow-x: hidden;
     margin: auto;
-    margin-top: 2em;
+    padding: 1em;
 }
 @media (min-width: 50em) {
     body {
