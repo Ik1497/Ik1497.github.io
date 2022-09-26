@@ -4,7 +4,7 @@ document.write(`
 <a href="/About.html"><li class="mdi mdi-format-quote-open">About</li></a>
 <hr>
 <details><summary>Extensions</summary>
-  <a href="/Extensions/Time-Widget.html"><li class="mdi mdi-clock-outline">Time Widget</li></a>
+  <a href="/Extensions/Time-Widget/"><li class="mdi mdi-clock-outline">Time Widget</li></a>
 </details>
 </ul>
 `);

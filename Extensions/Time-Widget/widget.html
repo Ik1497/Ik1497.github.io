@@ -8,12 +8,9 @@
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
-    <div id="clock">
-        <span id="date" class="date">{{date}}</span><span id="time" class="time">&nbsp;{{time}}</span>
-    </div>
+    <div class="time"></div>
 </body>
 </html>
-
 <style>
 /* @import url('https://fonts.googleapis.com/css?family={{fontName}}'); */
 html,body {
@@ -55,38 +52,3 @@ p {
     padding: 20px 0 0;
 }
 </style>
-<script>
-   var clock = new Vue({
-    el: '#clock',
-    data: {
-        time: '',
-        date: ''
-    }
-});
-
-var week = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
-var month = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
-var timerID = setInterval(updateTime, 1000);
-updateTime();
-function updateTime() {
-  var cd = new Date();
-  var hours = cd.getHours();
-  var ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // The hour '0' should be '12'
-
-  clock.time = {12};
-  clock.date = {time1} + ' ' + {time2} + ' ' + {time3} + ' ' + {time4};
-
-  document.getElementById("time").innerHTML = time;
-  document.getElementById("date").innerHTML = date;
-}
-
-function zeroPadding(num, digit) {
-    var zero = '';
-    for(var i = 0; i < digit; i++) {
-        zero += '0';
-    }
-    return (zero + num).slice(-digit);
-} 
-</script>

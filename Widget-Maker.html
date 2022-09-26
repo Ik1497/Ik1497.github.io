@@ -1,6 +1,6 @@
 <script>
-    var date = "25/09/2022";
-    var time = "5:34 PM";
+    var date = "26/09/2022";
+    var time = "6:00 PM";
     var next = null;
     var previous = null;
 </script>
@@ -24,22 +24,23 @@
 </header>
 </head>
 <body>
-    <label for="text">Font Size</label>
-    <input type="text" name="" id="fontSize" placeholder="24px"><br>
-    <label for="text">Background Color</label>
-    <input type="text" name="" id="backgroundColor" placeholder="#000000"><br>
-    <span></span>
-    <input type="submit" value="Generate" onclick="sendPayload()" /><span> </span>
+    <form>
+        <label for="text">Font Size</label>
+        <input onblur="onBlur()" type="text" id="fontSize" value="24px" placeholder="24px"><br>
+        <label for="text">Background Color</label>
+        <input onblur="onBlur()" type="text" id="backgroundColor" value="#000000" placeholder="#000000"><br>
+    </form>
     <pre><code id="widgetUrl" class="language-text">
         https://ik1497.github.io/Files/Scoreboard.html?fontSize=24px&backgroundColor=#000000
     </code></pre>
 </body>
 <script src="/assets/footer.js"></script>
 </html>
+<script src="/assets/widget-maker.js"></script>
 <script>
-var fontSize = document.getElementById('fontSize').value;
-var backgroundColor = document.getElementById('backgroundColor').value;
-function sendPayload() {
-document.getElementById('widgetUrl').innerHTML = "https://ik1497.github.io/Files/Scoreboard.html?fontSize=" + fontSize + "&backgroundColor=" + backgroundColor
+function onBlur() {
+    var fontSize = document.getElementById('fontSize').value;
+    var backgroundColor = document.getElementById('backgroundColor').value;
+    document.getElementById('widgetUrl').innerHTML = "https://ik1497.github.io/Files/Scoreboard.html?fontSize=" + fontSize + "&backgroundColor=" + backgroundColor
 }
 </script>
