@@ -1,6 +1,6 @@
 <script>
-    var date = "26/09/2022";
-    var time = "18:00";
+    var date = "29/09/2022";
+    var time = "11:43";
     var next = null;
     var previous = null;
 </script>
@@ -26,27 +26,44 @@
 <body>
     <form>
         <div>
-            <label for="text" class="mdi mdi-format-annotation-plus"> Font Size</label>
-            <input onblur="onBlur()" onfocus="onBlur()" type="text" id="fontSize" value="24px" placeholder="24px"><br>
+            <label class="mdi mdi-web"> Language (Two letter code)</label>
+            <input onblur="onBlur()" onfocus="onBlur()" type="text" id="Language" value="en" placeholder="en"><br>
         </div>
         <div>
-            <label for="text" class="mdi mdi-format-color-fill"> Background Color</label>
+            <label class="mdi mdi-format-annotation-plus"> Font Size (px)</label>
+            <input onblur="onBlur()" onfocus="onBlur()" type="number" id="fontSize" value="24" placeholder="24"><br>
+        </div>
+        <div>
+            <label class="mdi mdi-format-color-fill"> Background Color</label>
             <input onblur="onBlur()" onfocus="onBlur()" type="color" id="backgroundColor" value="#141414"><br>
+        </div>
+        <div>
+            <label class="mdi mdi-format-color-text"> Text Color</label>
+            <input onblur="onBlur()" onfocus="onBlur()" type="color" id="textColor" value="#ffffff"><br>
         </div>
     </form>
     <pre><code id="widgetUrl" class="language-text">
-        https://ik1497.github.io/Files/Scoreboard.html?fontSize=24px&backgroundColor=#000000
+        https://ik1497.github.io/Files/Scoreboard.html?fontSize=24px&backgroundColor=#000000&textColor=#ffffff
     </code></pre>
 </body>
 <script src="/assets/footer.js"></script>
 </html>
 <script src="/assets/widget-maker.js"></script>
 <style>
+/* input[type=color]::before {
+    content: "#000";
+    color: white;
+    position: absolute;
+    margin: 0.8em 0 0 0.8em;
+} */
 </style>
 <script>
 function onBlur() {
     var fontSize = document.getElementById('fontSize').value;
     var backgroundColor = document.getElementById('backgroundColor').value;
-    document.getElementById('widgetUrl').innerHTML = "https://ik1497.github.io/Files/Scoreboard.html?fontSize=" + fontSize + "&backgroundColor=" + backgroundColor
+    var textColor = document.getElementById('textColor').value;
+    document.getElementById('widgetUrl').innerHTML = "https://ik1497.github.io/Files/Scoreboard.html?fontSize=" + fontSize + "px&backgroundColor=" + backgroundColor + "&textColor=" + textColor + ""
+
+    // document.getElementById('backgroundColor').style.content = "'" + backgroundColor + "'"
 }
 </script>
