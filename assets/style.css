@@ -387,6 +387,38 @@ h3 {
   font-size: 24px;
   color: #aaa
 }
+
+/* Table */
+table {
+  border-spacing: 0;
+}
+
+thead tr td {
+  background: var(--v-background-soft);
+  padding-block: .3em!important;
+  padding-inline: .6em!important;
+  text-align: center;
+  font-weight: bold;
+}
+
+tbody tr td {
+  background: var(--v-background-mute);
+  padding-block: .5em!important;
+  padding-inline: .6em!important;
+}
+
+tbody tr:nth-child(even) td {
+  background: var(--v-background-soft);
+}
+
+table td {
+  border: 1px solid var(--v-background-darken);
+}
+
+.table-right {text-align: right;}
+.table-center {text-align: center;}
+.table-left {text-align: left;}
+
 /* Footer */
 footer.footer-info {
   display: grid;
