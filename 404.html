@@ -18,6 +18,7 @@
         <div class="main-text">404</div>
         <div class="bottom-text">This page doesn't exist</div>
         <div class="buttons">
+          <a class="button alt" onclick="history.back()">Go Back</a>
           <a href="/index.html" class="button main">Home</a>
         </div>
     </div>
@@ -74,10 +75,27 @@ i {
     transition: all .4s ease;
     font-size: 30px;
 }
+    
+.button.alt {
+    background: var(--v-background-mute);
+    border: 3px solid var(--v-background-soft);
+    padding: .2em 1em;
+    border-radius: 100vmax;
+    transition: all .4s ease;
+    font-size: 30px;
+}
 
 .button.main:hover {
     background: var(--v-background-accent-darken);
     border: 3px solid var(--v-background-accent-darken);
+}
+    
+.button.alt:hover {
+    background: var(--v-background-alt);
+    border: 3px solid var(--v-background-alt);
+}
+    
+.button:hover {
     padding: .2em 1em;
     border-radius: 100vmax;
     transition: all .4s ease;
