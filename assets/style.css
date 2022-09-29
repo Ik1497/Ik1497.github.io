@@ -2,42 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-  * {
+@import url(/assets/root.css);
+* {
    padding: 0;
    margin: 0;
-  }
-  :root {
-    --v-primary-base: #22252b;
-    --v-secondary-base: #1b1d22;
-    --v-accent-base: #a158ed;
-    --v-secondary-accent-base: #a158ed;
-    --v-accent-lighten1: #666;
-    --v-accent-lighten2: #444;
-    --v-font-family: Inter;
-
-    --v-blockquote-is-warning-base: #2d2d2a;
-    --v-blockquote-is-warning-color: #fcd253;
-    
-    --v-blockquote-is-info-base: #1f2931;
-    --v-blockquote-is-info-color: #53aafc;
-    
-    --v-blockquote-is-success-base: #232c30;
-    --v-blockquote-is-success-color: #42d392;
-    
-    --v-blockquote-is-danger-base: #2c262d;
-    --v-blockquote-is-danger-color: #f54e82;
-
-    --v-blockquote-base: #2c2e34;
-    --v-blockquote-color: #c0c0c0;
-
-    --v-blockquote-box-shadow: #212121;
-    --v-blockquote-code-base: #141414;
-    --v-blockquote-code-font-weight: 500;
-    --v-blockquote-code-border: #444;
-    --v-blockquote-ff: Arial;
-    --v-blockquote-border-radius: 12px;
-
-    --v-mobile-width: 50em;
   }
   body {
     padding-top: 1em;
@@ -46,8 +14,8 @@
     font-family: var(--v-font-family);
     font-size: 1em;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #22252b;
+    color: var(--v-primary-natural);
+    background-color: var(--v-background);
     overflow: hidden visible;
     margin-bottom: 1.5em;
   }
@@ -75,7 +43,7 @@
     font-weight: 600;
     margin: 0;
     padding: 0;
-    color: white;
+    color: var(--v-primary-natural);
   }
 
   header.page-info > p.description {
@@ -88,8 +56,8 @@
 
 /* Navbar */
 ul.navbar > details > summary {
-  background: #1b1d22;
-  border: 1px solid var(--v-secondary-base);
+  background: var(--v-background-alt);
+  border: 1px solid var(---v-background-alt);
   transition: all 0.3s;
 }
 
@@ -101,13 +69,13 @@ ul.navbar {
   left: 0;
   width: 14em;
   animation: nav-load 1s ease-in-out;
-  background: #1b1d22;
+  background: var(--v-background-alt);
   position: fixed;
   height: 100%;
 }
 
 ul.navbar li {
-  background: #1b1d22;
+  background: var(--v-background-alt);
   margin-top: 0em;
   padding: 0.5em;
   transition: all 0.3s;
@@ -124,7 +92,7 @@ ul.navbar > a > li.mdi::before {
 
 ul.navbar a {
   text-decoration: none; 
-  color: #fff;
+  color: var(--v-primary-natural);
   transition: all 0.3s;
 }
 
@@ -138,11 +106,11 @@ ul.navbar a {
 }
 
 ul.navbar > details > summary {
-  background: #1b1d22;
+  background: var(--v-background-alt);
   padding: 0.5em;
   margin-top: 0em;
   transition: all 0.3s;
-  color: white;
+  color: var(--v-primary-natural);
 }
 
 ul.navbar > details > summary:first-of-type {
@@ -184,7 +152,7 @@ ul.navbar > details {
 }
 
 ul.navbar > details > a > li {
-  background: #333;
+  background: var(--v-background-darken);
   padding: 0.5em;
   transition: all 0.3s;
 }
@@ -380,7 +348,7 @@ code, var, samp {
 kbd {
   font-size: .9em;
   background: rgba(0,0,0,.4);
-  color: #fff;
+  color: var(--v-primary-natural);
   padding: 2px 6px;
   font-family: montserrat;
   font-weight: 600;
@@ -400,7 +368,7 @@ a {
   transition: color .3s ease-in-out;
 }
 a:hover {
-  color: #0066ff;
+  color: var(--v-color-link);
   cursor: pointer;
   transition: color .3s ease-in-out;
 }
@@ -413,7 +381,7 @@ a.link:hover {
 /* Header */
 h2 {
   font-size: 28px;
-  color: #ccc
+  color: var(--v-primary-natural)
 }
 h3 {
   font-size: 24px;
@@ -440,7 +408,7 @@ ul.footer-grid {
   padding: 10px 20px;
   font-weight: bold;
   font-size: 22px;
-  border: 2px solid #333;
+  border: 2px solid var(--v-background-darken);
   border-radius: var(--v-blockquote-border-radius);
   transition: all 500ms;
   display: flex;
@@ -465,7 +433,7 @@ ul.footer-grid {
  ul.footer-grid li > strong > em {
   font-style: normal;
   font-weight: 600;
-  color: var(--v-accent-base);
+  color: var(--v-primary-accent);
   font-size: 1.5em;
  }
  @media (max-width: 50em) {
@@ -499,14 +467,14 @@ ul.button-grid {
  }
  ul.button-grid a {
   text-decoration: none;
-  color: white;
+  color: var(--v-primary-natural);
  }
  ul.button-grid li {
   list-style: none;
   padding: 10px 20px;
   font-weight: bold;
   font-size: 22px;
-  border: 2px solid #333;
+  border: 2px solid var(--v-background-darken);
   border-radius: var(--v-blockquote-border-radius);
   transition: all 500ms;
   display: flex;
@@ -545,11 +513,11 @@ ul.button-grid {
   margin: .8em 0em;
  }
  ul.grid-list > li {
-  background: var(--v-primary-base);
+  background: var(--v-background);
   padding: .6rem 1rem;
  }
  ul.grid-list > li:nth-child(odd) {
-  background: var(--v-secondary-base);
+  background: var(---v-background-alt);
   padding: .6rem 1rem;
  }
 /* Utility Classes */

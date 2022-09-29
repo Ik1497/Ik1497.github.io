@@ -13,6 +13,5 @@ document.write(`
 <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
 
 <script src="/assets/Prism/prism.js"></script>
-<script src="/assets/Prism/code-copy.js"></script>
 <link rel="stylesheet" href="/assets/Prism/prism.css">
 `);

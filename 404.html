@@ -11,6 +11,7 @@
     <meta property="og:description" content="This page does not exist" />
 
     <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
+    <link rel="stylesheet" href="/assets/root.css">
 </head>
 <body>
     <div class="container">
@@ -26,15 +27,6 @@
 </html>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-:root {
-    --v-background: #22252B;
-    --v-background-alt: #1B1D22;
-    --v-background-soft: #292C33;
-    --v-background-mute: #343841;
-    --v-background-accent: #5555ff;
-    --v-background-accent-darken: #6666ff;
-}
-
 body {
     background: var(--v-background);
     margin-top: 17%;
@@ -42,12 +34,12 @@ body {
 }
 
 i {
-    color: white;
+    color: var(--v-primary-natural);
     font-size: 90px;
 }
 
 .container {
-    color: white;
+    color: var(--v-primary-natural);
     text-align: center;
     font-weight: bold;
     font-family: Inter;
@@ -64,12 +56,12 @@ i {
 
 .button {
     text-decoration: none;
-    color: white;
+    color: var(--v-primary-natural);
 }
 
 .button.main {
-    background: var(--v-background-accent);
-    border: 3px solid var(--v-background-accent-darken);
+    background: var(--v-primary-accent);
+    border: 3px solid var(--v-primary-accent-alt);
     padding: .2em 1em;
     border-radius: 100vmax;
     transition: all .4s ease;
@@ -86,8 +78,8 @@ i {
 }
 
 .button.main:hover {
-    background: var(--v-background-accent-darken);
-    border: 3px solid var(--v-background-accent-darken);
+    background: var(--v-primary-accent-alt);
+    border: 3px solid var(--v-primary-accent-alt);
 }
     
 .button.alt:hover {
