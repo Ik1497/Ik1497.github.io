@@ -9,5 +9,9 @@ input {
 label {
     font-size: 20px;
 }
+input[type=color] {
+    height: 3em;
+    padding: 0;
+}
 </style>
 `);

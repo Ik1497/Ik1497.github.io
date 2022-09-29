@@ -25,10 +25,14 @@
 </head>
 <body>
     <form>
-        <label for="text">Font Size</label>
-        <input onblur="onBlur()" type="text" id="fontSize" value="24px" placeholder="24px"><br>
-        <label for="text">Background Color</label>
-        <input onblur="onBlur()" type="text" id="backgroundColor" value="#000000" placeholder="#000000"><br>
+        <div>
+            <label for="text" class="mdi mdi-format-annotation-plus"> Font Size</label>
+            <input onblur="onBlur()" onfocus="onBlur()" type="text" id="fontSize" value="24px" placeholder="24px"><br>
+        </div>
+        <div>
+            <label for="text" class="mdi mdi-format-color-fill"> Background Color</label>
+            <input onblur="onBlur()" onfocus="onBlur()" type="color" id="backgroundColor" value="#141414"><br>
+        </div>
     </form>
     <pre><code id="widgetUrl" class="language-text">
         https://ik1497.github.io/Files/Scoreboard.html?fontSize=24px&backgroundColor=#000000
@@ -37,6 +41,8 @@
 <script src="/assets/footer.js"></script>
 </html>
 <script src="/assets/widget-maker.js"></script>
+<style>
+</style>
 <script>
 function onBlur() {
     var fontSize = document.getElementById('fontSize').value;

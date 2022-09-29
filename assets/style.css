@@ -44,11 +44,12 @@
     padding-left: 16em;
     padding-right: .5em;
     font-family: var(--v-font-family);
-    font-size: 16px;
+    font-size: 1em;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.87);
     background-color: #22252b;
     overflow: hidden visible;
+    margin-bottom: 1.5em;
   }
   @media (min-width: 50em) {
     body {
@@ -84,97 +85,14 @@
     padding: 0;
     color: #777;
   }
-  /* header.main-header {
-    background: var(--v-secondary-base);
-    width: 100%;
-    position: fixed;
-    padding: 0;
-    margin: 0;
-  }
-  header.main-header img {
-    width: 32px;
-  } */
-  address {
-    margin-top: 1em;
-    padding-top: 5em;
-    font-size: 13px;
-    display: flex;
-    justify-content: right;
-   }
-   div.text1 {
-    padding-right: 10px;
-    border: thin dotted;
-    padding: 7px;
-   }
-   div.text2 {
-    padding-left: 10px;
-    border: thin dotted;
-    padding: 7px;
-   }
-   a.address-name-link {
-    text-decoration: underline;
-    color: lightblue;
-    padding: 0px;
-    border: 0px;
-    transition: all 0.3s;
-   }
-   a.address-name-link:hover {
-    text-decoration: underline;
-    color: #007FFF;
-    background: #1b1d22;
-    padding: 2px 5px;
-    border: 1px solid #555;
-    border-radius: 30px;
-    transition: all 0.3s;
-   }
-   h2.overige {
-    border-bottom: 2px dotted #555;
-    }
-  .tabler, .tabler th, .tabler td {
-    border: none;
-    text-align: left;
-    padding: 8px;
-  }
-  tr.table-top-row {
-    background-color: #1b1d22;
-    color: white;
-  }
-  .tabler {
-      margin-top: 20px;
-      margin-bottom: 40px;
-      border-collapse: collapse;
-      border-spacing: 0;
-      background-color: #3b3b3b;
-      width: 100%;
-      color: #000;
-  }
-  table {
-      display: table;
-      border-collapse: separate;
-      box-sizing: border-box;
-      text-indent: initial;
-      border-spacing: 2px;
-      border-color: grey;
-  }
-  .tabler tbody tr:nth-child(even) {
-    background-color: #2d2d2d;
-}
-.tabler tr {
-  color: white;
-}
-.tabler:has(tr:hover) tr:not(:hover) {
-  transition: all 350ms ease!important;
-  color: #bbb;
-}
-.tabler > tr {
-  transition: all 350ms ease!important;
-}
+
 /* Navbar */
 ul.navbar > details > summary {
   background: #1b1d22;
   border: 1px solid var(--v-secondary-base);
   transition: all 0.3s;
 }
+
 ul.navbar {
   list-style-type: none;
   padding: 0;
@@ -187,31 +105,38 @@ ul.navbar {
   position: fixed;
   height: 100%;
 }
+
 ul.navbar li {
   background: #1b1d22;
   margin-top: 0em;
   padding: 0.5em;
   transition: all 0.3s;
 }
+
 ul.navbar li:hover {
   box-shadow: #000 0 0 8px;
   transition: all 0.3s;
 }
+
 ul.navbar > a > li.mdi::before {
   margin-right: 0.4em;
 }
+
 ul.navbar a {
   text-decoration: none; 
   color: #fff;
   transition: all 0.3s;
 }
+
 .navbar:has(a:hover) a:not(:hover) {
   opacity: 0.5;
   transition: all 350ms ease!important;
 }
+
 .navbar > a {
   transition: all 350ms ease!important;
 }
+
 ul.navbar > details > summary {
   background: #1b1d22;
   padding: 0.5em;
@@ -219,9 +144,11 @@ ul.navbar > details > summary {
   transition: all 0.3s;
   color: white;
 }
+
 ul.navbar > details > summary:first-of-type {
   list-style-type: none;
 }
+
 ul.navbar > details > summary::after {
   font-family: "Material Design Icons";
   content: "\F0704";
@@ -229,6 +156,7 @@ ul.navbar > details > summary::after {
   right: .3em;
   transform: translateY(20%);
 }
+
 ul.navbar > details[open] > summary::after {
   font-family: "Material Design Icons";
   content: "\F06F2";
@@ -236,28 +164,35 @@ ul.navbar > details[open] > summary::after {
   right: .3em;
   transform: translateY(20%);
 }
+
 ul.navbar > details[open] > summary {
   border-bottom: 0.1em solid #555;
   transition: box-shadow 0.3s;
 }
+
 ul.navbar > details > summary:hover {
   box-shadow: #000 0 0 8px;
   transition: box-shadow 0.3s;
 }
+
 ul.navbar > details > a > li.mdi::before {
   margin-right: 0.4em;
 }
+
 ul.navbar > details {
   cursor: pointer;
 }
+
 ul.navbar > details > a > li {
   background: #333;
   padding: 0.5em;
   transition: all 0.3s;
 }
+
 ul.navbar hr {
   margin: 0;
 }
+
 @media (max-width: 50em) {
   ul.navbar {
     position: unset;
@@ -267,43 +202,47 @@ ul.navbar hr {
     margin-bottom: .5em;
     height: fit-content;
   }
+
   ul.navbar li {
     border: none;
   }
+
   ul.navbar > details > summary {
     border-right: none;
   }
+
   ul.navbar > details > summary::after {
     right: .9em;
   }
+  
   ul.navbar > details[open] > summary::after {
     right: .9em;
   }
 }
 /* Animations */
 @keyframes nav-load {
-0% {
-  transform: translateX(-100%);
-  opacity: 0%;
-  filter: blur(5px);
-}
-100% {
-  transform: translateX(0);
-  opacity: 100%;
-  filter: blur(0px);
-}
+  0% {
+    transform: translateX(-100%);
+    opacity: 0%;
+    filter: blur(5px);
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 100%;
+    filter: blur(0px);
+  }
 }
 @keyframes button-grid-load {
-0% {
-  transform: translateY(40%);
-  opacity: 0%;
-  filter: blur(5px);
-}
-100% {
-  transform: translateY(0%);
-  opacity: 100%;
-  filter: blur(0px);
-}
+  0% {
+    transform: translateY(40%);
+    opacity: 0%;
+    filter: blur(5px);
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 100%;
+    filter: blur(0px);
+  }
 }
 @keyframes footer-load {
   0% {
@@ -313,7 +252,7 @@ ul.navbar hr {
   100% {
     scale: normal;
   }
-  }
+}
 /* HTML Element Overides */
 blockquote.is-warning {
   background-color: var(--v-blockquote-is-warning-base)!important;
@@ -409,6 +348,24 @@ blockquote {
   margin: 1rem 0rem;
   font-family: var(--v-blockquote-ff);
 }
+
+/* Headers */
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-block: .5em;
+}
+
+h3, h4, h5, h6 {
+  font-size: 20px;
+}
+
+/* Other */
+
 code, var, samp {
   font-size: .9em;
   background: rgba(0,0,0,.2);
