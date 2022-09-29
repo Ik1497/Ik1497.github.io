@@ -10,7 +10,7 @@ label {
     font-size: 20px;
 }
 input[type=color] {
-    height: 3em;
+    height: 3.5em;
     padding: 0;
 }
 </style>
