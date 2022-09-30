@@ -17,10 +17,20 @@
     --v-primary-natural-lighten-variant: #999;
     --v-primary-natural-darken: rgba(255, 255, 255, 0.2);
 
+    --v-primary-natural-dark: rgba(0, 0, 0, 0.87);
+    --v-primary-natural-dark-light: rgba(0, 0, 0, 0.6);
+    --v-primary-natural-dark-lighten: rgba(0, 0, 0, 0.4);
+    --v-primary-natural-dark-lighten-variant: #666;
+    --v-primary-natural-dark-darken: rgba(0, 0, 0, 0.2);
+
     --v-color-discord: #5865F2;
     --v-color-twitch: #6441a5;
     --v-color-youtube: #ff0000;
-    --v-color-link: #0066FF;
+
+    --v-color-link: #0096ff;
+    --v-color-link-hover: #0066FF;
+
+    --v-color-code: #aac8e4;
 
     --v-blockquote-is-warning-base: #fcd25315;
     --v-blockquote-is-warning-color: #fcd253;
@@ -43,21 +53,21 @@
     --v-blockquote-code-border: #444;
     --v-blockquote-ff: Arial;
     --v-blockquote-border-radius: 12px;
-
-    --v-mobile-width: 50em;
   }
   :root:has(.theme-settings > [value="Light"]:checked) {
-    --v-background: #dddad4;
-    --v-background-alt: #e4e2dd;
-    --v-background-darken: #bdbab5;
-    --v-background-soft: #d6d3cc;
-    --v-background-mute: #cbc7be;
-    --v-background-light: #a39d8c;
-    --v-background-lighten: #7a7259;
+    --v-background: #ddd;
+    --v-background-alt: #e4e4e4;
+    --v-background-darken: #bdbdbd;
+    --v-background-soft: #d6d6d6;
+    --v-background-mute: #cbcbcb;
+    --v-background-light: #a3a3a3;
+    --v-background-lighten: #7a7a7a;
 
     --v-primary-natural: rgba(0, 0, 0, 0.87);
 
     --v-blockquote-is-warning-color: #ccaa43;
     --v-blockquote-is-success-color: #35a673;
     --v-blockquote-color: #555;
+
+    --v-color-code: #003266;
   }

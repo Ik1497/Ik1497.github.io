@@ -28,7 +28,7 @@
 </header>
 </head>
 <body>
- <ul class="button-grid list">
+ <ul class="button-grid">
     <a>
       <li>
         <i class="mdi mdi-scoreboard"></i>
@@ -76,14 +76,19 @@
     </a>
     <a>
       <li>
-        <i class="mdi mdi-rocket-launch"></i>
+        <i class="mdi mdi-delete"></i>
         <strong>
-          Launch Programs on Streamer.bot startup
+          Remove actions with hotkeys
           <em>Launch all your streamer.bot programs when opening streamer.bot!</em>
         </strong>
       </li>
     </a>
   </ul>
+  <select class="theme-settings" name="" id="themeSettings">
+    <option value="Dark">Dark Mode</option>
+    <option value="Light">Light Mode</option>
+    <option onmousemove="GoWMan()" value="GoWMan">GoWMan Mode</option>
+</select>
 </body>
 <script src="/assets/footer.js">
 var editor = "Ik";

@@ -336,9 +336,9 @@ h3, h4, h5, h6 {
 
 code, var, samp {
   font-size: .9em;
-  background: rgba(0,0,0,.2);
-  color: #aac8e4;
-  border: 1px solid rgba(0,0,0,.4);
+  background: var(--v-primary-natural-dark-darken);
+  color: var(--v-color-code);
+  border: 1px solid var(--v-primary-natural-dark-lighten);
   padding: 0 5px;
   font-family: Roboto Mono;
   font-weight: 400;
@@ -362,22 +362,19 @@ hr {
   margin-bottom: 1em;
   margin-top: 1em;
 }
+
 a {
-  color: #0096ff;
+  color: var(--v-color-link);
   text-decoration: none;
   transition: color .3s ease-in-out;
 }
+
 a:hover {
-  color: var(--v-color-link);
+  color: var(--v-color-link-hover);
   cursor: pointer;
   transition: color .3s ease-in-out;
 }
-a.link {
-  color: #0055ff!important;
-}
-a.link:hover {
-  color: #0096ff!important;
-}
+
 /* Header */
 h2 {
   font-size: 28px;
@@ -490,9 +487,10 @@ ul.footer-grid {
 ul.button-grid {
   padding: 0;
   display: grid;
-  gap: .5em;
+  gap: 2em .5em;
   margin: .8em 0em;
   grid-template-columns: repeat(auto-fit,minmax(450px,1fr));
+  margin-block: .5em 2em;
  }
  ul.list {
   grid-template-columns: 1fr;
@@ -506,16 +504,18 @@ ul.button-grid {
   padding: 10px 20px;
   font-weight: bold;
   font-size: 22px;
-  border: 2px solid var(--v-background-darken);
+  background: var(--v-background-soft);
   border-radius: var(--v-blockquote-border-radius);
   transition: all 500ms;
   display: flex;
   animation: button-grid-load 750ms ease-in-out;
+  height: 100%;
  }
  ul.button-grid li:hover {
   box-shadow: #000 0px 0px 20px;
   transition: all .3s;
-  border-color: #007FFF;
+  background: var(--v-background-light);
+  scale: 1.03;
  }
  ul.button-grid > a > li > img {
   margin: auto 1rem auto 0em;
@@ -532,6 +532,7 @@ ul.button-grid {
   display: flex;
   font-weight: 600!important;
   flex-direction: column;
+  margin: auto 0;
  }
  ul.button-grid li > strong > em {
   font-style: normal;
