@@ -14,22 +14,25 @@
     <link rel="stylesheet" href="/assets/root.css">
 </head>
 <body>
-    <div class="container">
-        <i class="mdi mdi-close-octagon"></i>
-        <div class="main-text">404</div>
-        <div class="bottom-text">This page doesn't exist</div>
-        <div class="buttons">
-          <a class="button alt" onclick="history.back()">Go Back</a>
-          <a href="/index.html" class="button main">Home</a>
-        </div>
-    </div>
+    <table>
+        <tr>
+            <td>
+                <i class="mdi mdi-close-octagon"></i>
+                <div class="main-text">404</div>
+                <div class="bottom-text">This page doesn't exist</div>
+                <div class="buttons">
+                <a class="button alt" onclick="history.back()">Go Back</a>
+                <a href="/index.html" class="button main">Home</a>
+                </div>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 body {
     background: var(--v-background);
-    margin-top: 17%;
     overflow: hidden;
 }
 
@@ -38,7 +41,13 @@ i {
     font-size: 90px;
 }
 
-.container {
+table {
+    height: 50vw;
+    width: 100%;
+    vertical-align: middle;
+}
+
+td {
     color: var(--v-primary-natural);
     text-align: center;
     font-weight: bold;
