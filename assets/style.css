@@ -98,7 +98,7 @@ header.main-header a.title p {
   margin-left: .5em;
   font-family: Montserrat;
   font-weight: 700;
-  color: white;
+  color: var(--v-primary-natural-white);
 }
 /* Navbar */
 ul.navbar > details > summary {

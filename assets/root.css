@@ -11,12 +11,14 @@
     --v-primary-accent: #8c75fa;
     --v-primary-accent-alt: #5430ff;
 
+    --v-primary-natural-white: rgba(255, 255, 255, 1);
     --v-primary-natural: rgba(255, 255, 255, 0.87);
     --v-primary-natural-light: rgba(255, 255, 255, 0.6);
     --v-primary-natural-lighten: rgba(255, 255, 255, 0.4);
     --v-primary-natural-lighten-variant: #999;
     --v-primary-natural-darken: rgba(255, 255, 255, 0.2);
 
+    --v-primary-natural-dark-black: rgba(0, 0, 0, 1);
     --v-primary-natural-dark: rgba(0, 0, 0, 0.87);
     --v-primary-natural-dark-light: rgba(0, 0, 0, 0.6);
     --v-primary-natural-dark-lighten: rgba(0, 0, 0, 0.4);
@@ -64,7 +66,10 @@
     --v-background-lighten: #7a7a7a;
 
     --v-primary-natural: rgba(0, 0, 0, 0.87);
+    --v-primary-natural-white: rgba(0, 0, 0, 1);
+
     --v-primary-natural-dark: rgba(255, 255, 255, 0.87);
+    --v-primary-natural-dark-black: rgba(255, 255, 255, 1);
 
     --v-blockquote-is-warning-color: #ccaa43;
     --v-blockquote-is-success-color: #35a673;
