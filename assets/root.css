@@ -54,7 +54,7 @@
     --v-blockquote-ff: Arial;
     --v-blockquote-border-radius: 12px;
   }
-  :root:has(.theme-settings > [value="Light"]:checked) {
+  .darkmode {
     --v-background: #ddd;
     --v-background-alt: #e4e4e4;
     --v-background-darken: #bdbdbd;

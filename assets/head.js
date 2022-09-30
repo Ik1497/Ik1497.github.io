@@ -9,11 +9,18 @@ document.write(`
 <meta name="theme-color" content="#B80086">
 <script src="/assets/navigation.js"></script>
 <script src="/assets/header.js"></script>
+<script src="/assets/theme.js"></script>
 <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
 
 <script src="/assets/Prism/prism.js"></script>
 <link rel="stylesheet" href="/assets/Prism/prism.css">
 <link rel="stylesheet" href="/assets/style.css">
+
+<header class="main-header">
+<div class="buttons">
+    <a id="dark-mode-toggle" class="dark-mode-toggle" onclick="themeSelector()"><i class="mdi mdi-moon-waning-crescent"></i></a>
+</div>
+</header>
 `);
 
 function GoWMan() {
