@@ -59,12 +59,17 @@ header.page-info > p.description {
 header.main-header {
   background: var(--v-background-soft);
   width: 100%;
-  height: 2vw;
+  height: 2.5vw;
   margin: auto;
   position: fixed;
 }
 
-header.main-header > div.buttons a {
+div.header-main-contents {
+  display: flex;
+  align-items: center;
+}
+
+header.main-header div.buttons a {
   position: absolute;
   right: 0;
   font-size: 1.5vw;
@@ -72,9 +77,28 @@ header.main-header > div.buttons a {
   padding: .25vw;
 }
 
-header.main-header > div.buttons .dark-mode-toggle {
-  color: #000;
-  background-color: #fff;
+header.main-header div.buttons .dark-mode-toggle {
+  color: var(--v-primary-natural);
+  background-color: var(--v-primary-natural-dark);
+}
+
+header.main-header a.title {
+  display: flex;
+  align-items: center;
+  margin-left: .3vw;
+  position: absolute;
+  top: 0;
+}
+
+header.main-header a.title img {
+  width: 2vw;
+}
+
+header.main-header a.title p {
+  margin-left: .3vw;
+  font-family: Montserrat;
+  font-weight: 700;
+  color: white;
 }
 /* Navbar */
 ul.navbar > details > summary {

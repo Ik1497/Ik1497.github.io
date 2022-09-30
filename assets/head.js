@@ -17,8 +17,14 @@ document.write(`
 <link rel="stylesheet" href="/assets/style.css">
 
 <header class="main-header">
+<div class="header-main-contents">
+<a class="title">
+    <img src="/assets/favicon.ico" alt="favicon">
+    <p>Streamer.bot Actions</p>
+</a>
 <div class="buttons">
-    <a id="dark-mode-toggle" class="dark-mode-toggle" onclick="themeSelector()"><i class="mdi mdi-moon-waning-crescent"></i></a>
+    <a id="dark-mode-toggle" class="dark-mode-toggle" onclick="themeSelector()"><i class="mdi mdi-invert-colors"></i></a>
+</div>
 </div>
 </header>
 `);
