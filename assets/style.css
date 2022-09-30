@@ -456,6 +456,7 @@ tbody tr:nth-child(even) td {
 
 table td {
   border: 1px solid var(--v-background-darken);
+  color: var(--v-primary-natural-white);
 }
 
 .table-right {text-align: right;}
