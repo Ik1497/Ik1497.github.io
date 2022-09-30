@@ -7,11 +7,21 @@ document.write(`
 <meta property="og:image" content="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
 <link rel="icon" href="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
 <meta name="theme-color" content="#B80086">
-<link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/navigation.js"></script>
 <script src="/assets/header.js"></script>
 <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
 
 <script src="/assets/Prism/prism.js"></script>
 <link rel="stylesheet" href="/assets/Prism/prism.css">
+<link rel="stylesheet" href="/assets/style.css">
 `);
+
+function GoWMan() {
+    var themeSettings = document.getElementById("themeSettings").value;
+    console.log(themeSettings);
+    if (themeSettings === "GoWMan") {
+    document.write(`
+    <link rel="stylesheet" href="/assets/style.css">
+    `);
+    }
+}
