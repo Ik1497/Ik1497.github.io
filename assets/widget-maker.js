@@ -5,10 +5,9 @@ input {
     padding: 1em;
     margin-top: .5em;
     margin-bottom: .5em;
+    border-radius: 0px;
 }
-label {
-    font-size: 20px;
-}
+
 input[type=color] {
     height: 3.5em;
     padding: 0;
