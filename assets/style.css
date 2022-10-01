@@ -21,18 +21,17 @@ main {
   padding-right: .5em;
   padding-top: 3em;
 }
+
 @media (min-width: 50em) {
-  main {
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-}
-@media (max-width: 50em) {
   body {
     padding-top: .5em;
     padding-bottom: 1em;
     padding-left: .5em;
     padding-right: .5em;
+  }
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
   }
 }
 header.page-info {
@@ -100,6 +99,14 @@ header.main-header a.title p {
   font-weight: 700;
   color: var(--v-primary-natural-white);
 }
+
+@media (max-width: 50em) {
+  header.main-header {
+    position: relative;
+  }
+  body, main { padding: 0; }
+}
+
 /* Navbar */
 ul.navbar > details > summary {
   background: var(--v-background-alt);
@@ -117,7 +124,7 @@ ul.navbar {
   animation: nav-load 1s ease-in-out;
   background: var(--v-background-alt);
   position: fixed;
-  height: calc(100% - 3em);
+  height: calc(100% - 3.5em);
 }
 
 ul.navbar li {

@@ -7,14 +7,6 @@ document.write(`
 <meta property="og:image" content="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
 <link rel="icon" href="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
 <meta name="theme-color" content="#B80086">
-<script src="/assets/navigation.js"></script>
-<script src="/assets/header.js"></script>
-<script src="/assets/theme.js"></script>
-<link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
-
-<script src="/assets/Prism/prism.js"></script>
-<link rel="stylesheet" href="/assets/Prism/prism.css">
-<link rel="stylesheet" href="/assets/style.css">
 
 <header class="main-header">
 <div class="header-main-contents">
@@ -27,6 +19,14 @@ document.write(`
 </div>
 </div>
 </header>
+
+<script src="/assets/navigation.js"></script>
+<script src="/assets/theme.js"></script>
+<link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
+
+<script src="/assets/Prism/prism.js"></script>
+<link rel="stylesheet" href="/assets/Prism/prism.css">
+<link rel="stylesheet" href="/assets/style.css">
 `);
 
 function GoWMan() {
