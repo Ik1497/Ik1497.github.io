@@ -19,7 +19,7 @@ body {
 main {
   padding-left: 16em;
   padding-right: .5em;
-  padding-top: 3em;
+  padding-top: 4em;
 }
 
 @media (min-width: 50em) {
@@ -565,7 +565,8 @@ ul.button-grid {
   animation: button-grid-load 750ms ease-in-out;
   height: 100%;
  }
- ul.button-grid li:hover {
+ ul.button-grid li:hover,
+ ul.button-grid li:focus {
   box-shadow: #000 0px 0px 20px;
   transition: all .3s;
   background: var(--v-background-light);
