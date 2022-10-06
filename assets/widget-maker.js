@@ -6,6 +6,7 @@ input {
     margin-top: .5em;
     margin-bottom: .5em;
     border-radius: 0px;
+    outline: 0;
 }
 
 input[type=color] {

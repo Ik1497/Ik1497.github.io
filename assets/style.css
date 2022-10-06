@@ -61,6 +61,9 @@ header.main-header {
   height: 3em;
   margin: auto;
   position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
 }
 
 div.header-main-contents {
@@ -158,58 +161,6 @@ ul.navbar a {
   transition: all 350ms ease!important;
 }
 
-ul.navbar > details > summary {
-  background: var(--v-background-alt);
-  padding: 0.5em;
-  margin-top: 0em;
-  transition: all 0.3s;
-  color: var(--v-primary-natural);
-}
-
-ul.navbar > details > summary:first-of-type {
-  list-style-type: none;
-}
-
-ul.navbar > details > summary::after {
-  font-family: "Material Design Icons";
-  content: "\F0704";
-  position: absolute;
-  right: .3em;
-  transform: translateY(20%);
-}
-
-ul.navbar > details[open] > summary::after {
-  font-family: "Material Design Icons";
-  content: "\F06F2";
-  position: absolute;
-  right: .3em;
-  transform: translateY(20%);
-}
-
-ul.navbar > details[open] > summary {
-  border-bottom: 0.1em solid #555;
-  transition: box-shadow 0.3s;
-}
-
-ul.navbar > details > summary:hover {
-  box-shadow: #000 0 0 8px;
-  transition: box-shadow 0.3s;
-}
-
-ul.navbar > details > a > li.mdi::before {
-  margin-right: 0.4em;
-}
-
-ul.navbar > details {
-  cursor: pointer;
-}
-
-ul.navbar > details > a > li {
-  background: var(--v-background-darken);
-  padding: 0.5em;
-  transition: all 0.3s;
-}
-
 ul.navbar hr {
   margin: 0;
 }
@@ -240,6 +191,55 @@ ul.navbar hr {
     right: .9em;
   }
 }
+
+ul.navbar .navbar-dropdown .navbar-dropdown-title {
+  background: var(--v-background-alt);
+  padding: 0.5em;
+  margin-top: 0em;
+  transition: all 0.3s;
+  color: var(--v-primary-natural);
+}
+
+ul.navbar .navbar-dropdown .navbar-dropdown-title::after {
+  font-family: "Material Design Icons";
+  content: "\F0704";
+  position: absolute;
+  right: .3em;
+  transform: translateY(20%);
+}
+
+ul.navbar .navbar-dropdown.active .navbar-dropdown-title::after {
+  font-family: "Material Design Icons";
+  content: "\F06F2";
+  position: absolute;
+  right: .3em;
+  transform: translateY(20%);
+}
+
+ul.navbar .navbar-dropdown.active .navbar-dropdown-title {
+  border-bottom: 0.1em solid #555;
+  transition: box-shadow 0.3s;
+}
+
+ul.navbar .navbar-dropdown .navbar-dropdown-title:hover {
+  box-shadow: #000 0 0 8px;
+  transition: box-shadow 0.3s;
+}
+
+ul.navbar .navbar-dropdown > a > li.mdi::before {
+  margin-right: 0.4em;
+}
+
+ul.navbar .navbar-dropdown {
+  cursor: pointer;
+}
+
+ul.navbar .navbar-dropdown > a > li {
+  background: var(--v-background-darken);
+  padding: 0.5em;
+  transition: all 0.3s;
+}
+
 /* Animations */
 @keyframes nav-load {
   0% {
@@ -281,17 +281,10 @@ blockquote.is-warning {
   border-color: var(--v-blockquote-is-warning-color)!important;
   border: 1px solid!important;
 }
+
 blockquote.is-warning * {
   color: var(--v-blockquote-is-warning-color)!important;
 }
-blockquote.is-warning code {
-  color: var(--v-blockquote-is-warning-color)!important;
-}
-blockquote.is-warning strong {
-  border-color: var(--v-blockquote-is-warning-color)!important;
-}
-
-/* < --- > */
 
 blockquote.is-info {
   background-color: var(--v-blockquote-is-info-base)!important;
@@ -299,17 +292,10 @@ blockquote.is-info {
   border-color: var(--v-blockquote-is-info-color)!important;
   border: 1px solid!important;
 }
+
 blockquote.is-info * {
   color: var(--v-blockquote-is-info-color)!important;
 }
-blockquote.is-info code {
-  color: var(--v-blockquote-is-info-color)!important;
-}
-blockquote.is-info strong {
-  border-color: var(--v-blockquote-is-info-color)!important;
-}
-
-/* < --- > */
 
 blockquote.is-success {
   background-color: var(--v-blockquote-is-success-base)!important;
@@ -317,17 +303,10 @@ blockquote.is-success {
   border-color: var(--v-blockquote-is-success-color)!important;
   border: 1px solid!important;
 }
+
 blockquote.is-success * {
   color: var(--v-blockquote-is-success-color)!important;
 }
-blockquote.is-success code {
-  color: var(--v-blockquote-is-success-color)!important;
-}
-blockquote.is-success strong {
-  border-color: var(--v-blockquote-is-success-color)!important;
-}
-
-/* < --- > */
 
 blockquote.is-danger {
   background-color: var(--v-blockquote-is-danger-base)!important;
@@ -335,15 +314,16 @@ blockquote.is-danger {
   border-color: var(--v-blockquote-is-danger-color)!important;
   border: 1px solid!important;
 }
+
 blockquote.is-danger * {
   color: var(--v-blockquote-is-danger-color)!important;
 }
-blockquote.is-danger code {
-  color: var(--v-blockquote-is-danger-color)!important;
-}
-blockquote.is-danger strong {
-  border-color: var(--v-blockquote-is-danger-color)!important;
-}
+
+blockquote.is-warning.variant .blockquote-title { background-color: var(--v-blockquote-is-warning-base); }
+blockquote.is-info.variant .blockquote-title { background-color: var(--v-blockquote-is-info-base); }
+blockquote.is-success.variant .blockquote-title { background-color: var(--v-blockquote-is-success-base); }
+blockquote.is-danger.variant .blockquote-title { background-color: var(--v-blockquote-is-danger-base); }
+blockquote.variant .blockquote-title { background-color: var(--v-blockquote-base); }
 
 /* < --- > */
 
@@ -354,20 +334,34 @@ blockquote {
   border: 1px solid var(--v-blockquote-color)!important;
   box-shadow: 0 0 2px 0 var(--v-blockquote-box-shadow)!important;
   font-size: 20px;
-}
-blockquote * {
-  color: var(--v-blockquote-color)!important;
-}
-blockquote code {
-  color: var(--v-blockquote-color)!important;
-}
-blockquote strong {
-  border-bottom: 0px solid var(--v-blockquote-color)!important;
-}
-blockquote {
   padding: .5rem!important;
   margin: 1rem 0rem;
   font-family: var(--v-blockquote-ff);
+  position: relative;
+}
+
+blockquote * {
+  color: var(--v-blockquote-color)!important;
+}
+
+blockquote .blockquote-title {
+  font-weight: bold;
+}
+
+blockquote.variant {
+  margin-top: 2em;
+}
+
+blockquote.variant .blockquote-title {
+  font-weight: bold;
+  position: absolute;
+  top: -1.2em;
+  background-color: currentColor;
+  /* border: 1px solid currentColor; */
+  padding-inline: 1em;
+  border-bottom: none;
+  border-radius: var(--v-blockquote-border-radius) var(--v-blockquote-border-radius) 0 0;
+  background-color: var(--v-blockquote-base);
 }
 
 /* Headers */
@@ -565,8 +559,7 @@ ul.button-grid {
   animation: button-grid-load 750ms ease-in-out;
   height: 100%;
  }
- ul.button-grid li:hover,
- ul.button-grid li:focus {
+ ul.button-grid li:hover {
   box-shadow: #000 0px 0px 20px;
   transition: all .3s;
   background: var(--v-background-light);
