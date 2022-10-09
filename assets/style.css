@@ -3,10 +3,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url(/assets/root.css);
+/* ==========
+   HTML Styling
+   ========== */
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #777;
+  border-radius: 20px;
+  border: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+::-webkit-scrollbar-track {
+  background: #333;
+}
+
 * {
-   padding: 0;
-   margin: 0;
-  }
+  padding: 0;
+  margin: 0;
+}
 body {
   font-family: var(--v-font-family);
   font-size: 1em;
@@ -22,6 +47,10 @@ main {
   padding-top: 4em;
 }
 
+/* ==========
+   Else
+   ========== */
+  
 @media (min-width: 50em) {
   body {
     padding-top: .5em;
@@ -581,12 +610,16 @@ ul.button-grid {
   font-weight: 600!important;
   flex-direction: column;
   margin: auto 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
  }
  ul.button-grid li > strong > em {
   font-style: normal;
   font-weight: 400;
   color: #888;
   font-size: .6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
  }
  ul.grid-list {
   list-style: none;

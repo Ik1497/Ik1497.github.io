@@ -22,6 +22,7 @@ document.write(`
 
 <script src="/assets/navigation.js"></script>
 <script src="/assets/theme.js"></script>
+<script src="/assets/main.js"></script>
 <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
 
 <script src="/assets/Prism/prism.js"></script>

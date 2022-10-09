@@ -2,7 +2,6 @@ var date;
 var time;
 
 var currentPage = window.location.pathname;
-console.log ( currentPage );
 document.write(`
 <hr>
 <footer class="footer-info">
