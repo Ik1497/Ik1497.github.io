@@ -87,10 +87,9 @@ header.page-info > p.description {
 header.main-header {
   background: var(--v-background-soft);
   width: 100%;
-  height: 3em;
-  margin: auto;
+  height: 2.5em;
+  padding-top: 1em;
   position: fixed;
-  z-index: 100;
   top: 0;
   left: 0;
 }
@@ -98,19 +97,7 @@ header.main-header {
 div.header-main-contents {
   display: flex;
   align-items: center;
-}
-
-header.main-header div.buttons a {
-  position: absolute;
-  right: 0;
-  font-size: 2em;
-  border-radius: 100vmax;
-  padding: .25vw;
-}
-
-header.main-header div.buttons .dark-mode-toggle {
-  color: var(--v-primary-natural);
-  background-color: var(--v-primary-natural-dark);
+  position: relative;
 }
 
 header.main-header a.title {
@@ -119,6 +106,7 @@ header.main-header a.title {
   margin-left: .5em;
   position: absolute;
   top: 0;
+  bottom: 0;
 }
 
 header.main-header a.title img {
@@ -130,6 +118,56 @@ header.main-header a.title p {
   font-family: Montserrat;
   font-weight: 700;
   color: var(--v-primary-natural-white);
+}
+
+header.main-header > div.header-main-contents > ul.nav-lists {
+  position: absolute;
+  right: 1em;
+  top: 0;
+  list-style: none;
+  color: var(--v-primary-natural-white);
+  text-align: center;
+}
+
+header.main-header > div.header-main-contents > ul.nav-lists > li:nth-child(1) {
+  background: var(--v-background-alt);
+  outline: 1px solid var(--v-background-light);
+  border-radius: .4em;
+  padding: .3em 2em;
+}
+
+header.main-header > div.header-main-contents > ul.nav-lists > li:not(:nth-child(1)) {
+  background: var(--v-background-alt);
+  display: none;
+}
+
+header.main-header > div.header-main-contents > ul.nav-lists > li:not(:nth-child(1)) > a {
+  color: var(--v-primary-natural)!important;
+}
+
+header.main-header > div.header-main-contents > ul.nav-lists > li:not(:nth-child(1)) > a:hover {
+  color: var(--v-primary-natural-light)!important;
+}
+
+header.main-header > div.header-main-contents > ul.nav-lists:hover > li {
+  outline: none;
+  border-radius: 0;
+}
+
+header.main-header > div.header-main-contents > ul.nav-lists:hover {
+  outline: 1px solid var(--v-background-light);
+  border-radius: .4em;
+  cursor: pointer;
+}
+
+header.main-header > div.header-main-contents > ul.nav-lists:hover > li:not(:nth-child(1)) {
+  background: var(--v-background-alt);
+  display: inherit;
+  padding-top: .3em;
+}
+
+header.main-header > div.header-main-contents > ul.nav-lists:hover > li:nth-child(1) {
+  border-bottom: 1px solid var(--v-primary-natural-white);
 }
 
 @media (max-width: 50em) {
@@ -348,11 +386,11 @@ blockquote.is-danger * {
   color: var(--v-blockquote-is-danger-color)!important;
 }
 
-blockquote.is-warning.variant .blockquote-title { background-color: var(--v-blockquote-is-warning-base); }
-blockquote.is-info.variant .blockquote-title { background-color: var(--v-blockquote-is-info-base); }
-blockquote.is-success.variant .blockquote-title { background-color: var(--v-blockquote-is-success-base); }
-blockquote.is-danger.variant .blockquote-title { background-color: var(--v-blockquote-is-danger-base); }
-blockquote.variant .blockquote-title { background-color: var(--v-blockquote-base); }
+blockquote.is-warning.variant .blockquote-title { background-color: var(--v-blockquote-is-warning-color); }
+blockquote.is-info.variant .blockquote-title { background-color: var(--v-blockquote-is-info-color); }
+blockquote.is-success.variant .blockquote-title { background-color: var(--v-blockquote-is-success-color); }
+blockquote.is-danger.variant .blockquote-title { background-color: var(--v-blockquote-is-danger-color); }
+blockquote.variant .blockquote-title { background-color: var(--v-blockquote-color); }
 
 /* < --- > */
 
@@ -386,7 +424,7 @@ blockquote.variant .blockquote-title {
   position: absolute;
   top: -1.2em;
   background-color: currentColor;
-  /* border: 1px solid currentColor; */
+  color: var(--v-primary-natural-white)!important;
   padding-inline: 1em;
   border-bottom: none;
   border-radius: var(--v-blockquote-border-radius) var(--v-blockquote-border-radius) 0 0;

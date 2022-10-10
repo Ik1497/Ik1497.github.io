@@ -14,9 +14,12 @@ document.write(`
     <img src="/assets/favicon.ico" alt="favicon">
     <p>Streamer.bot Actions</p>
 </a>
-<div class="buttons">
-    <a id="dark-mode-toggle" class="dark-mode-toggle" onclick="themeSelector()"><i class="mdi mdi-invert-colors"></i></a>
-</div>
+<ul class="nav-lists one">
+<li>Socials</li>
+<li><a href="/Socials/Discord.html">Discord</a></li>
+<li><a href="/Socials/Issues.html">Issues</a></li>
+<li><a href="/Socials/Pull-Requests.html">Pull Requests</a></li>
+<ul>
 </div>
 </header>
 
@@ -39,3 +42,6 @@ function GoWMan() {
     `);
     }
 }
+{/* <div class="buttons">
+    <a id="dark-mode-toggle" class="dark-mode-toggle" onclick="themeSelector()"><i class="mdi mdi-invert-colors"></i></a>
+</div> */}
