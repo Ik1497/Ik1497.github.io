@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url(/assets/root.css);
+@import url(/assets/header.css);
 /* ==========
    HTML Styling
    ========== */
@@ -82,99 +83,6 @@ header.page-info > p.description {
   margin: 0;
   padding: 0;
   color: #777;
-}
-
-header.main-header {
-  background: var(--v-background-soft);
-  width: 100%;
-  height: 2.5em;
-  padding-top: 1em;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-div.header-main-contents {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-header.main-header a.title {
-  display: flex;
-  align-items: center;
-  margin-left: .5em;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-}
-
-header.main-header a.title img {
-  width: 2.5em;
-}
-
-header.main-header a.title p {
-  margin-left: .5em;
-  font-family: Montserrat;
-  font-weight: 700;
-  color: var(--v-primary-natural-white);
-}
-
-header.main-header > div.header-main-contents > ul.nav-lists {
-  position: absolute;
-  right: 1em;
-  top: 0;
-  list-style: none;
-  color: var(--v-primary-natural-white);
-  text-align: center;
-}
-
-header.main-header > div.header-main-contents > ul.nav-lists > li:nth-child(1) {
-  background: var(--v-background-alt);
-  outline: 1px solid var(--v-background-light);
-  border-radius: .4em;
-  padding: .3em 2em;
-}
-
-header.main-header > div.header-main-contents > ul.nav-lists > li:not(:nth-child(1)) {
-  background: var(--v-background-alt);
-  display: none;
-}
-
-header.main-header > div.header-main-contents > ul.nav-lists > li:not(:nth-child(1)) > a {
-  color: var(--v-primary-natural)!important;
-}
-
-header.main-header > div.header-main-contents > ul.nav-lists > li:not(:nth-child(1)) > a:hover {
-  color: var(--v-primary-natural-light)!important;
-}
-
-header.main-header > div.header-main-contents > ul.nav-lists:hover > li {
-  outline: none;
-  border-radius: 0;
-}
-
-header.main-header > div.header-main-contents > ul.nav-lists:hover {
-  outline: 1px solid var(--v-background-light);
-  border-radius: .4em;
-  cursor: pointer;
-}
-
-header.main-header > div.header-main-contents > ul.nav-lists:hover > li:not(:nth-child(1)) {
-  background: var(--v-background-alt);
-  display: inherit;
-  padding-top: .3em;
-}
-
-header.main-header > div.header-main-contents > ul.nav-lists:hover > li:nth-child(1) {
-  border-bottom: 1px solid var(--v-primary-natural-white);
-}
-
-@media (max-width: 50em) {
-  header.main-header {
-    position: relative;
-  }
-  body, main { padding: 0; }
 }
 
 /* Navbar */
