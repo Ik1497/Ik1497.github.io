@@ -673,6 +673,6 @@ ul.button-grid {
   padding: .6rem 1rem;
  }
 /* Utility Classes */
-.text--color-youtube {color: #ff0000!important}
-.text--color-twitch {color: #6441a5!important}
-.text--color-discord {color: #5865f2!important}
+.text--youtube {color: #ff0000!important}
+.text--twitch {color: #6441a5!important}
+.text--discord {color: #5865f2!important}
