@@ -8,13 +8,17 @@ document.write(`
 <link rel="icon" href="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
 <meta name="theme-color" content="#B80086">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script src="/assets/navigation.js"></script>
 <script src="/assets/header.js"></script>
 <script src="/assets/theme.js"></script>
 <script src="/assets/main.js"></script>
 <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
 
-<script src="/assets/Prism/prism.js"></script>
-<link rel="stylesheet" href="/assets/Prism/prism.css">
+<script src="/assets/node_modules/@prism/prism.js"></script>
+<link rel="stylesheet" href="/assets/node_modules/@prism/prism.css">
 <link rel="stylesheet" href="/assets/style.css">
+
+<script src="/assets/node_modules/@tilt.js/js/tilt.jquery.js"></script>
 `);

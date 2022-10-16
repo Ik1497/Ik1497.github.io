@@ -49,12 +49,12 @@ body {
     width: 100%;
     color: var(--v-primary-natural);
     text-decoration: none;
+    transform-style: preserve-3d;
 }
 
 .item-grid-item article:hover {
     border-color: var(--v-primary-accent);
     box-shadow: 0 0 10px 5px #555;
-    transform: scale(1.1);
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -66,6 +66,7 @@ body {
     height: 140px;
     background-color: var(--v-background-soft);
     transition: all 0.3s ease;
+    transform-style: preserve-3d;
 }
 
 .item-grid-item .icon {
@@ -78,12 +79,14 @@ body {
     width: 48px;
     height: 48px;
     font-size: 24px;
+    transform: translateZ(10px);
 }
 
 .item-grid-item .title {
     line-height: 24px;
     font-size: 16px;
     font-weight: 600;
+    transform: translateZ(8px);
 }
 
 .item-grid-item .details {
@@ -92,6 +95,7 @@ body {
     font-size: 14px;
     font-weight: 500;
     color: var(--v-primary-natural-lighten-variant);
+    transform: translateZ(4px);
 }
 
 /* Footer */

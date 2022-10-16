@@ -20,6 +20,9 @@
 <script src="/assets/theme.js"></script>
 <script src="/assets/header.js"></script>
 
+<script src="/assets/node_modules/@prism/prism.js"></script>
+<link rel="stylesheet" href="/assets/node_modules/@prism/prism.css">
+
 <link rel="stylesheet" href="/index.css">
 </head>
 <body>
@@ -50,42 +53,42 @@
   <h2>Recent Extensions</h2>
   <div class="item-grid-container">
     <div class="items-grid">
-      <a class="item-grid-item">
+      <a data-tilt class="item-grid-item">
         <article>
           <i class="icon mdi mdi-scoreboard"></i>
           <p class="title">Scoreboard</p>
           <p class="details">Widget for a live scorboard, used for when playing games and more!</p>
         </article>
       </a>
-      <a class="item-grid-item">
+      <a data-tilt class="item-grid-item">
         <article>
           <i class="icon mdi mdi-folder"></i>
           <p class="title">Create/Remove Files</p>
           <p class="details">Create/Remove files on your computer with ease!</p>
         </article>
       </a>
-      <a href="/Extensions/Time-Widget/" class="item-grid-item">
+      <a data-tilt href="/Extensions/Time-Widget/" class="item-grid-item">
         <article>
           <i class="icon mdi mdi-clock-outline"></i>
           <p class="title">Time Widget</p>
           <p class="details">Display your local time on stream!</p>
         </article>
       </a>
-      <a class="item-grid-item">
+      <a data-tilt class="item-grid-item">
         <article>
           <i class="icon mdi mdi-forum"></i>
           <p class="title">Post to Discord</p>
           <p class="details">All the ways to post stuff to Discord with webhooks!</p>
         </article>
       </a>
-      <a class="item-grid-item">
+      <a data-tilt class="item-grid-item">
         <article>
           <i class="icon mdi mdi-clipboard-outline"></i>
           <p class="title">Copy to clipboard</p>
           <p class="details">Copy variables and text from streamer.bot to your clipboard!</p>
         </article>
       </a>
-      <a class="item-grid-item">
+      <a data-tilt class="item-grid-item">
         <article>
           <i class="icon mdi mdi-rocket-launch"></i>
           <p class="title">Launch Programs on Streamer.bot startup</p>
@@ -97,5 +100,8 @@
   <footer>
     © 2022 Streamer.bot Actions. All rights reserved.<br>
   </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/assets/node_modules/@tilt.js/js/tilt.jquery.js"></script>
 </body>
 </html>
