@@ -1,79 +1,79 @@
 :root {
-    --v-font-family: Inter;
-    
-    --v-background: #22252B;
-    --v-background-alt: #1B1D22;
-    --v-background-darken: #1b1e24;
-    --v-background-soft: #292C33;
-    --v-background-mute: #343841;
-    --v-background-light: #5c6273;
-    --v-background-lighten: #858da6;
-    --v-primary-accent: #8c75fa;
-    --v-primary-accent-alt: #5430ff;
+  --v-font-family: Inter;
+  
+  --v-background: #22252B;
+  --v-background-alt: #1B1D22;
+  --v-background-darken: #131a31;
+  --v-background-soft: #292C33;
+  --v-background-mute: #343841;
+  --v-background-light: #5c6273;
+  --v-background-lighten: #858da6;
+  --v-primary-accent: #8c75fa;
+  --v-primary-accent-alt: #5430ff;
 
-    --v-primary-natural-white: rgba(255, 255, 255, 1);
-    --v-primary-natural: rgba(255, 255, 255, 0.87);
-    --v-primary-natural-light: rgba(255, 255, 255, 0.6);
-    --v-primary-natural-lighten: rgba(255, 255, 255, 0.4);
-    --v-primary-natural-lighten-variant: #999;
-    --v-primary-natural-darken: rgba(255, 255, 255, 0.2);
+  --v-primary-natural-white: rgba(255, 255, 255, 1);
+  --v-primary-natural: rgba(255, 255, 255, 0.87);
+  --v-primary-natural-light: rgba(255, 255, 255, 0.6);
+  --v-primary-natural-lighten: rgba(255, 255, 255, 0.4);
+  --v-primary-natural-lighten-variant: #999;
+  --v-primary-natural-darken: rgba(255, 255, 255, 0.2);
 
-    --v-primary-natural-dark-black: rgba(0, 0, 0, 1);
-    --v-primary-natural-dark: rgba(0, 0, 0, 0.87);
-    --v-primary-natural-dark-light: rgba(0, 0, 0, 0.6);
-    --v-primary-natural-dark-lighten: rgba(0, 0, 0, 0.4);
-    --v-primary-natural-dark-lighten-variant: #666;
-    --v-primary-natural-dark-darken: rgba(0, 0, 0, 0.2);
+  --v-primary-natural-dark-black: rgba(0, 0, 0, 1);
+  --v-primary-natural-dark: rgba(0, 0, 0, 0.87);
+  --v-primary-natural-dark-light: rgba(0, 0, 0, 0.6);
+  --v-primary-natural-dark-lighten: rgba(0, 0, 0, 0.4);
+  --v-primary-natural-dark-lighten-variant: #666;
+  --v-primary-natural-dark-darken: rgba(0, 0, 0, 0.2);
 
-    --v-color-discord: #5865F2;
-    --v-color-twitch: #6441a5;
-    --v-color-youtube: #ff0000;
+  --v-color-discord: #5865F2;
+  --v-color-twitch: #6441a5;
+  --v-color-youtube: #ff0000;
 
-    --v-color-link: #0096ff;
-    --v-color-link-hover: #0066FF;
+  --v-color-link: #0096ff;
+  --v-color-link-hover: #0066FF;
 
-    --v-color-code: #aac8e4;
+  --v-color-code: #aac8e4;
 
-    --v-blockquote-is-warning-base: #fcd25315;
-    --v-blockquote-is-warning-color: #fcd253;
-    
-    --v-blockquote-is-info-base: #53aafc15;
-    --v-blockquote-is-info-color: #53aafc;
-    
-    --v-blockquote-is-success-base: #42d39215;
-    --v-blockquote-is-success-color: #42d392;
-    
-    --v-blockquote-is-danger-base: #f54e8215;
-    --v-blockquote-is-danger-color: #f54e82;
+  --v-blockquote-is-warning-base: #fcd25315;
+  --v-blockquote-is-warning-color: #fcd253;
+  
+  --v-blockquote-is-info-base: #53aafc15;
+  --v-blockquote-is-info-color: #53aafc;
+  
+  --v-blockquote-is-success-base: #42d39215;
+  --v-blockquote-is-success-color: #42d392;
+  
+  --v-blockquote-is-danger-base: #f54e8215;
+  --v-blockquote-is-danger-color: #f54e82;
 
-    --v-blockquote-base: #717fab30;
-    --v-blockquote-color: #c0c0c0;
+  --v-blockquote-base: #717fab30;
+  --v-blockquote-color: #c0c0c0;
 
-    --v-blockquote-box-shadow: #212121;
-    --v-blockquote-code-base: #141414;
-    --v-blockquote-code-font-weight: 500;
-    --v-blockquote-code-border: #444;
-    --v-blockquote-ff: Arial;
-    --v-blockquote-border-radius: 12px;
-  }
-  .darkmode {
-    --v-background: #ddd;
-    --v-background-alt: #e4e4e4;
-    --v-background-darken: #bdbdbd;
-    --v-background-soft: #d6d6d6;
-    --v-background-mute: #cbcbcb;
-    --v-background-light: #a3a3a3;
-    --v-background-lighten: #7a7a7a;
+  --v-blockquote-box-shadow: #212121;
+  --v-blockquote-code-base: #141414;
+  --v-blockquote-code-font-weight: 500;
+  --v-blockquote-code-border: #444;
+  --v-blockquote-ff: Arial;
+  --v-blockquote-border-radius: 12px;
+}
+.darkmode {
+  --v-background: #ddd;
+  --v-background-alt: #e4e4e4;
+  --v-background-darken: #bdbdbd;
+  --v-background-soft: #d6d6d6;
+  --v-background-mute: #cbcbcb;
+  --v-background-light: #a3a3a3;
+  --v-background-lighten: #7a7a7a;
 
-    --v-primary-natural: rgba(0, 0, 0, 0.87);
-    --v-primary-natural-white: rgba(0, 0, 0, 1);
+  --v-primary-natural: #000000de;
+  --v-primary-natural-white: #000000;
 
-    --v-primary-natural-dark: rgba(255, 255, 255, 0.87);
-    --v-primary-natural-dark-black: rgba(255, 255, 255, 1);
+  --v-primary-natural-dark: #ffffffde;
+  --v-primary-natural-dark-black: #ffffff;
 
-    --v-blockquote-is-warning-color: #ccaa43;
-    --v-blockquote-is-success-color: #35a673;
-    --v-blockquote-color: #555;
+  --v-blockquote-is-warning-color: #ccaa43;
+  --v-blockquote-is-success-color: #35a673;
+  --v-blockquote-color: #555;
 
-    --v-color-code: #003266;
-  }
+  --v-color-code: #003266;
+}

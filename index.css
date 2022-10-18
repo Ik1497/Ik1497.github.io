@@ -60,13 +60,27 @@ body {
 }
 
 .item-grid-item article {
-    border: 1px solid var(--v-background-soft);
+    border: 3px solid var(--v-background-soft);
     border-radius: 12px;
     padding: 24px;
     height: 140px;
-    background-color: var(--v-background-soft);
     transition: all 0.3s ease;
     transform-style: preserve-3d;
+    position: relative;
+}
+
+.item-grid-item .background {
+    border: 3px solid var(--v-background-soft);
+    border-radius: 12px;
+    padding: 24px;
+    height: 140px;
+    width: 88%;
+    background-color: var(--v-background-darken);
+    opacity: .4;
+    filter: blur(20px);
+    transition: all 0.3s ease;
+    position: absolute;
+    inset: 0;
 }
 
 .item-grid-item .icon {
