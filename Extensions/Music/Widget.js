@@ -23,13 +23,14 @@ ws.addEventListener("message", (event) => {
   //console.log(song);
   var album = data.data?.thumbNail;
   //console.log(album);
-  update(artist, song, album);
+  var duration = data.data?.durationMs;
+  //console.log(album);
+  update(artist, song, album, duration);
 });
 
-function update(artist, song, album) {
-  document.querySelector(".description").innerHTML = artist;
-  document.querySelector(".title").innerHTML = song;
-  document.querySelector(".album-cover").src = album;
-  fitty("p");
+function update(artist, song, album, duration) {
+  document.querySelector(".description").innerHTML = artist || "Helynt GameChops";
+  document.querySelector(".title").innerHTML = song || "Continue";
+  document.querySelector(".album-cover").src = album || "./photo.png";
+  document.querySelector(".end-time").innerHTML = duration || "2:53";
 }
-fitty("p");

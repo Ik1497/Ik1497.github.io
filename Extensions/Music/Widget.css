@@ -7,19 +7,21 @@ html {
 }
 
 :root {
+  --height: 340px; /* Not recommended to change */
+  --width: 1080px; /* Not recommended to change */
   --border-radius: 30px;
-  --background-hue: 345; /* 0, 30, 230, 275, 345 (these are recommendations, you can use 0-360)*/
+  --background-hue: 0; /* 0, 30, 230, 275, 345 (these are recommendations, you can use 0-360)*/
   --color-primary: rgba(255, 255, 255, 1);
   --color-accent: rgba(255, 255, 255, 0.7);
 }
 .container {
   display: flex;
-  height: 400px;
-  width: 1080px;
+  height: var(--height);
+  width: var(--width);
 }
 
 .container img {
-  width: 400px;
+  width: var(--height);
   aspect-ratio: 1;
   border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
@@ -64,12 +66,13 @@ html {
   font-size: 2em;
   font-weight: 400;
   color: var(--color-accent);
+  margin-bottom: 1em;
 }
 
 .progress-bar {
   margin-top: 1em;
   width: 550px;
-  height: 3px;
+  height: 8px;
   border-radius: 100vmax;
   background: #fff;
   position: relative;
@@ -77,15 +80,15 @@ html {
 
 .progress-bar .start-time {
   position: absolute;
-  top: -0.6em;
-  font-size: 1em;
+  top: -0.5em;
+  font-size: 1.5em;
   color: var(--color-accent);
 }
 
 .progress-bar .end-time {
   position: absolute;
-  top: -0.6em;
+  top: -0.5em;
   right: 0;
-  font-size: 1em;
+  font-size: 1.5em;
   color: var(--color-accent);
 }
