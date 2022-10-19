@@ -1,11 +1,14 @@
-function width() {
-    document.body.classList.add("small")
+// General
+
+var wait = (ms) => {
+    const start = Date.now();
+    let now = start;
+    while (now - start < ms) {
+      now = Date.now();
+    }
 }
 
-function small() {
-    document.body.classList.remove("small")
-}
-
+// Code
 const ws = new WebSocket("ws://127.0.0.1:8080/");
 ws.addEventListener("open", (event) => {
   console.log("Connected to Streamer.bot");
@@ -34,6 +37,7 @@ ws.addEventListener("message", (event) => {
   var duration = data.data?.durationMs;
   //console.log(album);
   update(artist, song, album, duration);
+  widgetAnimation();
 });
 
 function update(artist, song, album, duration) {
@@ -41,4 +45,10 @@ function update(artist, song, album, duration) {
   document.querySelector(".title").innerHTML = song || "Continue";
   document.querySelector(".album-cover").src = album || "./photo.png";
   document.querySelector(".end-time").innerHTML = duration || "2:53";
+}
+
+function widgetAnimation() {
+  document.body.classList.remove("small");
+//   wait(1000);
+//   document.body.classList.add("small");
 }

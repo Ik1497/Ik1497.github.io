@@ -8,6 +8,7 @@ html {
 
 :root {
   /* Not recommended to change */
+  --canvas-spacing: 1em; /* Spacing at the bottom and the left of the canvas*/
   --height: 300px;
   --width: 1000px;
   --border-radius: 30px;
@@ -19,7 +20,7 @@ html {
   /* Play around here :) */
   --transition-time: 1s;
   --transition-timing-function: ease;
-  --background-hue: 345; /* 0, 30, 230, 275, 345 (these are recommendations, you can use 0-360)*/
+  --background-hue: 275; /* 0, 30, 230, 275, 345 (these are recommendations, you can use 0-360)*/
   --color-primary: rgba(255, 255, 255, 1);
   --color-accent: rgba(255, 255, 255, 0.7);
 }
@@ -28,6 +29,9 @@ html {
   display: flex;
   height: var(--height);
   width: var(--width);
+  position: fixed;
+  bottom: var(--canvas-spacing);
+  left: var(--canvas-spacing);
 }
 
 .container img {
@@ -35,6 +39,7 @@ html {
   height: var(--height);
   aspect-ratio: 1;
   border-radius: var(--border-radius) 0 0 var(--border-radius);
+  background: hsl(var(--background-hue), 50%, 50%);
 }
 
 .container .bottom-container {
