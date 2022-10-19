@@ -7,13 +7,23 @@ html {
 }
 
 :root {
-  --height: 340px; /* Not recommended to change */
-  --width: 1080px; /* Not recommended to change */
+  /* Not recommended to change */
+  --height: 300px;
+  --width: 1000px;
   --border-radius: 30px;
-  --background-hue: 0; /* 0, 30, 230, 275, 345 (these are recommendations, you can use 0-360)*/
+
+  --height-small: 100px;
+  --width-small: 1000px;
+  --border-radius-small: 15px;
+
+  /* Play around here :) */
+  --transition-time: 1s;
+  --transition-timing-function: ease;
+  --background-hue: 345; /* 0, 30, 230, 275, 345 (these are recommendations, you can use 0-360)*/
   --color-primary: rgba(255, 255, 255, 1);
   --color-accent: rgba(255, 255, 255, 0.7);
 }
+
 .container {
   display: flex;
   height: var(--height);
@@ -22,6 +32,7 @@ html {
 
 .container img {
   width: var(--height);
+  height: var(--height);
   aspect-ratio: 1;
   border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
@@ -30,8 +41,7 @@ html {
   display: flex;
   flex-direction: column;
   font-family: Montserrat;
-  padding-inline: 1em;
-  width: 100%;
+  padding-inline: 3em;
   justify-content: center;
   align-items: center;
   background-image: linear-gradient(
@@ -91,4 +101,44 @@ html {
   right: 0;
   font-size: 1.5em;
   color: var(--color-accent);
+}
+
+/* Small Sizing */
+* {
+  transition: all var(--transition-time) var(--transition-timing-function);
+}
+
+body.small .container {
+  height: var(--height-small);
+  width: var(--width-small);
+}
+
+body.small .container img {
+  width: var(--height-small);
+  height: var(--height-small);
+  border-radius: var(--border-radius-small) 0 0 var(--border-radius-small);
+}
+
+body.small .container .bottom-container {
+  border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
+  width: auto;
+  padding-inline: 1em;
+}
+
+body.small .container .bottom-container .texts {
+  text-align: left;
+  margin: auto 0;
+}
+
+body.small .container .bottom-container .texts .title {
+  font-size: 2.5em;
+}
+
+body.small .container .bottom-container .texts .description {
+  font-size: 1em;
+  margin: 0;
+}
+
+body.small .progress-bar {
+  width: 0;
 }

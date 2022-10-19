@@ -1,3 +1,11 @@
+function width() {
+    document.body.classList.add("small")
+}
+
+function small() {
+    document.body.classList.remove("small")
+}
+
 const ws = new WebSocket("ws://127.0.0.1:8080/");
 ws.addEventListener("open", (event) => {
   console.log("Connected to Streamer.bot");
