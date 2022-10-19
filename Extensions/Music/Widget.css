@@ -41,7 +41,6 @@ html {
   display: flex;
   flex-direction: column;
   font-family: Montserrat;
-  padding-inline: 3em;
   justify-content: center;
   align-items: center;
   background-image: linear-gradient(
@@ -50,6 +49,7 @@ html {
     hsl(var(--background-hue), 100%, 75%)
   );
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  width: calc(var(--width) - var(--height));
 }
 
 .container .bottom-container .texts {
@@ -57,7 +57,7 @@ html {
   flex-direction: column;
   font-family: Montserrat;
   padding-inline: 1em;
-  width: 100%;
+  max-width: 100%;
   text-align: center;
 }
 
@@ -122,7 +122,7 @@ body.small .container img {
 body.small .container .bottom-container {
   border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
   width: auto;
-  padding-inline: 1em;
+  padding-inline: 0;
 }
 
 body.small .container .bottom-container .texts {
@@ -141,4 +141,11 @@ body.small .container .bottom-container .texts .description {
 
 body.small .progress-bar {
   width: 0;
+  background: transparent;
+  color: transparent;
+}
+
+body.small .progress-bar .end-time,
+body.small .progress-bar .start-time {
+  color: transparent;
 }
