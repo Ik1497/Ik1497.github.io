@@ -1,10 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-body,
-html {
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-}
 
 :root {
   /* Not recommended to change */
@@ -14,15 +8,24 @@ html {
   --border-radius: 30px;
 
   --height-small: 100px;
-  --width-small: 1000px;
   --border-radius-small: 15px;
 
   /* Play around here :) */
   --transition-time: 1s;
   --transition-timing-function: ease;
-  --background-hue: 275; /* 0, 30, 230, 275, 345 (these are recommendations, you can use 0-360)*/
+  --background-hue: 30; /* 0, 30, 230, 275, 345 (these are recommendations, you can use 0-360)*/
+
   --color-primary: rgba(255, 255, 255, 1);
   --color-accent: rgba(255, 255, 255, 0.7);
+  --alt-color: #1b1b1e; /* Used for when album covers are transparent */
+  --font-family: Montserrat; /* Casing MATTERS! and it NEEDS to be on your local machine, unless you know what you're doing */
+}
+
+body,
+html {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 .container {
@@ -32,6 +35,7 @@ html {
   position: fixed;
   bottom: var(--canvas-spacing);
   left: var(--canvas-spacing);
+  font-family: var(--font-family);
 }
 
 .container img {
@@ -39,13 +43,13 @@ html {
   height: var(--height);
   aspect-ratio: 1;
   border-radius: var(--border-radius) 0 0 var(--border-radius);
-  background: hsl(var(--background-hue), 50%, 50%);
+  background: var(--alt-color);
+  border-right: 1px solid white;
 }
 
 .container .bottom-container {
   display: flex;
   flex-direction: column;
-  font-family: Montserrat;
   justify-content: center;
   align-items: center;
   background-image: linear-gradient(
@@ -60,9 +64,8 @@ html {
 .container .bottom-container .texts {
   display: flex;
   flex-direction: column;
-  font-family: Montserrat;
   padding-inline: 1em;
-  max-width: 100%;
+  width: 100%;
   text-align: center;
 }
 
@@ -115,7 +118,6 @@ html {
 
 body.small .container {
   height: var(--height-small);
-  width: var(--width-small);
 }
 
 body.small .container img {
@@ -127,12 +129,11 @@ body.small .container img {
 body.small .container .bottom-container {
   border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
   width: auto;
-  padding-inline: 0;
+  padding-left: 1em;
 }
 
 body.small .container .bottom-container .texts {
   text-align: left;
-  margin: auto 0;
 }
 
 body.small .container .bottom-container .texts .title {
@@ -148,6 +149,7 @@ body.small .progress-bar {
   width: 0;
   background: transparent;
   color: transparent;
+  display: none;
 }
 
 body.small .progress-bar .end-time,

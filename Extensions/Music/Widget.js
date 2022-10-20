@@ -41,14 +41,13 @@ ws.addEventListener("message", (event) => {
 });
 
 function update(artist, song, album, duration) {
-  document.querySelector(".description").innerHTML = artist || "Helynt GameChops";
-  document.querySelector(".title").innerHTML = song || "Continue";
-  document.querySelector(".album-cover").src = album || "./photo.png";
-  document.querySelector(".end-time").innerHTML = duration || "2:53";
+  document.querySelector(".description").innerHTML = artist || "for this widget to work!";
+  document.querySelector(".title").innerHTML = song || "Play a Song";
+  document.querySelector(".album-cover").src = album || "./placeholder.png";
+  document.querySelector(".end-time").innerHTML = duration || "N/A";
 }
 
 function widgetAnimation() {
   document.body.classList.remove("small");
-//   wait(1000);
-//   document.body.classList.add("small");
+  setTimeout(function(){ document.body.classList.add("small")}, 8000);
 }
