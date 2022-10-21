@@ -14,7 +14,12 @@
   /* Play around here :) */
   --transition-time: 1s;
   --transition-timing-function: ease;
-  --background-hue: 30; /* 0, 30, 230, 275, 345 (these are recommendations, you can use 0-360)*/
+
+  --background-opacity: 1;
+  --background-hue: 240; /* 0, 30, 230, 240, 345 (these are recommendations, you can use 0-360)*/
+  --background-saturation: 100%;
+  --background-lightness1: 75%;
+  --background-lightness2: 60%;
 
   --color-primary: rgba(255, 255, 255, 1);
   --color-accent: rgba(255, 255, 255, 0.7);
@@ -54,9 +59,8 @@ html {
   justify-content: center;
   align-items: center;
   background-image: linear-gradient(
-    0deg,
-    hsl(var(--background-hue), 100%, 60%),
-    hsl(var(--background-hue), 100%, 75%)
+    hsl(var(--background-hue), var(--background-saturation), var(--background-lightness1), var(--background-opacity)),
+    hsl(var(--background-hue), var(--background-saturation), var(--background-lightness2), var(--background-opacity))
   );
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
   width: calc(var(--width) - var(--height));

@@ -1,14 +1,6 @@
-// General
-
-var wait = (ms) => {
-    const start = Date.now();
-    let now = start;
-    while (now - start < ms) {
-      now = Date.now();
-    }
-}
-
-// General Code
+//////////////////////
+/// Websocket Code ///
+//////////////////////
 const ws = new WebSocket("ws://127.0.0.1:8080/");
 ws.addEventListener("open", (event) => {
   console.log("Connected to Streamer.bot");
@@ -28,36 +20,73 @@ ws.addEventListener("message", (event) => {
 
   const data = JSON.parse(event.data);
   console.log(event.data);
-  var artist = data.data?.artistName;
-  //console.log(artist);
-  var song = data.data?.songName;
-  //console.log(song);
-  var album = data.data?.thumbNail;
-  //console.log(album);
-  var duration = data.data?.durationMs;
-  //console.log(album);
+  var title = data.data?.title;
+  var description = data.data?.description;
+  var image = data.data?.image;
+  var duration = data.data?.duration;
   update(artist, song, album, duration);
   widgetAnimation();
 });
 
-function update(artist, song, album, duration) {
-  document.querySelector(".description").innerHTML = artist || "for this widget to work!";
-  document.querySelector(".title").innerHTML = song || "Play a Song";
-  document.querySelector(".album-cover").src = album || "./placeholder.png";
+function update(title, description, image, duration) {
+  document.querySelector(".description").innerHTML =
+    artist || "for this widget to work!";
+  document.querySelector(".title").innerHTML = title || "Play a Song";
+  document.querySelector(".album-cover").src = image || "./placeholder.png";
   document.querySelector(".end-time").innerHTML = duration || "N/A";
 }
 
+//////////////////////
+/// Animation Code ///
+//////////////////////
+
 function widgetAnimation() {
   document.body.classList.remove("small");
-  // setTimeout(function(){ document.body.classList.add("small")}, 8000);
+  setTimeout(function () {
+    document.body.classList.add("small");
+  }, 8000);
 }
 
-// URL code
-var root = document.querySelector(':root');
+////////////////
+/// URL code ///
+////////////////
+
+/// General ///
+var root = document.querySelector(":root");
 const params = new URLSearchParams(window.location.search);
 
-let hue = params.get("hue");
-root.style.setProperty("--background-hue", hue);
+/// Background ///
+let backgroundOpacity = params.get("background-opacity");
+root.style.setProperty("--background-opacity", backgroundOpacity);
+let backgroundHue = params.get("background-hue");
+root.style.setProperty("--background-hue", backgroundHue);
+let backgroundSaturation = params.get("background-saturation");
+root.style.setProperty("--background-saturation", backgroundSaturation);
+let backgroundLightness1 = params.get("background-lightness1");
+root.style.setProperty("--background-lightness1", backgroundLightness1);
+let backgroundLightness2 = params.get("background-lightness2");
+root.style.setProperty("--background-lightness2", backgroundLightness2);
 
+/// Font ///
 let fontFamily = params.get("font-family");
 root.style.setProperty("--font-family", fontFamily);
+let colorPrimary = params.get("color-primary");
+root.style.setProperty("--color-primary", colorPrimary);
+let colorAccent = params.get("color-accent");
+root.style.setProperty("--color-accent", colorAccent);
+let altColor = params.get("alt-color");
+root.style.setProperty("--alt-color", altColor);
+
+// Sizing ///
+let canvasSpacing = params.get("canvas-spacing");
+root.style.setProperty("--canvas-spacing", canvasSpacing);
+let height = params.get("height");
+root.style.setProperty("--height", height);
+let width = params.get("width");
+root.style.setProperty("--width", width);
+let borderRadius = params.get("border-radius");
+root.style.setProperty("--border-radius", borderRadius);
+let heightSmall = params.get("height-small");
+root.style.setProperty("--height-small", heightSmall);
+let borderRadiusSmall = params.get("border-radius-small");
+root.style.setProperty("--border-radius-small", borderRadiusSmall);

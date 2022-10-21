@@ -1,63 +1,159 @@
 <script>
-    var date = "25/09/2022";
-    var time = "14:17";
-    var next = null;
-    var previous = null;
+  var date = "25/09/2022";
+  var time = "14:17";
+  var next = null;
+  var previous = null;
 </script>
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta property="og:title" content="Music Widget" />
     <title>Music Widget | Streamer.bot Actions</title>
 
-    <meta name="og:site_name" content="Streamer.bot Actions"/>
-    <meta property="og:image" content="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
-    <meta name="theme-color" content="#B80086">
+    <meta name="og:site_name" content="Streamer.bot Actions" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png"
+    />
+    <meta name="theme-color" content="#B80086" />
 
     <meta property="og:description" content="Music Widget for Spotify" />
 
-    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/assets/style.css" />
     <script src="/assets/head.js"></script>
-
-</head>
-<body>
-<main>
-    <header class="page-info">
+  </head>
+  <body>
+    <main>
+      <header class="page-info">
         <p class="title">Music Widget</p>
         <p class="description">Music Widget for Spotify</p>
-    </header>
-    <table>
+      </header>
+      <table>
+        <h2 id="url-edits">URL edits</h2>
+        <h3 id="url-edits">Background</h3>
         <thead>
-            <tr>
-                <td class="table-right">Name</td>
-                <td class="table-left">Description</td>
-            </tr>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="table-right"><code>Lorem, ipsum.</code></td>
-                <td class="table-left">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</td>
-            </tr>
-            <tr>
-                <td class="table-right"><code>Lorem, ipsum.</code></td>
-                <td class="table-left">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</td>
-            </tr>
-            <tr>
-                <td class="table-right"><code>Lorem, ipsum.</code></td>
-                <td class="table-left">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</td>
-            </tr>
-            <tr>
-                <td class="table-right"><code>Lorem, ipsum.</code></td>
-                <td class="table-left">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</td>
-            </tr>
-            <tr>
-                <td class="table-right"><code>Lorem, ipsum.</code></td>
-                <td class="table-left">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</td>
-            </tr>
+          <tr>
+            <td class="table-right"><code>background-opacity</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>background-hue</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>background-saturation</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>background-lightness1</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>background-lightness2</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
         </tbody>
+      </table>
+      <table>
+        <h3>Font</h3>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>font-family</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>color-primary</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>color-accent</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>alt-color</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Sizing</h3>
+      <table>
+      <thead>
+        <tr>
+          <td class="table-right">Name</td>
+          <td class="table-left">Description</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="table-right"><code>canvas-spacing</code></td>
+          <td class="table-left">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          </td>
+        </tr>
+        <tr>
+          <td class="table-right"><code>height</code></td>
+          <td class="table-left">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          </td>
+        </tr>
+        <tr>
+          <td class="table-right"><code>width</code></td>
+          <td class="table-left">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          </td>
+        </tr>
+        <tr>
+          <td class="table-right"><code>border-radius</code></td>
+          <td class="table-left">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          </td>
+        </tr>
+        <tr>
+            <td class="table-right"><code>height-small</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>border-radius-small</code></td>
+            <td class="table-left">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            </td>
+          </tr>
+      </tbody>
     </table>
-<script src="/assets/footer.js"></script>
-</main>
-</body>
+      <script src="/assets/footer.js"></script>
+    </main>
+  </body>
 </html>
