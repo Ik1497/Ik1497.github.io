@@ -19,18 +19,17 @@ ws.addEventListener("message", (event) => {
   if (!event.data) return;
 
   const data = JSON.parse(event.data);
-  console.log(event.data);
   var title = data.data?.title;
   var description = data.data?.description;
   var image = data.data?.image;
   var duration = data.data?.duration;
-  update(artist, song, album, duration);
+  update(title, description, image, duration);
   widgetAnimation();
 });
 
 function update(title, description, image, duration) {
   document.querySelector(".description").innerHTML =
-    artist || "for this widget to work!";
+  description || "for this widget to work!";
   document.querySelector(".title").innerHTML = title || "Play a Song";
   document.querySelector(".album-cover").src = image || "./placeholder.png";
   document.querySelector(".end-time").innerHTML = duration || "N/A";
