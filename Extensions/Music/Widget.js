@@ -54,6 +54,12 @@ function widgetAnimation() {
 var root = document.querySelector(":root");
 const params = new URLSearchParams(window.location.search);
 
+/// Transition ///
+let transitionTime = params.get("transition-time");
+root.style.setProperty("--transition-time", transitionTime);
+let transitionTimingFunction = params.get("transition-timing-function");
+root.style.setProperty("--transition-timing-function", transitionTimingFunction);
+
 /// Background ///
 let backgroundOpacity = params.get("background-opacity");
 root.style.setProperty("--background-opacity", backgroundOpacity);
@@ -65,6 +71,8 @@ let backgroundLightness1 = params.get("background-lightness1");
 root.style.setProperty("--background-lightness1", backgroundLightness1);
 let backgroundLightness2 = params.get("background-lightness2");
 root.style.setProperty("--background-lightness2", backgroundLightness2);
+let altBackgroundColor = params.get("alt-background-color");
+root.style.setProperty("--alt-background-color", altBackgroundColor);
 
 /// Font ///
 let fontFamily = params.get("font-family");
@@ -73,8 +81,6 @@ let colorPrimary = params.get("color-primary");
 root.style.setProperty("--color-primary", colorPrimary);
 let colorAccent = params.get("color-accent");
 root.style.setProperty("--color-accent", colorAccent);
-let altColor = params.get("alt-color");
-root.style.setProperty("--alt-color", altColor);
 
 // Sizing ///
 let canvasSpacing = params.get("canvas-spacing");
