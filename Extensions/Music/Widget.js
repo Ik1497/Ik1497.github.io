@@ -8,7 +8,7 @@ var wait = (ms) => {
     }
 }
 
-// Code
+// General Code
 const ws = new WebSocket("ws://127.0.0.1:8080/");
 ws.addEventListener("open", (event) => {
   console.log("Connected to Streamer.bot");
@@ -49,5 +49,15 @@ function update(artist, song, album, duration) {
 
 function widgetAnimation() {
   document.body.classList.remove("small");
-  setTimeout(function(){ document.body.classList.add("small")}, 8000);
+  // setTimeout(function(){ document.body.classList.add("small")}, 8000);
 }
+
+// URL code
+var root = document.querySelector(':root');
+const params = new URLSearchParams(window.location.search);
+
+let hue = params.get("hue");
+root.style.setProperty("--background-hue", hue);
+
+let fontFamily = params.get("font-family");
+root.style.setProperty("--font-family", fontFamily);
