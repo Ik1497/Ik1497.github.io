@@ -43,7 +43,7 @@ body {
   margin-bottom: 1.5em;
 }
 main {
-  padding-left: 16em;
+  padding-left: .5em;
   padding-right: .5em;
   padding-top: 4em;
 }
@@ -62,7 +62,7 @@ main {
   main {
     max-width: 1400px;
     margin: 0 auto;
-    padding-left: .5em
+    padding-left: 16em
   }
 }
 header.page-info {
