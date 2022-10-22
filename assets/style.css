@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import url(/assets/root.css);
 @import url(/assets/header.css);
 /* ==========
@@ -43,26 +43,26 @@ body {
   margin-bottom: 1.5em;
 }
 main {
-  padding-left: .5em;
-  padding-right: .5em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
   padding-top: 4em;
 }
 
 /* ==========
    Else
    ========== */
-  
+
 @media (min-width: 50em) {
   body {
-    padding-top: .5em;
+    padding-top: 0.5em;
     padding-bottom: 1em;
-    padding-left: .5em;
-    padding-right: .5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
   main {
     max-width: 1400px;
     margin: 0 auto;
-    padding-left: 16em
+    padding-left: 16em;
   }
 }
 header.page-info {
@@ -87,12 +87,6 @@ header.page-info > p.description {
 }
 
 /* Navbar */
-ul.navbar > details > summary {
-  background: var(--v-background-alt);
-  border: 1px solid var(---v-background-alt);
-  transition: all 0.3s;
-}
-
 ul.navbar {
   list-style-type: none;
   padding: 0;
@@ -104,6 +98,24 @@ ul.navbar {
   background: var(--v-background-alt);
   position: fixed;
   height: calc(100% - 3.5em);
+  overflow-y: scroll;
+}
+
+ul.navbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+ul.navbar::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  border: none;
+}
+
+ul.navbar::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+ul.navbar::-webkit-scrollbar-track {
+  background: #333;
 }
 
 ul.navbar li {
@@ -123,22 +135,28 @@ ul.navbar > a > li.mdi::before {
 }
 
 ul.navbar a {
-  text-decoration: none; 
+  text-decoration: none;
   color: var(--v-primary-natural);
   transition: all 0.3s;
 }
 
 .navbar:has(a:hover) a:not(:hover) {
   opacity: 0.5;
-  transition: all 350ms ease!important;
+  transition: all 350ms ease !important;
 }
 
 .navbar > a {
-  transition: all 350ms ease!important;
+  transition: all 350ms ease !important;
 }
 
 ul.navbar hr {
   margin: 0;
+}
+
+ul.navbar > details > summary {
+  background: var(--v-background-alt);
+  border: 1px solid var(---v-background-alt);
+  transition: all 0.3s;
 }
 
 @media (max-width: 50em) {
@@ -147,8 +165,9 @@ ul.navbar hr {
     top: auto;
     left: auto;
     width: 100%;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
     height: fit-content;
+    max-height: 10em;
   }
 
   ul.navbar li {
@@ -160,11 +179,11 @@ ul.navbar hr {
   }
 
   ul.navbar > details > summary::after {
-    right: .9em;
+    right: 0.9em;
   }
-  
+
   ul.navbar > details[open] > summary::after {
-    right: .9em;
+    right: 0.9em;
   }
 }
 
@@ -180,7 +199,7 @@ ul.navbar .navbar-dropdown .navbar-dropdown-title::after {
   font-family: "Material Design Icons";
   content: "\F0704";
   position: absolute;
-  right: .3em;
+  right: 0.3em;
   transform: translateY(20%);
 }
 
@@ -188,7 +207,7 @@ ul.navbar .navbar-dropdown.active .navbar-dropdown-title::after {
   font-family: "Material Design Icons";
   content: "\F06F2";
   position: absolute;
-  right: .3em;
+  right: 0.3em;
   transform: translateY(20%);
 }
 
@@ -244,7 +263,6 @@ ul.navbar .navbar-dropdown > a > li {
 @keyframes footer-load {
   0% {
     scale: 0;
-
   }
   100% {
     scale: normal;
@@ -252,72 +270,82 @@ ul.navbar .navbar-dropdown > a > li {
 }
 /* HTML Element Overides */
 blockquote.is-warning {
-  background-color: var(--v-blockquote-is-warning-base)!important;
-  color: var(--v-blockquote-is-warning-color)!important;
-  border-color: var(--v-blockquote-is-warning-color)!important;
-  border: 1px solid!important;
+  background-color: var(--v-blockquote-is-warning-base) !important;
+  color: var(--v-blockquote-is-warning-color) !important;
+  border-color: var(--v-blockquote-is-warning-color) !important;
+  border: 1px solid !important;
 }
 
 blockquote.is-warning * {
-  color: var(--v-blockquote-is-warning-color)!important;
+  color: var(--v-blockquote-is-warning-color) !important;
 }
 
 blockquote.is-info {
-  background-color: var(--v-blockquote-is-info-base)!important;
-  color: var(--v-blockquote-is-info-color)!important;
-  border-color: var(--v-blockquote-is-info-color)!important;
-  border: 1px solid!important;
+  background-color: var(--v-blockquote-is-info-base) !important;
+  color: var(--v-blockquote-is-info-color) !important;
+  border-color: var(--v-blockquote-is-info-color) !important;
+  border: 1px solid !important;
 }
 
 blockquote.is-info * {
-  color: var(--v-blockquote-is-info-color)!important;
+  color: var(--v-blockquote-is-info-color) !important;
 }
 
 blockquote.is-success {
-  background-color: var(--v-blockquote-is-success-base)!important;
-  color: var(--v-blockquote-is-success-color)!important;
-  border-color: var(--v-blockquote-is-success-color)!important;
-  border: 1px solid!important;
+  background-color: var(--v-blockquote-is-success-base) !important;
+  color: var(--v-blockquote-is-success-color) !important;
+  border-color: var(--v-blockquote-is-success-color) !important;
+  border: 1px solid !important;
 }
 
 blockquote.is-success * {
-  color: var(--v-blockquote-is-success-color)!important;
+  color: var(--v-blockquote-is-success-color) !important;
 }
 
 blockquote.is-danger {
-  background-color: var(--v-blockquote-is-danger-base)!important;
-  color: var(--v-blockquote-is-danger-color)!important;
-  border-color: var(--v-blockquote-is-danger-color)!important;
-  border: 1px solid!important;
+  background-color: var(--v-blockquote-is-danger-base) !important;
+  color: var(--v-blockquote-is-danger-color) !important;
+  border-color: var(--v-blockquote-is-danger-color) !important;
+  border: 1px solid !important;
 }
 
 blockquote.is-danger * {
-  color: var(--v-blockquote-is-danger-color)!important;
+  color: var(--v-blockquote-is-danger-color) !important;
 }
 
-blockquote.is-warning.variant .blockquote-title { background-color: var(--v-blockquote-is-warning-color); }
-blockquote.is-info.variant .blockquote-title { background-color: var(--v-blockquote-is-info-color); }
-blockquote.is-success.variant .blockquote-title { background-color: var(--v-blockquote-is-success-color); }
-blockquote.is-danger.variant .blockquote-title { background-color: var(--v-blockquote-is-danger-color); }
-blockquote.variant .blockquote-title { background-color: var(--v-blockquote-color); }
+blockquote.is-warning.variant .blockquote-title {
+  background-color: var(--v-blockquote-is-warning-color);
+}
+blockquote.is-info.variant .blockquote-title {
+  background-color: var(--v-blockquote-is-info-color);
+}
+blockquote.is-success.variant .blockquote-title {
+  background-color: var(--v-blockquote-is-success-color);
+}
+blockquote.is-danger.variant .blockquote-title {
+  background-color: var(--v-blockquote-is-danger-color);
+}
+blockquote.variant .blockquote-title {
+  background-color: var(--v-blockquote-color);
+}
 
 /* < --- > */
 
 blockquote {
-  background-color: var(--v-blockquote-base)!important;
-  border-radius: var(--v-blockquote-border-radius)!important;
-  color: var(--v-blockquote-color)!important;
-  border: 1px solid var(--v-blockquote-color)!important;
-  box-shadow: 0 0 2px 0 var(--v-blockquote-box-shadow)!important;
+  background-color: var(--v-blockquote-base) !important;
+  border-radius: var(--v-blockquote-border-radius) !important;
+  color: var(--v-blockquote-color) !important;
+  border: 1px solid var(--v-blockquote-color) !important;
+  box-shadow: 0 0 2px 0 var(--v-blockquote-box-shadow) !important;
   font-size: 20px;
-  padding: .5rem!important;
+  padding: 0.5rem !important;
   margin: 1rem 0rem;
   font-family: var(--v-blockquote-ff);
   position: relative;
 }
 
 blockquote * {
-  color: var(--v-blockquote-color)!important;
+  color: var(--v-blockquote-color) !important;
 }
 
 blockquote .blockquote-title {
@@ -333,10 +361,11 @@ blockquote.variant .blockquote-title {
   position: absolute;
   top: -1.2em;
   background-color: currentColor;
-  color: var(--v-primary-natural-white)!important;
+  color: var(--v-primary-natural-white) !important;
   padding-inline: 1em;
   border-bottom: none;
-  border-radius: var(--v-blockquote-border-radius) var(--v-blockquote-border-radius) 0 0;
+  border-radius: var(--v-blockquote-border-radius)
+    var(--v-blockquote-border-radius) 0 0;
   background-color: var(--v-blockquote-base);
 }
 
@@ -344,23 +373,28 @@ blockquote.variant .blockquote-title {
 
 h1 {
   font-size: 28px;
-  margin-block: .2em;
+  margin-block: 0.2em;
 }
 
 h2 {
   font-size: 24px;
-  margin-block: .2em;
+  margin-block: 0.2em;
 }
 
-h3, h4, h5, h6 {
+h3,
+h4,
+h5,
+h6 {
   font-size: 20px;
-  margin-block: .2em .4em;
+  margin-block: 0.2em 0.4em;
 }
 
 /* Other */
 
-code, var, samp {
-  font-size: .9em;
+code,
+var,
+samp {
+  font-size: 0.9em;
   background: var(--v-primary-natural-dark-darken);
   color: var(--v-color-code);
   border: 1px solid var(--v-primary-natural-dark-lighten);
@@ -371,8 +405,8 @@ code, var, samp {
   font-style: normal;
 }
 kbd {
-  font-size: .9em;
-  background: rgba(0,0,0,.4);
+  font-size: 0.9em;
+  background: rgba(0, 0, 0, 0.4);
   color: var(--v-primary-natural);
   padding: 2px 6px;
   font-family: montserrat;
@@ -391,23 +425,23 @@ hr {
 a {
   color: var(--v-color-link);
   text-decoration: none;
-  transition: color .3s ease-in-out;
+  transition: color 0.3s ease-in-out;
 }
 
 a:hover {
   color: var(--v-color-link-hover);
   cursor: pointer;
-  transition: color .3s ease-in-out;
+  transition: color 0.3s ease-in-out;
 }
 
 /* Header */
 h2 {
   font-size: 28px;
-  color: var(--v-primary-natural)
+  color: var(--v-primary-natural);
 }
 h3 {
   font-size: 24px;
-  color: #aaa
+  color: #aaa;
 }
 
 /* Table */
@@ -417,16 +451,16 @@ table {
 
 thead tr td {
   background: var(--v-background-soft);
-  padding-block: .3em!important;
-  padding-inline: .6em!important;
+  padding-block: 0.3em !important;
+  padding-inline: 0.6em !important;
   text-align: center;
   font-weight: bold;
 }
 
 tbody tr td {
   background: var(--v-background-mute);
-  padding-block: .5em!important;
-  padding-inline: .6em!important;
+  padding-block: 0.5em !important;
+  padding-inline: 0.6em !important;
 }
 
 tbody tr:nth-child(even) td {
@@ -438,9 +472,15 @@ table td {
   color: var(--v-primary-natural-white);
 }
 
-.table-right {text-align: right;}
-.table-center {text-align: center;}
-.table-left {text-align: left;}
+.table-right {
+  text-align: right;
+}
+.table-center {
+  text-align: center;
+}
+.table-left {
+  text-align: left;
+}
 
 /* Footer */
 footer.footer-info {
@@ -454,11 +494,11 @@ footer.footer-info .footer-update {
 ul.footer-grid {
   padding: 0;
   display: grid;
-  gap: .5em;
-  margin: .8em 0em;
+  gap: 0.5em;
+  margin: 0.8em 0em;
   grid-template-columns: 1fr 1fr;
- }
- ul.footer-grid li {
+}
+ul.footer-grid li {
   list-style: none;
   padding: 10px 20px;
   font-weight: bold;
@@ -468,30 +508,30 @@ ul.footer-grid {
   transition: all 500ms;
   display: flex;
   animation: footer-grid-load 750ms ease-in-out;
- }
- .footer-align-right {
+}
+.footer-align-right {
   text-align: right;
   justify-content: right;
- }
- ul.footer-grid li:hover {
+}
+ul.footer-grid li:hover {
   box-shadow: #000 0px 0px 20px;
-  transition: all .3s;
-  border-color: #007FFF;
- }
- ul.footer-grid li > strong {
+  transition: all 0.3s;
+  border-color: #007fff;
+}
+ul.footer-grid li > strong {
   display: flex;
-  font-weight: 400!important;
+  font-weight: 400 !important;
   flex-direction: column;
-  font-size: .6em;
+  font-size: 0.6em;
   color: #888;
- }
- ul.footer-grid li > strong > em {
+}
+ul.footer-grid li > strong > em {
   font-style: normal;
   font-weight: 600;
   color: var(--v-primary-accent);
   font-size: 1.5em;
- }
- @media (max-width: 50em) {
+}
+@media (max-width: 50em) {
   ul.footer-grid {
     grid-template-columns: 1fr;
   }
@@ -508,24 +548,24 @@ ul.footer-grid {
   footer.footer-info .footer-edit {
     text-align: center;
   }
- }
+}
 /* List / Grids */
 ul.button-grid {
   padding: 0;
   display: grid;
-  gap: 2em .5em;
-  margin: .8em 0em;
-  grid-template-columns: repeat(auto-fit,minmax(450px,1fr));
-  margin-block: .5em 2em;
- }
- ul.list {
+  gap: 2em 0.5em;
+  margin: 0.8em 0em;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  margin-block: 0.5em 2em;
+}
+ul.list {
   grid-template-columns: 1fr;
- }
- ul.button-grid a {
+}
+ul.button-grid a {
   text-decoration: none;
   color: var(--v-primary-natural);
- }
- ul.button-grid li {
+}
+ul.button-grid li {
   list-style: none;
   padding: 10px 20px;
   font-weight: bold;
@@ -536,54 +576,60 @@ ul.button-grid {
   display: flex;
   animation: button-grid-load 750ms ease-in-out;
   height: 100%;
- }
- ul.button-grid li:hover {
+}
+ul.button-grid li:hover {
   box-shadow: #000 0px 0px 20px;
-  transition: all .3s;
+  transition: all 0.3s;
   background: var(--v-background-light);
   scale: 1.03;
- }
- ul.button-grid > a > li > img {
+}
+ul.button-grid > a > li > img {
   margin: auto 1rem auto 0em;
   height: 35px;
   width: 35px;
- }
- ul.button-grid > a > li > i {
+}
+ul.button-grid > a > li > i {
   display: block;
   font-size: 35px;
   width: 35px;
   margin: auto 1rem auto 0em;
- }
- ul.button-grid li > strong {
+}
+ul.button-grid li > strong {
   display: flex;
-  font-weight: 600!important;
+  font-weight: 600 !important;
   flex-direction: column;
   margin: auto 0;
   overflow: hidden;
   text-overflow: ellipsis;
- }
- ul.button-grid li > strong > em {
+}
+ul.button-grid li > strong > em {
   font-style: normal;
   font-weight: 400;
   color: #888;
-  font-size: .6em;
+  font-size: 0.6em;
   overflow: hidden;
   text-overflow: ellipsis;
- }
- ul.grid-list {
+}
+ul.grid-list {
   list-style: none;
   border: 1px solid #434343;
-  margin: .8em 0em;
- }
- ul.grid-list > li {
+  margin: 0.8em 0em;
+}
+ul.grid-list > li {
   background: var(--v-background);
-  padding: .6rem 1rem;
- }
- ul.grid-list > li:nth-child(odd) {
+  padding: 0.6rem 1rem;
+}
+ul.grid-list > li:nth-child(odd) {
   background: var(---v-background-alt);
-  padding: .6rem 1rem;
- }
+  padding: 0.6rem 1rem;
+}
 /* Utility Classes */
-.text--youtube {color: #ff0000!important}
-.text--twitch {color: #6441a5!important}
-.text--discord {color: #5865f2!important}
+.text--youtube {
+  color: #ff0000 !important;
+}
+.text--twitch {
+  color: #6441a5 !important;
+}
+.text--discord {
+  color: #5865f2 !important;
+}
