@@ -19,19 +19,18 @@ ws.addEventListener("message", (event) => {
   if (!event.data) return;
 
   const data = JSON.parse(event.data);
-  var title = data.data?.title;
-  var description = data.data?.description;
-  var image = data.data?.image;
+  var songName = data.data?.songName;
+  var artistName = data.data?.artistName;
+  var albumArt = data.data?.albumArt;
   var duration = data.data?.duration;
-  update(title, description, image, duration);
+  update(songName, artistName, albumArt, duration);
   widgetAnimation();
 });
 
-function update(title, description, image, duration) {
-  document.querySelector(".description").innerHTML =
-  description || "for this widget to work!";
-  document.querySelector(".title").innerHTML = title || "Play a Song";
-  document.querySelector(".album-cover").src = image || "./placeholder.png";
+function update(songName, artistName, albumArt, duration) {
+  document.querySelector(".artistName").innerHTML = artistName || "for this widget to work!";
+  document.querySelector(".songName").innerHTML = songName || "Play a Song";
+  document.querySelector(".album-cover").src = albumArt || "./placeholder.png";
   document.querySelector(".end-time").innerHTML = duration || "N/A";
 }
 
@@ -58,7 +57,10 @@ const params = new URLSearchParams(window.location.search);
 let transitionTime = params.get("transition-time");
 root.style.setProperty("--transition-time", transitionTime);
 let transitionTimingFunction = params.get("transition-timing-function");
-root.style.setProperty("--transition-timing-function", transitionTimingFunction);
+root.style.setProperty(
+  "--transition-timing-function",
+  transitionTimingFunction
+);
 
 /// Background ///
 let backgroundOpacity = params.get("background-opacity");

@@ -11,6 +11,10 @@
   --height-small: 100px;
   --border-radius-small: 15px;
 
+  --icon-play: "\F040A";
+  --icon-pause: "\F03E4";
+  --icon-play-pause: var(--icon-pause);
+
   /* Play around here :) */
   --transition-time: 1s;
   --transition-timing-function: ease;
@@ -44,7 +48,7 @@ html {
   font-family: var(--font-family);
 }
 
-.container img {
+.container > img {
   width: var(--height);
   height: var(--height);
   aspect-ratio: 1;
@@ -59,8 +63,18 @@ html {
   justify-content: center;
   align-items: center;
   background-image: linear-gradient(
-    hsl(var(--background-hue), var(--background-saturation), var(--background-lightness1), var(--background-opacity)),
-    hsl(var(--background-hue), var(--background-saturation), var(--background-lightness2), var(--background-opacity))
+    hsl(
+      var(--background-hue),
+      var(--background-saturation),
+      var(--background-lightness1),
+      var(--background-opacity)
+    ),
+    hsl(
+      var(--background-hue),
+      var(--background-saturation),
+      var(--background-lightness2),
+      var(--background-opacity)
+    )
   );
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
   width: calc(var(--width) - var(--height));
@@ -79,13 +93,13 @@ html {
   padding: 0;
 }
 
-.texts .title {
+.texts .songName {
   font-size: 2.5em;
   font-weight: 600;
   color: var(--color-primary);
 }
 
-.texts .description {
+.texts .artistName {
   font-size: 2em;
   font-weight: 400;
   color: var(--color-accent);
@@ -116,6 +130,22 @@ html {
   color: var(--color-accent);
 }
 
+.progress-bar .play-pause p {
+  position: absolute;
+  top: -0.5em;
+  right: 50%;
+  font-size: 1.5em;
+  padding-inline: 2px;
+  color: var(--color-accent);
+  background: hsl(var(--background-hue), 60%, 40%);
+  border-radius: 100vmax;
+}
+
+.progress-bar .play-pause p::before {
+  content: var(--icon-play-pause);
+  font-family: Material Design Icons;
+}
+
 /* Small Sizing */
 * {
   transition: all var(--transition-time) var(--transition-timing-function);
@@ -125,7 +155,7 @@ body.small .container {
   height: var(--height-small);
 }
 
-body.small .container img {
+body.small .container > img {
   width: var(--height-small);
   height: var(--height-small);
   border-radius: var(--border-radius-small) 0 0 var(--border-radius-small);
@@ -141,11 +171,11 @@ body.small .container .bottom-container .texts {
   text-align: left;
 }
 
-body.small .container .bottom-container .texts .title {
+body.small .container .bottom-container .texts .songName {
   font-size: 2em;
 }
 
-body.small .container .bottom-container .texts .description {
+body.small .container .bottom-container .texts .artistName {
   font-size: 1.5em;
   margin: 0;
 }
