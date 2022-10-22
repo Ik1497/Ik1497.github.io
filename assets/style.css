@@ -370,15 +370,16 @@ blockquote.variant .blockquote-title {
 }
 
 /* Headers */
-
 h1 {
   font-size: 28px;
-  margin-block: 0.2em;
+  margin-block: .6em .3em;
 }
 
 h2 {
   font-size: 24px;
-  margin-block: 0.2em;
+  margin-block: .6em .3em;
+  background: #3d46a9;
+  padding: .2em .3em;
 }
 
 h3,
@@ -386,11 +387,12 @@ h4,
 h5,
 h6 {
   font-size: 20px;
-  margin-block: 0.2em 0.4em;
+  margin-block: .6em .3em;
+  background: #313131;
+  padding: .2em .3em;
 }
 
 /* Other */
-
 code,
 var,
 samp {
@@ -432,16 +434,6 @@ a:hover {
   color: var(--v-color-link-hover);
   cursor: pointer;
   transition: color 0.3s ease-in-out;
-}
-
-/* Header */
-h2 {
-  font-size: 28px;
-  color: var(--v-primary-natural);
-}
-h3 {
-  font-size: 24px;
-  color: #aaa;
 }
 
 /* Table */
@@ -561,13 +553,14 @@ ul.button-grid {
 ul.list {
   grid-template-columns: 1fr;
 }
-ul.button-grid a {
+ul.button-grid a,
+ul.button-grid li {
   text-decoration: none;
   color: var(--v-primary-natural);
 }
 ul.button-grid li {
   list-style: none;
-  padding: 10px 20px;
+  padding: 5px 20px;
   font-weight: bold;
   font-size: 22px;
   background: var(--v-background-soft);
@@ -583,12 +576,12 @@ ul.button-grid li:hover {
   background: var(--v-background-light);
   scale: 1.03;
 }
-ul.button-grid > a > li > img {
+ul.button-grid li img {
   margin: auto 1rem auto 0em;
   height: 35px;
   width: 35px;
 }
-ul.button-grid > a > li > i {
+ul.button-grid li i {
   display: block;
   font-size: 35px;
   width: 35px;
@@ -615,11 +608,11 @@ ul.grid-list {
   border: 1px solid #434343;
   margin: 0.8em 0em;
 }
-ul.grid-list > li {
+ul.grid-list li {
   background: var(--v-background);
   padding: 0.6rem 1rem;
 }
-ul.grid-list > li:nth-child(odd) {
+ul.grid-list li:nth-child(odd) {
   background: var(---v-background-alt);
   padding: 0.6rem 1rem;
 }
