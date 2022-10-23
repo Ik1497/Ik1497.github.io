@@ -44,17 +44,6 @@ function update(songName, artistName, albumArt, duration) {
   document.querySelector(".end-time").innerHTML = duration || durationDefault;
 }
 
-//////////////////////
-/// Animation Code ///
-//////////////////////
-
-function widgetAnimation() {
-  document.body.classList.remove("small");
-  setTimeout(function () {
-    document.body.classList.add("small");
-  }, 8000);
-}
-
 ////////////////
 /// URL code ///
 ////////////////
@@ -64,6 +53,7 @@ var root = document.querySelector(":root");
 const params = new URLSearchParams(window.location.search);
 
 /// Transition ///
+let sizeDelay = params.get("size-delay") || 8000;
 let transitionTime = params.get("transition-time");
 root.style.setProperty("--transition-time", transitionTime);
 let transitionTimingFunction = params.get("transition-timing-function");
@@ -107,3 +97,13 @@ let heightSmall = params.get("height-small");
 root.style.setProperty("--height-small", heightSmall);
 let borderRadiusSmall = params.get("border-radius-small");
 root.style.setProperty("--border-radius-small", borderRadiusSmall);
+
+//////////////////////
+/// Animation Code ///
+//////////////////////
+function widgetAnimation() {
+  document.body.classList.remove("small");
+  setTimeout(function () {
+    document.body.classList.add("small");
+  }, sizeDelay);
+}
