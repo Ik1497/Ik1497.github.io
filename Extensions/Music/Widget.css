@@ -101,7 +101,7 @@ html {
 
 .texts .artistName {
   font-size: 2em;
-  font-weight: 400;
+  font-weight: 200;
   color: var(--color-accent);
   margin-bottom: 1em;
 }
