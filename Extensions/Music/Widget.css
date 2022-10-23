@@ -130,7 +130,7 @@ html {
   color: var(--color-accent);
 }
 
-.progress-bar .play-pause p {
+.progress-bar .status-buttons .play-pause {
   position: absolute;
   top: -0.5em;
   right: 50%;
@@ -141,7 +141,7 @@ html {
   border-radius: 100vmax;
 }
 
-.progress-bar .play-pause p::before {
+.progress-bar .status-buttons .play-pause::before {
   content: var(--icon-play-pause);
   font-family: Material Design Icons;
 }

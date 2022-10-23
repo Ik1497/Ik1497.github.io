@@ -1,4 +1,12 @@
 //////////////////////
+/// Default Values ///
+//////////////////////
+var artistNameDefault = "for this widget to work!";
+var songNameDefault = "Play a Song";
+var albumArtDefault = "./placeholder.png";
+var durationDefault = "N/A";
+
+//////////////////////
 /// Websocket Code ///
 //////////////////////
 const ws = new WebSocket("ws://127.0.0.1:8080/");
@@ -20,18 +28,20 @@ ws.addEventListener("message", (event) => {
 
   const data = JSON.parse(event.data);
   var songName = data.data?.songName;
+  console.log(songName);
   var artistName = data.data?.artistName;
   var albumArt = data.data?.albumArt;
   var duration = data.data?.duration;
   update(songName, artistName, albumArt, duration);
-  widgetAnimation();
+  if (songName != undefined) {widgetAnimation();}
 });
 
 function update(songName, artistName, albumArt, duration) {
-  document.querySelector(".artistName").innerHTML = artistName || "for this widget to work!";
-  document.querySelector(".songName").innerHTML = songName || "Play a Song";
-  document.querySelector(".album-cover").src = albumArt || "./placeholder.png";
-  document.querySelector(".end-time").innerHTML = duration || "N/A";
+  document.querySelector(".artistName").innerHTML =
+    artistName || artistNameDefault;
+  document.querySelector(".songName").innerHTML = songName || songNameDefault;
+  document.querySelector(".album-cover").src = albumArt || albumArtDefault;
+  document.querySelector(".end-time").innerHTML = duration || durationDefault;
 }
 
 //////////////////////
