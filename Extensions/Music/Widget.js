@@ -28,7 +28,6 @@ ws.addEventListener("message", (event) => {
 
   const data = JSON.parse(event.data);
   var songName = data.data?.songName;
-  console.log(songName);
   var artistName = data.data?.artistName;
   var albumArt = data.data?.albumArt;
   var duration = data.data?.duration;
@@ -98,6 +97,10 @@ root.style.setProperty("--height-small", heightSmall);
 let borderRadiusSmall = params.get("border-radius-small");
 root.style.setProperty("--border-radius-small", borderRadiusSmall);
 
+// Visibility
+let progressBarHidden = params.get("progress-bar-hidden");
+if (progressBarHidden === "") {root.style.setProperty("--progress-bar-visibility", "none");}
+
 //////////////////////
 /// Animation Code ///
 //////////////////////
@@ -106,4 +109,5 @@ function widgetAnimation() {
   setTimeout(function () {
     document.body.classList.add("small");
   }, sizeDelay);
+  console.log("Animated succesfully");
 }

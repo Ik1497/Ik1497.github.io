@@ -15,6 +15,8 @@
   --icon-pause: "\F03E4";
   --icon-play-pause: var(--icon-pause);
 
+  --progress-bar-visibility: block;
+
   /* Play around here :) */
   --transition-time: 1s;
   --transition-timing-function: ease;
@@ -103,16 +105,16 @@ html {
   font-size: 2em;
   font-weight: 200;
   color: var(--color-accent);
-  margin-bottom: 1em;
 }
 
 .progress-bar {
-  margin-top: 1em;
   width: 550px;
   height: 8px;
   border-radius: 100vmax;
   background: #fff;
   position: relative;
+  margin-top: 2em;
+  display: var(--progress-bar-visibility);
 }
 
 .progress-bar .start-time {
