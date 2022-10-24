@@ -105,9 +105,9 @@ if (progressBarHidden === "") {root.style.setProperty("--progress-bar-visibility
 /// Animation Code ///
 //////////////////////
 function widgetAnimation() {
-  document.body.classList.remove("small");
+  document.querySelector(".default").classList.remove("small");
   setTimeout(function () {
-    document.body.classList.add("small");
+    document.querySelector(".default").classList.add("small");
   }, sizeDelay);
   console.log("Animated succesfully");
 }
