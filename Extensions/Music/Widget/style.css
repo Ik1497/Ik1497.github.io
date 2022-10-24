@@ -153,43 +153,43 @@ html {
   transition: all var(--transition-time) var(--transition-timing-function);
 }
 
-.default.small .container {
+body.small .container {
   height: var(--height-small);
 }
 
-.default.small .container > img {
+body.small .container > img {
   width: var(--height-small);
   height: var(--height-small);
   border-radius: var(--border-radius-small) 0 0 var(--border-radius-small);
 }
 
-.default.small .container .bottom-container {
+body.small .container .bottom-container {
   border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
   width: auto;
   padding-left: 1em;
 }
 
-.default.small .container .bottom-container .texts {
+body.small .container .bottom-container .texts {
   text-align: left;
 }
 
-.default.small .container .bottom-container .texts .songName {
+body.small .container .bottom-container .texts .songName {
   font-size: 2em;
 }
 
-.default.small .container .bottom-container .texts .artistName {
+body.small .container .bottom-container .texts .artistName {
   font-size: 1.5em;
   margin: 0;
 }
 
-.default.small .progress-bar {
+body.small .progress-bar {
   width: 0;
   background: transparent;
   color: transparent;
   display: none;
 }
 
-.default.small .progress-bar .end-time,
-.default.small .progress-bar .start-time {
+body.small .progress-bar .end-time,
+body.small .progress-bar .start-time {
   color: transparent;
 }

@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --image-size: 8em;
+  --border-radius-image: 30px;
+  --border-radius-texts: 15px;
+  --canvas-spacing: 1em; /* Spacing at the bottom and the left of the canvas*/
+
+  --color-primary: rgba(255, 255, 255, 1);
+  --color-accent: rgba(255, 255, 255, 0.7);
+  --alt-background-color: #1b1b1e; /* Used for when album covers are transparent */
+  --font-family: Montserrat; /* Casing MATTERS! and it NEEDS to be on your local machine, unless you know what you're doing */
+}
+
+html,
+body {
+  font-size: 16px;
+  font-family: var(--font-family);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: var(--canvas-spacing);
+  left: var(--canvas-spacing);
+}
+
+.container .bottom-container {
+  background: rgba(0, 0, 0, .7);
+  height: fit-content;
+  width: fit-content;
+  border-radius: 0 var(--border-radius-texts) var(--border-radius-texts) 0;
+}
+
+.container .album-cover {
+  height: var(--image-size);
+  aspect-ratio: 1;
+  background: var(--alt-background-color);
+  border-radius: var(--border-radius-image);
+}
+
+.container .texts {
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-inline: .3em .5em;
+  padding-block: .3em;
+}
+
+.container .texts .songName {
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 3em;
+}
+
+.container .texts .artistName {
+  font-weight: 300;
+  color: var(--color-accent);
+  font-size: 2em;
+}
