@@ -9,7 +9,7 @@
   --color-primary: rgba(255, 255, 255, 1);
   --color-accent: rgba(255, 255, 255, 0.7);
   --alt-background-color: #1b1b1e; /* Used for when album covers are transparent */
-  --font-family: Montserrat; /* Casing MATTERS! and it NEEDS to be on your local machine, unless you know what you're doing */
+  --font-family: Arial; /* Casing MATTERS! and it NEEDS to be on your local machine, unless you know what you're doing */
 }
 
 html,
@@ -46,7 +46,6 @@ body {
 }
 
 .container .texts {
-  text-transform: uppercase;
   display: flex;
   flex-direction: column;
   gap: 0;
