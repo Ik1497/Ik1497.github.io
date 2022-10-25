@@ -10,7 +10,9 @@ var durationDefault = "N/A";
 /// Websocket Code ///
 //////////////////////
 const ws = new WebSocket("ws://127.0.0.1:8080/");
-ws.addEventListener("open", (event) => {
+
+ws.addEventListener("open", (event) => { connectws(); });
+  function connectws() {
   console.log("Connected to Streamer.bot");
   ws.send(
     JSON.stringify({
@@ -21,7 +23,7 @@ ws.addEventListener("open", (event) => {
       },
     })
   );
-});
+}
 
 ws.addEventListener("message", (event) => {
   if (!event.data) return;
@@ -41,6 +43,15 @@ function update(songName, artistName, albumArt, duration) {
   document.querySelector(".songName").innerHTML = songName || songNameDefault;
   document.querySelector(".album-cover").src = albumArt || albumArtDefault;
   document.querySelector(".end-time").innerHTML = duration || durationDefault;
+}
+
+ws.onclose = function (event) {
+  console.log("Could not connect. Make sure the streamer.bot websocket server is enabled. Trying to reconnect...");
+  websocketDisconnect();
+};
+
+function websocketDisconnect() {
+  document.body.classList.add("websocketDisconnect");
 }
 
 ////////////////

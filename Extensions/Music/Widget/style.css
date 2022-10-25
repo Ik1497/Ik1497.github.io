@@ -193,3 +193,38 @@ body.small .progress-bar .end-time,
 body.small .progress-bar .start-time {
   color: transparent;
 }
+
+/* websocketDisconnect */
+
+body.websocketDisconnect * {
+  display: none;
+}
+
+body.websocketDisconnect::before {
+  content: "Websocket Disconnected...";
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  font-family: Arial;
+  font-size: 60px;
+  background: rgb(255, 82, 82);
+  color: white;
+  position: absolute;
+}
+
+body.websocketDisconnect::after {
+  content: "Connect in streamer.bot: `Servers/Clients` --> `Websocket Server` and click on `Start Server`. When connected refresh the browser.";
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  text-align: center;
+  align-items: flex-end;
+  font-family: Arial;
+  font-size: 20px;
+  color: white;
+  position: absolute;
+}

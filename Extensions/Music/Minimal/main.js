@@ -48,6 +48,6 @@ function widgetAnimation() {
   document.body.classList.remove("small");
   setTimeout(function () {
     document.body.classList.add("small");
+    console.log("Animated succesfully");
   }, sizeDelay);
-  console.log("Animated succesfully");
 }
