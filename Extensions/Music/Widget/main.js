@@ -46,7 +46,7 @@ function update(songName, artistName, albumArt, duration) {
 }
 
 ws.onclose = function (event) {
-  console.log("Could not connect. Make sure the streamer.bot websocket server is enabled. Trying to reconnect...");
+  console.log("Websocket Disconnected...");
   websocketDisconnect();
 };
 

@@ -210,7 +210,7 @@ body.websocketDisconnect::before {
   align-items: center;
   font-family: Arial;
   font-size: 60px;
-  background: rgb(255, 82, 82);
+  background-image: linear-gradient(hsl(0, 100%, 70%), hsl(0, 100%, 60%));
   color: white;
   position: absolute;
 }
