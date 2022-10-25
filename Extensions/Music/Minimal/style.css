@@ -2,8 +2,9 @@
 
 :root {
   --image-size: 8em;
+  --image-size-minus: -8em;
   --border-radius-image: 30px;
-  --border-radius-texts: 15px;
+  --border-radius-texts: 20px;
   --canvas-spacing: 1em; /* Spacing at the bottom and the left of the canvas*/
 
   --color-primary: rgba(255, 255, 255, 1);
@@ -32,10 +33,13 @@ body {
 }
 
 .container .bottom-container {
-  background: rgba(0, 0, 0, .7);
+  background: hsl(0, 0%, 0%, .7);
   height: fit-content;
   width: fit-content;
   border-radius: 0 var(--border-radius-texts) var(--border-radius-texts) 0;
+  transform: translateX(calc(var(--image-size-minus) / 2));
+  z-index: -1;
+  transition: all .5s ease .5s;
 }
 
 .container .album-cover {
@@ -43,13 +47,14 @@ body {
   aspect-ratio: 1;
   background: var(--alt-background-color);
   border-radius: var(--border-radius-image);
+  transition: all .5s ease 0s;
 }
 
 .container .texts {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-inline: .3em .5em;
+  padding-inline: calc(.5em + var(--image-size) / 2) 1em;
   padding-block: .3em;
 }
 
@@ -63,4 +68,16 @@ body {
   font-weight: 300;
   color: var(--color-accent);
   font-size: 2em;
+}
+
+body.small .container .bottom-container {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: all .5s ease 0s;
+}
+
+body.small .container .album-cover {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all .5s ease .5s;
 }
