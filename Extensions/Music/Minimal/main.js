@@ -1,9 +1,9 @@
 //////////////////////
 /// Default Values ///
 //////////////////////
-var artistNameDefault = "for this widget to work!";
-var songNameDefault = "Play a Song";
-var albumArtDefault = "./placeholder.png";
+let artistNameDefault = "for this widget to work!";
+let songNameDefault = "Play a Song";
+let albumArtDefault = "./placeholder.png";
 
 //////////////////////
 /// Websocket Code ///
