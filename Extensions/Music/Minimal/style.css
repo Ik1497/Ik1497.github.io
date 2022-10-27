@@ -36,11 +36,12 @@ body {
 .container .bottom-container {
   z-index: -1;
   transition: all 0.5s ease 0.5s;
-  background: hsl(0, 0%, 0%, 0.7);
   height: fit-content;
   width: fit-content;
-  border-radius: 30px var(--border-radius-texts) var(--border-radius-texts) 30px;
-  transform: translateX(calc(var(--image-size-minus) / 2));
+  transform: translateX(calc(var(--image-size-minus) / 1));
+  display: grid;
+  grid-template-columns: calc(var(--image-size) / 2) 1fr;
+  grid-template-areas: ". texts";
 }
 .container .album-cover {
   height: var(--image-size);
@@ -56,6 +57,11 @@ body {
   gap: 0;
   padding-inline: calc(0.5em + var(--image-size) / 2) 1em;
   padding-block: 0.3em;
+  grid-area: texts;
+  background: hsl(0, 0%, 0%, 0.7);
+  border-radius: 30px var(--border-radius-texts) var(--border-radius-texts) 30px;
+  overflow: hidden;
+  transition: all 0.5s ease 0.5s;
 }
 
 .container .texts .songName {
@@ -71,10 +77,15 @@ body {
 }
 
 body.small .container .bottom-container {
-  transform: translateX(-100%);
-  opacity: 0;
   transition: all 0.5s ease 0s;
   border-radius: 50% var(--border-radius-texts) var(--border-radius-texts) 50%;
+}
+
+body.small .container .bottom-container .texts {
+  transition: all 0.5s ease 0s;
+  border-radius: 50% var(--border-radius-texts) var(--border-radius-texts) 50%;
+  transform: translateX(-100%);
+  opacity: 0;
 }
 
 body.small .container .album-cover {
