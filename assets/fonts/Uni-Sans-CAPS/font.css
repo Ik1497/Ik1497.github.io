@@ -1,4 +1,6 @@
-@import url(/assets/fonts/Uni-Sans-CAPS/Uni\ Sans\ Thin.otf);
-@import url(/assets/fonts/Uni-Sans-CAPS/Uni\ Sans\ Thin\ Italic.otf);
-@import url(/assets/fonts/Uni-Sans-CAPS/Uni\ Sans\ Heavy.otf);
-@import url(/assets/fonts/Uni-Sans-CAPS/Uni\ Sans\ Heavy\ Italic.otf);
+/* Regular */
+/* 900 */ @font-face{font-family:"Uni Sans CAPS";font-display:swap;font-weight:900;font-style:normal;src:url("/assets/fonts/Uni-Sans-CAPS/Uni\ Sans\ Heavy.otf") format('woff')}
+/* 100 */ @font-face{font-family:"Uni Sans CAPS";font-display:swap;font-weight:100;font-style:normal;src:url("/assets/fonts/Uni-Sans-CAPS/Uni\ Sans\ Thin.otf") format('woff')}
+/* Italic */
+/* 900 */ @font-face{font-family:"Uni Sans CAPS";font-display:swap;font-weight:900;font-style:italic;src:url("/assets/fonts/Uni-Sans-CAPS/Uni\ Sans\ Heavy\ Italic.otf") format('woff')}
+/* 100 */ @font-face{font-family:"Uni Sans CAPS";font-display:swap;font-weight:100;font-style:italic;src:url("/assets/fonts/Uni-Sans-CAPS/Uni\ Sans\ Thin\ Italic.otf") format('woff')}
