@@ -49,6 +49,7 @@ body {
 .container .album-cover {
   height: var(--image-size);
   aspect-ratio: 1;
+  object-fit: cover;
   background: var(--alt-background-color);
   border-radius: var(--border-radius-image);
   transition: all 0.5s ease 0s;
