@@ -43,6 +43,7 @@ function update(songName, artistName, albumArt, duration) {
   document.querySelector(".songName").innerHTML = songName || songNameDefault;
   document.querySelector(".album-cover").src = albumArt || albumArtDefault;
   document.querySelector(".end-time").innerHTML = duration || durationDefault;
+  refreshAlbumCover();
 }
 
 ws.onclose = function (event) {
@@ -121,4 +122,32 @@ function widgetAnimation() {
     document.body.classList.add("small");
   }, sizeDelay);
   console.log("Animated succesfully");
+}
+
+////////////////////////////
+/// Image Refresh Issues ///
+////////////////////////////
+
+function refresh(node)
+{
+   var times = 3000; // gap in Milli Seconds;
+
+   (function startRefresh()
+   {
+      var address;
+      if(node.src.indexOf('?')>-1)
+       address = node.src.split('?')[0];
+      else 
+       address = node.src;
+      node.src = address+"?time="+new Date().getTime();
+
+      setTimeout(startRefresh,times);
+   })();
+
+}
+
+function refreshAlbumCover()
+{
+  var node = document.querySelector('.album-cover');
+  refresh(node);
 }
