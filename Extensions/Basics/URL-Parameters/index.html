@@ -8,8 +8,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta property="og:title" content="URL Edits" />
-    <title>URL Edits | Streamer.bot Actions</title>
+    <meta property="og:title" content="URL Parameters" />
+    <title>URL Parameters | Streamer.bot Actions</title>
 
     <meta name="og:site_name" content="Streamer.bot Actions" />
     <meta
@@ -20,7 +20,7 @@
 
     <meta
       property="og:description"
-      content="An explanation, on how to use the custom properties in your browser source"
+      content="An explanation, on how to use the custom parameters in your browser source"
     />
 
     <link rel="stylesheet" href="/assets/style.css" />
@@ -29,9 +29,9 @@
   <body>
     <main>
       <header class="page-info">
-        <p class="title">URL Edits</p>
+        <p class="title">URL Parameters</p>
         <p class="description">
-          An explanation, on how to use the custom properties in your browser
+          An explanation, on how to use the custom parameters in your browser
           source
         </p>
       </header>
@@ -41,27 +41,39 @@
         is the <code>?</code> and the <code>&</code>.<br /><br />
         End result: <code>https://example.com?key=value&key=value</code>.
       </p>
-      <h3>key</h3>
-      <p>
-        The key is the thing before the value, this is so the website knows what
-        setting you want to change.
-      </p>
-      <h3>value</h3>
-      <p>
-        The value is the thing after the key, this is so the website knows what
-        value you want that setting to be.
-      </p>
-      <h3>=</h3>
+      <h3>Default Values | Used with all of these</h3>
+      <h4>=</h4>
       <p>This is always between the key and value.</p>
-      <h3>?</h3>
+      <h4>?</h4>
       <p>
         The questionmark is whats directly after the URL, following the key,
         value, and then optionally an &.
       </p>
-      <h3>&</h3>
+      <h4>&</h4>
       <p>
         The ampersand is for after the first key and value, you
         <strong>can't</strong> do a questionmark here.
+      </p>
+      <h3>Default | Key, Value</h3>
+      This is do change something that requires an value e.g. a font family, text color, etc.
+      <h4>key</h4>
+      <p>
+        The key is the thing before the value, this is so the website knows what
+        setting you want to change.
+      </p>
+      <h4>value</h4>
+      <p>
+        The value is the thing after the key, this is so the website knows what
+        value you want that setting to be.
+      </p>
+      <h3>Key only</h3>
+      When in the table it says: <span class="url-parameter-novalue"></span> you
+      only fill in the key.<br />
+      e.g. <code>https://example.com?key&key</code>.
+      <h4>key</h4>
+      <p>
+        This is to do something simple that doesn't require any value e.g. to
+        hide something.
       </p>
       <script src="/assets/footer.js"></script>
     </main>
