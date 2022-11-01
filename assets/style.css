@@ -44,9 +44,8 @@ body {
   line-height: 1.5em;
 }
 main {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  padding-top: 4em;
+  padding-inline: 0.5em;
+  margin-top: 1em;
 }
 
 /* ==========
@@ -62,10 +61,12 @@ main {
   }
   main {
     max-width: 1400px;
-    margin: 0 auto;
     padding-left: 16em;
+    margin: auto;
+    margin-top: 4em;
   }
 }
+
 header.page-info {
   border-bottom: 1px solid #555;
   margin-bottom: 1em;
@@ -491,6 +492,7 @@ footer.footer-info {
 footer.footer-info .footer-update {
   text-align: right;
 }
+
 ul.footer-grid {
   padding: 0;
   display: grid;
@@ -498,6 +500,7 @@ ul.footer-grid {
   margin: 0.8em 0em;
   grid-template-columns: 1fr 1fr;
 }
+
 ul.footer-grid li {
   list-style: none;
   padding: 10px 20px;
@@ -509,15 +512,18 @@ ul.footer-grid li {
   display: flex;
   animation: footer-grid-load 750ms ease-in-out;
 }
+
 .footer-align-right {
   text-align: right;
   justify-content: right;
 }
+
 ul.footer-grid li:hover {
   box-shadow: #000 0px 0px 20px;
   transition: all 0.3s;
   border-color: #007fff;
 }
+
 ul.footer-grid li > strong {
   display: flex;
   font-weight: 400 !important;
@@ -525,26 +531,32 @@ ul.footer-grid li > strong {
   font-size: 0.6em;
   color: #888;
 }
+
 ul.footer-grid li > strong > em {
   font-style: normal;
   font-weight: 600;
   color: var(--v-primary-accent);
   font-size: 1.5em;
 }
+
 @media (max-width: 50em) {
   ul.footer-grid {
     grid-template-columns: 1fr;
   }
+
   ul.footer-grid li {
     text-align: center;
     justify-content: center;
   }
+
   footer.footer-info {
     grid-template-columns: 1fr;
   }
+
   footer.footer-info .footer-update {
     text-align: center;
   }
+  
   footer.footer-info .footer-edit {
     text-align: center;
   }
@@ -639,7 +651,6 @@ ul.grid-list li:nth-child(odd) {
    Documentaion Helpers
    ========*/
 .url-parameter-novalue::before {
-  content: "Doesn't allow any values";
   color: var(--v-color-code);
   background: var(--v-primary-natural-dark-darken);
   border: 1px solid var(--v-primary-natural-dark-lighten);

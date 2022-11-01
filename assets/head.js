@@ -19,6 +19,7 @@ document.write(`
 <script src="/assets/node_modules/@prism/prism.js"></script>
 <link rel="stylesheet" href="/assets/node_modules/@prism/prism.css">
 <link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/animation.css">
 
 <script src="/assets/node_modules/@tilt.js/js/tilt.jquery.js"></script>
 `);

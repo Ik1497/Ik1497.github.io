@@ -1,0 +1,37 @@
+@import url(/assets/fonts/font.css);
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    font-family: Uni Sans CAPS;
+    font-weight: 900;
+}
+
+ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 100px);
+    gap: 1em;
+    list-style: none;
+}
+
+ul li {
+    background-color: #ff4d4d;
+}
+
+ul li p.sourceName {
+    text-align: center;
+    color: #181818;
+    padding-left: 1em;
+}
+
+ul li p.sourceName::before {
+    content: "";
+    width: 1em;
+    height: 1em;
+    background-image: url(./Indiicator-image.png);
+    background-size: 1em;
+    background-repeat: no-repeat;
+}

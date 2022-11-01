@@ -23,8 +23,8 @@
       href="/assets/node_modules/@mdi/font/css/materialdesignicons.css"
     />
 
-    <meta property="og:title" content="Music Widget v1.0.0" />
-    <title>Music Widget v1.0.0 | Streamer.bot Actions</title>
+    <meta property="og:title" content="Mute Indicator v1.0.0" />
+    <title>Mute Indicator v1.0.0 | Streamer.bot Actions</title>
 
     <meta name="og:site_name" content="Streamer.bot Actions" />
     <meta
@@ -33,24 +33,18 @@
     />
     <meta name="theme-color" content="#B80086" />
 
-    <meta property="og:description" content="Music Widget for Spotify" />
+    <meta
+      property="og:description"
+      content="Mute Indicator so you can see if and what sources are muted"
+    />
   </head>
   <body class="small">
     <div class="container">
-      <img class="album-cover" alt="Music Album Cover" />
-      <div class="bottom-container">
-        <div class="texts">
-          <p class="songName"></p>
-          <p class="artistName"></p>
-        </div>
-        <div class="progress-bar">
-          <p class="start-time">0:00</p>
-          <div class="status-buttons">
-            <p class="play-pause"></p>
-          </div>
-          <p class="end-time"></p>
-        </div>
-      </div>
+      <ul>
+        <li id="[A] Music"><p class="sourceName">[A] Music</p></li>
+        <li id="[A] Music"><p class="sourceName">[A] Game</p></li>
+        <li id="[A] Music"><p class="sourceName">[A] Mic</p></li>
+      </ul>
     </div>
   </body>
 </html>
