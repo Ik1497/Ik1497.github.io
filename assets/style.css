@@ -401,6 +401,28 @@ h6 {
   background: #151515;
 }
 
+/* Headers ~ Anchors */
+h1 a.anchorjs-link,
+h2 a.anchorjs-link,
+h3 a.anchorjs-link,
+h5 a.anchorjs-link,
+h6 a.anchorjs-link {
+  opacity: 0;
+  transition: opacity .2s;
+  z-index: 0;
+  color: var(--v-primary-natural-white);
+}
+
+h1:hover a.anchorjs-link,
+h2:hover a.anchorjs-link,
+h3:hover a.anchorjs-link,
+h5:hover a.anchorjs-link,
+h6:hover a.anchorjs-link {
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+
 /* Other */
 code,
 var,
