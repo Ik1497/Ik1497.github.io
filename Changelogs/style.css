@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    overflow-x: hidden;
+}
+
+body {
+    background: #080808;
+    font-family: Inter;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    font-size: 16px;
+    grid-template: 
+        ". body-header ." max-content
+        ". body-main ." auto
+        / 5% auto 5%;
+}
+
+header {
+    margin-top: 5em;
+    border-bottom: .05em solid white;
+    padding-bottom: .5em;
+    display: grid;
+    height: fit-content;
+    grid-area: body-header;
+    grid-template: 
+        "header-h1 header-select-label header-select" auto
+        "header-go-back header-select-label header-select" auto
+        / auto auto 10em;
+}
+
+@media only screen and (max-width: 50em) {
+    header {
+        grid-template: 
+            "header-h1 header-h1" 3em
+            "header-select-label header-select" 3em 
+            "header-go-back header-go-back" auto 
+            / auto auto;
+    }
+    header * {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 30em) {
+    header {
+        grid-template: 
+            "header-h1" 3em
+            "header-select-label" 3em 
+            "header-select" 3em
+            "header-go-back" auto
+            / auto;
+    }
+    header * {
+        display: flex;
+        justify-content: center;
+    }
+
+    header label {
+        justify-content: center!important;
+    }
+
+    header select {
+        display: flex;
+        justify-content: center;
+        width: unset!important;
+    }
+}
+
+header h1 {
+    grid-area: header-h1;
+}
+
+header label {
+    grid-area: header-select-label;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-right: 1em;
+    font-weight: 600;
+}
+
+header select {
+    grid-area: header-select;
+    margin-block: 1.2em;
+}
+
+header .go-back {
+    grid-area: header-go-back;
+    cursor: pointer;
+    color: #aaa;
+}
+
+header .go-back:hover {
+    color: #00a2ff;
+}
+
+main {
+    grid-area: body-main;
+    padding-top: 1em;
+}
+
+ul.changelog-new,
+ul.changelog-update,
+ul.changelog-fixes {
+    list-style: none;
+    position: relative;
+    margin-block: 1em;
+    line-height: 1.3;
+    color: #eee;
+    padding: 3em;
+    padding-bottom: 1em;
+    border-radius: .6em;
+}
+
+ul.changelog-new::before,
+ul.changelog-update::before,
+ul.changelog-fixes::before {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    position: absolute;
+    inset: 0;
+    top: 1em;
+    left: 3em;
+}
+
+ul.changelog-new::before {
+    content: "new";
+}
+
+ul.changelog-update::before {
+    content: "update";
+}
+
+ul.changelog-fixes::before {
+    content: "fixes";
+}
+
+ul.changelog-new li::before,
+ul.changelog-update li::before,
+ul.changelog-fixes li::before {
+    content: "►";
+    margin-right: 1em;
+    color: #ffffff66;
+}
+
+ul.changelog-new {
+    background: #73ff734b;
+}
+
+ul.changelog-update {
+    background: #00d9ff4b!important;
+}
+
+ul.changelog-fixes {
+    background: #641a1e4b!important;
+}
