@@ -4,8 +4,8 @@ document.write(`
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="og:site_name" content="Streamer.bot Actions"/>
 <meta property="og:type" content="website" />
-<meta property="og:image" content="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
-<link rel="icon" href="https://raw.githubusercontent.com/Ik1497/Ik1497/main/assets/profile_picture/Logo-Round.png" />
+<meta property="og:image" content="/assets/favicon.ico" />
+<link rel="icon" href="/assets/favicon.ico" />
 <meta name="theme-color" content="#B80086">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
