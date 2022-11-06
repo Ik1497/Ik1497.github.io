@@ -37,7 +37,7 @@ header {
     grid-template: 
         "header-h1 header-select-label header-select" auto
         "header-go-back header-select-label header-select" auto
-        / auto auto 10em;
+        / auto max-content 10em;
 }
 
 @media only screen and (max-width: 50em) {
@@ -46,7 +46,7 @@ header {
             "header-h1 header-h1" 3em
             "header-select-label header-select" 3em 
             "header-go-back header-go-back" auto 
-            / auto auto;
+            / max-content auto;
     }
     header * {
         display: flex;
