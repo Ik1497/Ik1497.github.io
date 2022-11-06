@@ -24,12 +24,12 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header>
-      <a class="go-back" onclick="history.back()">&lt;- Go back</a>
-      <h1>Changelogs</h1>
-      <label for="select-changelog-extension">Select Which Changelog:</label>
+    <header class="animated fadeInUp">
+      <a class="go-back animated fadeInUp wait-p4s" onclick="history.back()">&lt;- Go back</a>
+      <h1 class="animated fadeInUp wait-p2s">Changelogs</h1>
+      <label class="animated fadeInUp wait-p2s" for="select-changelog-extension">Select Which Changelog:</label>
 
-      <select name="select-changelog-extension" id="selectChangelogExtension">
+      <select class="animated fadeInUp wait-p4s" name="select-changelog-extension" id="selectChangelogExtension" onchange="changelogSelector()">
         <optgroup label="Widgets">
           <option value="WidgetsMusic">Music</option>
         </optgroup>
@@ -38,7 +38,8 @@
         </optgroup>
       </select>
     </header>
-    <main></main>
-  </body>
+    <main class="animated fadeInUp wait-p6s"></main>
+    <script src="/assets/main.js"></script>
+</body>
   <script src="./main.js"></script>
 </html>

@@ -6,7 +6,7 @@ WidgetsMusic();
 
 // Music
 async function WidgetsMusic() {
-    const resp = await fetch("./Widgets-Music.html");
+    const resp = await fetch("./pages/Widgets/Music.html");
     const main = await resp.text();
     document.querySelector("main").insertAdjacentHTML("beforeend", main);
 }
@@ -17,7 +17,17 @@ async function WidgetsMusic() {
 
 // MusicBee
 async function ExtensionsMusicBee() {
-    const resp = await fetch("./Extensions-MusicBee.html");
+    const resp = await fetch("./pages/Extensions/MusicBee.html");
     const main = await resp.text();
     document.querySelector("main").insertAdjacentHTML("beforeend", main);
+}
+
+function changelogSelector() {
+    var element = document.getElementById("selectChangelogExtension");
+    var value = element.value;
+    var main = document.querySelector("main");
+    main.parentNode.removeChild(main);
+
+    if (value === "WidgetsMusic") {WidgetsMusic();}
+    if (value === "ExtensionsMusicBee") {ExtensionsMusicBee();}
 }
