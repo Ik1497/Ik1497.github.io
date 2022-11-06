@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
+:root {
+    --background: #080808;
+    --text-color: white;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,9 +14,9 @@ html {
 }
 
 body {
-    background: #080808;
+    background: var(--background);
     font-family: Inter;
-    color: white;
+    color: var(--text-color);
     width: 100vw;
     height: 100vh;
     display: grid;
@@ -24,7 +29,7 @@ body {
 
 header {
     margin-top: 5em;
-    border-bottom: .05em solid white;
+    border-bottom: .05em solid var(--text-color);
     padding-bottom: .5em;
     display: grid;
     height: fit-content;
@@ -88,8 +93,31 @@ header label {
 }
 
 header select {
+    appearance: none;
     grid-area: header-select;
     margin-block: 1.2em;
+    background: var(--background);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    text-align: center;
+}
+
+header select:focus {
+    background: var(--text-color);
+    color: var(--background);
+    outline: none;
+}
+
+header select optgroup {
+    color: #979797;
+    text-align: center;
+    width: 100%;
+}
+
+header select option {
+    text-align: center;
+    width: 100%;
+    color: var(--background);
 }
 
 header .go-back {
@@ -117,7 +145,7 @@ ul.changelog-fixes {
     color: #eee;
     padding: 3em;
     padding-bottom: 1em;
-    border-radius: .6em;
+    border-radius: 0;
 }
 
 ul.changelog-new::before,
@@ -147,9 +175,9 @@ ul.changelog-fixes::before {
 ul.changelog-new li::before,
 ul.changelog-update li::before,
 ul.changelog-fixes li::before {
-    content: "►";
+    content: "•";
     margin-right: 1em;
-    color: #ffffff66;
+    color: #ffffff33;
 }
 
 ul.changelog-new {
