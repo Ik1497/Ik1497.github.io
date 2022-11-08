@@ -12,7 +12,7 @@
   --alt-background-color: #1b1b1e; /* Used for when album covers are transparent */
 
   --font-family: Uni Sans CAPS; /* Casing MATTERS! */
-  --font-style: italic;
+  --font-style: normal;
 }
 
 html,

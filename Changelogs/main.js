@@ -1,4 +1,4 @@
-WidgetsMusic();
+changelogSelector();
 
 ///////////////////
 /// > Widgets < ///
@@ -7,6 +7,13 @@ WidgetsMusic();
 // Music
 async function WidgetsMusic() {
     const resp = await fetch("./pages/Widgets/Music.html");
+    const main = await resp.text();
+    document.querySelector("main").insertAdjacentHTML("beforeend", main);
+}
+
+// Test
+async function WidgetsTest() {
+    const resp = await fetch("./pages/Widgets/Test.html");
     const main = await resp.text();
     document.querySelector("main").insertAdjacentHTML("beforeend", main);
 }
@@ -28,6 +35,12 @@ function changelogSelector() {
     var main = document.querySelector("main");
     main.parentNode.removeChild(main);
 
+    var newMain = '<main class=""></main>'
+    document.querySelector("body").insertAdjacentHTML("afterbegin", newMain);
+
+
     if (value === "WidgetsMusic") {WidgetsMusic();}
+    if (value === "WidgetsTest") {WidgetsTest();}
+
     if (value === "ExtensionsMusicBee") {ExtensionsMusicBee();}
 }

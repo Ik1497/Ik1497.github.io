@@ -9,11 +9,8 @@
     <title>Changelogs | Streamer.bot Actions</title>
 
     <meta name="og:site_name" content="Streamer.bot Actions" />
-    <meta
-      property="og:image"
-      content="/assets/favicon.ico"
-    />
-    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <meta property="og:image" content="/assets/favicon.ico" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon" />
     <meta name="theme-color" content="#B80086" />
 
     <meta
@@ -25,12 +22,22 @@
   </head>
   <body>
     <header class="animated fadeInUp">
-      <a class="go-back animated fadeInUp wait-p4s" onclick="history.back()">&lt;- Go back</a>
+      <a class="go-back animated fadeInUp wait-p4s" onclick="history.back()"
+        >&lt;- Go back</a
+      >
       <h1 class="animated fadeInUp wait-p2s">Changelogs</h1>
-      <label class="animated fadeInUp wait-p2s" for="select-changelog-extension">Select Which Changelog:</label>
+      <label class="animated fadeInUp wait-p2s" for="select-changelog-extension"
+        >Select Which Changelog:</label
+      >
 
-      <select class="animated fadeInUp wait-p4s" name="select-changelog-extension" id="selectChangelogExtension" onchange="changelogSelector()">
+      <select
+        class="animated fadeInUp wait-p4s"
+        name="select-changelog-extension"
+        id="selectChangelogExtension"
+        onchange="changelogSelector()"
+      >
         <optgroup label="Widgets">
+          <option value="WidgetsTest">Test</option>
           <option value="WidgetsMusic">Music</option>
         </optgroup>
         <optgroup label="Extensions">
@@ -40,6 +47,18 @@
     </header>
     <main class="animated fadeInUp wait-p6s"></main>
     <script src="/assets/main.js"></script>
-</body>
+  </body>
   <script src="./main.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js"
+    integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    anchors.options = {
+      placement: "left",
+      icon: "#",
+    };
+    anchors.add();
+  </script>
 </html>

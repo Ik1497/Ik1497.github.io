@@ -3,6 +3,7 @@
 
 :root {
     --background: #22252B;
+    --background-alt: #1B1D22;
     --text-color: #ffffff;
 }
 
@@ -142,10 +143,9 @@ ul.changelog-update,
 ul.changelog-fixes {
     list-style: none;
     position: relative;
-    margin-block: 1em;
     line-height: 1.3;
     color: #eee;
-    padding: 3em;
+    padding-top: 3em;
     padding-bottom: 1em;
     border-radius: 0;
 }
@@ -156,10 +156,14 @@ ul.changelog-fixes::before {
     font-weight: 600;
     text-transform: uppercase;
     color: #fff;
+    background: var(--background-alt);
     position: absolute;
     inset: 0;
     top: 1em;
-    left: 3em;
+    left: 0;
+    height: fit-content;
+    width: 100%;
+    padding: .5em;
 }
 
 ul.changelog-new::before {
@@ -174,22 +178,43 @@ ul.changelog-fixes::before {
     content: "fixes";
 }
 
-ul.changelog-new li::before,
-ul.changelog-update li::before,
-ul.changelog-fixes li::before {
-    content: "•";
-    margin-right: 1em;
-    color: #ffffff33;
+ul.changelog-new li,
+ul.changelog-update li,
+ul.changelog-fixes li {
+    padding: .5em;
+    width: 100%;
+    margin-bottom: .3em;
 }
 
-ul.changelog-new {
-    background: #73ff734b;
+ul.changelog-new li {
+    background: #77ff7769;
 }
 
-ul.changelog-update {
-    background: #00d9ff4b!important;
+ul.changelog-update li {
+    background: #00d9ff86!important;
 }
 
-ul.changelog-fixes {
-    background: #641a1e4b!important;
+ul.changelog-fixes li {
+    background: #ff000d4b!important;
+}
+
+/* Headers ~ Anchors */
+h1 a.anchorjs-link,
+h2 a.anchorjs-link,
+h3 a.anchorjs-link,
+h5 a.anchorjs-link,
+h6 a.anchorjs-link {
+  opacity: 0;
+  transition: opacity .2s;
+  z-index: 0;
+  color: var(--v-primary-natural-white);
+}
+
+h1:hover a.anchorjs-link,
+h2:hover a.anchorjs-link,
+h3:hover a.anchorjs-link,
+h5:hover a.anchorjs-link,
+h6:hover a.anchorjs-link {
+  opacity: 1;
+  transition: opacity 1s;
 }
