@@ -44,6 +44,7 @@ header {
 
 @media only screen and (max-width: 50em) {
     header {
+        margin-top: 5%;
         grid-template: 
             "header-h1 header-h1" 3em
             "header-select-label header-select" 3em 
@@ -58,6 +59,7 @@ header {
 
 @media only screen and (max-width: 30em) {
     header {
+        margin-top: 5%;
         grid-template: 
             "header-h1" 3em
             "header-select-label" 3em 
@@ -162,8 +164,8 @@ ul.changelog-fixes::before {
     top: 1em;
     left: 0;
     height: fit-content;
-    width: 100%;
     padding: .5em;
+    padding-right: 0;
 }
 
 ul.changelog-new::before {
@@ -182,7 +184,6 @@ ul.changelog-new li,
 ul.changelog-update li,
 ul.changelog-fixes li {
     padding: .5em;
-    width: 100%;
     margin-bottom: .3em;
 }
 
