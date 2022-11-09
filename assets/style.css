@@ -685,3 +685,13 @@ ul.grid-list li:nth-child(odd) {
 .url-parameter-novalue::before {
   content: "Doesn't allow any values";
 }
+
+.img-400 {
+  max-width: 100%;
+  width: 40%;
+  margin-bottom: 1em;
+}
+
+.img-400.margin-top {
+  margin-top: 1em;
+}

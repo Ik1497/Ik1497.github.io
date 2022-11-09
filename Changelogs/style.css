@@ -219,3 +219,9 @@ h6:hover a.anchorjs-link {
   opacity: 1;
   transition: opacity 1s;
 }
+
+/* Extra HTML CSS */
+code {
+    background: #141414;
+    padding-inline: .3em;
+}

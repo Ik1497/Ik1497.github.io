@@ -35,8 +35,8 @@ function changelogSelector() {
   var main = document.querySelector("main");
   main.parentNode.removeChild(main);
 
-  var newMain = '<main class=""></main>';
-  document.querySelector("body").insertAdjacentHTML("afterbegin", newMain);
+  var newMain = '<main class="animated fadeInUp"></main>';
+  document.querySelector("header").insertAdjacentHTML("afterend", newMain);
 
   if (value === "WidgetsMusic") {
     WidgetsMusic();

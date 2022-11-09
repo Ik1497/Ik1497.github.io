@@ -29,8 +29,10 @@ ws.addEventListener("message", (event) => {
   var songName = data.data?.songName;
   var artistName = data.data?.artistName;
   var albumArt = data.data?.albumArt;
+  var onlyAnimation = data.data?.onlyAnimation;
   update(songName, artistName, albumArt);
   if (songName != undefined) {widgetAnimation();}
+  if (onlyAnimation === true) {widgetAnimation();}
 });
 
 function update(songName, artistName, albumArt) {
