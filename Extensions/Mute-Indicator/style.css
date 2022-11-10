@@ -1,3 +1,13 @@
+:root {
+    --gap-height: .2em;
+    --gap-width: .5em;
+
+    --chip-background: #ff4d4d;
+    --chip-border-radius: 0;
+
+    --text-color: #181818;
+}
+
 @import url(/assets/fonts/font.css);
 * {
     margin: 0;
@@ -13,18 +23,19 @@ html {
 
 ul {
     display: flex;
-    gap: .2em .5em;
+    gap: var(--gap-height) var(--gap-width);
     list-style: none;
     flex-wrap: wrap;
     transition: all 1s ease;
 }
 
 ul li {
-    background-color: #ff4d4d;
+    background-color: var(--chip-background);
+    border-radius: var(--chip-border-radius);
 }
 
 ul li p.sourceName {
-    color: #181818;
+    color: var(--text-color);
     padding-left: 1.5em;
     padding-right: .25em;
 }
