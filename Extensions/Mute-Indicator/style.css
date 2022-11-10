@@ -8,13 +8,15 @@ body,
 html {
     font-family: Uni Sans CAPS;
     font-weight: 900;
+    font-size: 1.5em;
 }
 
 ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 100px);
-    gap: 1em;
+    display: flex;
+    gap: .2em .5em;
     list-style: none;
+    flex-wrap: wrap;
+    transition: all 1s ease;
 }
 
 ul li {
@@ -22,16 +24,14 @@ ul li {
 }
 
 ul li p.sourceName {
-    text-align: center;
     color: #181818;
-    padding-left: 1em;
+    padding-left: 1.5em;
+    padding-right: .25em;
 }
 
-ul li p.sourceName::before {
-    content: "";
-    width: 1em;
-    height: 1em;
+ul li p.sourceName {
     background-image: url(./Indiicator-image.png);
     background-size: 1em;
     background-repeat: no-repeat;
+    background-position: .25em 50%;
 }
