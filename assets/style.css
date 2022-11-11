@@ -410,7 +410,7 @@ h3 a.anchorjs-link,
 h5 a.anchorjs-link,
 h6 a.anchorjs-link {
   opacity: 0;
-  transition: opacity .2s;
+  transition: opacity 0.2s;
   z-index: 0;
   color: var(--v-primary-natural-white);
 }
@@ -424,6 +424,23 @@ h6:hover a.anchorjs-link {
   transition: opacity 1s;
 }
 
+p {
+  color: var(--v-primary-natural);
+  padding: .5em 0 0;
+  margin: 0;
+}
+
+.subtitle {
+  padding-top: 0;
+  color: #ccc;
+  font-size: 0.7rem;
+  font-weight: 100;
+}
+
+.subtitle a {
+  background: var(--v-background-mute);
+  padding-inline: .5em;
+}
 
 /* Other */
 code,
@@ -580,7 +597,7 @@ ul.footer-grid li > strong > em {
   footer.footer-info .footer-update {
     text-align: center;
   }
-  
+
   footer.footer-info .footer-edit {
     text-align: center;
   }
@@ -590,9 +607,8 @@ ul.button-grid {
   padding: 0;
   display: grid;
   gap: 2em 0.5em;
-  margin: 0.8em 0em;
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-  margin-block: 0.5em 2em;
+  margin-block: .9em 1.5em;
 }
 ul.list {
   grid-template-columns: 1fr;

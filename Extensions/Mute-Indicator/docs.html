@@ -1,0 +1,228 @@
+<script>
+  var date = "11/11/2022";
+  var time = "18:26";
+  var next = null;
+  var previous = null;
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta property="og:title" content="Mute Indicator" />
+    <title>Mute Indicator | Streamer.bot Actions</title>
+
+    <meta name="og:site_name" content="Streamer.bot Actions" />
+    <meta property="og:image" content="/assets/favicon.ico" />
+    <meta name="theme-color" content="#B80086" />
+
+    <meta
+      property="og:description"
+      content="Mute Indicator so you can see if and what sources are muted"
+    />
+
+    <link rel="stylesheet" href="/assets/style.css" />
+    <script src="/assets/head.js"></script>
+  </head>
+  <body>
+    <main>
+      <header class="page-info">
+        <p class="title">Mute Indicator</p>
+        <p class="description">
+          Mute Indicator so you can see if and what sources are muted
+        </p>
+      </header>
+      <h2>Import File</h2>
+      <ul class="button-grid">
+        <a href="./import.sb">
+          <li>
+            <i class="mdi mdi-file-download"></i>
+            <strong>
+              Import File
+              <em>Click to Download</em>
+            </strong>
+          </li>
+        </a>
+      </ul>
+      <h2>Installation</h2>
+      <p>
+        In Streamer.bot select <code>Import</code> in the top left.<br />
+        Drag and Drop the <code>Import File</code> into the
+        <code>Import String</code>.<br />
+      </p>
+
+      <img
+        class="img-400 margin-top"
+        src="./installation.png"
+        alt="installation.png"
+      />
+      <h2>Configuration</h2>
+      <h3>Streamer.bot</h3>
+      <p>
+        1. Make sure you've imported the import code
+        <a href="#installation">above</a>.<br />
+        2. Link the <code>Mute Indicator - Mute event</code> action to the
+        <code>InputMuteStateChanged</code> event in <code>Stream Apps</code>
+        <code>--></code> <code>OBS</code>.<br />
+        3. Make sure that the <code>Server/Clients</code> <code>--></code>
+        <code>Websocket Server</code> is enabled.<br />
+      </p>
+      <h3>OBS Studio</h3>
+      <p>
+        1. Make a browser source in OBS Studio with the settings:
+        <code>Width = 1920</code>, <code>Height = 1080</code>.<br />
+        2. Put the URL of the widget in the Browser Source, choose one
+        <a href="#widget">here</a>.<br />
+      </p>
+      <h2>
+        Widget
+        <p class="subtitle">
+          Put this URL into OBS:
+          <a href="https://ik1497.github.io/Extensions/Mute-Indicator/"
+            >https://ik1497.github.io/Extensions/Mute-Indicator/</a
+          >
+        </p>
+      </h2>
+      <img class="img-400" src="./overview.gif" alt="overview.gif" />
+
+      <h3>URL Parameters</h3>
+      <ul class="button-grid">
+        <a href="/Extensions/Basics/URL-Parameters">
+          <li>
+            <i class="mdi mdi-google-chrome"></i>
+            <strong>
+              URL Parameters
+              <em
+                >An explanation, on how to use these parameters in your browser
+                source</em
+              >
+            </strong>
+          </li>
+        </a>
+      </ul>
+      <h4>Font</h4>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>font-family</code></td>
+            <td class="table-left">
+              The font family, <code>default: Uni Sans CAPS</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-weight</code></td>
+            <td class="table-left">
+              The font weight, <code>default: 900</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-style</code></td>
+            <td class="table-left">
+              The font style, <code>default: normal</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-size</code></td>
+            <td class="table-left">
+              The font size, <code>default: 1.5em</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-color</code></td>
+            <td class="table-left">
+              The font color: <code>default: #181818</code><br />Not recommended
+              to change because the color of the image doesn't change.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <h4>Gap</h4>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>gap-height</code></td>
+            <td class="table-left">
+              The height of the gap between the rows of chips
+              <code>default: .2em</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>gap-width</code></td>
+            <td class="table-left">
+              The width of the gap between the chips <code>default: .5em</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Chips</h4>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>chip-background</code></td>
+            <td class="table-left">
+              The background of the chips
+              <code>default: #ff4d4d</code>.<br />Doesn't work with hex, use
+              RGB, HSL, etc.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>chip-border-radius</code></td>
+            <td class="table-left">
+              The border radius of the chips <code>default: 0</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Extra</h4>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>exclude</code></td>
+            <td class="table-left">
+              The audio sources to exclude in an array <code>no default</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Customize your widget! This example image below uses:<br />
+        <code
+          >https://ik1497.github.io/Extensions/Mute-Indicator?chip-background=rgb(255,
+          255, 255)&chip-border-radius=20px&exclude=["[A] Music"]</code
+        >
+      </p>
+
+      <img
+        class="img-400 margin-top"
+        src="./overview-url-paramaters.png"
+        alt="overview-url-paramaters.png"
+      />
+      <script src="/assets/footer.js"></script>
+    </main>
+    <script src="/assets/main.js"></script>
+  </body>
+</html>
