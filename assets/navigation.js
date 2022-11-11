@@ -4,5 +4,6 @@ document.write(`
 <a href="/Changelogs/"><li class="mdi mdi-fire">Changelogs (WIP)</li></a>
 <hr>
 <a href="/Extensions/Music"><li class="mdi mdi-spotify">Music Widget</li></a>
+<a target="_blank" href="https://extensions.streamer.bot/en/extensions/Mute-Indicator"><li class="mdi mdi-volume-mute">Mute Indicator</li></a>
 </ul>
 `);

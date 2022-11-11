@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url(/assets/fonts/font.css);
 :root {
   --image-size: 8em;
@@ -80,19 +79,19 @@ body {
   font-size: 2em;
 }
 
-body.small .container .bottom-container {
+body.hidden .container .bottom-container {
   transition: all 0.5s ease 0s;
   border-radius: 50% var(--border-radius-texts) var(--border-radius-texts) 50%;
 }
 
-body.small .container .bottom-container .texts {
+body.hidden .container .bottom-container .texts {
   transition: all 0.5s ease 0s;
   border-radius: 50% var(--border-radius-texts) var(--border-radius-texts) 50%;
   transform: translateX(-100%);
   opacity: 0;
 }
 
-body.small .container .album-cover {
+body.hidden .container .album-cover {
   transform: translateY(100%);
   opacity: 0;
   transition: all 0.5s ease 0.5s;
