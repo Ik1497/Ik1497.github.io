@@ -21,6 +21,7 @@ header.main-header a.title {
   margin-left: 0.5em;
   position: absolute;
   bottom: -2em;
+  text-decoration: none;
 }
 
 header.main-header a.title img {
@@ -32,6 +33,15 @@ header.main-header a.title p {
   font-family: Montserrat;
   font-weight: 700;
   color: var(--v-primary-natural-white);
+}
+
+header.main-header a.title p span {
+  color: var(--v-primary-natural-white);
+  font-size: .7em;
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+  color: var(--v-primary-natural-light);
+  border-left: 1px solid var(--v-primary-natural);
 }
 
 @media (max-width: 50em) {
