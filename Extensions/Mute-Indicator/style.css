@@ -1,11 +1,15 @@
 :root {
+    --font-family: Uni Sans CAPS;
+    --font-weight: 900;
+    --font-style: normal;
+    --font-size: 1.5em;
+    --font-color: #181818;
+
     --gap-height: .2em;
     --gap-width: .5em;
 
     --chip-background: #ff4d4d;
     --chip-border-radius: 0;
-
-    --text-color: #181818;
 }
 
 @import url(/assets/fonts/font.css);
@@ -16,9 +20,10 @@
 
 body,
 html {
-    font-family: Uni Sans CAPS;
-    font-weight: 900;
-    font-size: 1.5em;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-style: var(--font-style);
+    font-size: var(--font-size);
 }
 
 ul {
@@ -32,17 +37,16 @@ ul {
 ul li {
     background-color: var(--chip-background);
     border-radius: var(--chip-border-radius);
+    display: flex;
 }
 
 ul li p.sourceName {
-    color: var(--text-color);
-    padding-left: 1.5em;
-    padding-right: .25em;
+    color: var(--font-color);
+    padding-inline: .25em;
 }
 
-ul li p.sourceName {
-    background-image: url(./Mute-Indicator.png);
-    background-size: 1em;
-    background-repeat: no-repeat;
-    background-position: .25em 50%;
+.mute-indicator-image {
+    width: 1em;
+    aspect-ratio: 1;
+    padding-left: .25em;
 }

@@ -121,7 +121,7 @@ function widgetAnimation() {
   setTimeout(function () {
     document.body.classList.add("small");
   }, sizeDelay);
-  console.log("Animated succesfully");
+  console.log("Animated successfully");
 }
 
 ////////////////////////////
@@ -130,7 +130,7 @@ function widgetAnimation() {
 
 function refresh(node)
 {
-   var times = 3000; // gap in Milli Seconds;
+   var times = 3000;
 
    (function startRefresh()
    {
