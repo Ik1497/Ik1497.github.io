@@ -1,83 +1,65 @@
-/**
- * Adding Websocket after the Page is fully loaded
- * This is only nessesary if you are processing other content first
- * and can be skiped if not needed
- */
-window.addEventListener("load", (event) => {
-  console.log("Page has been fully loaded");
-  connectws();
-});
+///////////////////
+/// GET ACTIONS ///
+///////////////////
 
-/**
- * Connect to Websocket Server
- */
-function connectws() {
+connectws();
+
+function connectws(action) {
   if ("WebSocket" in window) {
-    console.log("Connecting to Streamer.Bot....");
-    ws = new WebSocket("ws://localhost:8080/");
-    bindEvents();
+    const ws = new WebSocket("ws://localhost:8080/");
+    console.log("Trying to connect to Streamer.bot...");
+
+    ws.onclose = function () {
+      setTimeout(connectws, 10000);
+      console.log(
+        "No connection found to Streamer.bot, reconnecting every 10s..."
+      );
+    };
+
+    ws.onopen = function () {
+      ws.send(
+        JSON.stringify({
+          request: "GetActions",
+          id: "123",
+        })
+      );
+      console.log("Connected to Streamer.bot");
+    };
+    ws.addEventListener("message", (event) => {
+      if (action === undefined) {
+        if (!event.data) return;
+        var data = JSON.parse(event.data);
+        document
+          .querySelector("body")
+          .insertAdjacentHTML("afterbegin", '<ul id="actions"></ul>');
+        for (var i = 0; i < data.actions.length; i++) {
+          var actions = data.actions[i];
+          document
+            .getElementById("actions")
+            .insertAdjacentHTML(
+              "beforeend",
+              `<li onclick="var action = '` +
+                actions.name +
+                `'; connectws(action);" id="` +
+                actions.name +
+                `">` +
+                actions.name +
+                `</li>`
+            );
+        }
+      }
+      else {
+        ws.send(
+          JSON.stringify({
+            request: "DoAction",
+            action: {
+              name: action
+            },
+            id: "123",
+          })
+        );
+        console.log('Running action: "' + action + '"...');
+      }
+    });
   }
 }
-
-/**
- * Binding Events after connecting to prevent Errors
- */
-function bindEvents() {
-  ws.onopen = function () {
-    console.log("Connected. Binding Events...");
-
-    // Subscribe here to the events you wanne listen to
-    ws.send(
-      JSON.stringify({
-        request: "Subscribe",
-        events: {
-          raw: ["Action", "SubAction"],
-          Custom: [],
-        },
-        id: "WebsocketDemo",
-      })
-    );
-  };
-
-  ws.onmessage = function (event) {
-    // grab message and parse JSON
-    const msg = event.data;
-    const wsdata = JSON.parse(msg);
-
-    console.debug(wsdata);
-
-    if (wsdata.event == "Raw" && wsdata.event.type == "Action") {
-      // Checking for Action names
-      switch (wsdata.data.name) {
-        case "Websocket Test":
-          console.log("Websocket Test ran");
-          break;
-        default:
-          console.log(wsdata.data.name);
-      }
-    }
-  };
-
-  // Catch Event code and try to reconnect
-  ws.onclose = function (event) {
-    console.log("Could not connect. Trying to reconnect...");
-    setTimeout(connectws, 10000);
-  };
-}
-
-///////////////////
-/// Actual Code ///
-///////////////////
-
-getActions();
-
-function getActions() {
-  ws.send(
-    JSON.stringify({
-      request: "GetActions",
-      id: "WSEGetActions",
-    })
-  );
-}
-
-console.log(JSON);

@@ -1,0 +1,27 @@
+@import url(/assets/fonts/Uni-Sans-CAPS/font.css);
+
+body {
+    background: #333;
+}
+
+ul#actions {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(400px,1fr));
+    gap: 1em .5em;
+}
+
+ul#actions li {
+    background: #222;
+    color: white;
+    padding-inline: 1em;
+    padding-block: 3em;
+    text-align: center;
+    font-family: Uni Sans CAPS;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+ul#actions li:hover {
+    background: #292929;
+}

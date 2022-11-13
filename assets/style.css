@@ -609,6 +609,8 @@ ul.button-grid {
   gap: 2em 0.5em;
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   margin-block: .9em 1.5em;
+  position: relative;
+  width: calc(100% - 2.3em);
 }
 ul.list {
   grid-template-columns: 1fr;
@@ -618,6 +620,7 @@ ul.button-grid li {
   text-decoration: none;
   color: var(--v-primary-natural);
 }
+
 ul.button-grid li {
   list-style: none;
   padding: 5px 20px;
@@ -629,7 +632,9 @@ ul.button-grid li {
   display: flex;
   animation: button-grid-load 750ms ease-in-out;
   height: 100%;
+  width: 100%;
 }
+
 ul.button-grid li:hover {
   box-shadow: #000 0px 0px 20px;
   transition: all 0.3s;
