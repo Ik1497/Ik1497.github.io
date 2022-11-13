@@ -4,10 +4,10 @@
 
 connectws();
 
-function connectws(action) {
+function connectws(actionId, actionName) {
   if ("WebSocket" in window) {
     const ws = new WebSocket("ws://localhost:8080/");
-    if (action === undefined) {
+    if (actionId === undefined || actionName === undefined) {
       console.log("Trying to connect to Streamer.bot...");
     }
 
@@ -25,12 +25,12 @@ function connectws(action) {
           id: "123",
         })
       );
-      if (action === undefined) {
+      if (actionId === undefined || actionName === undefined) {
         console.log("Connected to Streamer.bot");
       }
     };
     ws.addEventListener("message", (event) => {
-      if (action === undefined) {
+      if (actionId === undefined || actionName === undefined) {
         if (!event.data) return;
         var data = JSON.parse(event.data);
         document
@@ -51,9 +51,11 @@ function connectws(action) {
             .getElementById("actions")
             .insertAdjacentHTML(
               "beforeend",
-              `<li onclick="var action = '` +
+              `<li onclick="var actionId = '` +
                 actions.id +
-                `'; connectws(action);" id="` +
+                `'; var actionName = '` +
+                actions.name +
+                `'; connectws(actionId, actionName);" id="` +
                 actions.id +
                 `">` +
                 actions.name +
@@ -68,17 +70,23 @@ function connectws(action) {
           }
         }
       } else {
-        /*ws.send(
+        ws.send(
           JSON.stringify({
             request: "DoAction",
             action: {
-              id: action
+              id: actionId
             },
             id: "123",
           })
-        );*/
-        console.log('Running action: "' + action + '"... (SOON)');
-        return;
+        );
+        console.log('Running action: "' + actionName + '" with the id "' + actionId + '"... (SOON)');
+        var modalHtml =
+          `<div id="modal" class="modal"><div class="upper"><p class="modal-title">Action Config</p><p onclick="var modal = document.getElementById('modal'); modal.parentNode.removeChild(modal);" class="modal-close">&times;</p></div><div class="lower"><p class="modal-action-name">` +
+          actionName +
+          `</p><button class="modal-action-button">Run Action</button></div></div>`;
+        document
+          .querySelector("body")
+          .insertAdjacentHTML("beforeend", modalHtml);
       }
     });
   }

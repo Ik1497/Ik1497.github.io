@@ -71,3 +71,74 @@ ul#actions li:hover {
 ul#actions li.disabled:hover {
     background: #4f1f1f;
 }
+
+/* ==============
+   Modal
+   ============== */
+
+.modal {
+    background: #444;
+    color: white;
+    font-family: Uni Sans Caps;
+    font-weight: 900;
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    width: 50vw;
+    height: 50vh;
+    z-index: 5;
+}
+
+.modal .upper {
+    /* display: flex; */
+    background: #555;
+    align-items: center;
+    width: 100%;
+}
+
+.modal .upper .modal-title {
+    padding-left: .5em;
+    font-size: 1.5em;
+}
+
+.modal .upper .modal-close {
+    font-size: 2em;
+    position: absolute;
+    top: -.25em;
+    right: .5em;
+    cursor: pointer;
+}
+
+.modal .lower {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    font-size: 2em;
+}
+
+.modal .lower button {
+    font-size: 1em;
+    outline: 0;
+    border: 0;
+    background: none;
+    color: white;
+    cursor: pointer;
+    outline: 1px solid white;
+    outline-offset: .4em;
+    border-radius: 100vmax;
+}
+
+.modal .lower button:active {
+    color: #888;
+    outline-color: #888;
+}
+
+.modal-background {
+    background: linear-gradient(hsl(0, 0%, 0%, 10%), hsl(0, 0%, 0%, 75%));
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 1;
+    inset: 0;
+}
