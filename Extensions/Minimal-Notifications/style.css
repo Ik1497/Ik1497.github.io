@@ -1,0 +1,63 @@
+:root {
+    --font-family: Uni Sans CAPS;
+    --font-weight: 900;
+    --font-style: normal;
+    --font-size: 1.5em;
+    --font-color: #181818;
+
+    --background: hsl(0, 0%, 0% , 90%);
+    --background-alt: hsl(0, 0%, 60% , 20%);
+    --background-accent: rgb(206, 128, 240);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-style: var(--font-style);
+    font-size: var(--font-size);
+}
+.container ul {
+    display: flex;
+    justify-content: end;
+    align-items: baseline;
+}
+
+.container ul li {
+    display: grid;
+    grid-template-columns: 6em 1fr;
+    background: var(--background);
+    color: white;
+    width: 25em;
+    border-left: 5px solid var(--background-accent);
+    border-radius: 8px;
+}
+
+.container ul li .notification-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container ul li img {
+    width: 5em;
+    background: var(--background-alt);
+    border-radius: 100vmax;
+}
+
+.container ul li .title {
+
+}
+
+.container ul li .description {
+    font-size: .75em;
+    color: #ccc;
+}
+
+.container ul li .pre-description {
+    color: lightcoral;
+}
