@@ -29,36 +29,35 @@ function connectws(action) {
       if (action === undefined) {
         if (!event.data) return;
         var data = JSON.parse(event.data);
+        document.querySelector("body").insertAdjacentHTML("afterbegin" , `<header><p class="action-count">` + data.count + ` Actions</p></header>`);
+        console.log(data);
         document
           .querySelector("body")
-          .insertAdjacentHTML("afterbegin", '<ul id="actions"></ul>');
+          .insertAdjacentHTML("beforeend", '<ul id="actions"></ul>');
         for (var i = 0; i < data.actions.length; i++) {
           var actions = data.actions[i];
           document
             .getElementById("actions")
             .insertAdjacentHTML(
               "beforeend",
-              `<li onclick="var action = '` +
-                actions.name +
-                `'; connectws(action);" id="` +
-                actions.name +
-                `">` +
-                actions.name +
-                `</li>`
+              `<li onclick="var action = '` + actions.name + `'; connectws(action);" id="` + actions.id + `">` + actions.name + `<p class="group">` + actions.group + `</p><span class="tooltip">` + actions.id + `</span></li>`
             );
+            if (actions.enabled === false) {
+              document.getElementById(actions.id).classList.add("disabled");
+            }
         }
       }
       else {
-        ws.send(
-          JSON.stringify({
-            request: "DoAction",
-            action: {
-              name: action
-            },
-            id: "123",
-          })
-        );
-        console.log('Running action: "' + action + '"...');
+        // ws.send(
+        //   JSON.stringify({
+        //     request: "DoAction",
+        //     action: {
+        //       name: action
+        //     },
+        //     id: "123",
+        //   })
+        // );
+        console.log('Running action: "' + action + '"... (SOON)');
       }
     });
   }
