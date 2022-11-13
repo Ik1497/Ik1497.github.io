@@ -7,7 +7,9 @@ connectws();
 function connectws(action) {
   if ("WebSocket" in window) {
     const ws = new WebSocket("ws://localhost:8080/");
-    console.log("Trying to connect to Streamer.bot...");
+    if (action === undefined) {
+      console.log("Trying to connect to Streamer.bot...");
+    }
 
     ws.onclose = function () {
       setTimeout(connectws, 10000);
@@ -23,13 +25,22 @@ function connectws(action) {
           id: "123",
         })
       );
-      console.log("Connected to Streamer.bot");
+      if (action === undefined) {
+        console.log("Connected to Streamer.bot");
+      }
     };
     ws.addEventListener("message", (event) => {
       if (action === undefined) {
         if (!event.data) return;
         var data = JSON.parse(event.data);
-        document.querySelector("body").insertAdjacentHTML("afterbegin" , `<header><p class="action-count">` + data.count + ` Actions</p></header>`);
+        document
+          .querySelector("body")
+          .insertAdjacentHTML(
+            "afterbegin",
+            `<header><p class="action-count">` +
+              data.count +
+              ` Actions</p></header>`
+          );
         console.log(data);
         document
           .querySelector("body")
@@ -40,24 +51,34 @@ function connectws(action) {
             .getElementById("actions")
             .insertAdjacentHTML(
               "beforeend",
-              `<li onclick="var action = '` + actions.name + `'; connectws(action);" id="` + actions.id + `">` + actions.name + `<p class="group">` + actions.group + `</p><span class="tooltip">` + actions.id + `</span></li>`
+              `<li onclick="var action = '` +
+                actions.id +
+                `'; connectws(action);" id="` +
+                actions.id +
+                `">` +
+                actions.name +
+                `<p class="group">` +
+                actions.group +
+                `</p><span class="tooltip">` +
+                actions.id +
+                `</span></li>`
             );
-            if (actions.enabled === false) {
-              document.getElementById(actions.id).classList.add("disabled");
-            }
+          if (actions.enabled === false) {
+            document.getElementById(actions.id).classList.add("disabled");
+          }
         }
-      }
-      else {
-        // ws.send(
-        //   JSON.stringify({
-        //     request: "DoAction",
-        //     action: {
-        //       name: action
-        //     },
-        //     id: "123",
-        //   })
-        // );
+      } else {
+        /*ws.send(
+          JSON.stringify({
+            request: "DoAction",
+            action: {
+              id: action
+            },
+            id: "123",
+          })
+        );*/
         console.log('Running action: "' + action + '"... (SOON)');
+        return;
       }
     });
   }
