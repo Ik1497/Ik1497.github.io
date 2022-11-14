@@ -1,0 +1,15 @@
+name: Website Suggestion
+description: Make suggestions to my Website!
+body:
+- type: textarea
+  id: descripe_your_suggestion
+  attributes:
+    label: Descripe your suggestion!
+  validations:
+    required: true
+- type: textarea
+  id: additional_notes
+  attributes:
+    label: Anything else I might need to know?
+  validations:
+    required: false

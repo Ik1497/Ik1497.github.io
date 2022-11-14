@@ -1,3 +1,4 @@
+@import url(/assets/animation.css);
 :root {
     --font-family: Uni Sans CAPS;
     --font-weight: 900;
@@ -20,44 +21,48 @@ body {
     font-weight: var(--font-weight);
     font-style: var(--font-style);
     font-size: var(--font-size);
+    overflow: hidden;
 }
-.container ul {
+ul.notifications {
     display: flex;
-    justify-content: end;
-    align-items: baseline;
+    justify-content: start;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: .25em 0;
 }
 
-.container ul li {
+ul.notifications li {
     display: grid;
-    grid-template-columns: 6em 1fr;
+    grid-template-columns: 3.5em 1fr;
     background: var(--background);
     color: white;
-    width: 25em;
+    width: 20em;
     border-left: 5px solid var(--background-accent);
     border-radius: 8px;
+    position: relative;
+    min-height: 3.5em;
 }
 
-.container ul li .notification-content {
+ul.notifications li .notification-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.container ul li img {
-    width: 5em;
+ul.notifications li img {
+    width: 3em;
     background: var(--background-alt);
     border-radius: 100vmax;
+    margin: auto;
 }
 
-.container ul li .title {
-
-}
-
-.container ul li .description {
+ul.notifications li .description {
     font-size: .75em;
     color: #ccc;
+    margin-block: .25em;
 }
 
-.container ul li .pre-description {
-    color: lightcoral;
+ul.notifications li .pre-description {
+    color: #f08080;
+    margin-right: .25em;
 }

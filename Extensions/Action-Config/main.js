@@ -70,20 +70,20 @@ function connectws(actionId, actionName) {
           }
         }
       } else {
-        ws.send(
-          JSON.stringify({
-            request: "DoAction",
-            action: {
-              id: actionId
-            },
-            id: "123",
-          })
-        );
-        console.log('Running action: "' + actionName + '" with the id "' + actionId + '"... (SOON)');
+        // console.log(
+        //   'Running action: "' +
+        //     actionName +
+        //     '" with the id "' +
+        //     actionId +
+        //     '"... (SOON)'
+        // );
         var modalHtml =
           `<div id="modal" class="modal"><div class="upper"><p class="modal-title">Action Config</p><p onclick="var modal = document.getElementById('modal'); modal.parentNode.removeChild(modal);" class="modal-close">&times;</p></div><div class="lower"><p class="modal-action-name">` +
           actionName +
-          `</p><button class="modal-action-button">Run Action</button></div></div>`;
+          `</p><button onclick="ws.send(JSON.stringify({request: 'DoAction',action: {id: '` +
+          actionId +
+          `'},id: '123',})); console.log('Running action: ` +
+          actionName + `');" class="modal-action-button">Run Action</button></div></div>`;
         document
           .querySelector("body")
           .insertAdjacentHTML("beforeend", modalHtml);
