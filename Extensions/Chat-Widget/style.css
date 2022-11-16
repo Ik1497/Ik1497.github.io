@@ -7,8 +7,9 @@
     --font-color: #181818;
 
     --background: hsl(0, 0%, 0% , 90%);
-    --background-alt: hsl(0, 0%, 60% , 20%);
-    --background-accent: rgb(206, 128, 240);
+    --background-accent: #6441a5;
+    
+    --border-radius: 0;
 }
 
 * {
@@ -33,36 +34,47 @@ ul.notifications {
 
 ul.notifications li {
     display: grid;
-    grid-template-columns: 3.5em 1fr;
-    background: var(--background);
+    grid-template-columns: 3.75em 1fr;
     color: white;
-    width: 20em;
-    border-left: 5px solid var(--background-accent);
-    border-radius: 8px;
+    max-width: 20em;
+    width: 100%;
     position: relative;
     min-height: 3.5em;
 }
 
-ul.notifications li .notification-content {
+ul.messages li .message-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
+    padding-left: .25em;
+    background: var(--background);
+    border-radius: var(--border-radius);
+    border-right: 4px solid var(--background-accent);
 }
 
-ul.notifications li img {
-    width: 3em;
-    background: var(--background-alt);
-    border-radius: 100vmax;
+ul.messages li > img {
+    width: 3.5em;
+    background: var(--background);
     margin: auto;
 }
 
-ul.notifications li .description {
+ul.messages li .description {
     font-size: .75em;
     color: #ccc;
     margin-block: .25em;
 }
 
-ul.notifications li .pre-description {
+ul.messages li .pre-description {
     color: #f08080;
     margin-right: .25em;
+}
+
+ul.messages li .pre-description img {
+    width: .75em;
+    aspect-ratio: 1;
+    margin-right: .1em;
+}
+
+ul.messages li .pre-description img:last-child {
+    margin-right: .2em;
 }

@@ -1,21 +1,19 @@
-const langJson = JSON.stringify({
-  extensions: {
-    music: {
-      defaultSongTitle: "Play a Song",
-      defaultSongArtist: "for this widget to work!",
-    },
-    anotherWidget: {
-      lorem: "ipsum",
-      dolar: "sit",
-    },
-  },
-});
+var language; 
+function getLanguage() {
+(localStorage.getItem('language') == null) ? setLanguage('en') : false;
+$.ajax({ 
+url:  '/language/' +  localStorage.getItem('language') + '.json', 
+dataType: 'json', async: false, dataType: 'json', 
+success: function (lang) { language = lang } });
+}
 
-const lang = JSON.parse(langJson);
-console.log(lang);
+function setLanguage(lang) {
+localStorage.setItem('language', lang);
+}
+/////////////////////////
+/// Language Settings ///
+/////////////////////////
 
-const extensionsMusicDefaultSongTitle = lang.extensions.music.defaultSongTitle || "test";
-document.querySelector('[data-lang="extensions.music.defaultSongTitle"]').innerHTML = extensionsMusicDefaultSongTitle || "test";
-
-// const params = new URLSearchParams(window.location.search);
-// let transitionTime = params.get("lang") || "en";
+$(document).ready(function(){
+  $('#div1').text(language.extensions.music.defaultSongTitle);
+  });

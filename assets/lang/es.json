@@ -1,0 +1,8 @@
+{
+  "extensions": {
+    "music": {
+      "defaultSongTitle": "¡Reproduce una canción",
+      "defaultSongArtist": "para que este widget funcione!"
+    }
+  }
+}

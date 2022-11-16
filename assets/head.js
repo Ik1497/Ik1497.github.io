@@ -8,8 +8,6 @@ document.write(`
 <link rel="icon" href="/assets/favicon.ico" />
 <meta name="theme-color" content="#B80086">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 <script src="/assets/navigation.js"></script>
 <script src="/assets/header.js"></script>
 <script src="/assets/theme.js"></script>

@@ -3,10 +3,6 @@
     "music": {
       "defaultSongTitle": "Play a Song",
       "defaultSongArtist": "for this widget to work!"
-    },
-    "another widget": {
-      "lorem": "ipsum",
-      "dolar": "sit"
     }
   }
 }

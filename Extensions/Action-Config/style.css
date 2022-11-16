@@ -1,3 +1,4 @@
+@import url(/assets/root.css);
 @import url(/assets/fonts/Uni-Sans-CAPS/font.css);
 
 * {
@@ -6,13 +7,13 @@
 }
 
 body {
-    background: #333;
+    background: var(--v-background);
     overflow-x: hidden;
     padding: .5em;
 }
 
 header .action-count {
-    color: white;
+    color: var(--v-primary-natural-white);
     font-family: Uni Sans CAPS;
     font-weight: 900;
     display: flex;
@@ -29,8 +30,8 @@ ul#actions {
 }
 
 ul#actions li {
-    background: #222;
-    color: white;
+    background: var(--v-background-alt);
+    color: var(--v-primary-natural-white);
     padding-inline: 1em;
     padding-block: 3em;
     text-align: center;
@@ -45,7 +46,7 @@ ul#actions li.disabled {
 }
 
 ul#actions li .group {
-    color: #aaa;
+    color: var(--v-primary-natural-lighten);
     font-size: .7em;
 }
 
@@ -56,7 +57,7 @@ ul#actions li .tooltip {
     bottom: 0;
     text-align: center;
     left: 0;
-    color: #aaa;
+    color: var(--v-primary-natural-light);
     font-size: .7em;
 }
 
@@ -65,7 +66,7 @@ ul#actions li:hover .tooltip {
 }
 
 ul#actions li:hover {
-    background: #292929;
+    background: var(--v-background-soft);
 }
 
 ul#actions li.disabled:hover {
@@ -77,8 +78,8 @@ ul#actions li.disabled:hover {
    ============== */
 
 .modal {
-    background: #444;
-    color: white;
+    background: var(--v-background);
+    color: var(--v-primary-natural-white);
     font-family: Uni Sans Caps;
     font-weight: 900;
     position: fixed;
@@ -91,7 +92,7 @@ ul#actions li.disabled:hover {
 
 .modal .upper {
     /* display: flex; */
-    background: #555;
+    background: var(--v-background-soft);
     align-items: center;
     width: 100%;
 }
@@ -122,23 +123,14 @@ ul#actions li.disabled:hover {
     outline: 0;
     border: 0;
     background: none;
-    color: white;
+    color: var(--v-primary-natural-white);
     cursor: pointer;
-    outline: 1px solid white;
+    outline: 1px solid var(--v-primary-natural-white);
     outline-offset: .4em;
     border-radius: 100vmax;
 }
 
 .modal .lower button:active {
-    color: #888;
-    outline-color: #888;
-}
-
-.modal-background {
-    background: linear-gradient(hsl(0, 0%, 0%, 10%), hsl(0, 0%, 0%, 75%));
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    z-index: 1;
-    inset: 0;
+    color: var(--v-primary-natural-lighten);
+    outline-color: var(--v-primary-natural-lighten);
 }

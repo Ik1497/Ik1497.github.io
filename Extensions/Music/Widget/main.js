@@ -68,10 +68,7 @@ let sizeDelay = params.get("size-delay") || 8000;
 let transitionTime = params.get("transition-time");
 root.style.setProperty("--transition-time", transitionTime);
 let transitionTimingFunction = params.get("transition-timing-function");
-root.style.setProperty(
-  "--transition-timing-function",
-  transitionTimingFunction
-);
+root.style.setProperty("--transition-timing-function", transitionTimingFunction);
 
 /// Background ///
 let backgroundOpacity = params.get("background-opacity");
