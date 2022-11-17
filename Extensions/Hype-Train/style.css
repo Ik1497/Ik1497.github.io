@@ -1,0 +1,274 @@
+@import url(/assets/animation.css);
+:root {
+  --font-family: Uni Sans CAPS;
+  --font-weight: 900;
+  --font-style: normal;
+  --font-size: 1em;
+  --font-color: #ffffff;
+
+  --background: hsl(0, 0%, 0%, 70%);
+  --background-progress-bar: hsl(277, 100%, 72%);
+
+  --border-radius: .5em;
+  --animation-duration: 1s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  font-style: var(--font-style);
+  font-size: var(--font-size);
+  color: var(--font-color);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: right;
+  margin: 1em;
+  height: 100vh;
+}
+
+.hype-train {
+  max-width: 30em;
+  width: 100%;
+  height: 3em;
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+
+  display: grid;
+  grid-template: 
+    ". hype-train-left hype-train-percent ." auto
+    / .5em auto max-content .5em;
+}
+
+.hype-train .hype-train-background {
+    background: var(--background);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: -2;
+    border-radius: var(--border-radius);
+    animation: on-load-hype-train-background var(--animation-duration) forwards ease;
+}
+
+.hype-train .hype-train-progress-bar {
+    transition: width 1s ease;
+    background: var(--background-progress-bar);
+    height: 100%;
+    width: 0%;
+    position: absolute;
+    z-index: -1;
+    border-radius: var(--border-radius);
+    animation: on-load-hype-train-progress-bar var(--animation-duration) forwards ease;
+}
+
+.hype-train .hype-train-percent {
+    grid-area: hype-train-percent;
+    font-size: 2.5em;
+    animation: on-load-hype-train-percent var(--animation-duration) forwards ease;
+}
+
+.hype-train .left {
+    grid-area: hype-train-left;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hype-train .hype-train-level {
+    background: var(--background);
+    padding-inline: .3em;
+    border-radius: .2em;
+    width: fit-content;
+    font-size: 1em;
+    animation: on-load-hype-train-level var(--animation-duration) forwards ease;
+}
+
+.hype-train .hype-train-time { /* Adding Soon! */
+    font-weight: 100;
+    font-size: 1em;
+    width: fit-content;
+    animation: on-load-hype-train-time var(--animation-duration) forwards ease;
+    display: none;
+}
+
+/* On Load Animations */
+@keyframes on-load-hype-train-background {
+    0% {
+        transform: translateY(100%);
+    }
+    20% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes on-load-hype-train-progress-bar {
+    0% {
+        transform: translateY(100%);
+    }
+    80% {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes on-load-hype-train-percent {
+    0% {
+        transform: translateX(100%);
+    }
+    40% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes on-load-hype-train-level {
+    0% {
+        transform: translateX(-150%);
+    }
+    40% {
+        transform: translateX(-150%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes on-load-hype-train-time {
+    0% {
+        transform: translateX(-150%);
+    }
+    50% {
+        transform: translateX(-150%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+/* On Remove Animations */
+.hype-train.remove .hype-train-background {
+    animation: on-remove-hype-train-background var(--animation-duration) forwards ease;
+}
+
+.hype-train.remove .hype-train-progress-bar {
+    animation: on-remove-hype-train-progress-bar var(--animation-duration) forwards ease;
+}
+
+.hype-train.remove .hype-train-percent {
+    animation: on-remove-hype-train-percent var(--animation-duration) forwards ease;
+}
+
+.hype-train.remove .hype-train-level {
+    animation: on-remove-hype-train-level var(--animation-duration) forwards ease;
+}
+
+.hype-train.remove .hype-train-time {
+    animation: on-remove-hype-train-time var(--animation-duration) forwards ease;
+}
+
+@keyframes on-remove-hype-train-background {
+    0% {
+        transform: translateY(0%);
+    }
+    40% {
+        transform: translateY(0%);
+    }
+    80% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes on-remove-hype-train-progress-bar {
+    0% {
+        transform: translateY(0%);
+    }
+    30% {
+        transform: translateY(0%);
+    }
+    70% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes on-remove-hype-train-percent {
+    0% {
+        transform: translateX(0%);
+    }
+    60% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes on-remove-hype-train-level {
+    0% {
+        transform: translateX(0%);
+    }
+    60% {
+        transform: translateX(-150%);
+    }
+    100% {
+        transform: translateX(-150%);
+    }
+}
+
+@keyframes on-remove-hype-train-time {
+    0% {
+        transform: translateX(0%);
+    }
+    50% {
+        transform: translateX(-150%);
+    }
+    100% {
+        transform: translateX(-150%);
+    }
+}
+/* Hype Train Alert */
+.hype-train-alert {
+    background: var(--background-progress-bar);
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    position: absolute;
+    border-radius: var(--border-radius);
+    animation: hype-train-alert 5s forwards ease;
+    transform: translateY(100%);
+}
+
+@keyframes hype-train-alert {
+    0% {
+        transform: translateY(100%);
+    }
+    15% {
+        transform: translateY(0%);
+    }
+    85% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+

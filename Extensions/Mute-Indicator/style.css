@@ -26,7 +26,7 @@ html {
     font-size: var(--font-size);
 }
 
-body ul {
+ul {
     display: flex;
     gap: var(--gap-height) var(--gap-width);
     list-style: none;
@@ -34,18 +34,18 @@ body ul {
     transition: all 1s ease;
 }
 
-body ul li {
+ul li {
     background-color: var(--chip-background);
     border-radius: var(--chip-border-radius);
     display: flex;
 }
 
-body ul li p.sourceName {
+ul li p.sourceName {
     color: var(--font-color);
     padding-inline: .25em;
 }
 
-body svg {
+svg {
     width: 1em;
     aspect-ratio: 1;
     padding-left: .25em;
