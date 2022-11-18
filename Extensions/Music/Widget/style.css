@@ -191,5 +191,5 @@ body.small .progress-bar {
 
 body.small .progress-bar .end-time,
 body.small .progress-bar .start-time {
-  color: transparent;
+        color: transparent;
 }

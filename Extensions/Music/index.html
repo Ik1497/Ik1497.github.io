@@ -1,6 +1,6 @@
 <script>
-  var date = "25/09/2022";
-  var time = "14:17";
+  var date = "18/11/2022";
+  var time = "8:30";
   var next = null;
   var previous = null;
 </script>
@@ -29,212 +29,33 @@
         <p class="title">Music Widget</p>
         <p class="description">Music Widget for Spotify</p>
       </header>
-      <h2>Overview</h2>
-      1. Choose what widget you want to use.<br />
-      2. Make a browser source in OBS with the settings:
-      <code>Width = 1920</code>, <code>Height = 1080</code>.<br />
-      3. Put the URL of the widget in the Browser Source, choose one below.<br />
-      <a href="https://ik1497.github.io/Extensions/Music/Widget/"
-        >https://ik1497.github.io/Extensions/Music/Widget/</a
-      ><br />
-      <a
-        style="pointer-events: none; color: #ff5f5f"
-        href="https://ik1497.github.io/Extensions/Music/Minimal/"
-        >https://ik1497.github.io/Extensions/Music/Minimal/ (soon)</a
-      >
-      <h2>URL Parameters</h2>
+      <h2>Widgets</h2>
+      <p class="subtitle">Choose your favorite widget here!</p>
       <ul class="button-grid">
         <a href="/Extensions/Basics/URL-Parameters">
           <li>
-            <i class="mdi mdi-google-chrome"></i>
+            <i class="mdi mdi-spotify"></i>
             <strong>
-              URL Parameters
-              <em
-                >An explanation, on how to use these parameters in your browser
-                source</em
-              >
+              Default Widget
             </strong>
           </li>
         </a>
       </ul>
-      <h3>Transition</h3>
-      <table>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>size-delay</code></td>
-            <td class="table-left">
-              The delay between transitioning from small to big and vice versa
-              <code>Default: 8000<small>ms</small></code>
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>transition-time</code></td>
-            <td class="table-left">
-              The time it takes to transition from the small to the big size and
-              vice versa <code>Default: 1s</code>
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>transition-timing-function</code></td>
-            <td class="table-left">
-              The transition timing function <code>Default: ease</code>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <h3>Background</h3>
-      <table>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>background-opacity</code></td>
-            <td class="table-left">The background opacity of the widget.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>background-hue</code></td>
-            <td class="table-left">
-              The background hue of the widget
-              <code>Choose between: 0-360</code>,
-              <code>recommended: 0, 30, 230, 240 or 345</code>.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>background-saturation</code></td>
-            <td class="table-left">
-              The background saturation of the widget
-              <code>Choose between: 0-100</code>,<br />
-              used for how much hue gets used.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>background-lightness1</code></td>
-            <td class="table-left">
-              The background background lightness top,
-              <code>Choose between 0-100</code>, <code>0: light, 100: dark</code
-              ><br />
-              Used for how light/dark the hue is.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>background-lightness2</code></td>
-            <td class="table-left">
-              The background background lightness bottom,
-              <code>Choose between 0-100</code>, <code>0: light, 100: dark</code
-              ><br />
-              Used for how light/dark the hue is.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <h3>Font</h3>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>font-family</code></td>
-            <td class="table-left">
-              The Font Family <strong>Case Sensitive</strong>
-              <code>Default: Montserrat</code>,<br />
-              If you have other google fonts you want to use, send
-              <code>ik#1497</code> a dm on Discord.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>color-primary</code></td>
-            <td class="table-left">
-              The primary text color, used for song title.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>color-accent</code></td>
-            <td class="table-left">
-              The accent text color, used for song artist and the song duration.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>alt-background-color</code></td>
-            <td class="table-left">
-              The alternative background color, used for album cover background.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <h3>Sizing</h3>
-      <table>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>canvas-spacing</code></td>
-            <td class="table-left">
-              The spacing on the bottom and left of the widget
-              <code>Default: 1em</code>.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>height</code></td>
-            <td class="table-left">The height of the entire widget.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>width</code></td>
-            <td class="table-left">The width of the entire widget.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>border-radius</code></td>
-            <td class="table-left">The rounded corners of the widget.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>height-small</code></td>
-            <td class="table-left">
-              The height of the entire widget when it's is in it's small state.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>border-radius-small</code></td>
-            <td class="table-left">
-              The rounded corners when the widget is in it's small state.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <h3>Visibility</h3>
-      <table>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>progress-bar-hidden</code></td>
-            <td class="table-left">
-              Hides the progress bar.
-              <span class="url-parameter-novalue"></span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <img class="img-400" src="./Widget/overview.gif" alt="overview.gif">
+
+      <hr>
+
+      <ul class="button-grid">
+        <a href="/Extensions/Basics/URL-Parameters">
+          <li>
+            <i class="mdi mdi-spotify"></i>
+            <strong>
+              Minimal widget
+            </strong>
+          </li>
+        </a>
+      </ul>
+      <img class="img-400" src="./Minimal/overview.gif" alt="overview.gif">
       <script src="/assets/footer.js"></script>
     </main>
     <script src="/assets/main.js"></script>

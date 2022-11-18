@@ -68,7 +68,7 @@ function connectws() {
       if (albumArt === "") return;
 
       update(songName, artistName, albumArt, duration);
-    });
+  });
   }
 }
 
@@ -78,9 +78,9 @@ function update(songName, artistName, albumArt, duration) {
   document.querySelector(".songName").innerHTML = songName || songNameDefault;
   document.querySelector(".album-cover").src = albumArt || albumArtDefault;
   document.querySelector(".end-time").innerHTML = duration || durationDefault;
-    widgetAnimation();
     refreshAlbumCover();
-}
+    widgetAnimation();
+  }
 
 ws.onclose = function (event) {
   console.log("Websocket Disconnected...");
@@ -100,7 +100,6 @@ var root = document.querySelector(":root");
 const params = new URLSearchParams(window.location.search);
 
 /// Transition ///
-let sizeDelay = params.get("size-delay") || 8000;
 let transitionTime = params.get("transition-time");
 root.style.setProperty("--transition-time", transitionTime);
 let transitionTimingFunction = params.get("transition-timing-function");
@@ -108,8 +107,6 @@ root.style.setProperty(
   "--transition-timing-function",
   transitionTimingFunction
 );
-
-/// Animation
 
 /// Background ///
 let backgroundOpacity = params.get("background-opacity");
@@ -157,6 +154,8 @@ if (progressBarHidden === "") {
 /// Animation Code ///
 //////////////////////
 function widgetAnimation() {
+  let sizeDelay = new URLSearchParams(window.location.search).get("size-delay") || 8000;
+  console.log(sizeDelay);
   document.body.classList.remove("small");
   setTimeout(function () {
     document.body.classList.add("small");
