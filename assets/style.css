@@ -431,10 +431,16 @@ p {
 }
 
 .subtitle {
-  padding-top: 0;
-  color: #ccc;
+  padding: 0;
+  color: #a5a5a5;
   font-size: 0.7rem;
   font-weight: 100;
+}
+
+h2:has(~ .subtitle),
+h3:has(~ .subtitle),
+h4:has(~ .subtitle) {
+  margin-bottom: 0;
 }
 
 .subtitle a {
@@ -708,6 +714,7 @@ ul.grid-list li:nth-child(odd) {
 }
 
 .img-400 {
+  height: fit-content;
   max-width: 30em;
   width: 100%;
   margin-bottom: 1em;

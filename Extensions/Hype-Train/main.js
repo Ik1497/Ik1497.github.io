@@ -5,7 +5,8 @@ connectws();
 
 function connectws() {
   if ("WebSocket" in window) {
-    const ws = new WebSocket("ws://localhost:8080/");
+    let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
+    const ws = new WebSocket(wsServerUrl);
     console.log("Trying to connect to Streamer.bot...");
 
     ws.onclose = function () {
@@ -106,7 +107,7 @@ function connectws() {
           .querySelector(".hype-train-background")
           .insertAdjacentHTML(
             "afterend",
-            `<div class="hype-train-alert">Hype Train Completed!</div>`
+            `<div style="--duration: 10s;" class="hype-train-alert"><marquee direction="right" scrollamount="10">Hype Train Completed!</marquee></div>`
           );
         setTimeout(function () {
           document
@@ -117,7 +118,7 @@ function connectws() {
                 hypeTrainDataContributorCount +
                 ` Contributors</div>`
             );
-        }, 3500);
+        }, 8000);
 
         setTimeout(function () {
           document
@@ -131,14 +132,14 @@ function connectws() {
               document.querySelector(".hype-train-alert")
             );
             document.querySelector(".hype-train").classList.add("remove");
-        }, 10000);
+        }, 13000);
 
         setTimeout(function () {
           document.querySelector(".hype-train-progress-bar").style.width = "0%";
           document.querySelector(".hype-train-percent").innerHTML = "0%";
           document.querySelector(".hype-train-level").innerHTML = "LVL 1";
           document.querySelector(".hype-train-time").innerHTML = "00:00";
-        }, 1000);
+        }, 2000);
 
         setTimeout(function () {
           document
@@ -146,8 +147,51 @@ function connectws() {
           .parentNode.removeChild(
             document.querySelector(".hype-train")
           );
-        }, 13000)
+        }, 14500)
       }
     });
   }
+}
+
+//////////////////////
+/// URL Paramaters ///
+//////////////////////
+// General
+const params = new URLSearchParams(window.location.search);
+var root = document.querySelector(":root");
+
+// Font
+let fontFamily = params.get("font-family");
+root.style.setProperty("--font-family", fontFamily);
+
+let fontWeight = params.get("font-weight");
+root.style.setProperty("--font-weight", fontWeight);
+
+let fontStyle = params.get("font-style");
+root.style.setProperty("--font-style", fontStyle);
+
+let fontSize = params.get("font-size");
+root.style.setProperty("--font-size", fontSize);
+
+let fontColor = params.get("font-color");
+root.style.setProperty("--font-color", fontColor);
+
+// Misc
+let background = params.get("background");
+root.style.setProperty("--background", background);
+
+let backgroundProgressBar = params.get("background-progress-bar");
+root.style.setProperty("--background-progress-bar", backgroundProgressBar);
+
+let borderRadius = params.get("border-radius");
+root.style.setProperty("--border-radius", borderRadius);
+
+// Theme
+let theme = params.get("theme");
+
+if (theme === "coming soon") {
+  document.body.setAttribute("data-theme", "coming soon");
+}
+else {
+  console.log("Theme unknown");
 }

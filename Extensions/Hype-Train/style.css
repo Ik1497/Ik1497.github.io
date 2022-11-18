@@ -4,13 +4,13 @@
   --font-weight: 900;
   --font-style: normal;
   --font-size: 1em;
-  --font-color: #ffffff;
+  --font-color: #fff;
 
   --background: hsl(0, 0%, 0%, 70%);
   --background-progress-bar: hsl(277, 100%, 72%);
-
   --border-radius: .5em;
-  --animation-duration: 1s;
+
+  --animation-duration: 1s; /* Not Changeble yet, need to rework some code for that */
 }
 
 * {
@@ -214,10 +214,10 @@ body {
         transform: translateX(0%);
     }
     60% {
-        transform: translateX(100%);
+        transform: translateX(150%);
     }
     100% {
-        transform: translateX(100%);
+        transform: translateX(150%);
     }
 }
 
@@ -253,7 +253,8 @@ body {
     place-items: center;
     position: absolute;
     border-radius: var(--border-radius);
-    animation: hype-train-alert 5s forwards ease;
+    --duration: 5s;
+    animation: hype-train-alert var(--duration) forwards ease;
     transform: translateY(100%);
 }
 

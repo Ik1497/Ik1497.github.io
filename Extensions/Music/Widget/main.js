@@ -33,6 +33,14 @@ ws.addEventListener("message", (event) => {
   var artistName = data.data?.artistName;
   var albumArt = data.data?.albumArt;
   var duration = data.data?.duration;
+
+  var durationSeconds = duration / 1000;
+  var durationMinutes = durationSeconds / 60;
+  var durationSecondsRounded = Math.floor((durationMinutes - Math.floor(durationMinutes)) * 60);
+  var durationMinutesRounded = Math.floor(durationMinutes);
+
+  duration = durationMinutesRounded + ":" + durationSecondsRounded;
+
   update(songName, artistName, albumArt, duration);
   if (songName != undefined) {widgetAnimation();}
 });
