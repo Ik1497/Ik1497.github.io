@@ -13,7 +13,9 @@ connectws();
 
 function connectws() {
   if ("WebSocket" in window) {
-    let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
+    let wsServerUrl =
+      new URLSearchParams(window.location.search).get("ws") ||
+      "ws://localhost:8080/";
     const ws = new WebSocket(wsServerUrl);
     console.log("Trying to connect to Streamer.bot...");
 
@@ -45,18 +47,17 @@ function connectws() {
       var artistName = data.data?.artistName;
       var albumArt = data.data?.albumArt;
       var duration = data.data?.duration;
-      var durationIncludes = duration.includes(":")
+      var durationIncludes = duration.includes(":");
 
       if (durationIncludes != true) {
+        var durationSeconds = duration / 1000;
+        var durationMinutes = durationSeconds / 60;
+        var durationSecondsRounded = Math.floor(
+          (durationMinutes - Math.floor(durationMinutes)) * 60
+        );
+        var durationMinutesRounded = Math.floor(durationMinutes);
 
-      var durationSeconds = duration / 1000;
-      var durationMinutes = durationSeconds / 60;
-      var durationSecondsRounded = Math.floor(
-        (durationMinutes - Math.floor(durationMinutes)) * 60
-      );
-      var durationMinutesRounded = Math.floor(durationMinutes);
-    
-      duration = durationMinutesRounded + ":" + durationSecondsRounded;
+        duration = durationMinutesRounded + ":" + durationSecondsRounded;
       }
 
       if (songName === undefined) return;
@@ -68,7 +69,7 @@ function connectws() {
       if (albumArt === "") return;
 
       update(songName, artistName, albumArt, duration);
-  });
+    });
   }
 }
 
@@ -78,17 +79,8 @@ function update(songName, artistName, albumArt, duration) {
   document.querySelector(".songName").innerHTML = songName || songNameDefault;
   document.querySelector(".album-cover").src = albumArt || albumArtDefault;
   document.querySelector(".end-time").innerHTML = duration || durationDefault;
-    refreshAlbumCover();
-    widgetAnimation();
-  }
-
-ws.onclose = function (event) {
-  console.log("Websocket Disconnected...");
-  websocketDisconnect();
-};
-
-function websocketDisconnect() {
-  document.body.classList.add("websocketDisconnect");
+  refreshAlbumCover();
+  widgetAnimation();
 }
 
 ////////////////
@@ -154,7 +146,8 @@ if (progressBarHidden === "") {
 /// Animation Code ///
 //////////////////////
 function widgetAnimation() {
-  let sizeDelay = new URLSearchParams(window.location.search).get("size-delay") || 8000;
+  let sizeDelay =
+    new URLSearchParams(window.location.search).get("size-delay") || 8000;
   console.log(sizeDelay);
   document.body.classList.remove("small");
   setTimeout(function () {

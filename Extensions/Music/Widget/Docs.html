@@ -29,19 +29,20 @@
         <p class="title">Music Widget</p>
         <p class="description">Music Widget for Spotify</p>
       </header>
-      <h2>Overview</h2>
-      1. Choose what widget you want to use.<br />
-      2. Make a browser source in OBS with the settings:
+      <h2>Configuration</h2>
+      <h3>OBS Studio</h3>
+      1. Make a browser source in OBS Studio with the settings:
       <code>Width = 1920</code>, <code>Height = 1080</code>.<br />
-      3. Put the URL of the widget in the Browser Source, choose one below.<br />
-      <a href="https://ik1497.github.io/Extensions/Music/Widget/"
-        >https://ik1497.github.io/Extensions/Music/Widget/</a
-      ><br />
-      <a
-        style="pointer-events: none; color: #ff5f5f"
-        href="https://ik1497.github.io/Extensions/Music/Minimal/"
-        >https://ik1497.github.io/Extensions/Music/Minimal/ (soon)</a
-      >
+      2. Put the URL of the widget in the Browser Source, find URL
+      <a href="#widget">here</a>.<br />
+
+      <h2>Widget</h2>
+      <p>
+        Put this URL into OBS:
+        <a href="https://ik1497.github.io/Extensions/Music/Widget/"
+          >https://ik1497.github.io/Extensions/Music/Widget/</a>
+      </p>
+      <img class="img-400" src="./overview.gif" alt="overview.gif" />
       <h2>URL Parameters</h2>
       <ul class="button-grid">
         <a href="/Extensions/Basics/URL-Parameters">
@@ -57,6 +58,24 @@
           </li>
         </a>
       </ul>
+      <h3>Misc</h3>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>ws</code></td>
+            <td class="table-left">
+              The websocket server of streamer.bot
+              <code>default: ws://localhost:8080/</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <h3>Transition</h3>
       <table>
         <thead>
@@ -150,9 +169,7 @@
             <td class="table-right"><code>font-family</code></td>
             <td class="table-left">
               The Font Family <strong>Case Sensitive</strong>
-              <code>Default: Montserrat</code>,<br />
-              If you have other google fonts you want to use, send
-              <code>ik#1497</code> a dm on Discord.
+              <code>Default: Montserrat</code>.
             </td>
           </tr>
           <tr>
@@ -231,10 +248,25 @@
             <td class="table-left">
               Hides the progress bar.
               <span class="url-parameter-novalue"></span>
-            </td>
+              </td>
           </tr>
         </tbody>
       </table>
+      <p>
+        Make it your own with URL Parameters! This example image below uses:<br />
+        <code
+          >https://ik1497.github.io/Extensions/Mute-Indicator?chip-background=rgb(255,
+          255, 255)&chip-border-radius=20px&exclude=["[A] Music"]</code
+        >
+      </p>
+    <img
+      class="img-400 margin-top"
+      src="./overview-url-paramaters.png"
+      alt="overview-url-paramaters.png" />
+    <p>
+      For any suggestions about this widget or any theme feel free to send me
+      a DM on discord or open an <a href="/Socials/Issues">issue</a>.
+    </p>
       <script src="/assets/footer.js"></script>
     </main>
     <script src="/assets/main.js"></script>
