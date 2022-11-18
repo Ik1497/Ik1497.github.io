@@ -1,59 +1,85 @@
 <script>
-    var date = "29/09/2022";
-    var time = "12:39";
-    var next = null;
-    var previous = null;
+  var date = "29/09/2022";
+  var time = "12:39";
+  var next = null;
+  var previous = null;
 </script>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta property="og:title" content="Widget Maker" />
-<title>Widget Maker  | Streamer.bot Actions</title>
+  <head>
+    <meta property="og:title" content="Widget Maker" />
+    <title>Widget Maker | Streamer.bot Actions</title>
 
-<meta name="og:site_name" content="Streamer.bot Actions"/>
-<meta property="og:image" content="/assets/favicon.ico" />
-<meta name="theme-color" content="#B80086">
+    <meta name="og:site_name" content="Streamer.bot Actions" />
+    <meta property="og:image" content="/assets/favicon.ico" />
+    <meta name="theme-color" content="#B80086" />
 
-<meta property="og:description" content="On this page you can asjust the settings of the widgets!" />
+    <meta
+      property="og:description"
+      content="On this page you can asjust the settings of the widgets!" />
 
-<link rel="stylesheet" href="/assets/style.css">
-<script src="/assets/head.js"></script>
-</head>
-<body>
-<main>
-    <header class="page-info">
+    <link rel="stylesheet" href="/assets/style.css" />
+    <script src="/assets/head.js"></script>
+  </head>
+  <body>
+    <main>
+      <header class="page-info">
         <p class="title">Widget Maker</p>
-        <p class="description">On this page you can asjust the settings of the widgets!</p>
-    </header>
-    <form>
+        <p class="description">
+          On this page you can asjust the settings of the widgets!
+        </p>
+      </header>
+      <form>
         <div class="form-box">
-            <label class="mdi mdi-web"> Language (Two letter code)</label>
-            <input onblur="onBlur()" onfocus="onBlur()" type="text" id="Language" value="en" placeholder="en"><br>
+          <label class="mdi mdi-web"> Language (Two letter code)</label>
+          <input
+            onblur="onBlur()"
+            onfocus="onBlur()"
+            type="text"
+            id="Language"
+            value="en"
+            placeholder="en" /><br />
         </div>
         <div class="form-box">
-            <label class="mdi mdi-format-size"> Font Size (px)</label>
-            <input onblur="onBlur()" onfocus="onBlur()" type="number" id="fontSize" value="24" placeholder="24"><br>
+          <label class="mdi mdi-format-size"> Font Size (px)</label>
+          <input
+            onblur="onBlur()"
+            onfocus="onBlur()"
+            type="number"
+            id="fontSize"
+            value="24"
+            placeholder="24" /><br />
         </div>
         <div class="form-box">
-            <label class="mdi mdi-format-color-fill"> Background Color</label>
-            <input onblur="onBlur()" onfocus="onBlur()" type="color" id="backgroundColor" value="#141414"><br>
+          <label class="mdi mdi-format-color-fill"> Background Color</label>
+          <input
+            onblur="onBlur()"
+            onfocus="onBlur()"
+            type="color"
+            id="backgroundColor"
+            value="#141414" /><br />
         </div>
         <div class="form-box">
-            <label class="mdi mdi-format-color-text"> Text Color</label>
-            <input onblur="onBlur()" onfocus="onBlur()" type="color" id="textColor" value="#ffffff"><br>
+          <label class="mdi mdi-format-color-text"> Text Color</label>
+          <input
+            onblur="onBlur()"
+            onfocus="onBlur()"
+            type="color"
+            id="textColor"
+            value="#ffffff" /><br />
         </div>
-    </form>
-    <pre><code id="widgetUrl" class="language-text">
+      </form>
+      <pre><code id="widgetUrl" class="language-text">
         https://ik1497.github.io/Files/Scoreboard.html?fontSize=24px&backgroundColor=#000000&textColor=#ffffff
     </code></pre>
-    <script src="/assets/footer.js"></script>
-</main>
-  <script src="/assets/main.js"></script>
-</body>
+      <script src="/assets/footer.js"></script>
+    </main>
+    <script src="/assets/main.js"></script>
+  </body>
 </html>
 <script src="/assets/widget-maker.js"></script>
 <style>
-/* input[type=color]::before {
+  /* input[type=color]::before {
     content: "#000";
     color: var(--v-primary-natural);
     position: absolute;
@@ -61,12 +87,19 @@
 } */
 </style>
 <script>
-function onBlur() {
-    var fontSize = document.getElementById('fontSize').value;
-    var backgroundColor = document.getElementById('backgroundColor').value;
-    var textColor = document.getElementById('textColor').value;
-    document.getElementById('widgetUrl').innerHTML = "https://ik1497.github.io/Files/Scoreboard.html?fontSize=" + fontSize + "px&backgroundColor=" + backgroundColor + "&textColor=" + textColor + ""
+  function onBlur() {
+    var fontSize = document.getElementById("fontSize").value;
+    var backgroundColor = document.getElementById("backgroundColor").value;
+    var textColor = document.getElementById("textColor").value;
+    document.getElementById("widgetUrl").innerHTML =
+      "https://ik1497.github.io/Files/Scoreboard.html?fontSize=" +
+      fontSize +
+      "px&backgroundColor=" +
+      backgroundColor +
+      "&textColor=" +
+      textColor +
+      "";
 
     // document.getElementById('backgroundColor').style.content = "'" + backgroundColor + "'"
-}
+  }
 </script>

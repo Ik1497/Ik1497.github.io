@@ -12,7 +12,8 @@ connectws();
 
 function connectws() {
   if ("WebSocket" in window) {
-    const ws = new WebSocket("ws://localhost:8080/");
+    let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
+    const ws = new WebSocket(wsServerUrl);
     console.log("Trying to connect to Streamer.bot...");
 
     ws.onclose = function () {

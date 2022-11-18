@@ -9,10 +9,15 @@ var durationDefault = "N/A";
 //////////////////////
 /// Websocket Code ///
 //////////////////////
-const ws = new WebSocket("ws://127.0.0.1:8080/");
+let wsServerUrl =
+  new URLSearchParams(window.location.search).get("ws") ||
+  "ws://localhost:8080/";
+const ws = new WebSocket(wsServerUrl);
 
-ws.addEventListener("open", (event) => { connectws(); });
-  function connectws() {
+ws.addEventListener("open", (event) => {
+  connectws();
+});
+function connectws() {
   console.log("Connected to Streamer.bot");
   ws.send(
     JSON.stringify({
@@ -36,13 +41,17 @@ ws.addEventListener("message", (event) => {
 
   var durationSeconds = duration / 1000;
   var durationMinutes = durationSeconds / 60;
-  var durationSecondsRounded = Math.floor((durationMinutes - Math.floor(durationMinutes)) * 60);
+  var durationSecondsRounded = Math.floor(
+    (durationMinutes - Math.floor(durationMinutes)) * 60
+  );
   var durationMinutesRounded = Math.floor(durationMinutes);
 
   duration = durationMinutesRounded + ":" + durationSecondsRounded;
 
   update(songName, artistName, albumArt, duration);
-  if (songName != undefined) {widgetAnimation();}
+  if (songName != undefined) {
+    widgetAnimation();
+  }
 });
 
 function update(songName, artistName, albumArt, duration) {
@@ -76,7 +85,12 @@ let sizeDelay = params.get("size-delay") || 8000;
 let transitionTime = params.get("transition-time");
 root.style.setProperty("--transition-time", transitionTime);
 let transitionTimingFunction = params.get("transition-timing-function");
-root.style.setProperty("--transition-timing-function", transitionTimingFunction);
+root.style.setProperty(
+  "--transition-timing-function",
+  transitionTimingFunction
+);
+
+/// Animation
 
 /// Background ///
 let backgroundOpacity = params.get("background-opacity");
@@ -116,7 +130,9 @@ root.style.setProperty("--border-radius-small", borderRadiusSmall);
 
 // Visibility
 let progressBarHidden = params.get("progress-bar-hidden");
-if (progressBarHidden === "") {root.style.setProperty("--progress-bar-visibility", "none");}
+if (progressBarHidden === "") {
+  root.style.setProperty("--progress-bar-visibility", "none");
+}
 
 //////////////////////
 /// Animation Code ///
@@ -133,26 +149,20 @@ function widgetAnimation() {
 /// Image Refresh Issues ///
 ////////////////////////////
 
-function refresh(node)
-{
-   var times = 3000;
+function refresh(node) {
+  var times = 3000;
 
-   (function startRefresh()
-   {
-      var address;
-      if(node.src.indexOf('?')>-1)
-       address = node.src.split('?')[0];
-      else 
-       address = node.src;
-      node.src = address+"?time="+new Date().getTime();
+  (function startRefresh() {
+    var address;
+    if (node.src.indexOf("?") > -1) address = node.src.split("?")[0];
+    else address = node.src;
+    node.src = address + "?time=" + new Date().getTime();
 
-      setTimeout(startRefresh,times);
-   })();
-
+    setTimeout(startRefresh, times);
+  })();
 }
 
-function refreshAlbumCover()
-{
-  var node = document.querySelector('.album-cover');
+function refreshAlbumCover() {
+  var node = document.querySelector(".album-cover");
   refresh(node);
 }

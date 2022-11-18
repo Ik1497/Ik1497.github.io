@@ -5,7 +5,9 @@ connectws();
 
 function connectws() {
   if ("WebSocket" in window) {
-    let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
+    let wsServerUrl =
+      new URLSearchParams(window.location.search).get("ws") ||
+      "ws://localhost:8080/";
     const ws = new WebSocket(wsServerUrl);
     console.log("Trying to connect to Streamer.bot...");
 
@@ -43,7 +45,10 @@ function connectws() {
 
       if (hypeTrainEventType === "HypeTrainStart") {
         // Create Hype Train
-        document.body.insertAdjacentHTML(`afterbegin`, `<div class="hype-train"><p class="hype-train-percent">0%</p><div class="left"><p class="hype-train-level">LVL 1</p><p class="hype-train-time">00:00</p></div><div class="hype-train-progress-bar"></div><div class="hype-train-background"></div></div>`);
+        document.body.insertAdjacentHTML(
+          `afterbegin`,
+          `<div class="hype-train"><p class="hype-train-percent">0%</p><div class="left"><p class="hype-train-level">LVL 1</p><p class="hype-train-time">00:00</p></div><div class="hype-train-progress-bar"></div><div class="hype-train-background"></div></div>`
+        );
 
         document.querySelector(".hype-train-progress-bar").style.width = "0%";
         document.querySelector(".hype-train-percent").innerHTML = "0%";
@@ -76,7 +81,7 @@ function connectws() {
           .insertAdjacentHTML(
             "afterend",
             `<div class="hype-train-alert">Level ` +
-            hypeTrainDataPrevLevel +
+              hypeTrainDataPrevLevel +
               ` Completed!</div>`
           );
 
@@ -131,7 +136,7 @@ function connectws() {
             .parentNode.removeChild(
               document.querySelector(".hype-train-alert")
             );
-            document.querySelector(".hype-train").classList.add("remove");
+          document.querySelector(".hype-train").classList.add("remove");
         }, 13000);
 
         setTimeout(function () {
@@ -143,11 +148,9 @@ function connectws() {
 
         setTimeout(function () {
           document
-          .querySelector(".hype-train")
-          .parentNode.removeChild(
-            document.querySelector(".hype-train")
-          );
-        }, 14500)
+            .querySelector(".hype-train")
+            .parentNode.removeChild(document.querySelector(".hype-train"));
+        }, 14500);
       }
     });
   }
@@ -191,7 +194,6 @@ let theme = params.get("theme");
 
 if (theme === "coming soon") {
   document.body.setAttribute("data-theme", "coming soon");
-}
-else {
+} else {
   console.log("Theme unknown");
 }
