@@ -29,7 +29,6 @@ nav.navbar {
   bottom: 0;
   left: 0;
   width: 14em;
-  animation: nav-load 1s ease-in-out;
   background: var(--v-background-alt);
   position: fixed;
   height: calc(100% - 3.5em);

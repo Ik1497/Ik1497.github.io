@@ -89,18 +89,6 @@ header.page-info > p.description {
 }
 
 /* Animations */
-@keyframes nav-load {
-  0% {
-    transform: translateX(-100%);
-    opacity: 0%;
-    filter: blur(5px);
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 100%;
-    filter: blur(0px);
-  }
-}
 @keyframes button-grid-load {
   0% {
     transform: translateY(40%);
