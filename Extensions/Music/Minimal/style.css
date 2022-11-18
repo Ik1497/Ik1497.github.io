@@ -1,22 +1,24 @@
 @import url(/assets/fonts/font.css);
 :root {
-  --image-size: 8em;
   --image-size-minus: -8em;
-  --border-radius-image: 15px;
-  --border-radius-texts: 20px;
+  --border-radius-album-cover: 1em;
+  --border-radius-texts-background: 1.25em;
   --canvas-spacing: 1em; /* Spacing at the bottom and the left of the canvas*/
 
-  --color-primary: rgba(255, 255, 255, 1);
-  --color-accent: rgba(255, 255, 255, 0.7);
-  --alt-background-color: #1b1b1e; /* Used for when album covers are transparent */
+  --color-primary: hsl(0, 0%, 100%);
+  --color-accent: hsla(0, 0%, 100%, 0.7);
+
+  --background: hsl(0, 0%, 0%, 0.7);
+  --alt-background: hsl(240, 5%, 11%); /* Used for when album covers are transparent */
 
   --font-family: Uni Sans CAPS; /* Casing MATTERS! */
   --font-style: normal;
+  --font-size: 1em;
 }
 
 html,
 body {
-  font-size: 16px;
+  font-size: var(--font-size);
   font-family: var(--font-family);
   font-style: var(--font-style);
 }
@@ -49,8 +51,8 @@ body {
   height: var(--image-size);
   aspect-ratio: 1;
   object-fit: cover;
-  background: var(--alt-background-color);
-  border-radius: var(--border-radius-image);
+  background: var(--alt-background);
+  border-radius: var(--border-radius-album-cover);
   transition: all 0.5s ease 0s;
 }
 
@@ -61,8 +63,8 @@ body {
   padding-inline: calc(0.5em + var(--image-size) / 2) 1em;
   padding-block: 0.3em;
   grid-area: texts;
-  background: hsl(0, 0%, 0%, 0.7);
-  border-radius: 30px var(--border-radius-texts) var(--border-radius-texts) 30px;
+  background: var(--background);
+  border-radius: 30px var(--border-radius-texts-background) var(--border-radius-texts-background) 30px;
   overflow: hidden;
   transition: all 0.5s ease 0.5s;
 }
@@ -81,12 +83,12 @@ body {
 
 body.hidden .container .bottom-container {
   transition: all 0.5s ease 0s;
-  border-radius: 50% var(--border-radius-texts) var(--border-radius-texts) 50%;
+  border-radius: 50% var(--border-radius-texts-background) var(--border-radius-texts-background) 50%;
 }
 
 body.hidden .container .bottom-container .texts {
   transition: all 0.5s ease 0s;
-  border-radius: 50% var(--border-radius-texts) var(--border-radius-texts) 50%;
+  border-radius: 50% var(--border-radius-texts-background) var(--border-radius-texts-background) 50%;
   transform: translateX(-100%);
   opacity: 0;
 }

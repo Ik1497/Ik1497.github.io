@@ -83,9 +83,43 @@ function update(songName, artistName, albumArt, duration) {
   widgetAnimation();
 }
 
-////////////////
-/// URL code ///
-////////////////
+//////////////////////
+/// Animation Code ///
+//////////////////////
+function widgetAnimation() {
+  let sizeDelay =
+    new URLSearchParams(window.location.search).get("size-delay") || 8000;
+  console.log(sizeDelay);
+  document.body.classList.remove("small");
+  setTimeout(function () {
+    document.body.classList.add("small");
+  }, sizeDelay);
+  console.log("Animated successfully");
+}
+
+////////////////////////////
+/// Image Refresh Issues ///
+////////////////////////////
+
+function refresh(node) {
+  var times = 3000;
+
+  (function startRefresh() {
+    var address;
+    if (node.src.indexOf("?") > -1) address = node.src.split("?")[0];
+    else address = node.src;
+    node.src = address + "?time=" + new Date().getTime();
+  })();
+}
+
+function refreshAlbumCover() {
+  var node = document.querySelector(".album-cover");
+  refresh(node);
+}
+
+//////////////////////
+/// URL Parameters ///
+//////////////////////
 
 /// General ///
 var root = document.querySelector(":root");
@@ -140,38 +174,4 @@ root.style.setProperty("--border-radius-small", borderRadiusSmall);
 let progressBarHidden = params.get("progress-bar-hidden");
 if (progressBarHidden === "") {
   root.style.setProperty("--progress-bar-visibility", "none");
-}
-
-//////////////////////
-/// Animation Code ///
-//////////////////////
-function widgetAnimation() {
-  let sizeDelay =
-    new URLSearchParams(window.location.search).get("size-delay") || 8000;
-  console.log(sizeDelay);
-  document.body.classList.remove("small");
-  setTimeout(function () {
-    document.body.classList.add("small");
-  }, sizeDelay);
-  console.log("Animated successfully");
-}
-
-////////////////////////////
-/// Image Refresh Issues ///
-////////////////////////////
-
-function refresh(node) {
-  var times = 3000;
-
-  (function startRefresh() {
-    var address;
-    if (node.src.indexOf("?") > -1) address = node.src.split("?")[0];
-    else address = node.src;
-    node.src = address + "?time=" + new Date().getTime();
-  })();
-}
-
-function refreshAlbumCover() {
-  var node = document.querySelector(".album-cover");
-  refresh(node);
 }

@@ -105,3 +105,49 @@ function refreshAlbumCover() {
   var node = document.querySelector(".album-cover");
   refresh(node);
 }
+
+//////////////////////
+/// URL Parameters ///
+//////////////////////
+
+/// General ///
+var root = document.querySelector(":root");
+const params = new URLSearchParams(window.location.search);
+
+// Font
+let fontFamily = params.get("font-family");
+root.style.setProperty("--font-family", fontFamily);
+
+let fontStyle = params.get("font-style");
+root.style.setProperty("--font-style", fontStyle);
+
+let fontSize = params.get("font-size");
+root.style.setProperty("--font-size", fontSize);
+
+// Misc
+let imageSize = params.get("image-size") || "8em";
+root.style.setProperty("--image-size", imageSize);
+root.style.setProperty("--image-size-minus", "-" + imageSize);
+
+let borderRadiusAlbumCover = params.get("border-radius-album-cover");
+root.style.setProperty("--border-radius-album-cover", borderRadiusAlbumCover);
+
+let borderRadiusTextsBackground = params.get("border-radius-texts-background");
+root.style.setProperty("--border-radius-texts-background", borderRadiusTextsBackground);
+
+let canvasSpacing = params.get("canvas-spacing");
+root.style.setProperty("--canvas-spacing", canvasSpacing);
+
+// Colors
+let colorPrimary = params.get("color-primary");
+root.style.setProperty("--color-primary", colorPrimary);
+
+let colorAccent = params.get("color-accent");
+root.style.setProperty("--color-accent", colorAccent);
+
+// Background
+let background = params.get("background");
+root.style.setProperty("--background", background);
+
+let altBackgroundColor = params.get("alt-background");
+root.style.setProperty("--alt-background", altBackgroundColor);

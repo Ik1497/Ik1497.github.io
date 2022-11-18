@@ -8,8 +8,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta property="og:title" content="Music Widget" />
-    <title>Music Widget | Streamer.bot Actions</title>
+    <meta property="og:title" content="Music Widget Default" />
+    <title>Music Widget Default | Streamer.bot Actions</title>
 
     <meta name="og:site_name" content="Streamer.bot Actions" />
     <meta
@@ -26,7 +26,7 @@
   <body>
     <main>
       <header class="page-info">
-        <p class="title">Music Widget</p>
+        <p class="title">Music Widget Default</p>
         <p class="description">Music Widget for Spotify</p>
       </header>
       <h2>Configuration</h2>
@@ -58,6 +58,42 @@
           </li>
         </a>
       </ul>
+      <h3>Font</h3>
+        <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>font-family</code></td>
+            <td class="table-left">
+              The Font Family <strong>Case Sensitive</strong>
+              <code>Default: Montserrat</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>color-primary</code></td>
+            <td class="table-left">
+              The primary text color, used for song title.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>color-accent</code></td>
+            <td class="table-left">
+              The accent text color, used for song artist and the song duration.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>alt-background-color</code></td>
+            <td class="table-left">
+              The alternative background color, used for album cover background.
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <h3>Misc</h3>
       <table>
         <thead>
@@ -156,42 +192,6 @@
           </tr>
         </tbody>
       </table>
-      <table>
-        <h3>Font</h3>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>font-family</code></td>
-            <td class="table-left">
-              The Font Family <strong>Case Sensitive</strong>
-              <code>Default: Montserrat</code>.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>color-primary</code></td>
-            <td class="table-left">
-              The primary text color, used for song title.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>color-accent</code></td>
-            <td class="table-left">
-              The accent text color, used for song artist and the song duration.
-            </td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>alt-background-color</code></td>
-            <td class="table-left">
-              The alternative background color, used for album cover background.
-            </td>
-          </tr>
-        </tbody>
-      </table>
       <h3>Sizing</h3>
       <table>
         <thead>
@@ -255,9 +255,7 @@
       <p>
         Make it your own with URL Parameters! This example image below uses:<br />
         <code
-          >https://ik1497.github.io/Extensions/Mute-Indicator?chip-background=rgb(255,
-          255, 255)&chip-border-radius=20px&exclude=["[A] Music"]</code
-        >
+          >https://ik1497.github.io/Extensions/Music/Widget/?progress-bar-hidden&border-radius=0&border-radius-small=0&background-hue=345&color-primary=rgb(200,200,200)&color-accent=rgb(180,180,180)</code>
       </p>
     <img
       class="img-400 margin-top"
