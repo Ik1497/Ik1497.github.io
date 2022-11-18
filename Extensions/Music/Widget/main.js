@@ -9,50 +9,68 @@ var durationDefault = "N/A";
 //////////////////////
 /// Websocket Code ///
 //////////////////////
-let wsServerUrl =
-  new URLSearchParams(window.location.search).get("ws") ||
-  "ws://localhost:8080/";
-const ws = new WebSocket(wsServerUrl);
+connectws();
 
-ws.addEventListener("open", (event) => {
-  connectws();
-});
 function connectws() {
-  console.log("Connected to Streamer.bot");
-  ws.send(
-    JSON.stringify({
-      request: "Subscribe",
-      id: "123",
-      events: {
-        general: ["Custom"],
-      },
-    })
-  );
-}
+  if ("WebSocket" in window) {
+    let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
+    const ws = new WebSocket(wsServerUrl);
+    console.log("Trying to connect to Streamer.bot...");
 
-ws.addEventListener("message", (event) => {
-  if (!event.data) return;
+    ws.onclose = function () {
+      setTimeout(connectws, 10000);
+      console.log(
+        "No connection found to Streamer.bot, reconnecting every 10s..."
+      );
+    };
 
-  const data = JSON.parse(event.data);
-  var songName = data.data?.songName;
-  var artistName = data.data?.artistName;
-  var albumArt = data.data?.albumArt;
-  var duration = data.data?.duration;
+    ws.onopen = function () {
+      ws.send(
+        JSON.stringify({
+          request: "Subscribe",
+          events: {
+            General: ["Custom"],
+          },
+          id: "123",
+        })
+      );
+      console.log("Connected to Streamer.bot");
+    };
 
-  var durationSeconds = duration / 1000;
-  var durationMinutes = durationSeconds / 60;
-  var durationSecondsRounded = Math.floor(
-    (durationMinutes - Math.floor(durationMinutes)) * 60
-  );
-  var durationMinutesRounded = Math.floor(durationMinutes);
+    ws.addEventListener("message", (event) => {
+      if (!event.data) return;
 
-  duration = durationMinutesRounded + ":" + durationSecondsRounded;
+      const data = JSON.parse(event.data);
+      var songName = data.data?.songName;
+      var artistName = data.data?.artistName;
+      var albumArt = data.data?.albumArt;
+      var duration = data.data?.duration;
+      var durationIncludes = duration.includes(":")
 
-  update(songName, artistName, albumArt, duration);
-  if (songName != undefined) {
-    widgetAnimation();
+      if (durationIncludes != true) {
+
+      var durationSeconds = duration / 1000;
+      var durationMinutes = durationSeconds / 60;
+      var durationSecondsRounded = Math.floor(
+        (durationMinutes - Math.floor(durationMinutes)) * 60
+      );
+      var durationMinutesRounded = Math.floor(durationMinutes);
+    
+      duration = durationMinutesRounded + ":" + durationSecondsRounded;
+      }
+
+      if (songName === undefined) return;
+      if (artistName === undefined) return;
+      if (albumArt === undefined) return;
+
+      if (songName === "") return;
+      if (artistName === "") return;
+      if (albumArt === "") return;
+
+      update(songName, artistName, albumArt, duration);
+    });
   }
-});
+}
 
 function update(songName, artistName, albumArt, duration) {
   document.querySelector(".artistName").innerHTML =
@@ -60,7 +78,8 @@ function update(songName, artistName, albumArt, duration) {
   document.querySelector(".songName").innerHTML = songName || songNameDefault;
   document.querySelector(".album-cover").src = albumArt || albumArtDefault;
   document.querySelector(".end-time").innerHTML = duration || durationDefault;
-  refreshAlbumCover();
+    widgetAnimation();
+    refreshAlbumCover();
 }
 
 ws.onclose = function (event) {
@@ -157,8 +176,6 @@ function refresh(node) {
     if (node.src.indexOf("?") > -1) address = node.src.split("?")[0];
     else address = node.src;
     node.src = address + "?time=" + new Date().getTime();
-
-    setTimeout(startRefresh, times);
   })();
 }
 
