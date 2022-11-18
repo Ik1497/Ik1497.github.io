@@ -1,17 +1,4 @@
-/* Navbar */
-nav.navbar {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  bottom: 0;
-  left: 0;
-  width: 14em;
-  animation: nav-load 1s ease-in-out;
-  background: var(--v-background-alt);
-  position: fixed;
-  height: calc(100% - 3.5em);
-  overflow-y: scroll;
-}
+/* Nav Scroll Bar */
 
 nav.navbar::-webkit-scrollbar {
   width: 5px;
@@ -27,18 +14,32 @@ nav.navbar::-webkit-scrollbar-thumb:hover {
 }
 
 nav.navbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+nav.navbar:hover::-webkit-scrollbar-track {
   background: #333;
+}
+
+/* Nav General */
+nav.navbar {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  bottom: 0;
+  left: 0;
+  width: 14em;
+  animation: nav-load 1s ease-in-out;
+  background: var(--v-background-alt);
+  position: fixed;
+  height: calc(100% - 3.5em);
+  overflow-y: scroll;
 }
 
 nav.navbar li {
   background: var(--v-background-alt);
   margin-top: 0em;
   padding: 0.5em;
-  transition: all 0.3s;
-}
-
-nav.navbar li:hover {
-  box-shadow: #000 0 0 8px;
   transition: all 0.3s;
 }
 
@@ -52,9 +53,15 @@ nav.navbar a {
   transition: all 0.3s;
 }
 
-.navbar:has(a:hover) a:not(:hover) {
+.navbar:has(li:hover) li:not(:hover) {
   opacity: 0.5;
-  transition: all 350ms ease !important;
+  transition: all 350ms ease;
+}
+
+nav.navbar li:hover {
+  color: var(--v-primary-accent);
+  background: var(--v-background-soft);
+  transition: all 0.3s;
 }
 
 .navbar > a {
@@ -63,12 +70,6 @@ nav.navbar a {
 
 nav.navbar hr {
   margin: 0;
-}
-
-nav.navbar > details > summary {
-  background: var(--v-background-alt);
-  border: 1px solid var(---v-background-alt);
-  transition: all 0.3s;
 }
 
 @media (max-width: 50em) {
@@ -85,66 +86,6 @@ nav.navbar > details > summary {
   nav.navbar li {
     border: none;
   }
-
-  nav.navbar > details > summary {
-    border-right: none;
-  }
-
-  nav.navbar > details > summary::after {
-    right: 0.9em;
-  }
-
-  nav.navbar > details[open] > summary::after {
-    right: 0.9em;
-  }
-}
-
-nav.navbar .navbar-dropdown .navbar-dropdown-title {
-  background: var(--v-background-alt);
-  padding: 0.5em;
-  margin-top: 0em;
-  transition: all 0.3s;
-  color: var(--v-primary-natural);
-}
-
-nav.navbar .navbar-dropdown .navbar-dropdown-title::after {
-  font-family: "Material Design Icons";
-  content: "\F0704";
-  position: absolute;
-  right: 0.3em;
-  transform: translateY(20%);
-}
-
-nav.navbar .navbar-dropdown.active .navbar-dropdown-title::after {
-  font-family: "Material Design Icons";
-  content: "\F06F2";
-  position: absolute;
-  right: 0.3em;
-  transform: translateY(20%);
-}
-
-nav.navbar .navbar-dropdown.active .navbar-dropdown-title {
-  border-bottom: 0.1em solid #555;
-  transition: box-shadow 0.3s;
-}
-
-nav.navbar .navbar-dropdown .navbar-dropdown-title:hover {
-  box-shadow: #000 0 0 8px;
-  transition: box-shadow 0.3s;
-}
-
-nav.navbar .navbar-dropdown > a > li.mdi::before {
-  margin-right: 0.4em;
-}
-
-nav.navbar .navbar-dropdown {
-  cursor: pointer;
-}
-
-nav.navbar .navbar-dropdown > a > li {
-  background: var(--v-background-darken);
-  padding: 0.5em;
-  transition: all 0.3s;
 }
 
 /* Nav Active */

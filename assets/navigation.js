@@ -2,40 +2,43 @@
 /// NAVBAR ///
 //////////////
 const navItemsArray = JSON.stringify([
-    { name: "Home",
-      icon: "mdi mdi-home",
-      href: "/",
-      type: "link"
-    },
-    {
-      name: "Changelogs",
-      icon: "mdi mdi-fire",
-      href: "/Changelogs/",
-      type: "link",
-    },
-    {type: "hr"},
-    {type: "label", name: "Widgets"},
-    {
-      name: "Music Widget",
-      icon: "mdi mdi-spotify",
-      href: "/Extensions/Music/",
-      type: "link",
-    },
-    {
-      name: "Mute Indicator",
-      icon: "mdi mdi-volume-mute",
-      href: "/Extensions/Mute-Indicator/Docs",
-      type: "link",
-    }
-  ]);
+  {
+    name: "Home",
+    icon: "mdi mdi-home",
+    href: "/",
+    type: "link",
+  },
+  {
+    name: "Changelogs",
+    icon: "mdi mdi-fire",
+    href: "/Changelogs/",
+    type: "link",
+  },
+  {
+    type: "hr",
+  },
+  {
+    type: "label",
+    name: "Widgets",
+  },
+  {
+    name: "Music Widget",
+    icon: "mdi mdi-spotify",
+    href: "/Extensions/Music/",
+    type: "link",
+  },
+  {
+    name: "Mute Indicator",
+    icon: "mdi mdi-volume-mute",
+    href: "/Extensions/Mute-Indicator/Docs",
+    type: "link",
+  }
+]);
 
 ///////////////////
 /// ACTUAL CODE ///
 ///////////////////
-document.body.insertAdjacentHTML(
-    `afterbegin`,
-    `<nav class="navbar"></nav>`
-);
+document.body.insertAdjacentHTML(`afterbegin`, `<nav class="navbar"></nav>`);
 
 /* ADDING SOON...
   {
@@ -49,30 +52,45 @@ document.body.insertAdjacentHTML(
 let navItems = JSON.parse(navItemsArray);
 
 navItems.forEach(function (index, value) {
-    let navItem = navItems[value];
+  let navItem = navItems[value];
 
-    if (navItem.type === "link") {
-        document.querySelector("nav.navbar").insertAdjacentHTML(
-            `beforeend`,
-            `<a id="nav-` + navItem.type + `: ` + navItem.name + `" href="` + navItem.href + `"><li class="` + navItem.icon + `">` + navItem.name + `</li></a>`
-        );
-        let currentUrl = window.location.pathname;
-        if (currentUrl.replace('.html', '') === navItem.href) {
-            document.getElementById(`nav-` + navItem.type + `: ` + navItem.name).classList.add("nav-active");
-        }
+  if (navItem.type === "link") {
+    document
+      .querySelector("nav.navbar")
+      .insertAdjacentHTML(
+        `beforeend`,
+        `<a id="nav-` +
+          navItem.type +
+          `: ` +
+          navItem.name +
+          `" href="` +
+          navItem.href +
+          `"><li class="` +
+          navItem.icon +
+          `">` +
+          navItem.name +
+          `</li></a>`
+      );
+    let currentUrl = window.location.pathname;
+    if (currentUrl.replace(".html", "") === navItem.href) {
+      document
+        .getElementById(`nav-` + navItem.type + `: ` + navItem.name)
+        .classList.add("nav-active");
     }
+  }
 
-    if (navItem.type === "hr") {
-        document.querySelector("nav.navbar").insertAdjacentHTML(
-            `beforeend`,
-            `<hr>`
-        );
-    }
+  if (navItem.type === "hr") {
+    document
+      .querySelector("nav.navbar")
+      .insertAdjacentHTML(`beforeend`, `<hr>`);
+  }
 
-    if (navItem.type === "label") {
-        document.querySelector("nav.navbar").insertAdjacentHTML(
-            `beforeend`,
-            `<p class="nav-label">` + navItem.name + `</p>`
-        );
-    }
+  if (navItem.type === "label") {
+    document
+      .querySelector("nav.navbar")
+      .insertAdjacentHTML(
+        `beforeend`,
+        `<p class="nav-label">` + navItem.name + `</p>`
+      );
+  }
 });
