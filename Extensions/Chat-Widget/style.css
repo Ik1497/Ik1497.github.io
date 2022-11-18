@@ -24,7 +24,7 @@ body {
     font-size: var(--font-size);
     overflow: hidden;
 }
-ul.notifications {
+ul.messages {
     display: flex;
     justify-content: start;
     align-items: flex-end;
@@ -32,7 +32,7 @@ ul.notifications {
     gap: .25em 0;
 }
 
-ul.notifications li {
+ul.messages li {
     display: grid;
     grid-template-columns: 3.75em 1fr;
     color: white;

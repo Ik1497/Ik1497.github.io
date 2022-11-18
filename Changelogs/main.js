@@ -4,27 +4,16 @@ changelogSelector();
 /// > Widgets < ///
 ///////////////////
 
-// Music
-async function WidgetsMusic() {
-  const resp = await fetch("./pages/Widgets/Music.html");
+// Music - Minimal
+async function WidgetsMusicMinimal() {
+  const resp = await fetch("./pages/Widgets/Music-Minimal.html");
   const main = await resp.text();
   document.querySelector("main").insertAdjacentHTML("beforeend", main);
 }
 
-// Test
-async function WidgetsTest() {
-  const resp = await fetch("./pages/Widgets/Test.html");
-  const main = await resp.text();
-  document.querySelector("main").insertAdjacentHTML("beforeend", main);
-}
-
-//////////////////////
-/// > Extensions < ///
-//////////////////////
-
-// MusicBee
-async function ExtensionsMusicBee() {
-  const resp = await fetch("./pages/Extensions/MusicBee.html");
+// Music - Widget
+async function WidgetsMusicWidget() {
+  const resp = await fetch("./pages/Widgets/Music-Widget.html");
   const main = await resp.text();
   document.querySelector("main").insertAdjacentHTML("beforeend", main);
 }
@@ -38,29 +27,10 @@ function changelogSelector() {
   var newMain = '<main class="animated fadeInUp"></main>';
   document.querySelector("header").insertAdjacentHTML("afterend", newMain);
 
-  if (value === "WidgetsMusic") {
-    WidgetsMusic();
+  if (value === "WidgetsMusicMinimal") {
+    WidgetsMusicMinimal();
   }
-  if (value === "WidgetsTest") {
-    WidgetsTest();
-  }
-
-  if (value === "ExtensionsMusicBee") {
-    ExtensionsMusicBee();
+  if (value === "WidgetsMusicWidget") {
+    WidgetsMusicWidget();
   }
 }
-
-//////////////////
-/// Default JS ///
-//////////////////
-
-/*
-var changelogList = document.querySelectorAll(
-  ".changelog-new, .changelog-update, .changelog-fixes"
-);
-
-for (var i = 0; i < changelogList.length; ++i) {
-  console.log(i);
-  changelogList[i].classList.add("animated fadeInUp wait-p6s");
-}
-*/

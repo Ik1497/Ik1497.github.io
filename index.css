@@ -6,6 +6,10 @@
 @import url(/assets/header.css);
 @import url(/assets/animation.css);
 
+nav.navbar {
+    display: none;
+}
+
 * {
    padding: 0;
    margin: 0;

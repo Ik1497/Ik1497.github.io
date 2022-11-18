@@ -8,7 +8,6 @@ document.write(`
 <link rel="icon" href="/assets/favicon.ico" />
 <meta name="theme-color" content="#B80086">
 
-<script src="/assets/navigation.js"></script>
 <script src="/assets/header.js"></script>
 <script src="/assets/theme.js"></script>
 <link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">

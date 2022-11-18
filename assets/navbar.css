@@ -1,0 +1,166 @@
+/* Navbar */
+nav.navbar {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  bottom: 0;
+  left: 0;
+  width: 14em;
+  animation: nav-load 1s ease-in-out;
+  background: var(--v-background-alt);
+  position: fixed;
+  height: calc(100% - 3.5em);
+  overflow-y: scroll;
+}
+
+nav.navbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+nav.navbar::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  border: none;
+}
+
+nav.navbar::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+nav.navbar::-webkit-scrollbar-track {
+  background: #333;
+}
+
+nav.navbar li {
+  background: var(--v-background-alt);
+  margin-top: 0em;
+  padding: 0.5em;
+  transition: all 0.3s;
+}
+
+nav.navbar li:hover {
+  box-shadow: #000 0 0 8px;
+  transition: all 0.3s;
+}
+
+nav.navbar > a > li.mdi::before {
+  margin-right: 0.4em;
+}
+
+nav.navbar a {
+  text-decoration: none;
+  color: var(--v-primary-natural);
+  transition: all 0.3s;
+}
+
+.navbar:has(a:hover) a:not(:hover) {
+  opacity: 0.5;
+  transition: all 350ms ease !important;
+}
+
+.navbar > a {
+  transition: all 350ms ease !important;
+}
+
+nav.navbar hr {
+  margin: 0;
+}
+
+nav.navbar > details > summary {
+  background: var(--v-background-alt);
+  border: 1px solid var(---v-background-alt);
+  transition: all 0.3s;
+}
+
+@media (max-width: 50em) {
+  nav.navbar {
+    position: unset;
+    top: auto;
+    left: auto;
+    width: 100%;
+    margin-bottom: 0.5em;
+    height: fit-content;
+    max-height: 20em;
+  }
+
+  nav.navbar li {
+    border: none;
+  }
+
+  nav.navbar > details > summary {
+    border-right: none;
+  }
+
+  nav.navbar > details > summary::after {
+    right: 0.9em;
+  }
+
+  nav.navbar > details[open] > summary::after {
+    right: 0.9em;
+  }
+}
+
+nav.navbar .navbar-dropdown .navbar-dropdown-title {
+  background: var(--v-background-alt);
+  padding: 0.5em;
+  margin-top: 0em;
+  transition: all 0.3s;
+  color: var(--v-primary-natural);
+}
+
+nav.navbar .navbar-dropdown .navbar-dropdown-title::after {
+  font-family: "Material Design Icons";
+  content: "\F0704";
+  position: absolute;
+  right: 0.3em;
+  transform: translateY(20%);
+}
+
+nav.navbar .navbar-dropdown.active .navbar-dropdown-title::after {
+  font-family: "Material Design Icons";
+  content: "\F06F2";
+  position: absolute;
+  right: 0.3em;
+  transform: translateY(20%);
+}
+
+nav.navbar .navbar-dropdown.active .navbar-dropdown-title {
+  border-bottom: 0.1em solid #555;
+  transition: box-shadow 0.3s;
+}
+
+nav.navbar .navbar-dropdown .navbar-dropdown-title:hover {
+  box-shadow: #000 0 0 8px;
+  transition: box-shadow 0.3s;
+}
+
+nav.navbar .navbar-dropdown > a > li.mdi::before {
+  margin-right: 0.4em;
+}
+
+nav.navbar .navbar-dropdown {
+  cursor: pointer;
+}
+
+nav.navbar .navbar-dropdown > a > li {
+  background: var(--v-background-darken);
+  padding: 0.5em;
+  transition: all 0.3s;
+}
+
+/* Nav Active */
+
+nav.navbar a.nav-active {
+  color: var(--v-primary-accent);
+}
+
+/* Nav Label */
+
+nav.navbar p.nav-label {
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 600;
+  font-size: .9em;
+  padding-inline: .5em;
+  padding-block: .75em 0;
+  color: var(--v-primary-natural-light);
+}
