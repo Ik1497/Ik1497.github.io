@@ -59,7 +59,6 @@ nav.navbar a {
 }
 
 nav.navbar li:hover {
-  color: var(--v-primary-accent);
   background: var(--v-background-soft);
   transition: all 0.3s;
 }
