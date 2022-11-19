@@ -4,6 +4,6 @@ Array.from( document.querySelectorAll( 'a' ) ).forEach( a => {
 
 document.write(`
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="/assets/navigation.js"></script>
+<script src="/assets/js/navigation.js"></script>
 `);
 
