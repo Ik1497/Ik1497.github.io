@@ -1,0 +1,8 @@
+{
+  "extensions": {
+    "music": {
+      "defaultSongTitle": "تشغيل أغنية",
+      "defaultSongArtist": "لتعمل أداة التحكم هذه!"
+    }
+  }
+}
