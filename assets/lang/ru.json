@@ -1,0 +1,8 @@
+{
+  "extensions": {
+    "music": {
+      "defaultSongTitle": "Играть песню",
+      "defaultSongArtist": "для этого виджета работает!"
+    }
+  }
+}
