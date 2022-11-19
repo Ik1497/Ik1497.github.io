@@ -1,0 +1,8 @@
+{
+  "extensions": {
+    "music": {
+      "defaultSongTitle": "Redă o piesă",
+      "defaultSongArtist": "pentru acest widget să funcţioneze!"
+    }
+  }
+}
