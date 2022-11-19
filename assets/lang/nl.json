@@ -1,0 +1,8 @@
+{
+  "extensions": {
+    "music": {
+      "defaultSongTitle": "Speel een nummer af",
+      "defaultSongArtist": "om deze widget te laten werken!"
+    }
+  }
+}
