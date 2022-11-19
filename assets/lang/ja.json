@@ -1,0 +1,8 @@
+{
+  "extensions": {
+    "music": {
+      "defaultSongTitle": "曲を再生",
+      "defaultSongArtist": "このウィジェットを動作させます！"
+    }
+  }
+}
