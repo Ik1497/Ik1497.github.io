@@ -1,0 +1,8 @@
+{
+  "extensions": {
+    "music": {
+      "defaultSongTitle": "Spill en sang",
+      "defaultSongArtist": "for at denne widgeten skal virke!"
+    }
+  }
+}
