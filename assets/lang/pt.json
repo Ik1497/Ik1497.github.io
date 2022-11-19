@@ -1,0 +1,8 @@
+{
+  "extensions": {
+    "music": {
+      "defaultSongTitle": "Tocar uma música",
+      "defaultSongArtist": "para este widget funcionar!"
+    }
+  }
+}
