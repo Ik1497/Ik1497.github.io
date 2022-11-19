@@ -553,7 +553,6 @@ ul.grid-list li:nth-child(odd) {
 }
 
 .img-400 {
-  height: fit-content;
   max-width: 30em;
   width: 100%;
   margin-bottom: 1em;
