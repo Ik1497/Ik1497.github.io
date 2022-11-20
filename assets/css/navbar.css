@@ -68,6 +68,8 @@ nav.navbar li:hover {
 
 nav.navbar hr {
   margin: 0;
+  border: none;
+  border-bottom: 1px solid #555;
 }
 
 @media (max-width: 50em) {

@@ -41,7 +41,7 @@ const categoryOrder = JSON.stringify ([
 
 document.body.insertAdjacentHTML(`afterbegin`, `<main></main>`);
 document.body.insertAdjacentHTML(`afterbegin`, `<nav class="obs-events-nav"></nav>`);
-document.body.insertAdjacentHTML(`afterbegin`, `<header><img src="/assets/images/favicon.png"><p class="page-title">OBS Websocket Events</p><p class="page-subtitle">By ik1497</p></header>`);
+document.body.insertAdjacentHTML(`afterbegin`, `<header><a href="/"><img src="/assets/images/favicon.png"><p class="page-title">OBS Websocket Events</p><p class="page-subtitle">By ik1497</p></a></header>`);
 let categoryOrderJson =  JSON.parse(categoryOrder);
 
 categoryOrderJson.forEach(function (item) {
@@ -65,7 +65,7 @@ function reloadData(hashChange) {
 
                 document.querySelector(".obs-events-nav").insertAdjacentHTML(`afterend`, `<main class="obs-events-data"></main>`);
                 document.querySelector(".obs-events-data").insertAdjacentHTML(`afterbegin`, `<section class="obs-events-data-top-section"><h1 class="obs-events-data-top-section-title">` + events.eventType + `</h1><p class="obs-events-data-top-section-description">` + events.description.replace("\n","<br>") + `</p></section>`);
-                document.querySelector(".obs-events-data-top-section").insertAdjacentHTML(`afterend`, `<section class="obs-events-data-fields-table"><h2>Data Fields</h2><table><thead class="obs-events-data-fields-table-thead"><tr><td class="table-right">Name</td><td class="table-center">Description</td></tr></thead><tbody class="obs-events-data-fields-table-tbody"><tr><td class="table-right">Complexity Rating:</td><td class="table-center stars stars--` + events.complexity + `" style="--rating: ` + events.complexity + `;"></td></tr><tr><td class="table-right">Latest Supported RPC Version:</td><td class="table-center"><em class="obs-version-badge">` + events.rpcVersion + `</em></td></tr><tr><td class="table-right">Added in:</td><td class="table-center"><em class="obs-version-badge">` + events.initialVersion + `</em></td></tr></tbody></table></section>`);
+                document.querySelector(".obs-events-data-top-section").insertAdjacentHTML(`afterend`, `<section class="obs-events-data-fields-table"><h2>Data Fields</h2><table><thead class="obs-events-data-fields-table-thead"><tr><td class="table-right">Name</td><td class="table-center">Description</td></tr></thead><tbody class="obs-events-data-fields-table-tbody"><tr><td class="table-right">Complexity Rating:</td><td class="table-center stars stars--` + events.complexity + `" style="--rating: ` + events.complexity + `;"></td></tr><tr><td class="table-right">Latest Supported RPC Version:</td><td class="table-center"><em class="obs-version-badge">` + events.rpcVersion + `</em></td></tr><tr><td class="table-right">Added in:</td><td class="table-center"><em class="obs-version-badge">v` + events.initialVersion + `</em></td></tr></tbody></table></section>`);
                 if (events.dataFields.length != 0) { 
                     document.querySelector(".obs-events-data-fields-table").insertAdjacentHTML(`afterend`, `<section class="obs-events-variables-table"><h2>Variables</h2><table><thead class="obs-events-variables-table-thead"><tr><td class="table-right">Name</td><td class="table-center">Type</td><td class="table-left">Description</td></tr></thead><tbody class="obs-events-variables-table-tbody"></tbody></table></section>`); 
                 }

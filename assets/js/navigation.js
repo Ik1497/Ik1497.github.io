@@ -18,8 +18,8 @@ const navItemsArray = JSON.stringify([
     type: "hr",
   },
   {
-    type: "label",
     name: "Widgets",
+    type: "label"
   },
   {
     name: "Music Widget",
@@ -31,6 +31,19 @@ const navItemsArray = JSON.stringify([
     name: "Mute Indicator",
     icon: "mdi mdi-volume-mute",
     href: "/Extensions/Mute-Indicator/Docs",
+    type: "link",
+  },
+  {
+    type: "hr"
+  },
+  {
+    name: "Tools",
+    type: "label"
+  },
+  {
+    name: "OBS Websocket Events",
+    icon: "mdi mdi-application",
+    href: "/Extensions/OBS-Websocket-Events/",
     type: "link",
   }
 ]);
