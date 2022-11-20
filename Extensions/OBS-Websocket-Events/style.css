@@ -41,11 +41,12 @@
 body {
     display: grid;
     grid-template: 
-        "navbar event-data" 100vh
+        "header header" 4em
+        "navbar event-data" calc(100vh - 4em)
             / 30em auto;
     font-family: Arial;
     color: var(--text-color);
-    background:var(--v-background);
+    background: var(--v-background);
 }
 
 @media screen and (max-width: 750px) {
@@ -57,9 +58,40 @@ body {
     }
 }
 
+header {
+    grid-area: header;
+    background: var(--v-background-mute);
+    display: grid;
+    padding-left: 1em;
+    grid-template:
+        "header-img header-title"
+        "header-img header-subtitle"
+            / 47.5px 15em;
+}
+
+header img {
+    grid-area: header-img;
+    width: 40px;
+    margin: auto 0;
+}
+
+header .page-title {
+    grid-area: header-title;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-end;
+}
+
+header .page-subtitle {
+    grid-area: header-subtitle;
+    display: flex;
+    align-items: flex-start;
+    color: var(--text-color-600);
+}
+
 h2 {
     font-size: 1.25em;
-    color: #ddd;
+    color: var(--text-color-700);
 }
 
 .obs-events-nav {
