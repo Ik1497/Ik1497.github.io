@@ -122,21 +122,51 @@ h2 {
 .obs-events-nav .obs-event-list-item {
     padding-inline: .75em;
     padding-block: .5em;
+    position: relative;
 }
+
+.obs-events-nav .obs-event-list-item a:has(.obs-event-list-item-version) {
+    grid-template: 
+        "obs-event-list-item-title obs-event-list-item-version" auto
+        "obs-event-list-item-description obs-event-list-item-version" auto
+            / auto min-content;
+}
+
 .obs-events-nav .obs-event-list-item a {
     text-decoration: none;
+    display: grid;
+    grid-template: 
+        "obs-event-list-item-title"
+        "obs-event-list-item-description";
 }
 
 .obs-events-nav .obs-event-list-item a .obs-event-list-item-title {
+    grid-area: obs-event-list-item-title;
     color: var(--text-color);
 }
 
 .obs-events-nav .obs-event-list-item a .obs-event-list-item-description {
+    grid-area: obs-event-list-item-description;
     color: var(--text-color-500);
     display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+
+.obs-events-nav .obs-event-list-item a .obs-event-list-item-version {
+    grid-area: obs-event-list-item-version;
+    color: var(--text-color-700);
+    background: var(--v-primary-accent);
+    padding-inline: .4em;
+    font-style: normal;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    margin: auto;
 }
 
 .obs-events-data {

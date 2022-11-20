@@ -57,8 +57,8 @@ function reloadData(hashChange) {
             // NavBar
             let hash = window.location.hash.replace("#","");
 
-            if (hashChange != true) { document.querySelector(`.obs-events-nav-group-` + events.category.replace(" ", "-")).insertAdjacentHTML(`beforeend`, `<li class="obs-event-list-item category-` + events.category + ` item-` + events.eventType + `"><a href="#` + events.eventType + `"><p class="obs-event-list-item-title">` + events.eventType + `</p><p class="obs-event-list-item-description">` + events.description + `</p></a></li>`); }
-
+            if (hashChange != true) { document.querySelector(`.obs-events-nav-group-` + events.category.replace(" ", "-")).insertAdjacentHTML(`beforeend`, `<li class="obs-event-list-item category-` + events.category + ` item-` + events.eventType + `"><a href="#` + events.eventType + `"><p class="obs-event-list-item-title">` + events.eventType + `</p><p class="obs-event-list-item-description">` + events.description + `</p><em class="obs-event-list-item-version"></em></a></li>`); }
+            // if (events.initialVersion != "5.0.0") { document.querySelector(`item-` + events.eventType + ` .obs-event-list-item-version`).innerHTML = events.initialVersion; };
             if(hash === events.eventType) {
                 document.querySelector(`.item-` + events.eventType).classList.add("obs-events-nav-active");
                 sessionStorage.setItem("obs-events-latest-nav-bar-item", events.eventType);
