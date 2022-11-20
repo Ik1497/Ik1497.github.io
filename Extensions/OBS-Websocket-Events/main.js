@@ -39,8 +39,9 @@ const categoryOrder = JSON.stringify ([
     {categoryName: "ui", categoryDisplayName: "Ui Events"}
 ]);
 
-document.body.insertAdjacentHTML(`afterbegin`, `<header><img src="/assets/images/favicon.png"><p class="page-title">OBS Websocket Events</p><p class="page-subtitle">By ik1497</p></header>`)
-document.body.insertAdjacentHTML(`afterbegin`, `<nav class="obs-events-nav"></nav>`)
+document.body.insertAdjacentHTML(`afterbegin`, `<main></main>`);
+document.body.insertAdjacentHTML(`afterbegin`, `<header><img src="/assets/images/favicon.png"><p class="page-title">OBS Websocket Events</p><p class="page-subtitle">By ik1497</p></header>`);
+document.body.insertAdjacentHTML(`afterbegin`, `<nav class="obs-events-nav"></nav>`);
 let categoryOrderJson =  JSON.parse(categoryOrder);
 
 categoryOrderJson.forEach(function (item) {
