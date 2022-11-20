@@ -42,7 +42,7 @@ body {
     display: grid;
     grid-template: 
         "navbar event-data" 100vh
-            / 20em auto;
+            / 30em auto;
     font-family: Arial;
     color: var(--text-color);
     background:var(--v-background);
@@ -69,18 +69,32 @@ h2 {
     flex-direction: column;
     overflow-y: scroll;
     width: 100%;
+    background: var(--v-background-alt);
+}
+
+.obs-events-nav .obs-event-list-item.obs-events-nav-active {
+    background: var(--v-primary-accent-alt);
 }
 
 .obs-events-nav .obs-event-list-item {
-    background: var(--v-background-soft);
     padding-block: .5em;
     padding-inline: .25em;
     border-bottom: 1px solid var(--text-color-500);
 }
-
 .obs-events-nav .obs-event-list-item a {
-    color: var(--text-color);
     text-decoration: none;
+}
+
+.obs-events-nav .obs-event-list-item a .obs-event-list-item-title {
+    color: var(--text-color);
+}
+
+.obs-events-nav .obs-event-list-item a .obs-event-list-item-description {
+    color: var(--text-color-500);
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .obs-events-data {
