@@ -77,8 +77,8 @@ h2 {
 }
 
 .obs-events-nav .obs-event-list-item {
+    padding-inline: .75em;
     padding-block: .5em;
-    padding-inline: .25em;
     border-bottom: 1px solid var(--text-color-500);
 }
 .obs-events-nav .obs-event-list-item a {
