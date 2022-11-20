@@ -31,7 +31,7 @@ function(err, data, hash) {
     for (var eventsLength = 0; eventsLength < data.events.length; eventsLength++) {
         let events = data.events[eventsLength];
         // NavBar
-        document.querySelector(`.obs-events-nav`).insertAdjacentHTML(`beforeend`, `<li class="obs-event-list-item category-` + events.category + `"><a href="#` + events.eventType + `" onclick="navClick()">` + events.eventType + `</a></li>`);
+        document.querySelector(`.obs-events-nav`).insertAdjacentHTML(`beforeend`, `<li data-category="` + events.category + `" class="obs-event-list-item category-` + events.category + `"><a href="#` + events.eventType + `" onclick="navClick()">` + events.eventType + `</a></li>`);
 
         let hash = window.location.hash.replace("#","");
         if(hash === events.eventType) {
