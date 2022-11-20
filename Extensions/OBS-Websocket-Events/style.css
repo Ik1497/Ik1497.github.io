@@ -70,6 +70,7 @@ h2 {
     overflow-y: scroll;
     width: 100%;
     background: var(--v-background-alt);
+    padding-block: 1em;
 }
 
 .obs-events-nav .obs-event-list-item.obs-events-nav-active {
@@ -79,7 +80,6 @@ h2 {
 .obs-events-nav .obs-event-list-item {
     padding-inline: .75em;
     padding-block: .5em;
-    border-bottom: 1px solid var(--text-color-500);
 }
 .obs-events-nav .obs-event-list-item a {
     text-decoration: none;
