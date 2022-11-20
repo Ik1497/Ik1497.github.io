@@ -77,6 +77,14 @@ h2 {
     background: var(--v-primary-accent-alt);
 }
 
+.obs-events-nav-group-label {
+    color: var(--v-primary-accent);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding-inline: .75em;
+}
+
 .obs-events-nav .obs-event-list-item {
     padding-inline: .75em;
     padding-block: .5em;
@@ -126,7 +134,7 @@ section {
 
 .obs-events-data-top-section-group {
     grid-area: obs-events-data-top-section-group;
-    font-size: .75em;
+    font-size: .6em;
     display: flex;
     align-items: center;
     margin-left: .25em;
