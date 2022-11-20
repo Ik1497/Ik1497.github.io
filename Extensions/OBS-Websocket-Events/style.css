@@ -115,6 +115,7 @@ h2 {
     text-transform: uppercase;
     letter-spacing: .05em;
     padding-inline: .75em;
+    padding-block: .5em;
 }
 
 .obs-events-nav .obs-event-list-item {
@@ -153,30 +154,13 @@ section {
 /* Top Section */
 .obs-events-data-top-section {
     display: grid;
-    grid-template:
-        "obs-events-data-top-section-title obs-events-data-top-section-group" auto
-        "obs-events-data-top-section-description obs-events-data-top-section-description" auto
-            / min-content auto;
 }
 
 .obs-events-data-top-section-title {
-    grid-area: obs-events-data-top-section-title;
     font-size: 1.5em;
 }
 
-.obs-events-data-top-section-group {
-    grid-area: obs-events-data-top-section-group;
-    font-size: .6em;
-    display: flex;
-    align-items: center;
-    margin-left: .25em;
-    padding-left: .25em;
-    color: var(--text-color-700);
-    text-transform: uppercase;
-}
-
 .obs-events-data-top-section-description {
-    grid-area: obs-events-data-top-section-description;
     color: var(--text-color-600);
 }
 
