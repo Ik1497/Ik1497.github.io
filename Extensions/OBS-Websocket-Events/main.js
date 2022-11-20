@@ -45,7 +45,6 @@ document.body.insertAdjacentHTML(`afterbegin`, `<header><img src="/assets/images
 let categoryOrderJson =  JSON.parse(categoryOrder);
 
 categoryOrderJson.forEach(function (item) {
-    console.log(item.categoryDisplayName);
     document.querySelector(".obs-events-nav").insertAdjacentHTML(`beforeend`, `<ul class="obs-events-nav-group-` + item.categoryName.replace(" ", "-") + `"><p class="obs-events-nav-group-label">` + item.categoryDisplayName + `</p></ul>`)
 })
 
@@ -53,7 +52,6 @@ reloadData();
 function reloadData(hashChange) {
     getJSON('https://raw.githubusercontent.com/obsproject/obs-websocket/master/docs/generated/protocol.json',
     function(err, data) {
-        console.log(data);
         for (var eventsLength = 0; eventsLength < data.events.length; eventsLength++) {
             let events = data.events[eventsLength];
             // NavBar
