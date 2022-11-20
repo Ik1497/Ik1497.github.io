@@ -49,9 +49,10 @@ body {
     background: var(--v-background);
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 1000px) {
     body {
         grid-template: 
+        "header" 4em
         "event-data" auto
         "navbar" 100vh
             / auto;
