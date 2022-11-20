@@ -6,6 +6,7 @@
 
     <meta name="og:site_name" content="Streamer.bot Actions" />
     <meta property="og:image" content="/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
     <meta name="theme-color" content="#B80086" />
 
     <meta property="og:description" content="This page does not exist" />
@@ -19,7 +20,7 @@
   </head>
   <body>
     <div class="container">
-          <i class="mdi mdi-close-octagon"></i>
+    <i class="mdi mdi-close-octagon"></i>
     <div class="main-text">404</div>
     <div class="bottom-text">This page doesn't exist</div>
     <div class="buttons">
@@ -37,8 +38,65 @@
 @import url(/assets/css/navbar.css);
 @import url(/assets/css/header.css);
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: Inter;
+  font-size: 16px;
+  color: white;
+  background: var(--v-background);
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
  
+.container i.mdi {
+  font-size: 7em;
+}
+
+.container .main-text {
+  font-size: 7em;
+  font-weight: 900;
+}
+
+.container .bottom-text {
+  font-size: 4em;
+  font-weight: 900;
+}
+
+.container .buttons {
+  margin-top: 2em;
+}
+
+.container .button {
+  font-size: 3em;
+  border: 3px solid;
+  border-radius: 100vmax;
+  padding-inline: .5em;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.container .button:hover {
+  color: var(--v-color-link-hover)!important;
+}
+
+.container .button.alt {
+  color: var(--v-primary-natural-light);
+}
+
+.container .button.main {
+  color: var(--v-primary-accent);
+}
+
+
 </style>
