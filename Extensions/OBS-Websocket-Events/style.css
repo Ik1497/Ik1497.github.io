@@ -61,7 +61,7 @@ body {
 
 header {
     grid-area: header;
-    padding-left: 1em;
+    padding-left: .5em;
     background: var(--v-background-mute);
     display: flex;
     align-items: center;

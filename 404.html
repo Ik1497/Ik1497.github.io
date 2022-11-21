@@ -19,15 +19,15 @@
     <script src="/assets/js/theme.js"></script>
   </head>
   <body>
-    <div class="container">
-    <i class="mdi mdi-close-octagon"></i>
-    <div class="main-text">404</div>
-    <div class="bottom-text">This page doesn't exist</div>
-    <div class="buttons">
-      <a class="button alt" onclick="history.back()">Go Back</a>
-      <a href="/" class="button main">Home</a>
-    </div>
-    </div>
+    <main>
+      <i class="mdi mdi-close-octagon"></i>
+      <div class="main-text">404</div>
+      <div class="bottom-text">This page doesn't exist</div>
+      <div class="buttons">
+        <a class="button alt" onclick="history.back()">Go Back</a>
+        <a href="/" class="button main">Home</a>
+      </div>
+    </main>
 
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/header.js"></script>
@@ -35,8 +35,7 @@
 </html>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import url(/assets/css/navbar.css);
-@import url(/assets/css/header.css);
+@import url(/assets/css/style.css);
 
 * {
   margin: 0;
@@ -49,35 +48,37 @@ body {
   color: white;
   background: var(--v-background);
   height: 100vh;
+  line-height: 1;
 }
 
-.container {
+main {
+  height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  flex-direction: column;
+  text-align: center;
 }
  
-.container i.mdi {
+main i.mdi {
   font-size: 7em;
 }
 
-.container .main-text {
+main .main-text {
   font-size: 7em;
   font-weight: 900;
 }
 
-.container .bottom-text {
-  font-size: 4em;
+main .bottom-text {
+  font-size: 3em;
   font-weight: 900;
 }
 
-.container .buttons {
+main .buttons {
   margin-top: 2em;
 }
 
-.container .button {
+main .button {
   font-size: 3em;
   border: 3px solid;
   border-radius: 100vmax;
@@ -86,17 +87,16 @@ body {
   cursor: pointer;
 }
 
-.container .button:hover {
+main .button:hover {
   color: var(--v-color-link-hover)!important;
 }
 
-.container .button.alt {
+main .button.alt {
   color: var(--v-primary-natural-light);
 }
 
-.container .button.main {
+main .button.main {
   color: var(--v-primary-accent);
 }
-
 
 </style>
