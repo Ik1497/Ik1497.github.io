@@ -1,11 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import url(/assets/css/animation.css);
+@import url(/assets/css/style.css);
 
-header.main-header {
-    display: none;
-}
-
-.navbar {
+footer.footer-info {
     display: none;
 }
 
@@ -19,6 +16,7 @@ header.main-header {
     margin: 0;
     padding: 0;
 }
+
 html {
     overflow-x: hidden;
 }
@@ -32,12 +30,12 @@ body {
     display: grid;
     font-size: 16px;
     grid-template: 
-        ". body-header ." max-content
-        ". body-main ." auto
-        / 5% auto 5%;
+        "body-header" max-content
+        "body-main" auto
+        / auto;
 }
 
-header {
+header.changelog-header {
     margin-top: 5em;
     border-bottom: .05em solid var(--text-color);
     padding-bottom: .5em;
@@ -51,7 +49,7 @@ header {
 }
 
 @media only screen and (max-width: 50em) {
-    header {
+    header.changelog-header {
         margin-top: 5%;
         grid-template: 
             "header-h1 header-h1" 3em
@@ -59,14 +57,14 @@ header {
             "header-go-back header-go-back" auto 
             / max-content auto;
     }
-    header * {
+    header.changelog-header * {
         display: flex;
         justify-content: center;
     }
 }
 
 @media only screen and (max-width: 30em) {
-    header {
+    header.changelog-header {
         margin-top: 5%;
         grid-template: 
             "header-h1" 3em
@@ -75,27 +73,27 @@ header {
             "header-go-back" auto
             / auto;
     }
-    header * {
+    header.changelog-header * {
         display: flex;
         justify-content: center;
     }
 
-    header label {
+    header.changelog-header label {
         justify-content: center!important;
     }
 
-    header select {
+    header.changelog-header select {
         display: flex;
         justify-content: center;
         width: unset!important;
     }
 }
 
-header h1 {
+header.changelog-header h1 {
     grid-area: header-h1;
 }
 
-header label {
+header.changelog-header label {
     grid-area: header-select-label;
     display: flex;
     justify-content: right;
@@ -104,7 +102,7 @@ header label {
     font-weight: 600;
 }
 
-header select {
+header.changelog-header select {
     grid-area: header-select;
     margin-block: 1.2em;
     background: var(--background);
@@ -116,36 +114,37 @@ header select {
     border-radius: 100vmax;
 }
 
-header select:focus-visible {
+header.changelog-header select:focus-visible {
     border-radius: 0;
     cursor: pointer;
 }
 
-header select optgroup {
+header.changelog-header select optgroup {
     color: #979797;
     text-align: left;
     width: 100%;
 }
 
-header select option {
+header.changelog-header select option {
     text-align: center;
     width: 100%;
     color: var(--text-color);
 }
 
-header .go-back {
+header.changelog-header .go-back {
     grid-area: header-go-back;
     cursor: pointer;
     color: #aaa;
 }
 
-header .go-back:hover {
+header.changelog-header .go-back:hover {
     color: #00a2ff;
 }
 
 main {
     grid-area: body-main;
     padding-top: 1em;
+    width: 100%;
 }
 
 ul.changelog-new,

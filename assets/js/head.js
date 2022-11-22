@@ -10,7 +10,6 @@ document.write(`
 
 <script src="/assets/js/header.js"></script>
 <script src="/assets/js/theme.js"></script>
-<link rel="stylesheet" href="/assets/node_modules/@mdi/font/css/materialdesignicons.css">
 
 <script src="/assets/node_modules/@prism/prism.js"></script>
 <link rel="stylesheet" href="/assets/node_modules/@prism/prism.css">

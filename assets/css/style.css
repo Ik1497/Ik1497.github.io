@@ -3,6 +3,8 @@
 @import url(/assets/css/header.css);
 @import url(/assets/css/navbar.css);
 @import url(/assets/css/animation.css);
+@import url(/assets/node_modules/@mdi/font/css/materialdesignicons.css);
+
 /* ==========
    HTML Styling
    ========== */

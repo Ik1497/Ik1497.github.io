@@ -21,31 +21,33 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header class="animated fadeInUp">
-      <a class="go-back animated fadeInUp wait-p4s" onclick="history.back()"
-        >&lt;- Go back</a
-      >
-      <h1 class="animated fadeInUp wait-p2s">Changelogs</h1>
-      <label class="animated fadeInUp wait-p2s" for="select-changelog-extension"
-        >Select Which Changelog:</label
-      >
-
-      <select
-        class="animated fadeInUp wait-p4s"
-        name="select-changelog-extension"
-        id="selectChangelogExtension"
-        onchange="changelogSelector()"
-      >
-        <optgroup label="Widgets">
-          <option value="WidgetsMusicMinimal">Music Minimal</option>
-          <option value="WidgetsMusicWidget">Music Widget</option>
-        </optgroup>
-      </select>
-    </header>
-    <main></main>
+    <main>
+      <header class="changelog-header animated fadeInUp">
+        <a class="go-back animated fadeInUp wait-p4s" onclick="history.back()"
+          >&lt;- Go back</a
+        >
+        <h1 class="animated fadeInUp wait-p2s">Changelogs</h1>
+        <label class="animated fadeInUp wait-p2s" for="select-changelog-extension"
+          >Select Which Changelog:</label
+        >
+  
+        <select
+          class="animated fadeInUp wait-p4s"
+          name="select-changelog-extension"
+          id="selectChangelogExtension"
+          onchange="changelogSelector()"
+        >
+          <optgroup label="Widgets">
+            <option value="WidgetsMusicMinimal">Music Minimal</option>
+            <option value="WidgetsMusicWidget">Music Widget</option>
+          </optgroup>
+        </select>
+      </header>
+      <div class="main-contents"></div>
+    </main>
+    <script src="./main.js"></script>
     <script src="/assets/js/main.js"></script>
   </body>
-  <script src="./main.js"></script>
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js"
     integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg="
