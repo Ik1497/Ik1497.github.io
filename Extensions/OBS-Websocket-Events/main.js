@@ -17,7 +17,6 @@ var getJSON = function(url, callback) {
 
 addEventListener('hashchange', (event) => {
     setTimeout(function () {
-        let hash = window.location.hash;
         document.querySelector("main").parentNode.removeChild(document.querySelector("main"));
         let obsEventsLatestNavBarItem = sessionStorage.getItem("obs-events-latest-nav-bar-item");
         document.querySelector(`.item-` + obsEventsLatestNavBarItem).classList.remove("obs-events-nav-active");

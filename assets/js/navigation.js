@@ -6,16 +6,16 @@ const navItemsArray = JSON.stringify([
     name: "Home",
     icon: "mdi mdi-home",
     href: "/",
-    type: "link",
+    type: "link"
   },
   {
     name: "Changelogs",
     icon: "mdi mdi-fire",
     href: "/Changelogs/",
-    type: "link",
+    type: "link"
   },
   {
-    type: "hr",
+    type: "hr"
   },
   {
     name: "Widgets",
@@ -25,13 +25,13 @@ const navItemsArray = JSON.stringify([
     name: "Music Widget",
     icon: "mdi mdi-spotify",
     href: "/Extensions/Music/",
-    type: "link",
+    type: "link"
   },
   {
     name: "Mute Indicator",
     icon: "mdi mdi-volume-mute",
     href: "/Extensions/Mute-Indicator/Docs",
-    type: "link",
+    type: "link"
   },
   {
     type: "hr"
@@ -44,7 +44,7 @@ const navItemsArray = JSON.stringify([
     name: "OBS Websocket Events",
     icon: "mdi mdi-application",
     href: "/Extensions/OBS-Websocket-Events/",
-    type: "link",
+    type: "link"
   }
 ]);
 
