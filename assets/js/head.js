@@ -11,10 +11,9 @@ document.write(`
 <script src="/assets/js/header.js"></script>
 <script src="/assets/js/theme.js"></script>
 
-<script src="/assets/node_modules/@prism/prism.js"></script>
-<link rel="stylesheet" href="/assets/node_modules/@prism/prism.css">
+<script src="/assets/prism/prism.js"></script>
+<link rel="stylesheet" href="/assets/prism/prism.css">
 <link rel="stylesheet" href="/assets/css/style.css">
-<link rel="stylesheet" href="/assets/css/animation.css">
-
-<script src="/assets/node_modules/@tilt.js/js/tilt.jquery.js"></script>
 `);
+
+{/* <script src="/node_modules/@tilt.js/js/tilt.jquery.js"></script> */}
