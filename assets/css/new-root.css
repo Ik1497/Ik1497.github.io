@@ -1,0 +1,265 @@
+:root {
+  --background-primary: #22252B;
+  --background-alt: #1B1D22;
+  --background-darken: #131a31;
+  --background-soft: #292C33;
+  --background-mute: #343841;
+  --background-light: #5c6273;
+  --background-lighten: #858da6;
+  --accent-primary: #8c75fa;
+  --accent-alt: #5430ff;
+  --brand-youtube: #ff0000;
+  --brand-twitch: #6441a5;
+  --brand-discord: #5865F2;
+  --link-primary: #0096ff;
+  --link-hover: #0066FF;
+  --blockquote-base: rgba(113, 127, 171, 0.1882352941);
+  --blockquote-color: #c0c0c0;
+  --blockquote-box-shadow-color: #212121;
+  --blockquote-code-base: #141414;
+  --blockquote-code-fw: 500;
+  --blockquote-code-border-color: #444;
+  --blockquote-border-radius: 12px;
+  --blockquote-is-warning-base: rgba(252, 210, 83, 0.0823529412);
+  --blockquote-is-warning-color: #fcd253;
+  --blockquote-is-info-base: rgba(83, 170, 252, 0.0823529412);
+  --blockquote-is-info-color: #53aafc;
+  --blockquote-is-success-base: rgba(66, 211, 146, 0.0823529412);
+  --blockquote-is-success-color: #42d392;
+  --blockquote-is-danger-base: rgba(245, 78, 130, 0.0823529412);
+  --blockquote-is-danger-color: #f54e82;
+}
+
+.text-color-background-primary {
+  color: var(--background-primary);
+}
+
+.text-color-background-alt {
+  color: var(--background-alt);
+}
+
+.text-color-background-darken {
+  color: var(--background-darken);
+}
+
+.text-color-background-soft {
+  color: var(--background-soft);
+}
+
+.text-color-background-mute {
+  color: var(--background-mute);
+}
+
+.text-color-background-light {
+  color: var(--background-light);
+}
+
+.text-color-background-lighten {
+  color: var(--background-lighten);
+}
+
+.background-color-background-primary {
+  background: var(--background-primary);
+}
+
+.background-color-background-alt {
+  background: var(--background-alt);
+}
+
+.background-color-background-darken {
+  background: var(--background-darken);
+}
+
+.background-color-background-soft {
+  background: var(--background-soft);
+}
+
+.background-color-background-mute {
+  background: var(--background-mute);
+}
+
+.background-color-background-light {
+  background: var(--background-light);
+}
+
+.background-color-background-lighten {
+  background: var(--background-lighten);
+}
+
+.text-color-accent-primary {
+  color: var(--accent-primary);
+}
+
+.text-color-accent-alt {
+  color: var(--accent-alt);
+}
+
+.background-color-accent-primary {
+  background: var(--accent-primary);
+}
+
+.background-color-accent-alt {
+  background: var(--accent-alt);
+}
+
+.text-color-brand-youtube {
+  color: var(--brand-youtube);
+}
+
+.text-color-brand-twitch {
+  color: var(--brand-twitch);
+}
+
+.text-color-brand-discord {
+  color: var(--brand-discord);
+}
+
+.background-color-brand-youtube {
+  background: var(--brand-youtube);
+}
+
+.background-color-brand-twitch {
+  background: var(--brand-twitch);
+}
+
+.background-color-brand-discord {
+  background: var(--brand-discord);
+}
+
+.text-color-link-primary {
+  color: var(--link-primary);
+}
+
+.text-color-link-hover {
+  color: var(--link-hover);
+}
+
+.background-color-link-primary {
+  background: var(--link-primary);
+}
+
+.background-color-link-hover {
+  background: var(--link-hover);
+}
+
+.text-color-blockquote-base {
+  color: var(--blockquote-base);
+}
+
+.text-color-blockquote-color {
+  color: var(--blockquote-color);
+}
+
+.text-color-blockquote-box-shadow-color {
+  color: var(--blockquote-box-shadow-color);
+}
+
+.text-color-blockquote-code-base {
+  color: var(--blockquote-code-base);
+}
+
+.text-color-blockquote-code-fw {
+  color: var(--blockquote-code-fw);
+}
+
+.text-color-blockquote-code-border-color {
+  color: var(--blockquote-code-border-color);
+}
+
+.text-color-blockquote-border-radius {
+  color: var(--blockquote-border-radius);
+}
+
+.background-color-blockquote-base {
+  background: var(--blockquote-base);
+}
+
+.background-color-blockquote-color {
+  background: var(--blockquote-color);
+}
+
+.background-color-blockquote-box-shadow-color {
+  background: var(--blockquote-box-shadow-color);
+}
+
+.background-color-blockquote-code-base {
+  background: var(--blockquote-code-base);
+}
+
+.background-color-blockquote-code-fw {
+  background: var(--blockquote-code-fw);
+}
+
+.background-color-blockquote-code-border-color {
+  background: var(--blockquote-code-border-color);
+}
+
+.background-color-blockquote-border-radius {
+  background: var(--blockquote-border-radius);
+}
+
+.text-color-blockquote-is-warning-base {
+  color: var(--blockquote-is-warning-base);
+}
+
+.text-color-blockquote-is-warning-color {
+  color: var(--blockquote-is-warning-color);
+}
+
+.background-color-blockquote-is-warning-base {
+  background: var(--blockquote-is-warning-base);
+}
+
+.background-color-blockquote-is-warning-color {
+  background: var(--blockquote-is-warning-color);
+}
+
+.text-color-blockquote-is-info-base {
+  color: var(--blockquote-is-info-base);
+}
+
+.text-color-blockquote-is-info-color {
+  color: var(--blockquote-is-info-color);
+}
+
+.background-color-blockquote-is-info-base {
+  background: var(--blockquote-is-info-base);
+}
+
+.background-color-blockquote-is-info-color {
+  background: var(--blockquote-is-info-color);
+}
+
+.text-color-blockquote-is-success-base {
+  color: var(--blockquote-is-success-base);
+}
+
+.text-color-blockquote-is-success-color {
+  color: var(--blockquote-is-success-color);
+}
+
+.background-color-blockquote-is-success-base {
+  background: var(--blockquote-is-success-base);
+}
+
+.background-color-blockquote-is-success-color {
+  background: var(--blockquote-is-success-color);
+}
+
+.text-color-blockquote-is-danger-base {
+  color: var(--blockquote-is-danger-base);
+}
+
+.text-color-blockquote-is-danger-color {
+  color: var(--blockquote-is-danger-color);
+}
+
+.background-color-blockquote-is-danger-base {
+  background: var(--blockquote-is-danger-base);
+}
+
+.background-color-blockquote-is-danger-color {
+  background: var(--blockquote-is-danger-color);
+}
+
+/*# sourceMappingURL=new-root.css.map */

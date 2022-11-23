@@ -1,13 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import url(/assets/css/root.css);
+@import url(/assets/css/new-root.css);
 @import url(/assets/css/header.css);
 @import url(/assets/css/navbar.css);
 @import url(/assets/css/animation.css);
-@import url(/assets/node_modules/@mdi/font/css/materialdesignicons.css);
+@import url(/node_modules/@mdi/font/css/materialdesignicons.css);
 
-/* ==========
-   HTML Styling
-   ========== */
+/* ============ */
+/* HTML Styling */
+/* ============ */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4em;
@@ -50,9 +51,9 @@ main {
   margin-top: 1em;
 }
 
-/* ==========
-   Else
-   ========== */
+/* ==== */
+/* Else */
+/* ==== */
 
 @media (min-width: 50em) {
   body {
@@ -183,7 +184,6 @@ blockquote {
   font-size: 20px;
   padding: 0.5rem !important;
   margin: 1rem 0rem;
-  font-family: var(--v-blockquote-ff);
   position: relative;
 }
 
@@ -496,9 +496,9 @@ ul.grid-list li:nth-child(odd) {
   color: #5865f2 !important;
 }
 
-/* =========
-   Documentaion Helpers
-   ========*/
+/* ==================== */
+/* Documentaion Helpers */
+/* ==================== */
 .url-parameter-novalue::before {
   color: var(--v-color-code);
   background: var(--v-primary-natural-dark-darken);

@@ -1,4 +1,5 @@
 /// General ///
+let hashChange = false;
 
 var getJSON = function(url, callback) {
     var xhr = new XMLHttpRequest();

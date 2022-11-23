@@ -1,0 +1,51 @@
+$colors: (
+    background: (
+        primary: #22252B,
+        alt: #1B1D22,
+        darken: #131a31,
+        soft: #292C33,
+        mute: #343841,
+        light: #5c6273,
+        lighten: #858da6
+    ),
+    accent: (
+        primary: #8c75fa,
+        alt: #5430ff
+    ),
+    brand: (
+        youtube: #ff0000,
+        twitch: #6441a5,
+        discord: #5865F2
+    ),
+    link: (
+        primary: #0096ff,
+        hover: #0066FF
+    ),
+
+    blockquote: (
+        base: #717fab30,
+        color: #c0c0c0,
+
+        box-shadow-color: #212121,
+        code-base: #141414,
+        code-fw: 500,
+        code-border-color: #444,
+        border-radius: 12px
+    ),
+    blockquote-is-warning: (
+        base: #fcd25315,
+        color: #fcd253
+    ),
+    blockquote-is-info: (
+        base: #53aafc15,
+        color: #53aafc
+    ),
+    blockquote-is-success: (
+        base: #42d39215,
+        color: #42d392
+    ),
+    blockquote-is-danger: (
+        base: #f54e8215,
+        color: #f54e82
+    )
+)

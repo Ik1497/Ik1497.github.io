@@ -1,0 +1,25 @@
+{
+  "name": "ik1497.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ik1497/Ik1497.github.io.git"
+  },
+  "author": "ik1497",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ik1497/Ik1497.github.io/issues"
+  },
+  "homepage": "https://github.com/Ik1497/Ik1497.github.io#readme",
+  "devDependencies": {
+    "sass": "^1.56.1"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.0.96"
+  }
+}
