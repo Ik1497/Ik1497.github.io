@@ -23,7 +23,7 @@ function connectws() {
         JSON.stringify({
           request: "Subscribe",
           events: {
-            general: ["Custom"]
+            General: ["Custom"]
           },
           id: "123",
         })
