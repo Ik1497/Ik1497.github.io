@@ -16,7 +16,7 @@
 body {
     padding-top: 1em;
     font-family: Poppins;
-    font-size: 16px;
+    font-size: 1em;
     color: var(--v-primary-natural);
     background-color: var(--v-background);
     overflow-x: hidden;

@@ -1,22 +1,37 @@
 @use "abstracts/colors" as *;
+@use "abstracts/sizes" as *;
+
 
 :root {
+    // Colors
     @each $color, $shades in $colors {
         @each $shade, $value in $shades {
             --#{$color}-#{$shade}: #{$value};
         }
     }
+
+    // Sizes
+    @each $size in $sizes {
+        --size-#{$size}: #{$size / 100 * $base-value};
+    }
 }
 
+// Colors
 @each $color, $shades in $colors {
     @each $shade, $value in $shades {
-        .text-color-#{$color}-#{$shade} {
-            color: var(--#{$color}-#{$shade});
-        } 
+        @each $element in $colorElements {
+            .#{$element}-#{$color}-#{$shade} {
+              #{$element}: var(--#{$color}-#{$shade});  
+            }    
+        }
     }
-    @each $shade, $value in $shades {
-            .background-color-#{$color}-#{$shade} {
-            background: var(--#{$color}-#{$shade});
-        } 
+}
+
+// Sizes
+@each $size in $sizes {
+    @each $element in $sizeElements {
+        .#{$element}-#{$size} {
+            #{$element}: var(--size-#{$size});  
+        }    
     }
 }
