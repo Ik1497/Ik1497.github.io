@@ -10,6 +10,7 @@ document.write(`
 
 <script src="/assets/js/header.js"></script>
 <script src="/assets/js/theme.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9395875744183228" crossorigin="anonymous"></script>
 
 <script src="/assets/prism/prism.js"></script>
 <link rel="stylesheet" href="/assets/css/style.css">

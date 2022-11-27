@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#container {
+    height: 100%; 
+    width: 100%;
+    margin: 0 auto; 
+}
+.loading {
+    margin-top: 10em;
+    text-align: center;
+    color: gray;
+}
+
+
+.my-link {
+  text-decoration: underline;
+}
+
+.my-link:hover {
+  cursor:pointer
+}
+
+/*  */
+
+.highcharts-exporting-group,
+.highcharts-zoom-in,
+.highcharts-zoom-out,
+.highcharts-credits,
+.highcharts-legend {
+  display: none;
+}
