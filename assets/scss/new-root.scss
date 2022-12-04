@@ -1,6 +1,6 @@
 @use "abstracts/colors" as *;
 @use "abstracts/sizes" as *;
-
+@use "sass:color";
 
 :root {
     // Colors
@@ -21,7 +21,7 @@
     @each $shade, $value in $shades {
         @each $element in $colorElements {
             .#{$element}-#{$color}-#{$shade} {
-              #{$element}: var(--#{$color}-#{$shade});  
+              #{$element}: var(--#{$color}-#{$shade});
             }    
         }
     }
@@ -31,7 +31,7 @@
 @each $size in $sizes {
     @each $element in $sizeElements {
         .#{$element}-#{$size} {
-            #{$element}: var(--size-#{$size});  
+            #{$element}: var(--size-#{$size});
         }    
     }
 }

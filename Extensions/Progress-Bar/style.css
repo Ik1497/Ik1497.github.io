@@ -9,12 +9,15 @@
     --background-opacity: .8;
     --background: hsl(0, 0%, 0%, var(--background-opacity));
     --background-progress-bar: hsl(279, 100%, 77%);
+    --background-border-radius: .3em;
 
     --font-family: Uni Sans CAPS;
     --font-weight: 900;
     --font-style: normal;
     --font-size: 3em;
     --font-color: #fff;
+
+    --animation-duration: 1500ms
 }
 
 body {
@@ -23,7 +26,7 @@ body {
     font-style: var(--font-style);
     font-size: var(--font-size);
     color: var(--font-color);
-    background: firebrick;
+    background: #181818;
 }
 
 .container {
@@ -32,6 +35,10 @@ body {
     position: relative;
     width: 900px;
     margin: .5em;
+    border-radius: var(--background-border-radius);
+    overflow: hidden;
+
+    animation: showWidget var(--animation-duration) forwards;
 }
 
 .container .progress-bar {
@@ -41,23 +48,30 @@ body {
     text-align: right;
     justify-content: right;
     align-items: center;
-    width: 50%;
+    width: 80%;
     display: flex;
+    border-radius: var(--background-border-radius) 0 0 var(--background-border-radius);
+
+    animation: showProgressBar var(--animation-duration) forwards;
 }
 
 .progress-text {
     font-size: .5em;
     display: flex;
-    width: 100%;
-    justify-content: center;
+    width: 80%;
+    justify-content: end;
     align-items: center;
     position: absolute;
     bottom: -50%;
+
+    animation: showGoalTitle var(--animation-duration) forwards;
 }
 
 .container .start-goal {
     z-index: 1;
     padding-left: .25em;
+
+    animation: showStartGoal var(--animation-duration) forwards;
 }
 
 .container .end-goal {
@@ -69,9 +83,11 @@ body {
     width: 100%;
     position: absolute;
     right: .25em;
+
+    animation: showEndGoal var(--animation-duration) forwards;
 }
 
-.container .goal-title {
+.container .goal-title-container {
     z-index: 1;
     text-align: center;
     display: flex;
@@ -81,4 +97,81 @@ body {
     height: 100%;
     font-size: .6em;
     position: absolute;
+    animation: showGoalTitle var(--animation-duration) forwards;
+}
+
+.container .goal-title {
+    background: var(--background);
+    padding: .1em .5em;
+    border-radius: var(--background-border-radius);
+}
+
+/* -------------- */
+/* Show Animation */
+/* -------------- */
+@keyframes showWidget {
+    0% {
+        background: transparent;
+    }
+
+    100% {
+        background: var(--background);
+    }
+}
+
+@keyframes showProgressBar {
+    0% {
+        transform: translateY(100%);
+    }
+
+    20% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes showStartGoal {
+    0% {
+        transform: translateY(100%);
+    }
+
+    30% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes showGoalTitle {
+    0% {
+        transform: translateY(100%);
+    }
+
+    50% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+
+}
+
+@keyframes showEndGoal {
+    0% {
+        transform: translateY(100%);
+    }
+
+    70% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
 }

@@ -9,14 +9,13 @@ function connectws(actionId, actionName) {
     let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
     const ws = new WebSocket(wsServerUrl);
     if (actionId === undefined || actionName === undefined) {
-      console.log("Trying to connect to Streamer.bot...");
+      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...");
     }
 
     ws.onclose = function () {
       setTimeout(connectws, 10000);
-      console.log(
-        "No connection found to Streamer.bot, reconnecting every 10s..."
-      );
+      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to Streamer.bot, reconnecting every 10s...");
+
     };
 
     ws.onopen = function () {
@@ -27,13 +26,14 @@ function connectws(actionId, actionName) {
         })
       );
       if (actionId === undefined || actionName === undefined) {
-        console.log("Connected to Streamer.bot");
+        console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot");
       }
     };
     ws.addEventListener("message", (event) => {
       if (actionId === undefined || actionName === undefined) {
         if (!event.data) return;
-        var data = JSON.parse(event.data);
+        const data = JSON.parse(event.data);
+        if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the events"); return; }
         document
           .querySelector("body")
           .insertAdjacentHTML(
