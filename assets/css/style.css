@@ -297,7 +297,7 @@ samp {
   color: var(--v-color-code);
   border: 1px solid var(--v-primary-natural-dark-lighten);
   padding: 0 5px;
-  font-family: Roboto Mono;
+  font: var(--v-font-family);
   font-weight: 400;
   box-shadow: none;
   font-style: normal;
