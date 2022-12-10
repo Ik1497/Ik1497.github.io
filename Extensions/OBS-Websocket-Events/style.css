@@ -1,14 +1,6 @@
-:root {
-    --v-background: #22252B;
-    --v-background-alt: #1B1D22;
-    --v-background-darken: #131a31;
-    --v-background-soft: #292C33;
-    --v-background-mute: #343841;
-    --v-background-light: #5c6273;
-    --v-background-lighten: #858da6;
-    --v-primary-accent: #8c75fa;
-    --v-primary-accent-alt: #5430ff;
+@import url(/assets/css/root.css);
 
+:root {
     --text-color: hsl(0, 0%, 100%);
     --text-color-700: hsla(0, 0%, 100%, 75%);
     --text-color-600: hsla(0, 0%, 100%, 47.5%);
@@ -36,6 +28,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -113,10 +106,6 @@ h2 {
     padding-block: 1em;
 }
 
-.obs-events-nav .obs-event-list-item.obs-events-nav-active {
-    background: var(--v-primary-accent-alt);
-}
-
 .obs-events-nav-group-label {
     color: var(--v-primary-accent);
     font-weight: bold;
@@ -128,7 +117,7 @@ h2 {
 
 .obs-events-nav .obs-event-list-item {
     padding-inline: .75em;
-    padding-block: .5em;
+    padding-block: .1em;
     position: relative;
 }
 
@@ -140,11 +129,22 @@ h2 {
 }
 
 .obs-events-nav .obs-event-list-item a {
+    border-radius: 8px;
+    padding: .6em;
     text-decoration: none;
     display: grid;
     grid-template: 
         "obs-event-list-item-title"
         "obs-event-list-item-description";
+}
+
+.obs-events-nav .obs-event-list-item a:hover,
+.obs-events-nav .obs-event-list-item a:focus-visible {
+    background: var(--v-background-soft);
+}
+
+.obs-events-nav .obs-event-list-item.obs-events-nav-active a {
+    background: var(--v-primary-accent-alt);
 }
 
 .obs-events-nav .obs-event-list-item a .obs-event-list-item-title {

@@ -1,13 +1,13 @@
-//////////////////////
-/// Websocket Code ///
-//////////////////////
+// -------------- //
+// Websocket Code //
+// -------------- //
+
 connectws();
 
 function connectws() {
   if ("WebSocket" in window) {
     let wsServerUrl =
-      new URLSearchParams(window.location.search).get("ws") ||
-      "ws://localhost:8080/";
+      new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
     const ws = new WebSocket(wsServerUrl);
     console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...");
 
@@ -41,13 +41,21 @@ function connectws() {
       if (timerEventType === "timer-started") {
         var timerDuration = data.data.duration;
       };
+
+      if (timerEventType === "timer-paused") {
+        
+      };
+
+      if (timerEventType === "timer-stopped") {
+        
+      };
     });
   }
 }
 
-//////////////////////
-/// URL Paramaters ///
-//////////////////////
+// -------------- //
+// URL Paramaters //
+// -------------- //
 // General
 const params = new URLSearchParams(window.location.search);
 var root = document.querySelector(":root");
@@ -76,7 +84,7 @@ root.style.setProperty("--animation-duration", animationDuration + "ms");
 // ------------------ //
 // ANIMATION SETTINGS //
 // ------------------ //
-function animationSettings() {
+function animationOff() {
   document.querySelector('.container').classList.toggle('center-animation'); 
   setTimeout(function () {
     document.querySelector(".container").classList.add("center");
@@ -84,9 +92,9 @@ function animationSettings() {
 
   setTimeout(function () {
     document.querySelector(".container").classList.add("off-animation");
-  }, animationDuration * 3);
+  }, animationDuration * 5);
 
   setTimeout(function () {
     document.querySelector(".container").parentNode.removeChild(document.querySelector(".container"));
-  }, animationDuration * 4);
+  }, animationDuration * 6);
 };
