@@ -29,7 +29,7 @@ function connectws() {
     ws.addEventListener("message", (event) => {
       if (!event.data) return;
       const data = JSON.parse(event.data);
-      if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the events"); return; };
+      if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the Events/Requests"); return; };
       var widget = data.data?.widget;
       if (widget != "mute-indicator") return;
 
@@ -79,9 +79,7 @@ function addMute(sourceName) {
 function removeMute(sourceName) {
   document.getElementById(sourceName).classList.add("fadeOutRight");
   setTimeout(function () {
-    document
-      .getElementById(sourceName)
-      .parentNode.removeChild(document.getElementById(sourceName));
+    document.getElementById(sourceName).parentNode.removeChild(document.getElementById(sourceName));
   }, 1000);
 }
 

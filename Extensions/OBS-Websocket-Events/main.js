@@ -18,9 +18,11 @@ var getJSON = function(url, callback) {
 
 addEventListener('hashchange', (event) => {
     setTimeout(function () {
-        document.querySelector("main").parentNode.removeChild(document.querySelector("main"));
         let obsEventsLatestNavBarItem = sessionStorage.getItem("obs-events-latest-nav-bar-item");
-        document.querySelector(`.item-` + obsEventsLatestNavBarItem).classList.remove("obs-events-nav-active");
+        if (obsEventsLatestNavBarItem != undefined) {
+            document.querySelector("main").parentNode.removeChild(document.querySelector("main"));
+            document.querySelector(`.item-` + obsEventsLatestNavBarItem).classList.remove("obs-events-nav-active");
+        }
         let hashChange = true;
         reloadData(hashChange);
     }, 10);

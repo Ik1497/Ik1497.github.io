@@ -31,11 +31,18 @@
         <p class="description">Music Widget for Spotify</p>
       </header>
       <h2>Configuration</h2>
+      <h3>Streamer.bot</h3>
+      <p>
+        1. Make sure that the <code>Server/Clients</code> <code>--></code>
+        <code>Websocket Server</code> is enabled.<br>
+        2. You don't have to import any action and/or connect something to
+        events, this the only thing!
+      </p>
       <h3>OBS Studio</h3>
       1. Make a browser source in OBS Studio with the settings:
-      <code>Width = 1920</code>, <code>Height = 1080</code>.<br />
+      <code>Width = 1920</code>, <code>Height = 1080</code>.<br>
       2. Put the URL of the widget in the Browser Source, find URL
-      <a href="#widget">here</a>.<br />
+      <a href="#widget">here</a>.<br>
 
       <h2>Widget</h2>
       <p>
@@ -126,20 +133,20 @@
             <td class="table-right"><code>size-delay</code></td>
             <td class="table-left">
               The delay between transitioning from small to big and vice versa
-              <code>Default: 8000<small>ms</small></code>
+              <code>Default: 8000<small>ms</small></code>.
             </td>
           </tr>
           <tr>
             <td class="table-right"><code>transition-time</code></td>
             <td class="table-left">
               The time it takes to transition from the small to the big size and
-              vice versa <code>Default: 1s</code>
+              vice versa <code>Default: 1s</code>.
             </td>
           </tr>
           <tr>
             <td class="table-right"><code>transition-timing-function</code></td>
             <td class="table-left">
-              The transition timing function <code>Default: ease</code>
+              The transition timing function <code>Default: ease</code>.
             </td>
           </tr>
         </tbody>
@@ -169,7 +176,7 @@
             <td class="table-right"><code>background-saturation</code></td>
             <td class="table-left">
               The background saturation of the widget
-              <code>Choose between: 0-100</code>,<br />
+              <code>Choose between: 0-100</code>,<br>
               used for how much hue gets used.
             </td>
           </tr>
@@ -178,7 +185,7 @@
             <td class="table-left">
               The background background lightness top,
               <code>Choose between 0-100</code>, <code>0: light, 100: dark</code
-              ><br />
+              ><br>
               Used for how light/dark the hue is.
             </td>
           </tr>
@@ -187,7 +194,7 @@
             <td class="table-left">
               The background background lightness bottom,
               <code>Choose between 0-100</code>, <code>0: light, 100: dark</code
-              ><br />
+              ><br>
               Used for how light/dark the hue is.
             </td>
           </tr>
@@ -254,7 +261,7 @@
         </tbody>
       </table>
       <p>
-        Make it your own with URL Parameters! This example image below uses:<br />
+        Make it your own with URL Parameters! This example image below uses:<br>
         <code
           >https://ik1497.github.io/Extensions/Music/Widget/?progress-bar-hidden&border-radius=0&border-radius-small=0&background-hue=345&color-primary=rgb(200,200,200)&color-accent=rgb(180,180,180)</code>
       </p>

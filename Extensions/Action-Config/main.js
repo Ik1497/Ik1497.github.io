@@ -1,16 +1,10 @@
-///////////////////
-/// GET ACTIONS ///
-///////////////////
+GetActions();
 
-connectws();
-
-function connectws(actionId, actionName) {
+function GetActions() {
   if ("WebSocket" in window) {
     let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
     const ws = new WebSocket(wsServerUrl);
-    if (actionId === undefined || actionName === undefined) {
-      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...");
-    }
+    console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...");
 
     ws.onclose = function () {
       setTimeout(connectws, 10000);
@@ -25,70 +19,22 @@ function connectws(actionId, actionName) {
           id: "123",
         })
       );
-      if (actionId === undefined || actionName === undefined) {
-        console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot");
-      }
+      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot");
+      document.querySelector("body").insertAdjacentHTML(`afterbegin`,`<main><ul class="Actions"></ul><main>`);
+      document.querySelector("body").insertAdjacentHTML(`afterbegin`,`<nav><ul class="Actions-Nav"></ul></nav>`);
     };
+
     ws.addEventListener("message", (event) => {
-      if (actionId === undefined || actionName === undefined) {
-        if (!event.data) return;
-        const data = JSON.parse(event.data);
-        if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the events"); return; }
-        document
-          .querySelector("body")
-          .insertAdjacentHTML(
-            "afterbegin",
-            `<header><p class="action-count">` +
-              data.count +
-              ` Actions</p></header>`
-          );
-        console.log(data);
-        document
-          .querySelector("body")
-          .insertAdjacentHTML("beforeend", '<ul id="actions"></ul>');
-        for (var i = 0; i < data.actions.length; i++) {
-          var actions = data.actions[i];
-          document
-            .getElementById("actions")
-            .insertAdjacentHTML(
-              "beforeend",
-              `<li onclick="var actionId = '` +
-                actions.id +
-                `'; var actionName = '` +
-                actions.name +
-                `'; connectws(actionId, actionName);" id="` +
-                actions.id +
-                `">` +
-                actions.name +
-                `<p class="group">` +
-                actions.group +
-                `</p><span class="tooltip">` +
-                actions.id +
-                `</span></li>`
-            );
-          if (actions.enabled === false) {
-            document.getElementById(actions.id).classList.add("disabled");
-          }
-        }
-      } else {
-        // console.log(
-        //   'Running action: "' +
-        //     actionName +
-        //     '" with the id "' +
-        //     actionId +
-        //     '"... (SOON)'
-        // );
-        var modalHtml =
-          `<div id="modal" class="modal"><div class="upper"><p class="modal-title">Action Config</p><p onclick="var modal = document.getElementById('modal'); modal.parentNode.removeChild(modal);" class="modal-close">&times;</p></div><div class="lower"><p class="modal-action-name">` +
-          actionName +
-          `</p><button onclick="ws.send(JSON.stringify({request: 'DoAction',action: {id: '` +
-          actionId +
-          `'},id: '123',})); console.log('Running action: ` +
-          actionName + `');" class="modal-action-button">Run Action</button></div></div>`;
-        document
-          .querySelector("body")
-          .insertAdjacentHTML("beforeend", modalHtml);
-      }
+      if (!event.data) return;
+      const data = JSON.parse(event.data);
+      console.log(data);
+
+      data.actions.forEach(index => {
+        let group = index.group;
+
+        document.querySelector(".Actions-Nav").insertAdjacentHTML(`beforeend`, `<li class="group group-${index.group}"><button onclick="ChangeMain('${index.group}')">${index.group}</button></li>`);
+        console.log(index);
+      });
     });
   }
 }

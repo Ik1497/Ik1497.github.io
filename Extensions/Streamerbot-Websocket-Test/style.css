@@ -1,0 +1,120 @@
+@import url(/assets/fonts/font.css);
+@import url(/assets/css/root.css);
+
+:root {
+    --font-size: 1em;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+body,
+html {
+    font-size: var(--font-size);
+    font-family: Arial;
+    color: #fff;
+    background: var(--v-background);
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    display: flex;
+}
+
+::-webkit-scrollbar {
+    background: var(--v-background-soft);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--v-background-light);
+}
+
+/* --- */
+/* nav */
+/* --- */
+
+.nav {
+    background: var(--v-background-alt);
+    width: 20em;
+}
+
+.nav .nav-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: .25em;
+    height: 100vh;
+    overflow-y: auto;
+
+    padding-block: 1em;
+}
+
+.nav .nav-list .nav-list-item {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-inline: .5em;
+}
+
+.nav .nav-list .nav-list-item button {
+    background: var(--v-background-alt);
+    border: 0;
+    border-radius: 5px;
+    outline: 0;
+    color: #fff;
+    width: 100%;
+    text-align: left;
+    padding-inline: .5em;
+    padding-block: 1em;
+    cursor: pointer;
+    font-family: Arial;
+}
+
+.nav .nav-list .nav-list-item button:active,
+.nav .nav-list .nav-list-item button:focus-visible,
+.nav .nav-list .nav-list-item button:hover {
+    background: var(--v-background-soft);
+}
+
+.nav .nav-list .nav-list-item.nav-active button {
+    color: #a4ceff;
+    background: #285292;
+}
+
+/* ---- */
+/* main */
+/* ---- */
+
+main {
+    width: 100%;
+    height: 100vh;
+    margin-inline: 1em;
+}
+
+main .event-items {
+    display: flex;
+    flex-direction: column;
+    row-gap: .25em;
+    height: 100vh;
+    overflow-y: auto;
+
+    padding-block: .5em;
+}
+
+main .event-items li {
+    display: flex;
+    width: 100%;
+    padding-inline: .5em;
+
+    background: var(--v-background-soft);
+    border: 0;
+    border-radius: 5px;
+    outline: 0;
+    width: 100%;
+    text-align: left;
+    padding-inline: .5em;
+    padding-block: 1em;
+}

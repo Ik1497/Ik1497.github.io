@@ -4,133 +4,44 @@
 * {
     margin: 0;
     padding: 0;
+    list-style: none;
+    box-sizing: border-box;
 }
 
 body {
-    background: var(--v-background);
+    /* background: var(--v-background); */
+    color: var(--v-primary-natural-white);
+    font-family: Uni Sans CAPS;
+    font-weight: 900;
     overflow-x: hidden;
     padding: .5em;
+    width: 100vw;
+    height: 100vh;
 }
 
-header .action-count {
-    color: var(--v-primary-natural-white);
-    font-family: Uni Sans CAPS;
-    font-weight: 900;
-    display: flex;
-    justify-content: center;
-    padding-block: .5em;
-    font-size: 2em;
-}
-
-ul#actions {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(400px,1fr));
-    gap: .5em;
-}
-
-ul#actions li {
-    background: var(--v-background-alt);
-    color: var(--v-primary-natural-white);
-    padding-inline: 1em;
-    padding-block: 3em;
-    text-align: center;
-    font-family: Uni Sans CAPS;
-    font-weight: 900;
-    cursor: pointer;
-    position: relative;
-}
-
-ul#actions li.disabled {
-    background: #331414;
-}
-
-ul#actions li .group {
-    color: var(--v-primary-natural-lighten);
-    font-size: .7em;
-}
-
-ul#actions li .tooltip {
-    opacity: 0;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    text-align: center;
-    left: 0;
-    color: var(--v-primary-natural-light);
-    font-size: .7em;
-}
-
-ul#actions li:hover .tooltip {
-    opacity: 1;
-}
-
-ul#actions li:hover {
-    background: var(--v-background-soft);
-}
-
-ul#actions li.disabled:hover {
-    background: #4f1f1f;
-}
-
-/* ==============
-   Modal
-   ============== */
-
-.modal {
-    background: var(--v-background);
-    color: var(--v-primary-natural-white);
-    font-family: Uni Sans Caps;
-    font-weight: 900;
-    position: fixed;
-    top: 25%;
-    left: 25%;
-    width: 50vw;
-    height: 50vh;
-    z-index: 5;
-}
-
-.modal .upper {
-    /* display: flex; */
-    background: var(--v-background-soft);
-    align-items: center;
-    width: 100%;
-}
-
-.modal .upper .modal-title {
-    padding-left: .5em;
-    font-size: 1.5em;
-}
-
-.modal .upper .modal-close {
-    font-size: 2em;
-    position: absolute;
-    top: -.25em;
-    right: .5em;
-    cursor: pointer;
-}
-
-.modal .lower {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.Actions-Nav {
+    width: 20%;
     height: 100%;
-    font-size: 2em;
+    background: var(--v-background-alt);
+    display: flex;
+    flex-direction: column;
+    row-gap: .25em;
 }
 
-.modal .lower button {
-    font-size: 1em;
-    outline: 0;
+.Actions-Nav li,
+.Actions-Nav li button {
+    width: 100%;
     border: 0;
-    background: none;
-    color: var(--v-primary-natural-white);
-    cursor: pointer;
-    outline: 1px solid var(--v-primary-natural-white);
-    outline-offset: .4em;
-    border-radius: 100vmax;
+    outline: 0;
+    color: inherit;
+    font: inherit;
+    padding-block: .25em;
+    background: var(--v-background-alt);
+    border-radius: 8px;
+    margin-inline: .25em;
 }
 
-.modal .lower button:active {
-    color: var(--v-primary-natural-lighten);
-    outline-color: var(--v-primary-natural-lighten);
+.Actions-Nav li button:active,
+.Actions-Nav li button:hover {
+    background: hsl(205 100% 50% / .4);
 }

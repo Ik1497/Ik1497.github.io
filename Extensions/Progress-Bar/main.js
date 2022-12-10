@@ -33,7 +33,7 @@ function connectws() {
     ws.addEventListener("message", (event) => {
       if (!event.data) return;
       const data = JSON.parse(event.data);
-      if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the events"); return; };
+      if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the Events/Requests"); return; };
 
       var insertVariableHere = data.event.type;
 
