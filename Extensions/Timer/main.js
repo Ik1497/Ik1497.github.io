@@ -84,7 +84,7 @@ root.style.setProperty("--animation-duration", animationDuration + "ms");
 // ------------------ //
 // ANIMATION SETTINGS //
 // ------------------ //
-function animationOff() {
+function animateOff() {
   document.querySelector('.container').classList.toggle('center-animation'); 
   setTimeout(function () {
     document.querySelector(".container").classList.add("center");
