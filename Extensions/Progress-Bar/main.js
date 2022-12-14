@@ -41,12 +41,42 @@ function connectws() {
   }
 }
 
-function showWidget(id, title) {
-  if (id === undefined || title === undefined) { return "[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "ERROR: Data is missing (string/number: id, string: title)"; }
-  document.body.insertAdjacentHTML(`afterbegin`, `<div id="${id}" class="container"><p class="start-goal">0</p><div class="progress-bar"></div><div class="goal-title-container"><p class="goal-title">${title}</p></div><p class="end-goal">0</p><p class="progress-text">0%</p></div>`);
+function add(id, title, maximum) {
+  if (id === undefined || title === undefined || maximum === undefined) { return "[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "ERROR: Data is missing (string/number: id, string: title, number: maximum)"; }
+  document.body.insertAdjacentHTML(`afterbegin`, `<div id="${id}" class="container"><p class="start-goal">0</p><div class="progress-bar"></div><div class="goal-title-container"><p class="goal-title">${title}</p></div><p class="end-goal">${maximum}</p><p class="progress-text">0%</p></div>`);
+  return "Adding Widget";
 }
 
-function removeWidget(id) {
+function remove(id) {
   if (id === undefined) { return "[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "ERROR: Data is missing (string/number: id)"; }
   document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+  return "Removing Widget";
+}
+
+function update(id, value) {
+  if (id === undefined || value === undefined) { return "[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "ERROR: Data is missing (string/number: id, number: value)"; }
+  document.getElementById(id).querySelector(".start-goal").innerHTML = value;
+
+  let maximum = document.getElementById(id).querySelector(".end-goal").innerHTML;
+  document.getElementById(id).querySelector(".progress-bar").style.width = `${value / maximum * 100}%`;
+
+  if (value >= maximum) {
+    finish(id, value, maximum);
+  }
+  return "Updating Widget";
+}
+
+function finish(id) {
+  let title   = document.getElementById(id).querySelector(`.goal-title`).innerHTML;
+  let maximum = document.getElementById(id).querySelector(`.end-goal`).innerHTML;
+  let value   = document.getElementById(id).querySelector(`.start-goal`).innerHTML;
+
+
+  document.getElementById(id).insertAdjacentHTML(`beforeend`, `<p class="goal-finished">${title} Finished!!!</p>`);
+
+  setTimeout(() => {
+    console.log("Removing Widget")
+  }, 3000);
+
+  return "Finsihed Widget Goal";
 }

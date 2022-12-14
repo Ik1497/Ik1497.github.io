@@ -96,11 +96,7 @@ function connectws() {
         }, 1000);
 
         setTimeout(function () {
-          document
-            .querySelector(".hype-train-alert")
-            .parentNode.removeChild(
-              document.querySelector(".hype-train-alert")
-            );
+          document.querySelector(".hype-train-alert").parentNode.removeChild(document.querySelector(".hype-train-alert"));
         }, 5000);
       }
 

@@ -17,7 +17,8 @@
     --font-size: 3em;
     --font-color: #fff;
 
-    --animation-duration: 1500ms
+    --animation-duration: 1500ms;
+    --transition-duration: 750ms;
 }
 
 body {
@@ -48,14 +49,15 @@ body {
     text-align: right;
     justify-content: right;
     align-items: center;
-    width: 80%;
+    width: 0%;
     display: flex;
     border-radius: var(--background-border-radius) 0 0 var(--background-border-radius);
 
     animation: showProgressBar var(--animation-duration) forwards;
+    transition: width var(--transition-duration);
 }
 
-.progress-text {
+.container .progress-text {
     font-size: .5em;
     display: flex;
     width: 80%;
@@ -97,6 +99,7 @@ body {
     height: 100%;
     font-size: .6em;
     position: absolute;
+
     animation: showGoalTitle var(--animation-duration) forwards;
 }
 
@@ -104,6 +107,16 @@ body {
     background: var(--background);
     padding: .1em .5em;
     border-radius: var(--background-border-radius);
+}
+
+.container .goal-finished {
+    z-index: 2;
+    background: var(--background-progress-bar);
+    position: absolute;
+    inset: 0;
+    text-align: center;
+
+    animation: showGoalFinished var(--animation-duration) forwards;
 }
 
 /* -------------- */
@@ -168,6 +181,16 @@ body {
     }
 
     70% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes showGoalFinished {
+    0% {
         transform: translateY(100%);
     }
 
