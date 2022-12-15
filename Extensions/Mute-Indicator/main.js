@@ -30,13 +30,13 @@ function connectws() {
       if (!event.data) return;
       const data = JSON.parse(event.data);
       if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the Events/Requests"); return; };
-      var widget = data.data?.widget;
+      let widget = data.data?.widget;
       if (widget != "mute-indicator") return;
 
-      var sourceName = data.data?.sourceName;
+      let sourceName = data.data?.sourceName;
       if (sourceName === undefined) return;
 
-      var muted = data.data?.muted;
+      let muted = data.data?.muted;
       if (muted === undefined) return;
 
       const params = new URLSearchParams(window.location.search);
