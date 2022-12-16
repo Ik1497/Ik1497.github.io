@@ -70,7 +70,8 @@ function connectws() {
       
       
       function stop() {
-        DoAction("TimerFinished");
+        console.log("Stopping Timer...");
+        DoAction("Timer Finished | Timer Widget");
 
         setTimeout(function () {
           document.querySelector('.container').classList.toggle('center-animation'); 
@@ -90,11 +91,12 @@ function connectws() {
       };      
 
       function create() {
-        console.log("CREATE!");
+        console.log("Creating Timer...");
         document.body.insertAdjacentHTML(`afterbegin`, `<div class="container"><div class="timer-wrapper"><p class="timer-text">0:00</p></div></div>`);
       }
       
       function start(timeSeconds) {
+        console.log("Starting Timer...");
         let normalTimeMinutes = Math.floor(timeSeconds / 60);
         let normalTimeSeconds = Math.round(timeSeconds - (normalTimeMinutes * 60));
       
@@ -120,7 +122,7 @@ function connectws() {
           let intervalTimeMinutes = Math.floor(timeSecondsInterval / 60);
           let intervalTimeSeconds = Math.round(timeSecondsInterval - (intervalTimeMinutes * 60));
         
-          if (intervalTimeSeconds < 10) {normalTimeSeconds = "0" + intervalTimeSeconds;}
+          if (intervalTimeSeconds < 10) {intervalTimeSeconds = "0" + intervalTimeSeconds;}
           intervalTime    = `${intervalTimeMinutes}:${intervalTimeSeconds}`;
           
           document.querySelector(".timer-text").innerHTML = intervalTime;
@@ -134,6 +136,7 @@ function connectws() {
       }
       
       function pause() {
+        console.log("Pausing Timer...");
         clearInterval(timerInterval);
       }
     });
