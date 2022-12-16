@@ -15,16 +15,15 @@
     --v-alt-text-gradient: -webkit-linear-gradient(270deg, rgba(0,255,252,1) 0%, rgba(255,0,215,1) 100%);
 }
 body {
-    padding-top: 1em;
     font-family: Poppins;
     font-size: 1em;
     color: var(--v-primary-natural);
     background-color: var(--v-background);
     overflow-x: hidden;
     margin: auto;
-    margin-top: 5em;
-    padding: 1em;
     line-height: 1;
+    width: 100vw;
+    height: 100vh;
 }
 
 footer.footer-info {
@@ -151,6 +150,8 @@ footer {
 .top-section .main-text {
     margin-bottom: 1em;
     grid-area: main-text;
+    display: flex;
+    flex-direction: column;
 }
 
 .top-section .main-text .title {
@@ -197,11 +198,13 @@ footer {
 .main-buttons {
     margin-bottom: 3em;
     margin-top: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
 }
 
 .main-buttons a {
     padding: .7em 1.2em;
-    margin-right: .5em;
     border-radius: 100vmax;
     transition: all .5s ease;
     text-decoration: none;
@@ -236,11 +239,16 @@ h2 {
         max-width: unset;
         margin: auto;
     }
+
     .top-section {
         grid-template-areas:
             "logo" 
             "main-text";
         text-align: center;
+    }
+
+    .main-text {
+        align-items: center;
     }
 
 }

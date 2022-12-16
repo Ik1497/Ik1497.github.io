@@ -68,7 +68,7 @@ function connectws() {
           document.querySelector("main").insertAdjacentHTML(`beforeend`, `<ul class="event-items"></ul>`);
           group = group.replace("group-", "");
           
-          data.events.streamlabs.forEach(index => {
+          data.events.twitch.forEach(index => {
             document.querySelector(".event-items").insertAdjacentHTML(`beforeend`, `<li class="event-item">${index}</li>`);
           });
         }

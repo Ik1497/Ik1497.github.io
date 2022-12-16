@@ -35,10 +35,10 @@ let page = {
             enabled: true
         },
         {
-            name: "Lorem ipsum dolor sit amet.",
-            description: "Lorem ipsum dolor sit amet.",
-            icon: "mdi mdi-solid",
-            href: "",
+            name: "Timer Widget",
+            description: "Start a timer with Streamer.bot, 4 actions included",
+            icon: "mdi mdi-clock",
+            href: "/Extensions/Timer/Docs",
             enabled: false
         },
         {
