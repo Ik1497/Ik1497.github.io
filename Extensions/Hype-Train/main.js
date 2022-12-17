@@ -42,7 +42,22 @@ function connectws() {
         document.querySelector(".hype-train-progress-bar").style.width = "0%";
         document.querySelector(".hype-train-percent").innerHTML = "0%";
         document.querySelector(".hype-train-level").innerHTML = "LVL 1";
-        document.querySelector(".hype-train-time").innerHTML = "00:00";
+        document.querySelector(".hype-train-time").innerHTML = "5:00";
+
+        let intervalSeconds = 300;
+
+        let timerInterval = setInterval(function () {
+          intervalSeconds--;
+          console.log(intervalSeconds);
+
+          let intervalFormatMinutes = Math.floor(intervalSeconds / 60);
+          let intervalFormatSeconds = Math.round(intervalSeconds - (intervalFormatMinutes * 60));
+
+          if (intervalFormatSeconds < 10) { intervalFormatSeconds = `0` + intervalFormatSeconds; }
+
+          let intervalSecondsFormatted = `${intervalFormatMinutes}:${intervalFormatSeconds}`;
+          document.querySelector(".hype-train-time").innerHTML = intervalSecondsFormatted;
+        }, 1000);
       }
 
       if (hypeTrainEventType === "HypeTrainUpdate") {
@@ -54,7 +69,6 @@ function connectws() {
         document.querySelector(".hype-train-progress-bar").style.width = hypeTrainDataPercent + "%";
         document.querySelector(".hype-train-percent").innerHTML = hypeTrainDataPercent + "%";
         document.querySelector(".hype-train-level").innerHTML = "LVL " + hypeTrainDataLevel;
-        document.querySelector(".hype-train-time").innerHTML = "00:00";
       }
 
       if (hypeTrainEventType === "HypeTrainLevelUp") {
@@ -70,7 +84,6 @@ function connectws() {
           document.querySelector(".hype-train-progress-bar").style.width = hypeTrainDataPercent + "%";
           document.querySelector(".hype-train-percent").innerHTML = hypeTrainDataPercent + "%";
           document.querySelector(".hype-train-level").innerHTML = "LVL " + hypeTrainDataLevel;
-          document.querySelector(".hype-train-time").innerHTML = "00:00";
         }, 1000);
 
         setTimeout(function () {
@@ -79,12 +92,11 @@ function connectws() {
       }
 
       if (hypeTrainEventType === "HypeTrainEnd") {
-        let hypeTrainDataContributorCount = data.data.contributorCount;
-        let hypeTrainDataContributors = data.data.contributors;
+        let hypeTrainDataContributors = data.data.top_contributions;
 
         document.querySelector(".hype-train-background").insertAdjacentHTML("afterend", `<div style="--duration: 10s;" class="hype-train-alert"><marquee direction="right" scrollamount="10">Hype Train Completed!</marquee></div>`);
         setTimeout(function () {
-          document.querySelector(`.hype-train-alert`).insertAdjacentHTML(`afterend`, `<div class="hype-train-alert">` +hypeTrainDataContributorCount +` Contributors</div>`);
+          document.querySelector(`.hype-train-alert`).insertAdjacentHTML(`afterend`, `<div class="hype-train-alert">` + hypeTrainDataContributors.length +` Contributors</div>`);
         }, 8000);
 
         setTimeout(function () {

@@ -100,7 +100,7 @@ body {
   font-size: 1em;
   width: fit-content;
   animation: on-load-hype-train-time var(--animation-duration) forwards ease;
-  display: none;
+  /* display: none; */
 }
 
 /* On Load Animations */

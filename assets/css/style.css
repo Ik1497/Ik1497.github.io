@@ -359,14 +359,45 @@ table td {
   color: var(--v-primary-natural-white);
 }
 
-.table-right {
+table .table-right {
   text-align: right;
 }
-.table-center {
+table .table-center {
   text-align: center;
 }
-.table-left {
+table .table-left {
   text-align: left;
+}
+
+table button {
+  background: var(--v-background-soft);
+  color: var(--v-primary-natural);
+  outline: none;
+  border: none;
+  text-align: center;
+}
+
+table button:active,
+table button:focus-visible {
+  background: var(--v-background-mute);
+}
+
+table .table-settings {
+  display: flex;
+  flex-direction: column;
+  min-width: fit-content;
+}
+
+table .table-settings button {
+  padding: .3em;
+}
+
+table[data-settings-menu=closed] .table-settings {
+  display: none;
+}
+
+table[data-settings-menu=opened] .table-settings {
+  display: flex;
 }
 
 /* Footer */

@@ -99,8 +99,6 @@ for (let buttonsLength = 0; buttonsLength < page.buttons.length; buttonsLength++
 
 document.querySelector(`section.top-section`).insertAdjacentHTML(`afterend`, `<section class="recent-extensions"><h2 class="animated fadeInDown wait-p2s">Recent Extensions</h2><ul class="item-grid"></ul></section>`)
 
-let itemGridDelay = 2;
-
 for (let itemsLength = 0; itemsLength < page.items.length; itemsLength++) {
     index = page.items[itemsLength];
     let enabled = "";
