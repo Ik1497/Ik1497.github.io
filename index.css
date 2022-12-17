@@ -138,6 +138,7 @@ li.item-grid-item .description {
 footer {
     text-align: center;
     margin-top: 2em;
+    padding-bottom: 1em;
     color: var(--v-primary-natural);
 }
 
@@ -148,10 +149,10 @@ footer {
 }
 
 .top-section .main-text {
-    margin-bottom: 1em;
     grid-area: main-text;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .top-section .main-text .title {
@@ -167,7 +168,6 @@ footer {
     font-size: 2.5rem;
     font-weight: bold;
     max-width: 17.5ch;
-    margin-bottom: 1rem;
 }
 
 .top-section .logo {
@@ -196,7 +196,6 @@ footer {
 }
 
 .main-buttons {
-    margin-bottom: 3em;
     margin-top: 2em;
     display: flex;
     flex-wrap: wrap;

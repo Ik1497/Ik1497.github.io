@@ -5,16 +5,13 @@ connectws();
 
 function connectws() {
   if ("WebSocket" in window) {
-    let wsServerUrl =
-      new URLSearchParams(window.location.search).get("ws") ||
-      "ws://localhost:8080/";
+    let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
     const ws = new WebSocket(wsServerUrl);
     console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...");
 
     ws.onclose = function () {
       setTimeout(connectws, 10000);
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to Streamer.bot, reconnecting every 10s...");
-
     };
 
     ws.onopen = function () {
@@ -22,12 +19,7 @@ function connectws() {
         JSON.stringify({
           request: "Subscribe",
           events: {
-            Twitch: [
-              "HypeTrainStart",
-              "HypeTrainUpdate",
-              "HypeTrainLevelUp",
-              "HypeTrainEnd",
-            ],
+            Twitch: ["HypeTrainStart", "HypeTrainUpdate", "HypeTrainLevelUp", "HypeTrainEnd"],
           },
           id: "123",
         })
@@ -41,14 +33,11 @@ function connectws() {
       console.log(data);
       if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the Events/Requests"); return; };
 
-      var hypeTrainEventType = data.event.type;
+      let hypeTrainEventType = data.event.type;
 
       if (hypeTrainEventType === "HypeTrainStart") {
         // Create Hype Train
-        document.body.insertAdjacentHTML(
-          `afterbegin`,
-          `<div class="hype-train"><p class="hype-train-percent">0%</p><div class="left"><p class="hype-train-level">LVL 1</p><p class="hype-train-time">00:00</p></div><div class="hype-train-progress-bar"></div><div class="hype-train-background"></div></div>`
-        );
+        document.body.insertAdjacentHTML(`afterbegin`, `<div class="hype-train"><p class="hype-train-percent">0%</p><div class="left"><p class="hype-train-level">LVL 1</p><p class="hype-train-time">00:00</p></div><div class="hype-train-progress-bar"></div><div class="hype-train-background"></div></div>`);
 
         document.querySelector(".hype-train-progress-bar").style.width = "0%";
         document.querySelector(".hype-train-percent").innerHTML = "0%";
@@ -57,41 +46,30 @@ function connectws() {
       }
 
       if (hypeTrainEventType === "HypeTrainUpdate") {
-        var hypeTrainDataPercent = data.data.percent;
-        var hypeTrainDataLevel = data.data.level;
-        var hypeTrainDataPercent100 = Math.round(hypeTrainDataPercent * 100);
+        let hypeTrainDataLevel = data.data.level;
+        let hypeTrainDataProgress = data.data.progress;
+        let hypeTrainDataGoal = data.data.goal;
+        let hypeTrainDataPercent = Math.round(hypeTrainDataProgress / hypeTrainDataGoal * 100);
 
-        document.querySelector(".hype-train-progress-bar").style.width =
-          hypeTrainDataPercent100 + "%";
-        document.querySelector(".hype-train-percent").innerHTML =
-          hypeTrainDataPercent100 + "%";
-        document.querySelector(".hype-train-level").innerHTML =
-          "LVL " + hypeTrainDataLevel;
+        document.querySelector(".hype-train-progress-bar").style.width = hypeTrainDataPercent + "%";
+        document.querySelector(".hype-train-percent").innerHTML = hypeTrainDataPercent + "%";
+        document.querySelector(".hype-train-level").innerHTML = "LVL " + hypeTrainDataLevel;
         document.querySelector(".hype-train-time").innerHTML = "00:00";
       }
 
       if (hypeTrainEventType === "HypeTrainLevelUp") {
-        var hypeTrainDataPrevLevel = data.data.prevLevel;
-        var hypeTrainDataLevel = data.data.level;
-        var hypeTrainDataPercent = data.data.percent;
-        var hypeTrainDataPercent100 = Math.round(hypeTrainDataPercent * 100);
+        let hypeTrainDataLevel = data.data.level;
+        let hypeTrainDataPrevLevel = hypeTrainDataLevel - 1;
+        let hypeTrainDataProgress = data.data.progress;
+        let hypeTrainDataGoal = data.data.goal;
+        let hypeTrainDataPercent = Math.round(hypeTrainDataProgress / hypeTrainDataGoal * 100);
 
-        document
-          .querySelector(".hype-train-background")
-          .insertAdjacentHTML(
-            "afterend",
-            `<div class="hype-train-alert">Level ` +
-              hypeTrainDataPrevLevel +
-              ` Completed!</div>`
-          );
+        document.querySelector(".hype-train-background").insertAdjacentHTML(`afterend`, `<div class="hype-train-alert">Level ` + hypeTrainDataPrevLevel + ` Completed!</div>`);
 
         setTimeout(function () {
-          document.querySelector(".hype-train-progress-bar").style.width =
-            hypeTrainDataPercent100 + "%";
-          document.querySelector(".hype-train-percent").innerHTML =
-            hypeTrainDataPercent100 + "%";
-          document.querySelector(".hype-train-level").innerHTML =
-            "LVL " + hypeTrainDataLevel;
+          document.querySelector(".hype-train-progress-bar").style.width = hypeTrainDataPercent + "%";
+          document.querySelector(".hype-train-percent").innerHTML = hypeTrainDataPercent + "%";
+          document.querySelector(".hype-train-level").innerHTML = "LVL " + hypeTrainDataLevel;
           document.querySelector(".hype-train-time").innerHTML = "00:00";
         }, 1000);
 
@@ -101,37 +79,17 @@ function connectws() {
       }
 
       if (hypeTrainEventType === "HypeTrainEnd") {
-        var hypeTrainDataContributorCount = data.data.contributorCount;
-        var hypeTrainDataContributors = data.data.contributors;
+        let hypeTrainDataContributorCount = data.data.contributorCount;
+        let hypeTrainDataContributors = data.data.contributors;
 
-        document
-          .querySelector(".hype-train-background")
-          .insertAdjacentHTML(
-            "afterend",
-            `<div style="--duration: 10s;" class="hype-train-alert"><marquee direction="right" scrollamount="10">Hype Train Completed!</marquee></div>`
-          );
+        document.querySelector(".hype-train-background").insertAdjacentHTML("afterend", `<div style="--duration: 10s;" class="hype-train-alert"><marquee direction="right" scrollamount="10">Hype Train Completed!</marquee></div>`);
         setTimeout(function () {
-          document
-            .querySelector(".hype-train-alert")
-            .insertAdjacentHTML(
-              "afterend",
-              `<div class="hype-train-alert">` +
-                hypeTrainDataContributorCount +
-                ` Contributors</div>`
-            );
+          document.querySelector(`.hype-train-alert`).insertAdjacentHTML(`afterend`, `<div class="hype-train-alert">` +hypeTrainDataContributorCount +` Contributors</div>`);
         }, 8000);
 
         setTimeout(function () {
-          document
-            .querySelector(".hype-train-alert")
-            .parentNode.removeChild(
-              document.querySelector(".hype-train-alert")
-            );
-          document
-            .querySelector(".hype-train-alert")
-            .parentNode.removeChild(
-              document.querySelector(".hype-train-alert")
-            );
+          document.querySelector(".hype-train-alert").parentNode.removeChild(document.querySelector(".hype-train-alert"));
+          document.querySelector(".hype-train-alert").parentNode.removeChild(document.querySelector(".hype-train-alert"));
           document.querySelector(".hype-train").classList.add("remove");
         }, 13000);
 
@@ -143,9 +101,7 @@ function connectws() {
         }, 2000);
 
         setTimeout(function () {
-          document
-            .querySelector(".hype-train")
-            .parentNode.removeChild(document.querySelector(".hype-train"));
+          document.querySelector(".hype-train").parentNode.removeChild(document.querySelector(".hype-train"));
         }, 14500);
       }
     });
@@ -157,7 +113,7 @@ function connectws() {
 //////////////////////
 // General
 const params = new URLSearchParams(window.location.search);
-var root = document.querySelector(":root");
+let root = document.querySelector(":root");
 
 // Font
 let fontFamily = params.get("font-family");
@@ -188,8 +144,8 @@ root.style.setProperty("--border-radius", borderRadius);
 // Theme
 let theme = params.get("theme");
 
-if (theme === "coming soon") {
-  document.body.setAttribute("data-theme", "coming soon");
-} else {
+if (theme === "soon") {
+  document.body.setAttribute("data-theme", "soon");
+} else if (theme != undefined) {
   console.log("Theme unknown");
 }
