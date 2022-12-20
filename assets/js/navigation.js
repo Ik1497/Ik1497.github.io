@@ -9,12 +9,6 @@ const navItemsArray = JSON.stringify([
     type: "link"
   },
   {
-    name: "Changelogs",
-    icon: "mdi mdi-fire",
-    href: "/Changelogs/",
-    type: "link"
-  },
-  {
     type: "hr"
   },
   {

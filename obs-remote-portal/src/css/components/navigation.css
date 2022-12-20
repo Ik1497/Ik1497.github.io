@@ -1,0 +1,23 @@
+nav.primary-navigation {
+  position: fixed;
+  right: 1rem;
+  top: 5rem;
+}
+nav.primary-navigation ul {
+  list-style: none;
+  display: flex;
+  gap: 0.5rem;
+}
+nav.primary-navigation ul li {
+  background: var(--accent-primary);
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+nav.primary-navigation ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+/*# sourceMappingURL=navigation.css.map */

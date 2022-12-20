@@ -1,0 +1,37 @@
+@use "../abstracts/colors" as *;
+@use "../abstracts/sizes" as *;
+@use "sass:color";
+
+:root {
+    // Colors
+    @each $color, $shades in $colors {
+        @each $shade, $value in $shades {
+            --#{$color}-#{$shade}: #{$value};
+        }
+    }
+
+    // Sizes
+    @each $size in $sizes {
+        --size-#{$size}: #{$size / 100 * $base-value};
+    }
+}
+
+// Colors
+@each $color, $shades in $colors {
+    @each $shade, $value in $shades {
+        @each $element in $colorElements {
+            .#{$element}-#{$color}-#{$shade} {
+              #{$element}: var(--#{$color}-#{$shade});
+            }    
+        }
+    }
+}
+
+// Sizes
+@each $size in $sizes {
+    @each $element in $sizeElements {
+        .#{$element}-#{$size} {
+            #{$element}: var(--size-#{$size});
+        }    
+    }
+}

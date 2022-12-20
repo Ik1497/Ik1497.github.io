@@ -1,0 +1,89 @@
+body {
+  margin-top: 3rem;
+  min-height: calc(100vh - 3rem);
+}
+
+header.primary-header {
+  box-sizing: content-box;
+  height: 3rem;
+  background: var(--background-alt);
+  padding-block: 0.5rem;
+  padding-inline: 1em;
+  display: grid;
+  grid-template-columns: max-content auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+header.primary-header a {
+  text-decoration: none;
+  color: #fff;
+}
+header.primary-header .title-section {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  align-items: center;
+}
+header.primary-header .title-section img {
+  height: 3rem;
+  width: 3rem;
+}
+header.primary-header .title-section .titles {
+  margin-left: 1rem;
+}
+header.primary-header .title-section p.author {
+  color: #ccc;
+}
+header.primary-header .connection-section-form {
+  display: grid;
+  max-width: 50em;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  column-gap: 1rem;
+  justify-self: end;
+  position: relative;
+}
+header.primary-header .connection-section-form > div {
+  display: grid;
+  position: relative;
+}
+header.primary-header .connection-section-form > div:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+header.primary-header .connection-section-form label {
+  position: absolute;
+  font-size: 0.55rem;
+  padding-inline: 0.5rem;
+}
+header.primary-header .connection-section-form input,
+header.primary-header .connection-section-form button {
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  background-color: var(--background-soft);
+  border-bottom: 0.125rem solid transparent;
+  padding-top: 1.25rem;
+  color: #fff;
+  padding-inline: 0.5rem;
+  -moz-appearance: textfield;
+}
+header.primary-header .connection-section-form input:focus-visible,
+header.primary-header .connection-section-form button:focus-visible {
+  border-color: var(--background-light);
+}
+header.primary-header .connection-section-form input::-webkit-outer-spin-button, header.primary-header .connection-section-form input::-webkit-inner-spin-button,
+header.primary-header .connection-section-form button::-webkit-outer-spin-button,
+header.primary-header .connection-section-form button::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+header.primary-header .connection-section-form button {
+  padding-block: 0.3rem;
+}
+
+/*# sourceMappingURL=header.css.map */

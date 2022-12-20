@@ -51,11 +51,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  scale: 1.6;
 }
 
 .container.center-animation {
-  animation: container-center var(--animation-duration) ease;
+  animation: container-center var(--animation-duration) ease forwards;
 }
 
 .container.off-animation {
@@ -64,49 +63,50 @@ body {
 
 @keyframes container-center {
   0% {
-    transform: translateY(0);
+    top: unset;
     opacity: 1;
   }
   25% {
-    transform: translateY(150px);
-    opacity: 0;   
+    bottom: -150px;
+    opacity: 0;
   }
   75% {
-    transform: translateY(150px);
+    bottom: -150px;
     opacity: 0;
   }
   100% {
-    transform: translateY(0);
+    top: unset;
     opacity: 1;
-  }
+    transform: scale(2.5);
+  }  
 }
 
 @keyframes container-off {
   0% {
-    transform: translateY(0);
+    top: unset;
     opacity: 1;
   }
   25% {
-    transform: translateY(150px);
+    bottom: -150px;
     opacity: 0;
   }
   100% {
-    transform: translateY(150px);
+    bottom: -150px;
     opacity: 0;
   }
 }
 
 @keyframes container-on {
   0% {
-    transform: translateY(150px);
+    bottom: -150px;
     opacity: 0;
   }
   50% {
-    transform: translateY(0);
+    top: unset;
     opacity: 1;
   }
   100% {
-    transform: translateY(0);
+    top: unset;
     opacity: 1;
   }
 }

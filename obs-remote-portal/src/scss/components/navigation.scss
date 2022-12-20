@@ -1,0 +1,26 @@
+nav.primary-navigation {
+    position: fixed;
+    right: 1rem;
+    top: 5rem;
+
+    ul {
+        list-style: none;
+        display: flex;
+        gap: .5rem;
+
+
+
+        li {
+            background: var(--accent-primary);
+            display: grid;
+            place-items: center;
+            width: 2.5rem;
+            height: 2.5rem;
+
+            a {
+                text-decoration: none;
+                color: #fff;
+            }
+        }
+    }
+}

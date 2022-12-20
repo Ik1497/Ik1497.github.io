@@ -1,0 +1,17 @@
+{
+  "name": "obs-remote-portal",
+  "version": "1.0.0-beta-1",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "sass": "sass --watch src/scss:src/css"
+  },
+  "author": "Ik1497",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.56.2"
+  },
+  "dependencies": {
+    "obs-websocket-js": "^5.0.2"
+  }
+}

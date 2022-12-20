@@ -1,0 +1,107 @@
+@use '../functions/metrics' as *;
+
+$header-height: 3rem;
+
+body {
+    margin-top: $header-height;
+    min-height: calc(100vh - $header-height);
+}
+
+header.primary-header {
+    box-sizing: content-box;
+    height: $header-height;
+    background: var(--background-alt);
+    padding-block: .5rem;
+    padding-inline: 1em;
+    display: grid;
+    grid-template-columns: max-content auto;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    a {
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .title-section {
+        display: grid;
+        grid-template-columns: $header-height 1fr;
+        align-items: center;
+    
+        img {
+            height: $header-height;
+            width: $header-height;
+        }
+
+        .titles {
+            margin-left: 1rem;
+        }
+
+        p.author {
+            color: #ccc;
+        }
+    }
+
+
+
+    .connection-section-form {
+        $padding-input-inline: .5rem;
+        display: grid;
+        max-width: 50em;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        column-gap: 1rem;
+        justify-self: end;
+        position: relative;
+
+        > div {
+            display: grid;
+            position: relative;
+        }
+
+        > div:last-child {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        label {
+            position: absolute;
+            font-size: .55rem;
+            padding-inline: $padding-input-inline;
+        }
+
+        input,
+        button {
+            box-shadow: none;
+            border: none;
+            border-radius: 0;
+            outline: none;
+
+            background-color: var(--background-soft);
+            border-bottom: rem(2) solid transparent;
+            padding-top: rem(20);
+            color: #fff;
+            padding-inline: $padding-input-inline;
+            -moz-appearance: textfield;
+
+            &:focus-visible {
+                border-color: var(--background-light);
+            }
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+        }
+        button {
+            padding-block: .3rem;
+        }
+    }
+}

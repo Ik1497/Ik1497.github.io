@@ -44,10 +44,13 @@ function connectws() {
         document.querySelector(".hype-train-level").innerHTML = "LVL 1";
         document.querySelector(".hype-train-time").innerHTML = "5:00";
 
-        let intervalSeconds = 300;
+        let intervalSeconds = 60;
 
         let timerInterval = setInterval(function () {
           intervalSeconds--;
+          if (intervalSeconds <= 0) {
+            clearInterval(timerInterval);
+          }
           console.log(intervalSeconds);
 
           let intervalFormatMinutes = Math.floor(intervalSeconds / 60);

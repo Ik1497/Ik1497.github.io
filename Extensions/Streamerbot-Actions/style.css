@@ -37,12 +37,12 @@ html {
 /* nav */
 /* --- */
 
-.nav {
+.navbar {
     background: var(--v-background-alt);
     width: 20em;
 }
 
-.nav .nav-list {
+.navbar .navbar-list {
     display: flex;
     flex-direction: column;
     row-gap: .25em;
@@ -52,19 +52,19 @@ html {
     padding-block: 1em;
 }
 
-.nav .nav-list .nav-list-item {
+.navbar .navbar-list .navbar-list-item {
     display: flex;
     justify-content: center;
     width: 100%;
     padding-inline: .5em;
 }
 
-.nav .nav-list .nav-list-item .Action-Timestamp {
+.navbar .navbar-list .navbar-list-item .Action-Timestamp {
     font-size: .75em;
     color: #aaa;
 }
 
-.nav .nav-list .nav-list-item button {
+.navbar .navbar-list .navbar-list-item button {
     background: var(--v-background-alt);
     border: 0;
     border-radius: 5px;
@@ -76,15 +76,19 @@ html {
     padding-block: 1em;
     cursor: pointer;
     font-family: Arial;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.nav .nav-list .nav-list-item button:active,
-.nav .nav-list .nav-list-item button:focus-visible,
-.nav .nav-list .nav-list-item button:hover {
+.navbar .navbar-list .navbar-list-item button:active,
+.navbar .navbar-list .navbar-list-item button:focus-visible,
+.navbar .navbar-list .navbar-list-item button:hover {
     background: var(--v-background-soft);
 }
 
-.nav .nav-list .nav-list-item.nav-active button {
+.navbar .navbar-list .navbar-list-item.nav-active button {
     color: #a4ceff;
     background: #285292;
 }
@@ -98,25 +102,60 @@ main {
     height: 100vh;
     margin-inline: 1em;
     margin-block: 1em;
+    overflow-y: auto;
 }
 
-main h1 {
-    margin-top: 1em;
+main ul.actions {
+    display: grid;
+    row-gap: .5em;
 }
 
-main p.subtitle {
-    margin-bottom: 1em;
-    color: #aaa;
-}
-
-main table tr td {
-    padding-inline: .5em;
-
+main ul.actions li {
     background: var(--v-background-soft);
+    padding-inline: .5em;
+    padding-block: .75em;
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+main ul.actions li p.action-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+main ul.actions li button {
+    color: #cbe3ff;
+    background: #28446d;
     border: 0;
     border-radius: 5px;
     outline: 0;
-    text-align: left;
+    width: 100%;
     padding-inline: .5em;
-    padding-block: 1em;
+    padding-block: .25em;
+    cursor: pointer;
+    font-family: Arial;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+main ul.actions li button:active,
+main ul.actions li button:focus-visible,
+main ul.actions li button:hover {
+    color: #7ab8fe;
+    background: #356ec3;
+}
+
+@media (max-width: 60em) {
+    body {
+        flex-direction: column;
+    }
+
+    .navbar,
+    .navbar-list {
+        width: 100%;
+        max-height: 50vh;
+    }
 }
