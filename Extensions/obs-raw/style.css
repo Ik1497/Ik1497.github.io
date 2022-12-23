@@ -1,0 +1,161 @@
+@import url(/assets/fonts/font.css);
+@import url(/assets/css/root.css);
+
+:root {
+    --font-size: 1em;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+body,
+html {
+    font-size: var(--font-size);
+    font-family: Arial;
+    color: #fff;
+    background: var(--v-background);
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    display: flex;
+}
+
+::-webkit-scrollbar {
+    background: var(--v-background-soft);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--v-background-light);
+}
+
+/* --- */
+/* nav */
+/* --- */
+
+nav {
+    background: var(--v-background-alt);
+    width: 20em;
+    overflow: hidden;
+}
+
+[hidden] {
+    display: none;
+}
+
+nav input[type=search] {
+    border: none;
+    outline: none;
+    background: var(--v-background-soft);
+    color: #ffffff;
+    width: 100%;
+    font-size: 1.2em;
+    padding-inline: .2em;
+    padding-block: .5em;
+}
+
+nav > ul {
+    display: flex;
+    flex-direction: column;
+    row-gap: .25em;
+    height: 100vh;
+    overflow-y: auto;
+    
+    padding-block: 1em;
+    padding-bottom: 4em;
+}
+
+nav > ul li {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-inline: .5em;
+}
+
+nav > ul p {
+    padding-inline: .5em;
+    margin: .5em;
+    color: var(--v-primary-accent);
+    font-weight: 900;
+    font-size: .8em;
+    text-transform: uppercase;
+    font-family: Arial;
+}
+
+nav > ul li .Action-Timestamp {
+    font-size: .75em;
+    color: #aaa;
+}
+
+nav > ul li button {
+    background: var(--v-background-alt);
+    border: 0;
+    border-radius: 5px;
+    outline: 0;
+    color: #fff;
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+    padding-inline: .5em;
+    padding-block: 1em;
+    cursor: pointer;
+    font-family: Arial;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+nav > ul li button:active,
+nav > ul li button:focus-visible,
+nav > ul li button:hover {
+    background: var(--v-background-soft);
+}
+
+nav > ul li.nav-active button {
+    color: #a4ceff;
+    background: #285292;
+}
+
+/* ---- */
+/* main */
+/* ---- */
+
+main {
+    width: 100%;
+    height: 100vh;
+    margin-inline: 1em;
+    margin-block: 1em;
+    overflow-y: auto;
+}
+
+p.subtitle {
+    color: #ccc;
+}
+
+@media (max-width: 60em) {
+    body {
+        flex-direction: column;
+    }
+
+    nav, nav ul {
+        width: 100%;
+        max-width: 100%;
+        max-height: 30vh;
+    }
+}
+
+/* --- */
+/* Pre */
+/* --- */
+
+pre {
+    background: #141414;
+    padding: 1.5em;
+    margin-block: 1em;
+    font-size: 1.25em;
+}

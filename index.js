@@ -126,6 +126,7 @@ else {
 async function fetchGithubRepoInformation() {
     let response = await fetch(`https://api.github.com/repos/${page.githubUser}/${page.githubRepository}`);
     let data = await response.json();
+    console.log(data);
     setGithubRepoInformation(data.stargazers_count, data.watchers);
 }
 
