@@ -64,7 +64,7 @@ async function app() {
     // Requests
     requests.forEach(request => {
         request.category = request.category.replaceAll(` `, `-`);
-        document.querySelector(`nav ul ul.${request.category}`).insertAdjacentHTML(`beforeend`, `<li aria-hidden="false"><button>${request.requestType}</button></li>`);
+        document.querySelector(`nav ul ul.${request.category}`).insertAdjacentHTML(`beforeend`, `<li aria-hidden="false" class><button>${request.requestType}</button></li>`);
     });
 
     // Active Class
@@ -155,16 +155,13 @@ async function app() {
         });
     });
 
-
-
-
     // Search Engine
     document.querySelector(`nav input[type=search]`).addEventListener(`keydown`, function () {        
         setTimeout(() => {
             let searchTerm = document.querySelector(`nav input[type=search]`).value.toLowerCase();
 
             document.querySelectorAll(`nav li button`).forEach(button => {
-                if (button.innerText.toLowerCase().startsWith(searchTerm) === true) {
+                if (button.innerText.toLowerCase().includes(searchTerm) === true) {
                     button.parentNode.removeAttribute(`hidden`);
                     button.parentNode.setAttribute(`aria-hidden`, `true`);
                 } else {
