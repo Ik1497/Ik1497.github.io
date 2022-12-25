@@ -39,7 +39,7 @@ html {
 
 nav {
     background: var(--v-background-alt);
-    width: 20em;
+    width: 30em;
     overflow: hidden;
 }
 
@@ -76,7 +76,7 @@ nav > ul li {
     padding-inline: .5em;
 }
 
-nav > ul p {
+nav ul > p {
     padding-inline: .5em;
     margin: .5em;
     color: var(--v-primary-accent);
@@ -96,14 +96,52 @@ nav > ul li button {
     border: 0;
     border-radius: 5px;
     outline: 0;
-    color: #fff;
     width: 100%;
     max-width: 100%;
     text-align: left;
     padding-inline: .5em;
-    padding-block: 1em;
+    padding-block: .5em;
     cursor: pointer;
     font-family: Arial;
+    position: relative;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    z-index: 0;
+}
+
+nav > ul li button .ripple-layer {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #4f75ae;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    transition-property: width, height;
+    transition-duration: 1s;
+    transition-timing-function: ease;
+}
+
+nav > ul li button .title,
+nav > ul li button .description {
+    color: var(--v-primary-accent);
+    font-size: 1em;
+    font-family: Arial;
+    z-index: 1;
+}
+
+nav > ul li button .title {
+    color: #fff;
+    font-weight: 700;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+nav > ul li button .description {
+    color: #777;
 
     overflow: hidden;
     white-space: nowrap;
@@ -117,8 +155,15 @@ nav > ul li button:hover {
 }
 
 nav > ul li.nav-active button {
-    color: #a4ceff;
     background: #285292;
+}
+
+nav > ul li.nav-active button .title {
+    color: #a4ceff;
+}
+
+nav > ul li.nav-active button .description {
+    color: #7c98b9;
 }
 
 /* ---- */
@@ -145,7 +190,7 @@ p.subtitle {
     nav, nav ul {
         width: 100%;
         max-width: 100%;
-        max-height: 30vh;
+        max-height: 40vh;
     }
 }
 
@@ -158,4 +203,5 @@ pre {
     padding: 1.5em;
     margin-block: 1em;
     font-size: 1.25em;
+    overflow: auto;
 }

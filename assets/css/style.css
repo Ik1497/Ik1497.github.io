@@ -3,6 +3,7 @@
 @import url(/assets/css/new-root.css);
 @import url(/assets/css/header.css);
 @import url(/assets/css/navbar.css);
+@import url(/assets/css/toc.css);
 @import url(/assets/css/animation.css);
 
 /* ============ */
@@ -45,14 +46,11 @@ body {
   margin-bottom: 1.5em;
   line-height: 1.5em;
 }
+
 main {
   padding-inline: 0.5em;
   margin-top: 1em;
 }
-
-/* ==== */
-/* Else */
-/* ==== */
 
 @media (min-width: 50em) {
   body {
@@ -63,11 +61,28 @@ main {
   }
   main {
     max-width: 1400px;
-    padding-left: 16em;
+    padding-left: 3em;
     margin: auto;
     margin-top: 4em;
   }
 }
+
+@media (max-width: 115em) {
+  main {
+    padding-left: 15em;
+  }
+}
+
+@media (max-width: 50em) {
+  main {
+    padding-left: 0.5em;
+  }
+}
+
+/* ==== */
+/* Else */
+/* ==== */
+
 
 header.page-info {
   border-bottom: 1px solid #555;

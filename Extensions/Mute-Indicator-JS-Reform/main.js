@@ -21,3 +21,13 @@ tables.forEach(index => {
 
     });
 });
+
+
+// TOC
+
+document.querySelector(`main`).insertAdjacentHTML(`beforebegin`, `<ul class="toc"></ul>`);
+
+document.querySelectorAll(`h2, h3, h4, h5, h6`).forEach(heading => {
+    console.log(heading);
+    document.querySelector(`ul.toc`).insertAdjacentHTML(`beforeend`, `<li class="${heading.tagName.toLowerCase()}"><button>${heading.innerHTML}</button></li>`);
+});

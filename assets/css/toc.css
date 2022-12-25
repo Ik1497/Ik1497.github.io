@@ -1,0 +1,30 @@
+@import url(/assets/css/root.css);
+
+ul.toc {
+    position: fixed;
+    right: 1em;
+    list-style: none;
+    width: 10em;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-top: 5em;
+    overflow: auto;
+}
+
+ul.toc button {
+    background: var(--v-background-soft);
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+    color: #fff;
+    width: 100%;
+    padding-block: .25em;
+}
+
+@media (max-width: 115rem) {
+    ul.toc {
+        display: none;
+    }
+}

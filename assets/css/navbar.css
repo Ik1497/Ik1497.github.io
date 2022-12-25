@@ -32,7 +32,7 @@ nav.navbar {
   background: var(--v-background-alt);
   position: fixed;
   height: calc(100% - 3.5em);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 nav.navbar li {

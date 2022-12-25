@@ -64,7 +64,7 @@ async function app() {
     // Requests
     requests.forEach(request => {
         request.category = request.category.replaceAll(` `, `-`);
-        document.querySelector(`nav ul ul.${request.category}`).insertAdjacentHTML(`beforeend`, `<li aria-hidden="false" class><button>${request.requestType}</button></li>`);
+        document.querySelector(`nav ul ul.${request.category}`).insertAdjacentHTML(`beforeend`, `<li aria-hidden="false" class><button><span class="ripple-layer"></span><p class="title">${request.requestType}</p><p class="description">${request.description}</p></button></li>`);
     });
 
     // Active Class
@@ -77,16 +77,17 @@ async function app() {
             button.parentElement.classList.add(`nav-active`);
 
             // Main
-            window.location.href = `#${button.innerHTML}`
+            window.location.href = `#${button.querySelector(`.title`).innerHTML}`
 
             requests.forEach(request => {
-                if (button.innerHTML === request.requestType) {
+                if (button.querySelector(`.title`).innerHTML === request.requestType) {
                     document.querySelector(`main`).parentNode.removeChild(document.querySelector(`main`));
                     let htmlRequestTop      = `<h1>${request.requestType}</h1><p class="subtitle">${request.description}</p>`
                     let htmlRequestResponse = ``
 
                     
                     let requestFields = ``;
+                    let cphRequestFields = ``;
                     let clipboardRequestFields = ``;
                     let codeHighlightingColors = {
                         key: "#ff79c6",
@@ -95,16 +96,18 @@ async function app() {
                         boolean: "#bd93f9",
                         any: "#bd93f9",
                         object: "#ffffff",
+                        function: "#f1fa8c",
                         bracket: "#ffffff",
                         comma: "#ffffff",
-                        colon: "#ffffff"
+                        colon: "#ffffff",
+                        backslash: "#ffffff"
                     }
                     request.requestFields.forEach(requestField => {
 
 
                         let optional = ``;
                         if (requestField.valueOptional === true) {
-                            optional = ` (Optional)`
+                            // optional = ` (Optional)`
                         }
 
                         let property = `<span style="color: #ffffff"></span>`;
@@ -114,7 +117,9 @@ async function app() {
                         if (requestField.valueType === `Any`) { property = `<span style="color: ${codeHighlightingColors.any}">Any${optional}</span>`; }
                         if (requestField.valueType === `Object`) { property = `<span style="color: ${codeHighlightingColors.object}">{}${optional}</span>`; }
                         requestFields = `${requestFields}    <span style="color: ${codeHighlightingColors.key}">"${requestField.valueName}"</span><span style="color: ${codeHighlightingColors.colon}">:</span> ${property}<span style="color: ${codeHighlightingColors.comma}">,</span><br>`
-
+                        if (requestField.valueType === `String`) { property = `<span style="color: ${codeHighlightingColors.string}"><span style="color: ${codeHighlightingColors.backslash}">&#92;</span>"&lt;${requestField.valueName.toLowerCase()}&gt;${optional}<span style="color: ${codeHighlightingColors.backslash}">&#92;</span>"</span>`; }
+                        cphRequestFields = `${cphRequestFields}&#92;<span style="color: ${codeHighlightingColors.key}">"${requestField.valueName}</span>&#92;<span style="color: ${codeHighlightingColors.key}">"</span><span style="color: ${codeHighlightingColors.colon}">:</span>${property}<span style="color: ${codeHighlightingColors.comma}">,</span>`
+                        // {\"fpsNumerator\":0,\"fpsDenominator\":0,\"baseWidth\":0,\"baseHeight\":0,\"outputWidth\":0,\"outputHeight\":0}
 
 
                         if (requestField.valueType === `String`) { clipboardProperty = `"<${requestField.valueName.toLowerCase()}>${optional}"`; }
@@ -147,12 +152,37 @@ async function app() {
                         clipboardRequestCode = `{\n  "requestType": "${request.requestType}"\n}`
                         clipboardRequestCode = '```json\n' + clipboardRequestCode + '\n```'
                     }
+
+                    let htmlCPHRequestCode = `<pre><code>CPH.<span style="color: ${codeHighlightingColors.function}">ObsSendRaw</span>(<span style="color: ${codeHighlightingColors.string}">"${request.requestType}"</span><span style="color: ${codeHighlightingColors.comma}">,</span> "{${cphRequestFields}}"<span style="color: ${codeHighlightingColors.comma}">,</span> <span style="color: ${codeHighlightingColors.number}">0</span>);</code></pre>`
+
                     navigator.clipboard.writeText(clipboardRequestCode);
 
-                    document.querySelector(`nav`).insertAdjacentHTML(`afterend`, `<main>${htmlRequestTop}${htmlRequestCode}${htmlRequestResponse}</main>`);
+                    document.querySelector(`nav`).insertAdjacentHTML(`afterend`, `<main>${htmlRequestTop}${htmlRequestCode}${htmlCPHRequestCode}${htmlRequestResponse}</main>`);
                 }
             });
         });
+
+
+        // Animation
+        // button.addEventListener("mousedown", buttonClick => {
+        //     let buttonProps = buttonClick.target.getBoundingClientRect();
+        //     let y = buttonClick.clientY - buttonProps.top;
+        //     let x = buttonClick.clientX - buttonProps.left;
+
+        //     console.log(buttonProps)
+        //     console.log(x, y);
+        //     button.querySelector(`.ripple-layer`).style.cssText  = `top:${y}px;left:${x}px;`;
+        // });
+
+        // button.addEventListener("mouseup", buttonClick => {
+        //     let buttonProps = buttonClick.target.getBoundingClientRect();
+        //     let y = buttonClick.clientY - buttonProps.top;
+        //     let x = buttonClick.clientX - buttonProps.left;
+
+        //     console.log(buttonProps)
+        //     console.log(x, y);
+        //     button.querySelector(`.ripple-layer`).style.cssText  = `opacity:0.8;top:0;left:0;width:${buttonProps.width}px;height:${buttonProps.height}px;`;
+        // });
     });
 
     // Search Engine
@@ -161,12 +191,12 @@ async function app() {
             let searchTerm = document.querySelector(`nav input[type=search]`).value.toLowerCase();
 
             document.querySelectorAll(`nav li button`).forEach(button => {
-                if (button.innerText.toLowerCase().includes(searchTerm) === true) {
+                if (button.querySelector(`.title`).innerText.toLowerCase().includes(searchTerm) === true) {
                     button.parentNode.removeAttribute(`hidden`);
-                    button.parentNode.setAttribute(`aria-hidden`, `true`);
+                    button.parentNode.setAttribute(`aria-hidden`, `false`);
                 } else {
                     button.parentNode.setAttribute(`hidden`, ``);
-                    button.parentNode.setAttribute(`aria-hidden`, `false`);
+                    button.parentNode.setAttribute(`aria-hidden`, `true`);
                 }
             });
         }, 10);
