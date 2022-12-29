@@ -1,0 +1,350 @@
+@import url(/assets/fonts/font.css);
+@import url(/assets/css/root.css);
+
+:root {
+    --font-size: 1em;
+    --page-accent-color: rgb(0, 145, 255);
+    --page-accent-color-alt: rgb(101, 188, 255);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+body,
+html {
+    font-size: var(--font-size);
+    font-family: Arial;
+    color: #fff;
+    background: var(--v-background);
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    display: flex;
+}
+
+::-webkit-scrollbar {
+    background: var(--v-background-soft);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--v-background-light);
+}
+
+/* ------ */
+/* Header */
+/* ------ */
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: .5em;
+    position: fixed;
+    background: var(--v-background-soft);
+    width: 100%;
+    height: 3em;
+}
+
+header .main {
+    display: flex;
+    align-items: center;
+    column-gap: .4em;
+    height: 2.5em;
+}
+    
+header .main img {
+    width: 2.5em;
+}
+
+header .main .name {
+    font-weight: bold;
+}
+
+header .main .description {
+    color: #ccc;
+}
+
+header aside {
+    display: flex;
+    column-gap: .5em;
+}
+
+header aside .form-area {
+    position: relative;
+}
+
+header aside .form-area label {
+    position: absolute;
+    font-size: .5em;
+    padding-inline: .25rem;
+}
+
+header aside .form-area input {
+    background: var(--v-background-alt);
+    color: #fff;
+    border: 0;
+    outline: 0;
+    border-radius: 0;
+    padding-top: 1em;
+    padding-inline: .25rem;
+}
+
+header aside button {
+    background: var(--v-background-alt);
+    color: #fff;
+    border: 0;
+    outline: 0;
+    border-radius: 0;
+    padding-block: .25em;
+    padding-inline: .25rem;
+}
+
+
+/* --- */
+/* nav */
+/* --- */
+
+.navbar {
+    background: var(--v-background-alt);
+    width: 20em;
+    margin-top: 3em;
+}
+
+.navbar .navbar-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: .25em;
+    height: 100vh;
+    overflow-y: auto;
+
+    padding-block: 1em;
+}
+
+.navbar .navbar-list .navbar-list-item {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-inline: .5em;
+}
+
+.navbar .navbar-list .navbar-list-item .Action-Timestamp {
+    font-size: .75em;
+    color: #aaa;
+}
+
+.navbar .navbar-list .navbar-list-item button {
+    background: var(--v-background-alt);
+    border: 0;
+    border-radius: 5px;
+    outline: 0;
+    color: #fff;
+    width: 100%;
+    text-align: left;
+    padding-inline: .5em;
+    padding-block: 1em;
+    cursor: pointer;
+    font-family: Arial;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.navbar .navbar-list .navbar-list-item button:active,
+.navbar .navbar-list .navbar-list-item button:focus-visible,
+.navbar .navbar-list .navbar-list-item button:hover {
+    background: var(--v-background-soft);
+}
+
+.navbar .navbar-list .navbar-list-item.nav-active button {
+    color: #a4ceff;
+    background: #285292;
+}
+
+/* ---- */
+/* main */
+/* ---- */
+
+main {
+    width: 100%;
+    height: 100vh;
+    margin-inline: 1em;
+    margin-block: 1em;
+    margin-top: 3.5em;
+    overflow-y: auto;
+}
+
+main ul.actions {
+    display: grid;
+    row-gap: .5em;
+}
+
+main ul.actions li {
+    background: var(--v-background-soft);
+    padding-inline: .5em;
+    padding-block: .75em;
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+main ul.actions li p.action-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+main ul.actions li button {
+    color: #cbe3ff;
+    background: #28446d;
+    border: 0;
+    border-radius: 5px;
+    outline: 0;
+    width: 100%;
+    padding-inline: .5em;
+    padding-block: .25em;
+    cursor: pointer;
+    font-family: Arial;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+main ul.actions li button:active,
+main ul.actions li button:focus-visible,
+main ul.actions li button:hover {
+    color: #7ab8fe;
+    background: #356ec3;
+}
+
+/* ----------- */
+/* Global Args */
+/* ----------- */
+
+.global-args {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--v-background-alt);
+    width: 60vw;
+    height: 70vh;
+    border: 2px solid var(--v-background-light);
+    border-radius: .5em;
+    overflow: hidden;
+}
+
+body:has(> .global-args) > *:not(.global-args) {
+    opacity: .57;
+    pointer-events: none;
+}
+
+body:has(> .global-args) .open-global-args {
+    display: none;
+}
+
+.global-args .header {
+    background: var(--page-accent-color);
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: .5rem;
+}
+
+.global-args .header .close-button {
+    border: 0;
+    outline: 0;
+    border-radius: 0;
+    width: 2rem;
+    height: 2rem;
+    background: var(--page-accent-color-alt);
+    color: white;
+    font-size: 1.25em;
+}
+
+.global-args .header .info .title {
+    font-weight: bold;
+    font-size: .8em;
+}
+
+.global-args .header .info .description {
+    font-size: .5em;
+}
+
+.global-args .main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.global-args .main table {
+    width: 100%;
+    padding-inline: 3em;
+}
+
+.global-args .main table input {
+    width: 100%;
+    background: var(--v-background-light);
+    color: white;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    padding: .25em;
+}
+
+.global-args .main table td:has(.add-row) {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.global-args .main table td .remove-row,
+.global-args .main table td .add-row {
+    background: var(--v-background-light);
+    color: white;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    padding-inline: .25em;
+    padding-block: .25em;
+}
+
+.global-args .main table td .add-row {
+    padding-block: .15em;
+}
+
+.open-global-args {
+    width: 2em;
+    height: 2em;
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    background: var(--page-accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100vmax;
+}
+
+/* ------------- */
+/* Media Queries */
+/* ------------- */
+
+@media (max-width: 60em) {
+    body {
+        flex-direction: column;
+        display: none;
+    }
+
+    .navbar,
+    .navbar-list {
+        width: 100%;
+        max-height: 50vh;
+    }
+}

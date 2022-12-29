@@ -1,0 +1,40 @@
+[
+    {
+      "name": "Home",
+      "icon": "mdi mdi-home",
+      "href": "/",
+      "type": "link"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "name": "Widgets",
+      "type": "label"
+    },
+    {
+      "name": "Music Widget",
+      "icon": "mdi mdi-spotify",
+      "href": "/Extensions/Music/",
+      "type": "link"
+    },
+    {
+      "name": "Mute Indicator",
+      "icon": "mdi mdi-volume-mute",
+      "href": "/Extensions/Mute-Indicator/Docs",
+      "type": "link"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "name": "Tools",
+      "type": "label"
+    },
+    {
+      "name": "OBS Websocket Events",
+      "icon": "mdi mdi-application",
+      "href": "/Extensions/OBS-Websocket-Events/",
+      "type": "link"
+    }
+]

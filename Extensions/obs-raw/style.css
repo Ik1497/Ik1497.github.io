@@ -76,6 +76,10 @@ nav > ul li {
     padding-inline: .5em;
 }
 
+nav ul:not(:has(li:not([hidden]))) {
+    display: none;
+}
+
 nav ul > p {
     padding-inline: .5em;
     margin: .5em;
