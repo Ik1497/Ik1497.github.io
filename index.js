@@ -1,7 +1,7 @@
 let page = {
     name: "Streamer<wbr>.bot Actions",
     description: "Everything you NEED for streaming!",
-    favicon: "https://ik1497.github.io/assets/images/favicon.ico",
+    favicon: "https://ik1497.github.io/assets/images/favicon.png",
     footer: "© 2022 Streamer.bot Actions. All rights reserved.",
     githubUser: "ik1497",
     githubRepository: "ik1497.github.io",
