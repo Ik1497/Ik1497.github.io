@@ -15,7 +15,7 @@
     {
       "name": ".bat Actions Handler",
       "icon": "mdi mdi-script-text-play",
-      "href": "/Extensions/Bat-Actions-Handler/Docs",
+      "href": "/Extensions/Bat-File-Actions-Handler/Docs",
       "type": "link"
     }
 ]
