@@ -9,7 +9,7 @@ async function app() {
 
   navItemsArray.forEach(function (navItem) {
     if (navItem.type === "link") {
-      document.querySelector("nav.navbar").insertAdjacentHTML(`beforeend`, `<a id="nav-${navItem.type}: ${navItem.name}" href="${navItem.href}"><li class="${navItem.icon}">${navItem.name}</li></a>`);
+      document.querySelector("nav.navbar").insertAdjacentHTML(`beforeend`, `<a id="nav-${navItem.type}: ${navItem.name}" href="${navItem.href}" title="${navItem.name}"><li class="${navItem.icon}">${navItem.name}</li></a>`);
       let currentUrl = window.location.pathname;
       if (currentUrl.replace(".html", "") === navItem.href) {
         document.getElementById(`nav-${navItem.type}: ${navItem.name}`).classList.add("nav-active");
