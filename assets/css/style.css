@@ -315,6 +315,7 @@ samp {
   box-shadow: none;
   font-style: normal;
 }
+
 kbd {
   font-size: 0.9em;
   background: rgba(0, 0, 0, 0.4);
@@ -326,6 +327,14 @@ kbd {
   font-style: normal;
   border-radius: 2px;
 }
+
+pre {
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  padding-left: 1em;
+  overflow-x: auto;
+}
+
 hr {
   border: none;
   border-bottom: 1px solid #555;

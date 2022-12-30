@@ -21,31 +21,31 @@ let page = {
     ],
     items: [
         {
+            name: ".bat Actions Handler.",
+            description: "Run actions with a .bat file.",
+            icon: "mdi mdi-script-text-play",
+            href: "",
+            enabled: true
+        },
+        {
             name: "Mute Indicator",
             description: "Mute Indicator so you can see if and what sources are muted.",
             icon: "mdi mdi-volume-mute",
             href: "/Extensions/Mute-Indicator/Docs",
-            enabled: true
+            enabled: false
         },
         {
             name: "Music Widget",
             description: "Music Widget for Spotify",
             icon: "mdi mdi-spotify",
             href: "/Extensions/Music/",
-            enabled: true
+            enabled: false
         },
         {
             name: "Timer Widget",
             description: "Start a timer with Streamer.bot, 4 actions included",
             icon: "mdi mdi-clock",
             href: "/Extensions/Timer/Docs",
-            enabled: false
-        },
-        {
-            name: "Lorem ipsum dolor sit amet.",
-            description: "Lorem ipsum dolor sit amet.",
-            icon: "mdi mdi-solid",
-            href: "",
             enabled: false
         },
         {

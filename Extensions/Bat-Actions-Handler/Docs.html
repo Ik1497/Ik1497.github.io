@@ -1,0 +1,60 @@
+<script>
+  var date = "18/11/2022";
+  var time = "18:42";
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta property="og:title" content=".bat Actions Handler">
+    <title>.bat Actions Handler | Streamer.bot Actions</title>
+
+    <meta name="og:site_name" content="Streamer.bot Actions">
+    <meta property="og:image" content="/assets/images/favicon.ico">
+    <meta name="theme-color" content="#B80086">
+
+    <meta property="og:description" content="Run action with .bat Files">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/node_modules/@mdi/font/css/materialdesignicons.css">
+    <script src="/assets/js/head.js"></script>
+  </head>
+  <body>
+    <main>
+      <header class="page-info">
+        <p class="title">.bat Actions Handler</p>
+        <p class="description">Run action with .bat Files</p>
+      </header>
+      <h2>Download</h2>
+      <blockquote class="is-warning">
+        <b>Warning:</b> The files need to stay located in the same folder.
+      </blockquote>
+      <ul class="button-grid">
+        <a href="./bat-file-actions-handler.zip">
+          <li>
+            <i class="mdi mdi-folder-zip"></i>
+            <strong>
+              .Zip File Download
+              <em>Click to Download</em>
+            </strong>
+          </li>
+        </a>
+      </ul>
+      <h2>Prerequisites</h2>
+      <p>- Node.js: Node.js is needed to send out the action via the command line to Streamer.bot. Install: <a href="https://nodejs.org/en/">https://nodejs.org/en/</a> you can choose either versions. To verify it's installed correctly go the your command line (<kbd>windows</kbd> <kbd>+</kbd> <kbd>r</kbd> --> cmd) and type <code>node -v</code> and if it says <code>v.....</code> you have installed it correctly.</p>
+      <p>- HTTP Server: in Streamer.bot the HTTP Server needs to be enabled, you can leave it at the default settings, but if you choose to change it go to the <code>action.cjs</code> file and change the settings at the top of the file.</p>
+      <h2>Installation</h2>
+      <p>- In the <code>.zip</code> file attached there is a folder, this by default contains two files: <code>action.cjs</code>, <code>actions.bat</code> you don't have to touch the <code>action.cjs</code>, although you need to change the <code>action.bat</code> file, to do this you can <kbd>right-click</kbd> and click on <code>Edit</code>, here you're gonna see: <code>node action.cjs ActionName</code> change the <code>ActionName</code> to your action name and your done.</p>
+      <p>For actions with spaces you need to use {space}</p>
+      <h3>Action.bat Examples</h3>
+      <pre class="language-bat">node action.cjs Start Poll
+node action.cjs Pause Channel Points</pre>
+      <h2>Notes</h2>
+      <p>Running the .bat file will open a black window for about half a second, this can't be disabled AFAIK, in the future I might work on the usage of .vbs files</p>
+      <hr>
+      <p>For any suggestions about this extension send me a DM on discord or open an <a href="/Links/Issues">issue</a>.</p>
+      <p>If there are any bugs with this Extension you can make a #support post in <a href="https://discord.streamer.bot">The Streamer.bot Discord Server</a>.</p>
+    </main>
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
