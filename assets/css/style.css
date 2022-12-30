@@ -332,7 +332,9 @@ pre {
   background: rgba(0, 0, 0, 0.4);
   color: #fff;
   padding-left: 1em;
+  padding-block: .5em;
   overflow-x: auto;
+  margin-block: .5em;
 }
 
 hr {
