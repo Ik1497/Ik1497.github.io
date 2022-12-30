@@ -24,7 +24,7 @@ let page = {
             name: ".bat File Actions Handler.",
             description: "Run actions with a .bat file.",
             icon: "mdi mdi-script-text-play",
-            href: "",
+            href: "/Extensions/Bat-File-Actions-Handler/Docs",
             enabled: true
         },
         {

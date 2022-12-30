@@ -33,6 +33,7 @@ nav.navbar {
   position: fixed;
   height: calc(100% - 3.5em);
   overflow-y: auto;
+  line-height: 1.5;
 }
 
 nav.navbar li {
