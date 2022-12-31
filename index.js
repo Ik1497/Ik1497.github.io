@@ -8,7 +8,7 @@ let page = {
     buttons: [
         {
             name: "Latest Extension",
-            href: "/Extensions/Mute-Indicator/Docs",
+            href: "/Extensions/Local-Script-Action-Handler/Docs",
             external: false,
             type: "default"
         },
@@ -21,10 +21,10 @@ let page = {
     ],
     items: [
         {
-            name: ".bat File Actions Handler.",
+            name: ".bat/.vbs File Actions Handler.",
             description: "Run actions with a .bat file.",
             icon: "mdi mdi-script-text-play",
-            href: "/Extensions/Bat-File-Actions-Handler/Docs",
+            href: "/Extensions/Local-Script-Action-Handler/Docs",
             enabled: true
         },
         {

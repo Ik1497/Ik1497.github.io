@@ -19,7 +19,6 @@ console.log(`Attempting to run ${actionName}...`)
 
 const http = require('http');
 
-//The url we want is `www.nodejitsu.com:1337/`
 const options = {
   host: httpHost,
   port: httpPort,
@@ -39,12 +38,14 @@ callback = function(response) {
 }
 
 const req = http.request(options, callback);
-//This is the data we are posting, it needs to be a string or a buffer
 req.write(JSON.stringify(
   {
     action: {
       name: actionName
     },
+    args: {
+      actionHandlerFile: process.argv[1],
+    }
   }
 ));
 req.end();

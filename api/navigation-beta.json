@@ -13,9 +13,9 @@
     "type": "label"
   },
   {
-    "name": ".bat Actions Handler",
+    "name": ".bat/.vbs Actions Handler",
     "icon": "mdi mdi-script-text-play",
-    "href": "/Extensions/Bat-Actions-Handler/",
+    "href": "/Extensions/Local-Script-Action-Handler/Docs",
     "type": "link"
   },
   {

@@ -28,7 +28,7 @@ nav.navbar {
   margin: 0;
   bottom: 0;
   left: 0;
-  width: 14em;
+  width: 16em;
   background: var(--v-background-alt);
   position: fixed;
   height: calc(100% - 3.5em);
@@ -42,6 +42,13 @@ nav.navbar li {
   padding-inline: 0.5em;
   padding-block: .6em;
   transition: all 0.3s;
+  height: 1.5em;
+  box-sizing: content-box;
+
+  text-size-adjust: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 nav.navbar > a > li.mdi::before {
