@@ -13,7 +13,7 @@
     "type": "label"
   },
   {
-    "name": ".bat/.vbs Actions Handler",
+    "name": "Local Script Actions Handler",
     "icon": "mdi mdi-script-text-play",
     "href": "/Extensions/Local-Script-Action-Handler/Docs",
     "type": "link"
