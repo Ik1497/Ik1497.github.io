@@ -37,9 +37,9 @@ async function app() {
     // Fetch Requests
     let requests = await fetch(`https://raw.githubusercontent.com/obsproject/obs-websocket/master/docs/generated/protocol.json`);
     requests = await requests.json();
+    console.log(requests);
     requests = requests.requests;
     requests.sort();
-    console.log(requests);
 
     // Add HTML
     document.body.insertAdjacentHTML(`afterbegin`, `<nav><input type="search" placeholder="search..."><ul></ul></nav><main></main>`);

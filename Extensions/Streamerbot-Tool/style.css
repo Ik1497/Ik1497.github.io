@@ -237,6 +237,7 @@ main ul.actions li button:hover {
     border: 2px solid var(--v-background-light);
     border-radius: .5em;
     overflow: hidden;
+    z-index: 1;
 }
 
 body:has(> .global-args) > *:not(.global-args) {
@@ -251,7 +252,7 @@ body:has(> .global-args) .open-global-args {
 .global-args .header {
     background: var(--page-accent-color);
     width: 100%;
-    height: 2rem;
+    height: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -262,8 +263,8 @@ body:has(> .global-args) .open-global-args {
     border: 0;
     outline: 0;
     border-radius: 0;
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     background: var(--page-accent-color-alt);
     color: white;
     font-size: 1.25em;
@@ -271,11 +272,11 @@ body:has(> .global-args) .open-global-args {
 
 .global-args .header .info .title {
     font-weight: bold;
-    font-size: .8em;
+    font-size: 1.25em;
 }
 
 .global-args .header .info .description {
-    font-size: .5em;
+    font-size: .8em;
 }
 
 .global-args .main {
@@ -297,6 +298,7 @@ body:has(> .global-args) .open-global-args {
     border: 0;
     border-radius: 0;
     padding: .25em;
+    font-size: 1rem;
 }
 
 .global-args .main table td:has(.add-row) {
@@ -305,7 +307,8 @@ body:has(> .global-args) .open-global-args {
 }
 
 .global-args .main table td .remove-row,
-.global-args .main table td .add-row {
+.global-args .main table td .add-row,
+.global-args .save-button button {
     background: var(--v-background-light);
     color: white;
     outline: 0;
@@ -313,10 +316,18 @@ body:has(> .global-args) .open-global-args {
     border-radius: 0;
     padding-inline: .25em;
     padding-block: .25em;
+    font-size: 1rem;
 }
 
 .global-args .main table td .add-row {
     padding-block: .15em;
+}
+
+.global-args .save-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 2;
 }
 
 .open-global-args {

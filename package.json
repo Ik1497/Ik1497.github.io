@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
+  "type": "module",
   "scripts": {
     "sass": "sass --watch assets/scss:assets/css"
   },
@@ -20,6 +21,11 @@
     "sass": "^1.56.1"
   },
   "dependencies": {
-    "@mdi/font": "^7.0.96"
+    "@mdi/font": "^7.0.96",
+    "rehype-stringify": "^9.0.3",
+    "remark-parse": "^10.0.1",
+    "remark-rehype": "^10.1.0",
+    "unified": "^10.1.2",
+    "unified-stream": "^2.0.0"
   }
 }

@@ -1,0 +1,254 @@
+[
+    {
+        "name": "Clear Action Queue",
+        "description": "Clears a specified or all action queue(s).",
+        "overview": null,
+        "group": "Actions",
+        "groupDirectory": "Actions",
+        "fields": [
+            {
+                "fieldName": "Queue",
+                "fieldDescription": "The queue that you want to be cleared.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "All",
+                        "optionDescription": "Clears all action queues."
+                    },
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your action queues."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Get Action Group State",
+        "description": "Gets the action's group's enabled state of your specified group.",
+        "overview": null,
+        "group": "Actions",
+        "groupDirectory": "Actions",
+        "fields": [
+            {
+                "fieldName": "Group",
+                "fieldDescription": "The group where you want to get the state of.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "None",
+                        "optionDescription": "Default value, gets no state."
+                    },
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your action groups."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Get Action State",
+        "description": "Get the action's enabled state of your specified action.",
+        "overview": null,
+        "group": "Actions",
+        "groupDirectory": "Actions",
+        "fields": [
+            {
+                "fieldName": "Action",
+                "fieldDescription": "The action you where you want to get the enabled state from.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your actions."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Run Action",
+        "description": "Runs a specified action.",
+        "overview": null,
+        "group": "Actions",
+        "groupDirectory": "Actions",
+        "fields": [
+            {
+                "fieldName": "Action",
+                "fieldDescription": "The action what you want to run.",
+                "fieldType": "button"
+            },
+            {
+                "fieldName": "Run Action Immediately",
+                "fieldDescription": "Wheter this action should follow the action's queue.",
+                "fieldType": "button",
+                "fieldStates": {
+                    "default": "enabled",
+                    "enabled": "Action does folllow the action queue.",
+                    "disabled": "Action doesn't folllow the action queue."
+                }
+            }
+        ]
+    },
+    {
+        "name": "Set Action Group State",
+        "description": "Sets the action's group's enabled state of your specified group.",
+        "overview": null,
+        "group": "Actions",
+        "groupDirectory": "Actions",
+        "fields": [
+            {
+                "fieldName": "Group",
+                "fieldDescription": "The group where you want to set the state of.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "None",
+                        "optionDescription": "Default value, sets no state."
+                    },
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your action groups."
+                    }
+                ]
+            },
+            {
+                "fieldName": "State",
+                "fieldDescription": "Wheter the action group should be enabled, disabled or toggled.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "Enabled",
+                        "optionDescription": "Enables the specified action group."
+                    },
+                    {
+                        "optionName": "Disabled",
+                        "optionDescription": "Disables the specified action group."
+                    },
+                    {
+                        "optionName": "Toggle",
+                        "optionDescription": "Toggles the specified action group between enabled and disabled."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Set Action Queue Pause State",
+        "description": "Pauses or resumes a specified action queue.",
+        "overview": null,
+        "group": "Actions",
+        "groupDirectory": "Actions",
+        "fields": [
+            {
+                "fieldName": "Queue",
+                "fieldDescription": "The queue you want to change the pause state of.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "All",
+                        "optionDescription": "All the action queues you have."
+                    },
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your action queues."
+                    }
+                ]
+            },
+            {
+                "fieldName": "State",
+                "fieldDescription": "Wheter the queue should be paused or resumed.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "Pause",
+                        "optionDescription": "If you want the queue to be paused."
+                    },
+                    {
+                        "optionName": "Resume",
+                        "optionDescription": "If you want the queue to be resumed."
+                    }
+                ]
+            },
+            {
+                "fieldName": "Clear",
+                "fieldDescription": "Clears the specified action queue.",
+                "fieldType": "button",
+                "fieldStates": {
+                    "default": "disabled",
+                    "enabled": "Clears the specified action queue",
+                    "disabled": "Doesn't clear the specified action queue"
+                }
+            }
+        ]
+    },
+    {
+        "name": "Set Action State",
+        "description": "Disables or enables the specified action.",
+        "overview": null,
+        "group": "Actions",
+        "groupDirectory": "Actions",
+        "fields": [
+            {
+                "fieldName": "Action",
+                "fieldDescription": "The action you want to enable or disabled.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your actions."
+                    }
+                ]
+            },
+            {
+                "fieldName": "State",
+                "fieldDescription": "Wheter the action should be enabled or disabled.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "Enabled",
+                        "optionDescription": "If you want to enable the specified action."
+                    },
+                    {
+                        "optionName": "Disabled",
+                        "optionDescription": "If you want to disabled the specified action."
+                    },
+                    {
+                        "optionName": "Toggle",
+                        "optionDescription": "If you want to toggle the enabled state between enabled or disabled for the specified action."
+                    }
+                ]
+            }   
+        ]
+    },
+    {
+        "name": "Fetch Url",
+        "description": "Fetches your url and outputs it as a variable.",
+        "overview": null,
+        "group": "Network",
+        "groupDirectory": "Core/Network",
+        "fields": [
+            {
+                "fieldName": "Url",
+                "fieldDescription": "The url of your fetch.",
+                "fieldType": "text"
+            },
+            {
+                "fieldName": "Headers",
+                "fieldDescription": "The HTTP headers that will be used in your fetch.",
+                "fieldType": "table",
+                "fieldOptions": [
+                    {
+                        "optionName": "Name",
+                        "optionDescription": "The name of the HTTP header."
+                    },
+                    {
+                        "optionName": "Value",
+                        "optionDescription": "The value of the HTTP header."
+                    }
+                ]
+            }
+        ]
+    }
+]

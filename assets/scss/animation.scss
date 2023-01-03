@@ -1,3 +1,12 @@
+$wait: 50;
+
+@for $i from 0 to $wait + 1 {
+  .wait-p#{$i}s {
+    -webkit-animation-delay: $i * .1s;
+    animation-delay: $i * .1s;
+  }
+}
+
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -273,11 +282,4 @@
 .fadeOutUp {
   -webkit-animation-name: fadeOutUp;
   animation-name: fadeOutUp;
-}
-
-@for $i from 1 to 51 {
-  .wait-p#{$i}s {
-    -webkit-animation-delay: $i * .1s;
-    animation-delay: $i * .1s;
-  }
 }
