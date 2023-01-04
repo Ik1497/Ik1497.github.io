@@ -29,6 +29,7 @@ function connectws() {
     ws.addEventListener("message", (event) => {
       if (!event.data) return
       const data = JSON.parse(event.data)
+      console.log(`Event received with the data: `, data)
       if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the Events/Requests"); return }
       let widget = data.data?.widget
       if (widget != "mute-indicator") return
@@ -43,6 +44,7 @@ function connectws() {
       let exclude = params.get("exclude")
       if (exclude != undefined) {
         if (exclude.indexOf(sourceName) !== -1) {
+          console.log(`Excludung ${sourceName}`)
           return
         }
       }
@@ -50,6 +52,7 @@ function connectws() {
       let include = params.get("include")
       if (include != undefined) {
         if (!include.includes(sourceName)) {
+          console.log(`Not Including ${sourceName}`)
           return
         }
       }
