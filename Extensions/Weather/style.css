@@ -1,0 +1,51 @@
+@import url(/assets/fonts/Uni-Sans-CAPS/font.css);
+
+:root {
+    --font-family: Uni Sans CAPS;
+    --font-weight: 900;
+    --font-style: normal;
+    --font-size: 1.5em;
+    --font-color: #181818;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    font-style: var(--font-style);
+    font-size: var(--font-size);
+    color: var(--font-color);
+    height: 100vh;
+}
+
+.weather-widget {
+    background: linear-gradient(hsl(0, 100%, 100%), hsl(0, 0%, 80%));
+    border: 2px solid hsl(0, 0%, 80%);
+    height: 100%;
+    width: 100%;
+    border-radius: calc(var(--font-size) * 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.weather-widget .weather-subtitle {
+    font-size: calc(var(--font-size) * .5);
+}
+
+.weather-widget .temperature {
+    font-size: calc(var(--font-size) * 1);
+}
+
+.weather-widget img {
+    width: calc(var(--font-size) * 4);
+    height: calc(var(--font-size) * 4);
+}

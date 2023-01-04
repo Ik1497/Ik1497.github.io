@@ -82,7 +82,7 @@
             {
                 "fieldName": "Run Action Immediately",
                 "fieldDescription": "Wheter this action should follow the action's queue.",
-                "fieldType": "button",
+                "fieldType": "checkbox",
                 "fieldStates": {
                     "default": "enabled",
                     "enabled": "Action does folllow the action queue.",
@@ -174,7 +174,7 @@
             {
                 "fieldName": "Clear",
                 "fieldDescription": "Clears the specified action queue.",
-                "fieldType": "button",
+                "fieldType": "checkbox",
                 "fieldStates": {
                     "default": "disabled",
                     "enabled": "Clears the specified action queue",
@@ -212,14 +212,218 @@
                     },
                     {
                         "optionName": "Disabled",
-                        "optionDescription": "If you want to disabled the specified action."
+                        "optionDescription": "If you want to disable the specified action."
                     },
                     {
                         "optionName": "Toggle",
-                        "optionDescription": "If you want to toggle the enabled state between enabled or disabled for the specified action."
+                        "optionDescription": "If you want to toggle the enabled state between enabled or disabled for the specified group."
                     }
                 ]
-            }   
+            }
+        ]
+    },
+    {
+        "name": "Get Command Group State",
+        "description": "Gets the state of a command group.",
+        "overview": null,
+        "group": "Commands",
+        "groupDirectory": "Commands",
+        "fields": [
+            {
+                "fieldName": "Group",
+                "fieldDescription": "The command group where you want to get the state from.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "None",
+                        "optionDescription": "No group."
+                    },
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your command groups."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Get Command State",
+        "description": "Gets the state of a command.",
+        "overview": null,
+        "group": "Commands",
+        "groupDirectory": "Commands",
+        "fields": [
+            {
+                "fieldName": "Command",
+                "fieldDescription": "The command where you want to get the state from.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your commands."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Get Commands",
+        "description": "Gets a list of your commands.",
+        "overview": null,
+        "group": "Commands",
+        "groupDirectory": "Commands",
+        "fields": [
+            {
+                "fieldName": "Group",
+                "fieldDescription": "From which group that you want the commands from.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "All",
+                        "optionDescription": "If you want to get the commands from all groups."
+                    },
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your command groups."
+                    }
+                ]
+            },
+            {
+                "fieldName": "Variable Name",
+                "fieldDescription": "The variable name where the commands will be outputted in.",
+                "fieldType": "text"
+            },
+            {
+                "fieldName": "Include All",
+                "fieldDescription": "Will include all commands but if `Only Has Permission` is enabled this will be ignored.",
+                "fieldType": "checkbox",
+                "fieldStates": {
+                    "default": "enabled",
+                    "enabled": "Includes every command.",
+                    "disabled": "Doesn't include every command."
+                }
+            },
+            {
+                "fieldName": "Only Has Permission",
+                "fieldDescription": "Will only show the commands where the user has persimmion to. Include alll will be ignored.",
+                "fieldType": "checkbox",
+                "fieldStates": {
+                    "default": "disabled",
+                    "enabled": "Will only include commands that the user has permission to.",
+                    "disabled": "Will include all commands."
+                }
+            }
+        ]
+    },
+    {
+        "name": "Set Command Group State",
+        "description": "Sets the state of a command group.",
+        "overview": null,
+        "group": "Commands",
+        "groupDirectory": "Commands",
+        "fields": [
+            {
+                "fieldName": "Group",
+                "fieldDescription": "The command group where you want to get the state from.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "None",
+                        "optionDescription": "No group."
+                    },
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your command groups."
+                    }
+                ]
+            },
+            {
+                "fieldName": "State",
+                "fieldDescription": "Wheter the command group should be enabled or disabled.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "Enabled",
+                        "optionDescription": "If you want to enable the specified command group."
+                    },
+                    {
+                        "optionName": "Disabled",
+                        "optionDescription": "If you want to disable the specified command group."
+                    },
+                    {
+                        "optionName": "Toggle",
+                        "optionDescription": "If you want to toggle the enabled state between enabled or disabled for the specified command group."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Set Command State",
+        "description": "Sets the state of a command.",
+        "overview": null,
+        "group": "Commands",
+        "groupDirectory": "Commands",
+        "fields": [
+            {
+                "fieldName": "Command",
+                "fieldDescription": "The command where you want to set the state to.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "...",
+                        "optionDescription": "A list of your commands."
+                    }
+                ]
+            },
+            {
+                "fieldName": "State",
+                "fieldDescription": "Wheter the command should be enabled or disabled.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "Enabled",
+                        "optionDescription": "If you want to enable the specified command."
+                    },
+                    {
+                        "optionName": "Disabled",
+                        "optionDescription": "If you want to disable the specified command."
+                    },
+                    {
+                        "optionName": "Toggle",
+                        "optionDescription": "If you want to toggle the enabled state between enabled or disabled for the specified command."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Delay",
+        "description": "Adds a delay what you can put between Sub-Actions.",
+        "overview": null,
+        "group": "Core",
+        "groupDirectory": "Core",
+        "fields": [
+            {
+                "fieldName": "Delay",
+                "fieldDescription": "The amount of milliseconds of the delay.",
+                "fieldType": "text"
+            },
+            {
+                "fieldName": "Random",
+                "fieldDescription": "Wheter the delay should be random between the values of `Delay` and `To`.",
+                "fieldType": "checkbox",
+                "fieldStates": {
+                    "default": "disabled",
+                    "enabled": "Chooses a random value between `Delay` and `To` fields for the delay.",
+                    "disabled": "Uses the `Delay` field for the delay."
+                }
+            },
+            {
+                "fieldName": "To",
+                "fieldDescription": "The max amount of milliseconds of the delay, when `Random` is ticked.",
+                "fieldType": "text"
+            }
         ]
     },
     {

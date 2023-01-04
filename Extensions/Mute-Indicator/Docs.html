@@ -8,19 +8,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta property="og:title" content="Mute Indicator" />
+    <meta property="og:title" content="Mute Indicator">
     <title>Mute Indicator | Streamer.bot Actions</title>
 
-    <meta name="og:site_name" content="Streamer.bot Actions" />
-    <meta property="og:image" content="/assets/images/favicon.png" />
-    <meta name="theme-color" content="#B80086" />
+    <meta name="og:site_name" content="Streamer.bot Actions">
+    <meta property="og:image" content="/assets/images/favicon.png">
+    <meta name="theme-color" content="#B80086">
 
     <meta
       property="og:description"
       content="Mute Indicator so you can see if and what sources are muted"
-    />
+   >
 
-    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css">
     <script src="/assets/js/head.js"></script>
   </head>
   <body>
@@ -50,11 +50,7 @@
         <code>Import String</code>.<br>
       </p>
 
-      <img
-        class="img-400 margin-top"
-        src="./installation.png"
-        alt="installation.png"
-      />
+      <img class="img-400 margin-top" src="./installation.png" alt="installation.png">
       <h2>Configuration</h2>
       <h3>Streamer.bot</h3>
       <p>
@@ -65,6 +61,7 @@
         <code>--></code> <code>OBS</code>.<br>
         3. Make sure that the <code>Server/Clients</code> <code>--></code>
         <code>Websocket Server</code> is enabled.<br>
+        <img class="img-300 margin-top" src="./overview-obs-event.png" alt="overview.gif">
       </p>
       <h3>OBS Studio</h3>
       <p>
@@ -75,12 +72,9 @@
       </p>
       <h2>Widget</h2>
       <p>
-        Put this URL into OBS:
-        <a href="https://ik1497.github.io/Extensions/Mute-Indicator/"
-          >https://ik1497.github.io/Extensions/Mute-Indicator/</a
-        >
+        Put this URL into OBS: <a href="https://ik1497.github.io/Extensions/Mute-Indicator/">https://ik1497.github.io/Extensions/Mute-Indicator/</a>
       </p>
-      <img class="img-400" src="./overview.gif" alt="overview.gif" />
+      <img class="img-400" src="./overview.gif" alt="overview.gif">
 
       <h3>URL Parameters</h3>
       <ul class="button-grid">
@@ -218,25 +212,32 @@
           <tr>
             <td class="table-right"><code>exclude</code></td>
             <td class="table-left">
-              The audio sources to exclude in an array <code>no default</code>.
+              The audio sources to exclude  <code>no default</code>.<br>
+              This can go in a string if you have only one e.g. <code>?exclude=[A] Music</code>.<br>
+              If you have more it can be comma seperated or an array e.g. <code>?exclude="[A] Music","[A] TTS"</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>include</code></td>
+            <td class="table-left">
+              The audio sources to only include <code>no default</code>.<br>
+              This can go in a string if you have only one e.g. <code>?include=[A] Music</code>.<br>
+              If you have more it can be comma seperated or an array e.g. <code>?include="[A] Music","[A] TTS"</code>.
             </td>
           </tr>
         </tbody>
       </table>
-
+      <br>
       <p>
         Make it your own with URL Parameters! This example image below uses:<br>
-        <code
-          >https://ik1497.github.io/Extensions/Mute-Indicator?chip-background=rgb(255,
-          255, 255)&chip-border-radius=20px&exclude=["[A] Music"]</code
-        >
+        <code>https://ik1497.github.io/Extensions/Mute-Indicator?chip-background=rgb(255,255, 255)&chip-border-radius=20px&exclude=[A] Music</code>
       </p>
 
       <img
         class="img-400 margin-top"
         src="./overview-url-paramaters.png"
         alt="overview-url-paramaters.png"
-      />
+     >
       <p>
         For any suggestions about this widget or any theme feel free to send me
         a DM on discord or open an <a href="/Links/Issues">issue</a>.

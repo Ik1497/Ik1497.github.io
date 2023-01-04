@@ -43,11 +43,5 @@
   {
     "name": "Tools",
     "type": "label"
-  },
-  {
-    "name": "OBS Websocket Events",
-    "icon": "mdi mdi-application",
-    "href": "/Extensions/OBS-Websocket-Events/",
-    "type": "link"
   }
 ]

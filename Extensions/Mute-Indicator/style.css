@@ -1,3 +1,5 @@
+@import url(/assets/fonts/font.css);
+
 :root {
     --font-family: Uni Sans CAPS;
     --font-weight: 900;
@@ -12,7 +14,6 @@
     --chip-border-radius: 0;
 }
 
-@import url(/assets/fonts/font.css);
 * {
     margin: 0;
     padding: 0;

@@ -566,12 +566,19 @@ ul.grid-list li:nth-child(odd) {
   content: "Doesn't allow any values";
 }
 
-.img-400 {
-  max-width: 30em;
+[class*=img-] {
   width: 100%;
   margin-bottom: 1em;
 }
 
-.img-400.margin-top {
+[class*=img-].margin-top {
   margin-top: 1em;
+}
+
+.img-400 {
+  max-width: 30em;
+}
+
+.img-300 {
+  max-width: 22.5em;
 }

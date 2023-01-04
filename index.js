@@ -8,7 +8,7 @@ let page = {
     buttons: [
         {
             name: "Latest Extension",
-            href: "/Extensions/Local-Script-Action-Handler/Docs",
+            href: "/Extensions/Mute-Indicator/Docs",
             external: false,
             type: "default"
         },
@@ -21,18 +21,18 @@ let page = {
     ],
     items: [
         {
+            name: "Mute Indicator",
+            description: "Mute Indicator so you can see if and what sources are muted.",
+            icon: "mdi mdi-volume-mute",
+            href: "/Extensions/Mute-Indicator/Docs",
+            enabled: true
+        },
+        {
             name: ".bat/.vbs File Actions Handler.",
             description: "Run actions with a .bat file.",
             icon: "mdi mdi-script-text-play",
             href: "/Extensions/Local-Script-Action-Handler/Docs",
             enabled: true
-        },
-        {
-            name: "Mute Indicator",
-            description: "Mute Indicator so you can see if and what sources are muted.",
-            icon: "mdi mdi-volume-mute",
-            href: "/Extensions/Mute-Indicator/Docs",
-            enabled: false
         },
         {
             name: "Music Widget",
