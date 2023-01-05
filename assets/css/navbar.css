@@ -1,8 +1,10 @@
 .navbar-wrapper {
-  position: sticky;
-  height: 100%;
   width: 17.5rem;
   margin-left: auto;
+  margin-top: 6rem;
+  line-height: 1.5;
+  height: fit-content;
+  max-height: 80vh;
 }
 
 .navbar-wrapper ul.navbar {
@@ -34,7 +36,8 @@
   padding-right: .25rem;
 }
 
-.navbar-wrapper ul.navbar ul li:hover {
+.navbar-wrapper ul.navbar ul li:hover,
+.navbar-wrapper ul.navbar ul li:focus-visible {
   background: var(--accent-alt);
 }
 
@@ -84,7 +87,8 @@
   display: none;
 }
 
-.navbar-wrapper ul.navbar .navbar-group .group-title:hover {
+.navbar-wrapper ul.navbar .navbar-group .group-title:hover,
+.navbar-wrapper ul.navbar .navbar-group .group-title:focus-visible {
   background: var(--background-mute);
 }
 

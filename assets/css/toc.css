@@ -1,30 +1,64 @@
 @import url(/assets/css/root.css);
 
-ul.toc {
+ul.table-of-contents {
     list-style: none;
-    width: 10em;
-
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-top: 5em;
-    overflow: auto;
+    overflow-y: auto;
     grid-area: body--toc;
     margin-right: auto;
+    margin-top: 6rem;
+    background: var(--v-background-soft);
+    height: fit-content;
+    max-height: 80vh;
+    width: 17.5rem;
+    border-radius: .5rem;
+    padding-block: .5rem;
+    padding-inline: .5rem;
 }
 
-ul.toc button {
-    background: var(--v-background-soft);
+ul.table-of-contents button {
+    background: transparent;
     border: 0;
-    border-radius: 0;
+    border-radius: .25rem;
     outline: 0;
     color: #fff;
     width: 100%;
     padding-block: .25em;
+    text-align: left;
+    font-size: 1rem;
+    cursor: pointer;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
+ul.table-of-contents button:hover,
+ul.table-of-contents button:focus-visible {
+    background: var(--v-background-light);
+}
+
+ul.table-of-contents li.heading-tag-h3 button {
+    font-size: .85rem;
+    padding-left: .75rem;
+    color: #ddd;
+}
+
+ul.table-of-contents li.heading-tag-h4 button,
+ul.table-of-contents li.heading-tag-h5 button,
+ul.table-of-contents li.heading-tag-h6 button {
+    font-size: .75rem;
+    padding-left: 1.5rem;
+    color: #bbb;
+}
+
+
+
+ul.table-of-contents .anchorjs-link {
+    display: none;
+}
 @media (max-width: 115rem) {
-    ul.toc {
+    ul.table-of-contents {
         display: none;
     }
 }

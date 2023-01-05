@@ -3,13 +3,19 @@ header.header-primary {
   top: 0;
   left: 0;
   right: 0;
+  padding-inline: .5rem;
+  display: grid;
+  grid-template-columns: max-content auto;
+  background: var(--background-soft);
+  height: 4rem;
+  z-index: 100;
+  line-height: 1.5;
+}
+
+header.header-primary .main-info {
   display: flex;
   column-gap: .5rem;
-  padding-inline: .5rem;
   align-items: center;
-  background: var(--background-soft);
-  padding-block: .5rem;
-  z-index: 100;
 }
 
 header.header-primary img {
@@ -29,4 +35,28 @@ header.header-primary p.name {
 
 header.header-primary p.description {
   color: #bbb;
+}
+
+header.header-primary aside {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+
+header.header-primary aside .settings:hover,
+header.header-primary aside .settings:focus-visible {
+  background: var(--background-light);
+}
+
+header.header-primary aside .settings,
+header.header-primary aside .settings:active {
+    border: 0;
+    outline: 0;
+    color: #fff;
+    background: var(--background-mute);
+    padding: .5rem;
+    border-radius: 100vmax;
+    cursor: pointer;
 }
