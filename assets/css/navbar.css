@@ -4,7 +4,6 @@
   margin-top: 6rem;
   line-height: 1.5;
   height: fit-content;
-  max-height: 80vh;
 }
 
 .navbar-wrapper ul.navbar {
@@ -12,34 +11,44 @@
   background: var(--background-soft);
   border-radius: .5rem;
   height: fit-content;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-bottom: .5rem;
 }
 
 .navbar-wrapper ul.navbar .navbar-group ul {
   list-style: none;
 }
 
-.navbar-wrapper ul.navbar .navbar-group ul li a {
-  color: #ffffff;
-  display: block;
-  padding-block: .5rem;
-  padding-inline: .25rem;
-  font-size: .85rem;
-}
-
 .navbar-wrapper ul.navbar .navbar-group ul li {
   border-radius: .25rem;
   cursor: pointer;
   position: relative;
-}
-
-.navbar-wrapper ul.navbar .navbar-group ul li a::before {
-  padding-right: .25rem;
+  color: #ffffff;
 }
 
 .navbar-wrapper ul.navbar ul li:hover,
 .navbar-wrapper ul.navbar ul li:focus-visible {
   background: var(--accent-alt);
 }
+
+.navbar-wrapper ul.navbar ul li.nav-active {
+  color: var(--accent-primary);
+  background: var(--background-alt);
+}
+
+.navbar-wrapper ul.navbar .navbar-group ul li a {
+  color: inherit;
+  display: block;
+  padding-block: .5rem;
+  padding-inline: .25rem;
+  font-size: .85rem;
+}
+
+.navbar-wrapper ul.navbar .navbar-group ul li a::before {
+  padding-right: .25rem;
+}
+
 
 
 /* NAVBAR GROUP */

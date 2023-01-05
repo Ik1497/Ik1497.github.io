@@ -8,7 +8,7 @@ header.header-primary {
   grid-template-columns: max-content auto;
   background: var(--background-soft);
   height: 4rem;
-  z-index: 100;
+  z-index: 10;
   line-height: 1.5;
 }
 
@@ -41,7 +41,6 @@ header.header-primary aside {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  font-size: 1.5rem;
 }
 
 
@@ -52,11 +51,100 @@ header.header-primary aside .settings:focus-visible {
 
 header.header-primary aside .settings,
 header.header-primary aside .settings:active {
-    border: 0;
-    outline: 0;
-    color: #fff;
-    background: var(--background-mute);
-    padding: .5rem;
-    border-radius: 100vmax;
-    cursor: pointer;
+  border: 0;
+  outline: 0;
+  color: #fff;
+  background: var(--background-mute);
+  padding: .5rem;
+  border-radius: 100vmax;
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.5rem;
+}
+
+/* Website Settings Modal */
+
+.website-settings-modal {
+  position: fixed;
+  z-index: 20;
+  background: var(--background-soft);
+  width: 80vw;
+  height: 80vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.website-settings-modal header {
+  padding-inline: .5rem;
+  background: var(--accent-primary);
+  height: 3rem;
+  display: grid;
+  grid-template-columns: max-content auto;
+}
+
+.website-settings-modal header .main-info {
+  display: flex;
+  align-items: center;
+  column-gap: .25rem;
+}
+
+.website-settings-modal header .main-info .info p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.website-settings-modal header .main-info .info p.name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.website-settings-modal header .main-info .info p.description {
+  color: #eee;
+  font-size: .75rem;
+}
+
+.website-settings-modal header .main-info img {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--background-soft);
+  border-radius: 100vmax;
+}
+
+.website-settings-modal header aside {
+  place-self: end;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.website-settings-modal header aside button:hover,
+.website-settings-modal header aside button:focus-visible {
+  background: var(--background-light);
+}
+
+.website-settings-modal header aside button,
+.website-settings-modal header aside button:active {
+  font-size: 2rem;
+  background: none;
+  border: 0;
+  outline: 0;
+  border-radius: .4rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.website-settings-modal .website-settings-modal-contents {
+  padding-inline: .5rem;
+}
+
+body:has(.website-settings-modal) > *:not(.website-settings-modal) {
+  pointer-events: none;
+}
+
+body:has(.website-settings-modal) > *:not(.website-settings-modal) {
+  opacity: .5;
 }

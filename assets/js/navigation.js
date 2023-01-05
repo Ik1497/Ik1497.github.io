@@ -12,7 +12,11 @@ async function app() {
         
         navItemGroup.groupItems.forEach(navItem => {
           if (navItem.type === `link` && navItem.enabled != false) {
-            navItemList += `<li title="${navItem.name}"><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
+            let navActive = ``
+            if (location.pathname.replace(`.html`, ``) === navItem.href.replace(`.html`, ``)) {
+              navActive += ` class="nav-active"`
+            }
+            navItemList += `<li title="${navItem.name}"${navActive}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
           }
         });
 
@@ -21,7 +25,6 @@ async function app() {
       }
     });
     document.querySelectorAll(`nav.navbar-wrapper ul.navbar .navbar-group`).forEach(navbarGroup => {
-      console.log(navbarGroup)
       navbarGroup.querySelector(`button.group-title`).addEventListener(`click`, function () {
         let navbarGroupState = navbarGroup.getAttribute(`data-navbar-group-state`)
 
