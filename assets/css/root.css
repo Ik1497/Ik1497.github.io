@@ -55,6 +55,7 @@
   --v-blockquote-code-border: #444;
   --v-blockquote-border-radius: 12px;
 }
+
 .darkmode {
   --v-background: #ddd;
   --v-background-alt: #e4e4e4;

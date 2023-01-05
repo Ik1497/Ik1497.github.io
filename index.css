@@ -86,6 +86,7 @@ li.item-grid-item article {
     transform-style: preserve-3d;
     position: relative;
     color: var(--v-primary-natural-white);
+    box-sizing: content-box;
 }
 
 li.item-grid-item .background {
@@ -172,7 +173,6 @@ footer {
 .top-section .logo {
     width: 260px;
     border-radius: 100vmax;
-    z-index: -1;
     margin: auto;
     grid-area: logo;
     position: relative;
@@ -191,7 +191,6 @@ footer {
     aspect-ratio: 1;
     filter: blur(100px);
     border-radius: 100vmax;
-    z-index: -1;
 }
 
 .main-buttons {

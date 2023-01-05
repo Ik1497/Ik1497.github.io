@@ -98,4 +98,9 @@
     padding-inline: 1rem;
     padding-bottom: 2rem;
   }
+
+  .navbar-wrapper ul.navbar {
+    max-height: 16.5rem;
+    overflow-y: auto;
+  }
 }

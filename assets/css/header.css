@@ -9,6 +9,7 @@ header.header-primary {
   align-items: center;
   background: var(--background-soft);
   padding-block: .5rem;
+  z-index: 100;
 }
 
 header.header-primary img {
