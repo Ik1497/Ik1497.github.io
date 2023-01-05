@@ -35,47 +35,40 @@ html {
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
+
 body {
   font-family: var(--v-font-family);
   font-size: 1em;
   font-weight: 400;
   color: var(--v-primary-natural);
   background-color: var(--v-background);
-  overflow: hidden visible;
+  overflow: hidden auto;
   margin-bottom: 1.5em;
   line-height: 1.5em;
+  display: grid;
+  grid-template-areas: "body--navbar body--main body--toc";
+  grid-template-columns: 1fr max-content 1fr;
+  padding-top: 5rem;
+  position: relative;
 }
 
 main {
-  padding-inline: 0.5em;
-  margin-top: 1em;
+  grid-area: body--main;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1rem;
 }
 
-@media (min-width: 50em) {
+@media (max-width: 70rem) {
   body {
-    padding-top: 0.5em;
-    padding-bottom: 1em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-  main {
-    max-width: 1400px;
-    padding-left: 3em;
-    margin: auto;
-    margin-top: 4em;
-  }
-}
-
-@media (max-width: 115em) {
-  main {
-    padding-left: 16em;
-  }
-}
-
-@media (max-width: 50em) {
-  main {
-    padding-left: 0.5em;
+    grid-template-areas: 
+      "body--navbar"
+      "body--toc"
+      "body--main";
+    grid-template-columns: 1fr;
   }
 }
 
@@ -468,7 +461,6 @@ ul.button-grid {
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   margin-block: .9em 1.5em;
   position: relative;
-  width: calc(100% - 2.3em);
 }
 ul.list {
   grid-template-columns: 1fr;

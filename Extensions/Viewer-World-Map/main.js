@@ -12,7 +12,6 @@ function connectws() {
     ws.onclose = function () {
       setTimeout(connectws, 10000);
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to Streamer.bot, reconnecting every 10s...");
-
     };
 
     ws.onopen = function () {

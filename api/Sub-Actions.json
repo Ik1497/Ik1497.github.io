@@ -291,7 +291,8 @@
             {
                 "fieldName": "Variable Name",
                 "fieldDescription": "The variable name where the commands will be outputted in.",
-                "fieldType": "text"
+                "fieldInputType": "text",
+                "fieldType": "input"
             },
             {
                 "fieldName": "Include All",
@@ -407,7 +408,8 @@
             {
                 "fieldName": "Delay",
                 "fieldDescription": "The amount of milliseconds of the delay.",
-                "fieldType": "text"
+                "fieldInputType": "text",
+                "fieldType": "input"
             },
             {
                 "fieldName": "Random",
@@ -422,7 +424,212 @@
             {
                 "fieldName": "To",
                 "fieldDescription": "The max amount of milliseconds of the delay, when `Random` is ticked.",
+                "fieldInputType": "text",
+                "fieldType": "input"
+            },
+            {
+                "fieldContent": "You can enter a %variable% in either field, or a number. The value is in milliseconds",
                 "fieldType": "text"
+            }
+        ]
+    },
+    {
+        "name": "Get Quote",
+        "description": "Adds a random or specific quote to the variables.",
+        "overview": null,
+        "group": "Core",
+        "groupDirectory": "Core",
+        "fields": [
+            {
+                "fieldName": "Type",
+                "fieldDescription": "Wheter the quote should be random or specific.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "Random",
+                        "optionDescription": "Gets a random quote."
+                    },
+                    {
+                        "optionName": "Specific",
+                        "optionDescription": "Gets a specific quote by id."
+                    }
+                ]
+            },
+            {
+                "fieldName": "Quote Id",
+                "fieldDescription": "A specific quote id from your quotes. `Type` needs to be set to Specific.",
+                "fieldInputType": "text",
+                "fieldType": "input"
+            },
+            {
+                "fieldContent": "Adding multiple Get Quotes will overwrite each previous one",
+                "fieldType": "text"
+            }
+        ]
+    },
+    {
+        "name": "Get Random Number",
+        "description": "Adds a random between two values. With `Type`: `Next Float` it picks a random number between 0 and 1 with up to 17 decimal precision.",
+        "overview": null,
+        "group": "Core",
+        "groupDirectory": "Core",
+        "fields": [
+            {
+                "fieldName": "Type",
+                "fieldDescription": "Wheter the random number should be Between two values or the Next Float.",
+                "fieldType": "dropdown",
+                "fieldOptions": [
+                    {
+                        "optionName": "Between",
+                        "optionDescription": "Gets a random quote."
+                    },
+                    {
+                        "optionName": "Next Float",
+                        "optionDescription": "Gets a random number between 0 and 1 with up to 17 decimal precision."
+                    }
+                ]
+            },
+            {
+                "fieldDescription": "Your between settings, disabled when `Type` is set to `Next Float`.",
+                "fieldType": "inputs",
+                "fieldParts": [
+                    {
+                        "fieldType": "label",
+                        "fieldContent": "Between"
+                    },
+                    {
+                        "fieldType": "input",
+                        "fieldInputType": "number"
+                    },
+                    {
+                        "fieldType": "label",
+                        "fieldContent": "and"
+                    },
+                    {
+                        "fieldType": "input",
+                        "fieldInputType": "number"
+                    }
+                ]
+            },
+            {
+                "fieldContent": "Add a random number into arguments, use percentages, or anything else.\n\nWhen random type is between, a number between the 2 values you set will be added into the arguments at %randomNumber%\n\nWhen random type is Next Float, a decimal number (upto 17 decimal precision) will be picked amd added tp the arguments as %randomFloat%, this number will also be added as percentage value (with no decimals) as %randomPercent%",
+                "fieldType": "text"
+            }
+        ]
+    },
+    {
+        "name": "Pick Color",
+        "description": "Convert a specified color to: `HTML Color Code`, `HTML Alpha Color Code`, `OBS ABGR` and the `red`, `green`, `blue` and `alpha` of this color.",
+        "overview": null,
+        "group": "Core",
+        "groupDirectory": "Core",
+        "fields": [
+            {
+                "fieldName": "Color",
+                "fieldDescription": "The color you want to convert.",
+                "fieldInputType": "color",
+                "fieldType": "input"
+            },
+            {
+                "fieldDescription": "The OBS Color what you can copy, this will be converted from the `Color` field, and this can't be edited.",
+                "fieldType": "inputs",
+                "fieldParts": [
+                    {
+                        "fieldType": "label",
+                        "fieldContent": "OBS Colour"
+                    },
+                    {
+                        "fieldType": "input",
+                        "fieldInputType": "number"
+                    },
+                    {
+                        "fieldType": "label",
+                        "fieldContent": "OBS uses ABGR"
+                    }
+                ]
+            },
+            {
+                "fieldName": "Variable Name",
+                "fieldDescription": "The variable name that will be prefixed for the color variables.",
+                "fieldInputType": "text",
+                "fieldType": "input"
+            },
+            {
+                "fieldName": "Random Color",
+                "fieldDescription": "This will pick a random color each time the action runs, the `Color` field will be disabled.",
+                "fieldType": "checkbox",
+                "fieldStates": {
+                    "default": "disabled",
+                    "enabled": "A random color will be picked each time the action runs.",
+                    "disabled": "A specified color in the `Color` field will be used for the variables."
+                }
+            }
+        ]
+    },
+    {
+        "name": "Set Argument",
+        "description": "Sets a argument (same as variable) what you can use in subsequent Sub-Actions.",
+        "overview": null,
+        "group": "Arguments",
+        "groupDirectory": "Core/Arguments",
+        "fields": [
+            {
+                "fieldContent": "This SubAction will allow you to set the value of an argument. These are the %variables% you use in other SubActions",
+                "fieldType": "text"
+            },
+            {
+                "fieldName": "Variable Name",
+                "fieldDescription": "The variable name that will be used for setting the argument.",
+                "fieldInputType": "text",
+                "fieldType": "input"
+            },
+            {
+                "fieldName": "Value",
+                "fieldDescription": "The value of the variable name that will be used for setting the argument.",
+                "fieldInputType": "text",
+                "fieldType": "input"
+            },
+            {
+                "fieldContent": "Value can be a fixed value or a parsed value, using variables and or inline functions",
+                "fieldType": "text"
+            }
+        ]
+    },
+    {
+        "name": "Read Lines From File",
+        "description": "Reads all the lines from a file.",
+        "overview": null,
+        "group": "File IO",
+        "groupDirectory": "Core/File IO",
+        "fields": [
+            {
+                "fieldContent": "File to read from",
+                "fieldType": "text"
+            },
+            {
+                "fieldDescription": "The file where each line will be read from",
+                "fieldInputType": "file",
+                "fieldType": "input"
+            },
+            {
+                "fieldName": "Parse variables",
+                "fieldDescription": "Wheter this action should follow the action's queue.",
+                "fieldType": "checkbox",
+                "fieldStates": {
+                    "default": "disabled",
+                    "enabled": "",
+                    "disabled": ""
+                }
+            },
+            {
+                "fieldName": "Run Action Immediately",
+                "fieldDescription": "Wheter this action should follow the action's queue.",
+                "fieldType": "checkbox",
+                "fieldStates": {
+                    "default": "disabled",
+                    "enabled": "",
+                    "disabled": ""
+                }
             }
         ]
     },
@@ -436,7 +643,8 @@
             {
                 "fieldName": "Url",
                 "fieldDescription": "The url of your fetch.",
-                "fieldType": "text"
+                "fieldInputType": "text",
+                "fieldType": "input"
             },
             {
                 "fieldName": "Headers",
@@ -454,5 +662,13 @@
                 ]
             }
         ]
+    },
+    {
+        "name": "TODO",
+        "description": "`Execute C# Code`, `Execute C# Method`, `Globals (Get)`, `Globals (Set)`",
+        "overview": null,
+        "group": "TODO",
+        "groupDirectory": "TODO",
+        "fields": []
     }
 ]

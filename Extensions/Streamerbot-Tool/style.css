@@ -267,7 +267,8 @@ body:has(> .global-args) .open-global-args {
     height: 3rem;
     background: var(--page-accent-color-alt);
     color: white;
-    font-size: 1.25em;
+    font-size: 2em;
+    font-weight: 700;
 }
 
 .global-args .header .info .title {

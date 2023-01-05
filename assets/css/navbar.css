@@ -1,117 +1,101 @@
-/* Nav Scroll Bar */
-
-nav.navbar::-webkit-scrollbar {
-  width: 5px;
+.navbar-wrapper {
+  position: sticky;
+  height: 100%;
+  width: 17.5rem;
+  margin-left: auto;
 }
 
-nav.navbar::-webkit-scrollbar-thumb {
-  border-radius: 20px;
-  border: none;
+.navbar-wrapper ul.navbar {
+  list-style: none;
+  background: var(--background-soft);
+  border-radius: .5rem;
+  height: fit-content;
 }
 
-nav.navbar::-webkit-scrollbar-thumb:hover {
-  background-color: #aaa;
+.navbar-wrapper ul.navbar .navbar-group ul {
+  list-style: none;
 }
 
-nav.navbar::-webkit-scrollbar-track {
-  background: transparent;
+.navbar-wrapper ul.navbar .navbar-group ul li a {
+  color: #ffffff;
+  display: block;
+  padding-block: .5rem;
+  padding-inline: .25rem;
+  font-size: .9rem;
 }
 
-nav.navbar:hover::-webkit-scrollbar-track {
-  background: #333;
+.navbar-wrapper ul.navbar .navbar-group ul li {
+  border-radius: .25rem;
+  cursor: pointer;
+  position: relative;
 }
 
-/* Nav General */
-nav.navbar {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.navbar-wrapper ul.navbar .navbar-group ul li a::before {
+  padding-right: .25rem;
+}
+
+.navbar-wrapper ul.navbar ul li:hover {
+  background: var(--accent-alt);
+}
+
+
+/* NAVBAR GROUP */
+
+.navbar-wrapper ul.navbar .navbar-group {
+  padding-inline: .5rem;
+  border-radius: .5rem;
+}
+
+.navbar-wrapper ul.navbar .navbar-group .group-title {
+  border: 0;
+  outline: 0;
+  border-radius: .25rem;
+  background: none;
+  color: var(--accent-primary);
+  padding-inline: .5rem;
+  padding-block: .5rem;
+  margin-block: .5rem;
+  font-weight: bold;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  cursor: pointer;
+}
+
+.navbar-wrapper ul.navbar .navbar-group .group-title::after {
+  content: "\F0140";
+  font-family: Material Design Icons;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  position: absolute;
+  top: 0;
   bottom: 0;
-  left: 0;
-  width: 16em;
-  background: var(--v-background-alt);
-  position: fixed;
-  height: calc(100% - 3.5em);
-  overflow-y: auto;
-  line-height: 1.5;
+  right: 0;
+  padding-right: .25rem;
+  /* transition: 1s rotate ease; */
 }
 
-nav.navbar li {
-  background: var(--v-background-alt);
-  margin-top: 0em;
-  padding-inline: 0.5em;
-  padding-block: .6em;
-  transition: all 0.3s;
-  height: 1.5em;
-  box-sizing: content-box;
-
-  text-size-adjust: auto;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.navbar-wrapper ul.navbar .navbar-group[data-navbar-group-state=closed] .group-title::after {
+  rotate: 90deg;
 }
 
-nav.navbar > a > li.mdi::before {
-  margin-right: 0.4em;
+.navbar-wrapper ul.navbar .navbar-group[data-navbar-group-state=closed] ul {
+  display: none;
 }
 
-nav.navbar a {
-  text-decoration: none;
-  color: var(--v-primary-natural);
-  transition: all 0.3s;
+.navbar-wrapper ul.navbar .navbar-group .group-title:hover {
+  background: var(--accent-alt);
 }
 
-.navbar:has(li:hover) li:not(:hover) {
-  opacity: 0.5;
-  transition: all 350ms ease;
+.navbar-wrapper ul.navbar .navbar-group:not([data-navbar-group-state=closed]):has(.group-title:hover) {
+  background: var(--background-mute);
 }
 
-nav.navbar li:hover {
-  background: var(--v-background-soft);
-  transition: all 0.3s;
-}
-
-.navbar > a {
-  transition: all 350ms ease !important;
-}
-
-nav.navbar hr {
-  margin: 0;
-  border: none;
-  border-bottom: 1px solid #555;
-}
-
-@media (max-width: 50em) {
-  nav.navbar {
-    position: unset;
-    top: auto;
-    left: auto;
+@media (max-width: 70rem) {
+  .navbar-wrapper {
     width: 100%;
-    margin-bottom: 0.5em;
-    height: fit-content;
-    max-height: 20em;
+    padding-inline: 1rem;
+    padding-bottom: 2rem;
   }
-
-  nav.navbar li {
-    border: none;
-  }
-}
-
-/* Nav Active */
-
-nav.navbar a.nav-active {
-  color: var(--v-primary-accent);
-}
-
-/* Nav Label */
-
-nav.navbar p.nav-label {
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  font-weight: 600;
-  font-size: .9em;
-  padding-inline: .5em;
-  padding-top: .75em;
-  margin-bottom: .6em;
-  color: var(--v-primary-natural-light);
 }

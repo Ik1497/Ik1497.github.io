@@ -1,8 +1,6 @@
 @import url(/assets/css/root.css);
 
 ul.toc {
-    position: fixed;
-    right: 1em;
     list-style: none;
     width: 10em;
 
@@ -11,6 +9,8 @@ ul.toc {
     text-overflow: ellipsis;
     margin-top: 5em;
     overflow: auto;
+    grid-area: body--toc;
+    margin-right: auto;
 }
 
 ul.toc button {

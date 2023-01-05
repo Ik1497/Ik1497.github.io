@@ -1,34 +1,38 @@
 [
     {
-      "name": "Home",
-      "icon": "mdi mdi-home",
-      "href": "/",
-      "type": "link"
-    },
-    {
-      "type": "hr"
+      "name": "General",
+      "type": "group",
+      "groupItems": [
+        {
+          "name": "Home",
+          "icon": "mdi mdi-home",
+          "href": "/",
+          "type": "link"
+        }
+      ]
     },
     {
       "name": "Extensions",
-      "type": "label"
-    },
-    {
-      "name": "Local Script Actions Handler",
-      "icon": "mdi mdi-script-text-play",
-      "href": "/Extensions/Local-Script-Action-Handler/Docs",
-      "type": "link"
-    },
-    {
-      "type": "hr"
+      "type": "group",
+      "groupItems": [
+        {
+          "name": "Local Script Actions Handler",
+          "icon": "mdi mdi-script-text-play",
+          "href": "/Extensions/Local-Script-Action-Handler/Docs.html",
+          "type": "link"
+        }
+      ]
     },
     {
       "name": "Widgets",
-      "type": "label"
-    },
-    {
-      "name": "Mute Indicator",
-      "icon": "mdi mdi-volume-mute",
-      "href": "/Extensions/Mute-Indicator/Docs",
-      "type": "link"
+      "type": "group",
+      "groupItems": [
+        {
+          "name": "Mute Indicator",
+          "icon": "mdi mdi-volume-mute",
+          "href": "/Extensions/Mute-Indicator/Docs.html",
+          "type": "link"
+        }
+      ]
     }
 ]

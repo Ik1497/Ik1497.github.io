@@ -1,1 +1,1 @@
-document.body.insertAdjacentHTML(`afterbegin`, `<header class="main-header"><div class="header-main-contents"><a class="title" href="/"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><p>Streamer.bot Actions<span>By ik#1497 (on discord)</span></p></a></div></header>`);
+document.body.insertAdjacentHTML(`afterbegin`, `<header class="header-primary"><img src="/assets/images/favicon.png" alt="Header logo"><div class="info"><p class="name">Streamer.bot Actions</p><p class="description">By Ik1497</p></div></header>`)
