@@ -17,5 +17,3 @@ document.write(`
 <script src="/assets/prism/prism.js" defer></script>
 <link rel="stylesheet" href="/assets/css/style.css">
 `);
-
-// <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9395875744183228" crossorigin="anonymous"></script>

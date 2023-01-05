@@ -34,7 +34,7 @@
 
 .navbar-wrapper ul.navbar ul li.nav-active {
   color: var(--accent-primary);
-  background: var(--background-alt);
+  background: var(--background-mute);
 }
 
 .navbar-wrapper ul.navbar .navbar-group ul li a {
@@ -48,8 +48,6 @@
 .navbar-wrapper ul.navbar .navbar-group ul li a::before {
   padding-right: .25rem;
 }
-
-
 
 /* NAVBAR GROUP */
 
@@ -101,7 +99,7 @@
   background: var(--background-mute);
 }
 
-@media (max-width: 70rem) {
+@media (max-width: 93rem) {
   .navbar-wrapper {
     width: 100%;
     padding-inline: 1rem;

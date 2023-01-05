@@ -18,7 +18,7 @@
         {
           "name": "Local Script Actions Handler",
           "icon": "mdi mdi-script-text-play",
-          "href": "/Extensions/Local-Script-Action-Handler/Docs.html",
+          "href": "/Extensions/Local-Script-Action-Handler/Docs",
           "type": "link"
         }
       ]
@@ -30,7 +30,7 @@
         {
           "name": "Mute Indicator",
           "icon": "mdi mdi-volume-mute",
-          "href": "/Extensions/Mute-Indicator/Docs.html",
+          "href": "/Extensions/Mute-Indicator/Docs",
           "type": "link"
         }
       ]

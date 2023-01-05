@@ -5,7 +5,6 @@ document.querySelector(`header.header-primary aside .settings`).addEventListener
     let modalBase = `<div class="website-settings-modal"><header><div class="main-info"><img src="/assets/images/favicon.png" alt="Header logo"><div class="info"><p class="name">Website Settings</p><p class="description">Streamer.bot Actions</p></div></div><aside><button class="close-button mdi mdi-close"></button></aside></header><div class="website-settings-modal-contents">${modalContents}</div></div>`
     document.body.insertAdjacentHTML(`afterbegin`, modalBase);
 
-
     document.querySelector(`.website-settings-modal header aside .close-button`).addEventListener(`click`, function () {
         document.querySelector(`.website-settings-modal`).parentNode.removeChild(document.querySelector(`.website-settings-modal`))
     })
