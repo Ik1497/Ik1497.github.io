@@ -3,7 +3,6 @@
   --image-size-minus: -8em;
   --border-radius-album-cover: 1em;
   --border-radius-texts-background: 1.25em;
-  --canvas-spacing: 1em; /* Spacing at the bottom and the left of the canvas*/
 
   --color-primary: hsl(0, 0%, 100%);
   --color-accent: hsla(0, 0%, 100%, 0.7);
@@ -32,9 +31,9 @@ body {
   display: flex;
   align-items: center;
   position: fixed;
-  bottom: var(--canvas-spacing);
-  left: var(--canvas-spacing);
   overflow: hidden;
+  left: 0;
+  bottom: 0;
 }
 
 .container .bottom-container {
@@ -83,18 +82,14 @@ body {
 
 body.hidden .container .bottom-container {
   transition: all 0.5s ease 0s;
-  border-radius: 50% var(--border-radius-texts-background) var(--border-radius-texts-background) 50%;
 }
 
 body.hidden .container .bottom-container .texts {
   transition: all 0.5s ease 0s;
-  border-radius: 50% var(--border-radius-texts-background) var(--border-radius-texts-background) 50%;
-  transform: translateX(-100%);
-  opacity: 0;
+  transform: translateX(calc(-100% - var(--image-size)));
 }
 
 body.hidden .container .album-cover {
   transform: translateY(100%);
-  opacity: 0;
   transition: all 0.5s ease 0.5s;
 }

@@ -17,21 +17,19 @@ async function app() {
         });
 
         document.querySelector("nav.navbar-wrapper ul.navbar").insertAdjacentHTML(`beforeend`, `<div class="navbar-group" data-navbar-group-state="opened"><button class="group-title" title="${navItemGroup.name}">${navItemGroup.name}</button><ul>${navItemList}</ul></div>`)
-        let hhhh = document.querySelectorAll(`nav.navbar-wrapper ul.navbar .navbar-group`)
-        console.log(hhhh)
-
-        hhhh.forEach(navbarGroup => {
-          console.log(navbarGroup)
-          navbarGroup.querySelector(`button.group-title`).addEventListener(`click`, function () {
-            let navbarGroupState = navbarGroup.getAttribute(`data-navbar-group-state`)
-
-            if (navbarGroupState === `opened`) {
-              navbarGroup.setAttribute(`data-navbar-group-state`, `closed`)
-            } else if (navbarGroupState === `closed`) {
-              navbarGroup.setAttribute(`data-navbar-group-state`, `opened`)
-            }
-          })
-        });
+         
       }
+    });
+    document.querySelectorAll(`nav.navbar-wrapper ul.navbar .navbar-group`).forEach(navbarGroup => {
+      console.log(navbarGroup)
+      navbarGroup.querySelector(`button.group-title`).addEventListener(`click`, function () {
+        let navbarGroupState = navbarGroup.getAttribute(`data-navbar-group-state`)
+
+        if (navbarGroupState === `opened`) {
+          navbarGroup.setAttribute(`data-navbar-group-state`, `closed`)
+        } else if (navbarGroupState === `closed`) {
+          navbarGroup.setAttribute(`data-navbar-group-state`, `opened`)
+        }
+      })
     });
 }

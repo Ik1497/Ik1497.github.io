@@ -73,7 +73,7 @@
   bottom: 0;
   right: 0;
   padding-right: .25rem;
-  /* transition: 1s rotate ease; */
+  /* transition: .5s rotate ease; */
 }
 
 .navbar-wrapper ul.navbar .navbar-group[data-navbar-group-state=closed] .group-title::after {
@@ -85,10 +85,6 @@
 }
 
 .navbar-wrapper ul.navbar .navbar-group .group-title:hover {
-  background: var(--accent-alt);
-}
-
-.navbar-wrapper ul.navbar .navbar-group:not([data-navbar-group-state=closed]):has(.group-title:hover) {
   background: var(--background-mute);
 }
 

@@ -134,9 +134,6 @@ root.style.setProperty("--border-radius-album-cover", borderRadiusAlbumCover);
 let borderRadiusTextsBackground = params.get("border-radius-texts-background");
 root.style.setProperty("--border-radius-texts-background", borderRadiusTextsBackground);
 
-let canvasSpacing = params.get("canvas-spacing");
-root.style.setProperty("--canvas-spacing", canvasSpacing);
-
 // Colors
 let colorPrimary = params.get("color-primary");
 root.style.setProperty("--color-primary", colorPrimary);

@@ -88,7 +88,7 @@ for (let buttonsLength = 0; buttonsLength < page.buttons.length; buttonsLength++
         external = ` target="_blank"`
     }
 
-    document.querySelector(`section.top-section .main-buttons`).insertAdjacentHTML(`beforeend`, `<a href="${index.href}" ${external} class="animated fadeInDown wait-p${(buttonsLength * 2) + 6}s${type}">${index.name}</a>`);
+    document.querySelector(`section.top-section .main-buttons`).insertAdjacentHTML(`beforeend`, `<a href="${index.href}" ${external} class="animated fadeInDown wait-p${(buttonsLength * 2) + 6}s${type}" title="${index.name}">${index.name}</a>`);
 }
 
 // -------------- //
@@ -100,12 +100,15 @@ document.querySelector(`section.top-section`).insertAdjacentHTML(`afterend`, `<s
 for (let itemsLength = 0; itemsLength < page.items.length; itemsLength++) {
     index = page.items[itemsLength];
     let enabled = "";
+    let itemGridTitle = index.name
     
     if (index.enabled === false) { 
         enabled = " disabled"
+        itemGridTitle = `SOON...`
     }
+
     
-    document.querySelector(`section.recent-extensions ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item${enabled}"><a href="${index.href}" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p${(itemsLength * 2) + 2}s"><div class="background"></div><i class="icon ${index.icon}"></i><p class="title">${index.name}</p><p class="description">${index.description}</p></article></a></li>`)
+    document.querySelector(`section.recent-extensions ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item${enabled}" title="${itemGridTitle}"><a href="${index.href}" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p${(itemsLength * 2) + 2}s"><div class="background"></div><i class="icon ${index.icon}"></i><p class="title">${index.name}</p><p class="description">${index.description}</p></article></a></li>`)
 }
 
 // ---------- //
