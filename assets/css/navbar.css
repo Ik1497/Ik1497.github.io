@@ -88,7 +88,7 @@
 }
 
 .navbar-wrapper ul.navbar .navbar-group[data-navbar-group-state=closed] .group-title::after {
-  rotate: 90deg;
+  rotate: -90deg;
 }
 
 .navbar-wrapper ul.navbar .navbar-group[data-navbar-group-state=closed] ul {
