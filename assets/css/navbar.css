@@ -4,12 +4,14 @@
   margin-top: 6rem;
   line-height: 1.5;
   height: fit-content;
+  position: relative;
+  overflow: hidden;
+  border-radius: .5rem;
 }
 
 .navbar-wrapper ul.navbar {
   list-style: none;
   background: var(--background-soft);
-  border-radius: .5rem;
   height: fit-content;
   max-height: 80vh;
   overflow-y: auto;
@@ -83,7 +85,6 @@
   bottom: 0;
   right: 0;
   padding-right: .25rem;
-  /* transition: .5s rotate ease; */
 }
 
 .navbar-wrapper ul.navbar .navbar-group[data-navbar-group-state=closed] .group-title::after {
@@ -110,4 +111,25 @@
     max-height: 16.5rem;
     overflow-y: auto;
   }
+}
+
+.navbar-wrapper::before,
+.navbar-wrapper::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 2rem;
+  pointer-events: none;
+  z-index: 3;
+  background: hotpink;
+}
+
+.navbar-wrapper::before {
+  background: linear-gradient(180deg, var(--background-soft), transparent);
+  top: 0;
+}
+
+.navbar-wrapper::after {
+  background: linear-gradient(0deg, var(--background-soft), transparent);
+  bottom: 0;
 }
