@@ -71,8 +71,9 @@ main {
   body {
     grid-template-areas: 
       "body--navbar body--main"
-      "body--toc  body--main";
+      "body--toc body--toc";
     grid-template-columns: auto 1200px;
+    grid-template-rows: auto auto;
   }
 }
 
@@ -80,9 +81,10 @@ main {
   body {
     grid-template-areas: 
       "body--navbar"
-      "body--toc"
-      "body--main";
+      "body--main"
+      "body--toc";
     grid-template-columns: 1fr;
+    grid-template-rows: max-content auto auto;
   }
 
   main {

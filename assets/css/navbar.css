@@ -113,7 +113,7 @@
   }
 }
 
-.navbar-wrapper::before,
+/* .navbar-wrapper::before,
 .navbar-wrapper::after {
   position: absolute;
   content: "";
@@ -132,4 +132,4 @@
 .navbar-wrapper::after {
   background: linear-gradient(0deg, var(--background-soft), transparent);
   bottom: 0;
-}
+} */
