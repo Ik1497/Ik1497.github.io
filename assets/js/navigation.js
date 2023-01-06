@@ -23,7 +23,7 @@ async function app() {
             }
           }
 
-          navItemList += `<li title="${navItem.name}"${navActive}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
+          navItemList += `<li title="${navItem.name} aria-label="${navItem.name}"${navActive}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
         }
       });
 
@@ -39,7 +39,7 @@ async function app() {
       if (navbarSettings__collapsedGroups.includes(navItemGroup.name)) {
         openState = `closed`
       }
-      document.querySelector("nav.navbar-wrapper ul.navbar").insertAdjacentHTML(`beforeend`, `<div class="navbar-group" data-navbar-group-state="${openState}"><button class="group-title" title="${navItemGroup.name}">${navItemGroup.name}</button><ul>${navItemList}</ul></div>`)
+      document.querySelector("nav.navbar-wrapper ul.navbar").insertAdjacentHTML(`beforeend`, `<div class="navbar-group" data-navbar-group-state="${openState}"><button class="group-title" title="${navItemGroup.name}" aria-label="${navItemGroup.name}">${navItemGroup.name}</button><ul>${navItemList}</ul></div>`)
        
     }
   });

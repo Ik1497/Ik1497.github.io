@@ -108,7 +108,7 @@ for (let itemsLength = 0; itemsLength < page.items.length; itemsLength++) {
     }
 
     
-    document.querySelector(`section.recent-extensions ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item${enabled}" title="${itemGridTitle}"><a href="${index.href}" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p${(itemsLength * 2) + 2}s"><div class="background"></div><i class="icon ${index.icon}"></i><p class="title">${index.name}</p><p class="description">${index.description}</p></article></a></li>`)
+    document.querySelector(`section.recent-extensions ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item${enabled}" title="${itemGridTitle}" aria-label="${itemGridTitle}"><a href="${index.href}" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p${(itemsLength * 2) + 2}s"><div class="background"></div><i class="icon ${index.icon}"></i><p class="title">${index.name}</p><p class="description">${index.description}</p></article></a></li>`)
 }
 
 // ---------- //
@@ -138,8 +138,8 @@ function setGithubRepoInformation(githubStargazersCount, githubWatchers) {
     sessionStorage.setItem(`github_stargazers_count`, githubStargazersCount);
     sessionStorage.setItem(`github_watchers`, githubWatchers);
 
-    document.querySelector(`section.repository-info ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item"><a href="https://github.com/${page.githubUser}/${page.githubRepository}/stargazers" target="_blank" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p8s"><div class="background"></div><i class="icon mdi mdi-star" style="color: #fff000"></i><p class="title">${githubStargazersCount} Stars</p><p class="description">Become a Stargazers!</p></article></a></li>`)
-    document.querySelector(`section.repository-info ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item"><a href="https://github.com/${page.githubUser}/${page.githubRepository}/watchers" target="_blank" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p10s"><div class="background"></div><i class="icon mdi mdi-eye" style="color: #ffffff"></i><p class="title">${githubWatchers} Watchers</p><p class="description">Watch this Repository to be notified of all changes!</p></article></a></li>`)
+    document.querySelector(`section.repository-info ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item" title="${githubStargazersCount} Stars" aria-label="${githubStargazersCount} Stars"><a href="https://github.com/${page.githubUser}/${page.githubRepository}/stargazers" target="_blank" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p8s"><div class="background"></div><i class="icon mdi mdi-star" style="color: #fff000"></i><p class="title">${githubStargazersCount} Stars</p><p class="description">Become a Stargazers!</p></article></a></li>`)
+    document.querySelector(`section.repository-info ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item" title="${githubWatchers} Watchers" aria-label="${githubWatchers} Watchers"><a href="https://github.com/${page.githubUser}/${page.githubRepository}/watchers" target="_blank" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p10s"><div class="background"></div><i class="icon mdi mdi-eye" style="color: #ffffff"></i><p class="title">${githubWatchers} Watchers</p><p class="description">Watch this Repository to be notified of all changes!</p></article></a></li>`)
 }
 
 // ----------- //
