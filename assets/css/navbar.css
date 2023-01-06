@@ -77,14 +77,8 @@
 .navbar-wrapper ul.navbar .navbar-group .group-title::after {
   content: "\F0140";
   font-family: Material Design Icons;
-  display: flex;
-  justify-content: end;
-  align-items: center;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  padding-right: .25rem;
+  right: .25rem;
 }
 
 .navbar-wrapper ul.navbar .navbar-group[data-navbar-group-state=closed] .group-title::after {
