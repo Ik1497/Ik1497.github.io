@@ -97,7 +97,8 @@
 
 .navbar-wrapper ul.navbar .navbar-group .group-title:hover,
 .navbar-wrapper ul.navbar .navbar-group .group-title:focus-visible {
-  background: var(--background-mute);
+  background: var(--accent-alt);
+  color: #ffffff;
 }
 
 @media (max-width: 93rem) {
