@@ -16,6 +16,13 @@ async function app() {
           if (location.pathname.replace(`.html`, ``) === navItem.href.replace(`.html`, ``)) {
             navActive += ` class="nav-active"`
           }
+
+          if (location.hostname === `127.0.0.1` || location.hostname === `localhost`) {
+            if (navItem.href.slice(-1) != `/`) {
+              navItem.href += `.html`
+            }
+          }
+
           navItemList += `<li title="${navItem.name}"${navActive}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
         }
       });
