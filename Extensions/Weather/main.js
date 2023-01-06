@@ -42,10 +42,24 @@ app()
 async function app() {
   let weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.382158355677774&longitude=4.887103035690015&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode`)
   weather = await weather.json()
-  let temperature = weather.current_weather.temperature
+
   let icon = {icon: `rainy-1`, timerPeriod: `Misc`}
-  let iconType = `static`
+  let temperature = weather.current_weather.temperature
+  let weathercode = weather.current_weather.weathercode
+
+  let day = weather.current_weather.time.split(`T`)[1]
+
+  day = day.split(`:`)[0]
+  if (day >= 6 && day <= 18) {
+    day = `day`
+  } else {
+    day = `night`
+  }
+
+  let iconType = `animated`
   if (new URLSearchParams(window.location.search).get("animated") != undefined) iconType = `animated`
-  console.log(weather)
+  
+  console.log(weathercode)
+  
   document.body.insertAdjacentHTML(`afterbegin`, `<div class="weather-widget"><img class="weather-icon" src="./icons/${iconType}/${icon.icon}.svg"><p class="weather-subtitle">${icon.timerPeriod}</p><p class="temperature">${temperature}</p></div>`)
 }
