@@ -39,7 +39,7 @@ body {
             / 30em auto;
     font-family: Arial;
     color: var(--text-color);
-    background: var(--v-background);
+    background: var(--background-primary);
 }
 
 @media screen and (max-width: 1000px) {
@@ -55,7 +55,7 @@ body {
 header {
     grid-area: header;
     padding-left: .5em;
-    background: var(--v-background-mute);
+    background: var(--background-mute);
     display: flex;
     align-items: center;
 }
@@ -102,12 +102,12 @@ h2 {
     flex-direction: column;
     overflow-y: scroll;
     width: 100%;
-    background: var(--v-background-alt);
+    background: var(--background-alt);
     padding-block: 1em;
 }
 
 .obs-events-nav-group-label {
-    color: var(--v-primary-accent);
+    color: var(--accent-primary);
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: .05em;
@@ -140,11 +140,11 @@ h2 {
 
 .obs-events-nav .obs-event-list-item a:hover,
 .obs-events-nav .obs-event-list-item a:focus-visible {
-    background: var(--v-background-soft);
+    background: var(--background-soft);
 }
 
 .obs-events-nav .obs-event-list-item.obs-events-nav-active a {
-    background: var(--v-primary-accent-alt);
+    background: var(--accent-alt);
 }
 
 .obs-events-nav .obs-event-list-item a .obs-event-list-item-title {
@@ -165,7 +165,7 @@ h2 {
 .obs-events-nav .obs-event-list-item a .obs-event-list-item-version {
     grid-area: obs-event-list-item-version;
     color: var(--text-color-700);
-    background: var(--v-primary-accent);
+    background: var(--accent-primary);
     padding-inline: .4em;
     font-style: normal;
     font-weight: bold;
@@ -225,13 +225,13 @@ table tr td {
 }
 
 table tbody tr:not(:nth-child(even)) td {
-    background: var(--v-background-soft);
-    border: 1px solid var(--v-background-darken);
+    background: var(--background-soft);
+    border: 1px solid var(--background-darken);
 }
 
 table tr:nth-child(even),
 table thead {
-    background: var(--v-background-alt);
+    background: var(--background-alt);
 }
 
 .stars {
@@ -292,7 +292,7 @@ code {
 
 .datatype-data {
     font-style: normal;
-    color: var(--v-primary-accent);
+    color: var(--accent-primary);
 }
 
 .datatype-data::before {

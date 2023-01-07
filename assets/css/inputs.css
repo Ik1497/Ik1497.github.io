@@ -1,0 +1,61 @@
+.dropdown p {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropdown .dropdown__title {
+    display: inline-block;
+}
+
+.dropdown .dropdown__item-section {
+    position: relative;
+}
+
+.dropdown .dropdown__current-item {
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
+
+.dropdown .dropdown__current-item .dropdown__current-item-name {
+    background: var(--background-mute);
+    padding-block: .5rem;
+    padding-inline: 1rem;
+    display: inline-block;
+}
+
+.dropdown .dropdown__current-item .dropdown__current-item-name::after {
+    content: "\F0140";
+    font-family: Material Design Icons;
+}
+
+.dropdown .dropdown__items {
+    display: none;
+    position: absolute;
+}
+
+.dropdown:hover .dropdown__items,
+.dropdown:focus-visible .dropdown__items {
+    display: block;
+}
+
+.dropdown:hover .dropdown__items .dropdown__items-item,
+.dropdown:focus-visible .dropdown__items .dropdown__items-item {
+    border: 0;
+    border: 1px solid var(--background-soft);
+    outline: 0;
+    background: var(--background-mute);
+    padding-inline: .5rem;
+    padding-block: .5rem;
+    cursor: pointer;
+}
+
+.dropdown:hover .dropdown__items .dropdown__items-item:active,
+.dropdown:focus-visible .dropdown__items .dropdown__items-item:active {
+    background: var(--background-soft);
+}

@@ -26,7 +26,7 @@
   border-radius: .25rem;
   cursor: pointer;
   position: relative;
-  color: #ffffff;
+  color: var(--text-900);
 }
 
 .navbar-wrapper ul.navbar ul li:hover,
@@ -44,7 +44,7 @@
   display: block;
   padding-block: .5rem;
   padding-inline: .25rem;
-  font-size: .85rem;
+  font-size: .8rem;
 }
 
 .navbar-wrapper ul.navbar .navbar-group ul li a::before {
@@ -92,7 +92,7 @@
 .navbar-wrapper ul.navbar .navbar-group .group-title:hover,
 .navbar-wrapper ul.navbar .navbar-group .group-title:focus-visible {
   background: var(--accent-alt);
-  color: #ffffff;
+  color: var(--text-900);
 }
 
 @media (max-width: 93rem) {

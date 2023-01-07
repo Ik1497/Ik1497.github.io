@@ -30,12 +30,12 @@ header.header-primary p {
 }
 
 header.header-primary p.name {
-  color: #fff;
+  color: var(--text-900);
   font-weight: 600;
 }
 
 header.header-primary p.description {
-  color: #bbb;
+  color: var(--text-300);
 }
 
 header.header-primary aside {
@@ -82,7 +82,7 @@ header.header-primary aside .settings:active {
 
 .website-settings-modal header {
   padding-inline: .5rem;
-  background: var(--accent-primary);
+  background: var(--accent-alt);
   height: 3rem;
   display: grid;
   grid-template-columns: max-content auto;

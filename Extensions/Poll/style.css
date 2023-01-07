@@ -5,7 +5,7 @@
     --font-weight: 900;
     --font-style: normal;
     --font-size: 24px;
-    --font-color: #ffffff;
+    --font-color: var(--text-900);
 
     --background: rgb(0, 0, 0, .8);
     --border-radius: 0px;

@@ -7,8 +7,8 @@
 }
 
 :root {
-    --v-main-text-gradient: -webkit-linear-gradient(300deg, rgba(0,255,252,1) 0%, rgba(255,0,215,1) 100%);
-    --v-alt-text-gradient: -webkit-linear-gradient(270deg, rgba(0,255,252,1) 0%, rgba(255,0,215,1) 100%);
+    --main-text-gradient: -webkit-linear-gradient(300deg, rgba(0,255,252,1) 0%, rgba(255,0,215,1) 100%);
+    --alt-text-gradient: -webkit-linear-gradient(270deg, rgba(0,255,252,1) 0%, rgba(255,0,215,1) 100%);
 }
 body {
     font-family: Poppins;
@@ -32,7 +32,7 @@ ul.item-grid {
 
 li.item-grid-item {
     width: 100%;
-    color: var(--v-primary-natural);
+    color: var(--text-primary);
     text-decoration: none;
     transform-style: preserve-3d;
     position: relative;
@@ -49,7 +49,7 @@ li.item-grid-item.disabled article > * {
 
 li.item-grid-item.disabled article::after {
     content: "SOON...";
-    color: var(--v-primary-natural-white);
+    color: var(--text-900);
     position: absolute;
     inset: 0;
     display: grid;
@@ -59,33 +59,33 @@ li.item-grid-item.disabled article::after {
 }
 
 li.item-grid-item article:hover {
-    border-color: var(--v-primary-accent);
+    border-color: var(--accent-primary);
     box-shadow: 0 0 10px 5px #555;
     transition: all 0.3s ease;
     cursor: pointer;
-    color: var(--v-primary-natural-white);
+    color: var(--text-900);
 }
 
 li.item-grid-item article {
-    border: 3px solid var(--v-background-soft);
+    border: 3px solid var(--background-soft);
     border-radius: 12px;
     padding: 24px;
     height: 140px;
     transition: all 0.3s ease;
     transform-style: preserve-3d;
     position: relative;
-    color: var(--v-primary-natural-white);
+    color: var(--text-900);
     box-sizing: content-box;
 }
 
 li.item-grid-item .background {
-    border: 3px solid var(--v-background-soft);
+    border: 3px solid var(--background-soft);
     border-radius: 12px;
     padding: 24px;
     box-sizing: border-box;
     height: 100%;
     width: 100%;
-    background-color: var(--v-background-darken);
+    background-color: var(--background-darken);
     opacity: .4;
     filter: blur(20px);
     transition: all 0.3s ease;
@@ -99,7 +99,7 @@ li.item-grid-item .icon {
     align-items: center;
     margin-bottom: 20px;
     border-radius: 6px;
-    background-color: var(--v-background);
+    background-color: var(--background-primary);
     width: 48px;
     height: 48px;
     font-size: 24px;
@@ -118,7 +118,7 @@ li.item-grid-item .description {
     line-height: 24px;
     font-size: 14px;
     font-weight: 500;
-    color: var(--v-primary-natural-lighten-variant);
+    color: var(--text-300);
     transform: translateZ(4px);
 }
 
@@ -128,7 +128,7 @@ footer {
     text-align: center;
     margin-top: 2em;
     padding-bottom: 1em;
-    color: var(--v-primary-natural);
+    color: var(--text-primary);
 }
 
 /* Top Section */
@@ -149,7 +149,7 @@ footer {
     font-size: 3.5rem;
     font-weight: bold;
     width: fit-content;
-    background: var(--v-main-text-gradient);
+    background: var(--main-text-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -170,12 +170,12 @@ footer {
 
 .top-section .logo .logo-image {
     max-width: 260px;
-    background: var(--v-background-mute);
+    background: var(--background-mute);
     border-radius: 100vmax;
 }
 
 .top-section .logo .logo-background {
-    background: var(--v-main-text-gradient);
+    background: var(--main-text-gradient);
     width: 100%;
     position: absolute;
     aspect-ratio: 1;
@@ -195,18 +195,18 @@ footer {
     border-radius: 100vmax;
     transition: all .5s ease;
     text-decoration: none;
-    color: var(--v-primary-natural);
+    color: var(--text-primary);
     border: 2px solid;
 }
 
 .main-buttons a { 
-    background-color: var(--v-primary-accent);
-    border-color: var(--v-primary-accent-alt);
+    background-color: var(--accent-primary);
+    border-color: var(--accent-alt);
 }
 
 .main-buttons a.alt {
-    background-color: var(--v-background-mute);
-    border-color: var(--v-background-soft);
+    background-color: var(--background-mute);
+    border-color: var(--background-soft);
 }
 
 .main-buttons a:hover {
@@ -216,7 +216,7 @@ footer {
 }
 
 h2 {
-    color: var(--v-primary-natural);
+    color: var(--text-primary);
     background: none;
 }
 

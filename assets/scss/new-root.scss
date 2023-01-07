@@ -12,7 +12,7 @@
 
     // Sizes
     @each $size in $sizes {
-        --size-#{$size}: #{$size / 100 * $base-value};
+        --size-#{$size}: #{calc($size / 100  * $base-value)};
     }
 }
 

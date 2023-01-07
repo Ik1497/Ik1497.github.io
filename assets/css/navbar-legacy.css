@@ -29,7 +29,7 @@ nav.navbar {
   bottom: 0;
   left: 0;
   width: 16em;
-  background: var(--v-background-alt);
+  background: var(--background-alt);
   position: fixed;
   height: calc(100% - 3.5em);
   overflow-y: auto;
@@ -37,7 +37,7 @@ nav.navbar {
 }
 
 nav.navbar li {
-  background: var(--v-background-alt);
+  background: var(--background-alt);
   margin-top: 0em;
   padding-inline: 0.5em;
   padding-block: .6em;
@@ -57,7 +57,7 @@ nav.navbar > a > li.mdi::before {
 
 nav.navbar a {
   text-decoration: none;
-  color: var(--v-primary-natural);
+  color: var(--text-primary);
   transition: all 0.3s;
 }
 
@@ -67,7 +67,7 @@ nav.navbar a {
 }
 
 nav.navbar li:hover {
-  background: var(--v-background-soft);
+  background: var(--background-soft);
   transition: all 0.3s;
 }
 
@@ -100,7 +100,7 @@ nav.navbar hr {
 /* Nav Active */
 
 nav.navbar a.nav-active {
-  color: var(--v-primary-accent);
+  color: var(--accent-primary);
 }
 
 /* Nav Label */
@@ -113,5 +113,5 @@ nav.navbar p.nav-label {
   padding-inline: .5em;
   padding-top: .75em;
   margin-bottom: .6em;
-  color: var(--v-primary-natural-light);
+  color: var(--text-400);
 }

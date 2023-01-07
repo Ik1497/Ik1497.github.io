@@ -60,6 +60,9 @@ async function app() {
   if (new URLSearchParams(window.location.search).get("animated") != undefined) iconType = `animated`
   
   console.log(weathercode)
+  iconMap.forEach(iconMapIcon => {
+    
+  });
   
   document.body.insertAdjacentHTML(`afterbegin`, `<div class="weather-widget"><img class="weather-icon" src="./icons/${iconType}/${icon.icon}.svg"><p class="weather-subtitle">${icon.timerPeriod}</p><p class="temperature">${temperature}</p></div>`)
 }

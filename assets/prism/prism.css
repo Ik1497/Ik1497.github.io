@@ -308,7 +308,7 @@ pre[class*="language-"] code {
     appearance: none;
     background: none;
     border: none;
-    outline: 3px solid var(--v-background-alt);
+    outline: 3px solid var(--background-alt);
     border-radius: .25em;
     width: fit-content;
     height: 2.5em;

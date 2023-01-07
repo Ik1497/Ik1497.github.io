@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url(/assets/css/animation.css);
 @import url(/assets/css/root.css);
 @import url(/assets/css/new-root.css);
 @import url(/assets/css/header.css);
 @import url(/assets/css/navbar.css);
 @import url(/assets/css/toc.css);
-@import url(/assets/css/animation.css);
+@import url(/assets/css/inputs.css);
 
 /* ============ */
 /* HTML Styling */
@@ -19,21 +20,21 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--v-background-light);
+  background: var(--background-light);
   border: none;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--v-background-lighten);
+  background: var(--background-lighten);
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--v-background-soft);
+  background: var(--background-soft);
 }
 
 ::selection {
-  background: var(--v-primary-accent);
-  color: #fff;
+  background: var(--accent-primary);
+  color: var(--text-900);
 }
 
 * {
@@ -43,11 +44,11 @@ html {
 }
 
 body {
-  font-family: var(--v-font-family);
+  font-family: var(--font-family);
   font-size: 1em;
   font-weight: 400;
-  color: var(--v-primary-natural);
-  background-color: var(--v-background);
+  color: var(--text-primary);
+  background-color: var(--background-primary);
   height: 100vh;
   max-height: 100vh;
   line-height: 1.5;
@@ -109,7 +110,7 @@ header.page-info > p.title {
   font-weight: 600;
   margin: 0;
   padding: 0;
-  color: var(--v-primary-accent);
+  color: var(--accent-primary);
 }
 
 header.page-info > p.description {
@@ -143,73 +144,73 @@ header.page-info > p.description {
 }
 /* HTML Element Overides */
 blockquote.is-warning {
-  background-color: var(--v-blockquote-is-warning-base) !important;
-  color: var(--v-blockquote-is-warning-color) !important;
-  border-color: var(--v-blockquote-is-warning-color) !important;
+  background-color: var(--blockquote-is-warning-base) !important;
+  color: var(--blockquote-is-warning-color) !important;
+  border-color: var(--blockquote-is-warning-color) !important;
   border: 1px solid !important;
 }
 
 blockquote.is-warning * {
-  color: var(--v-blockquote-is-warning-color) !important;
+  color: var(--blockquote-is-warning-color) !important;
 }
 
 blockquote.is-info {
-  background-color: var(--v-blockquote-is-info-base) !important;
-  color: var(--v-blockquote-is-info-color) !important;
-  border-color: var(--v-blockquote-is-info-color) !important;
+  background-color: var(--blockquote-is-info-base) !important;
+  color: var(--blockquote-is-info-color) !important;
+  border-color: var(--blockquote-is-info-color) !important;
   border: 1px solid !important;
 }
 
 blockquote.is-info * {
-  color: var(--v-blockquote-is-info-color) !important;
+  color: var(--blockquote-is-info-color) !important;
 }
 
 blockquote.is-success {
-  background-color: var(--v-blockquote-is-success-base) !important;
-  color: var(--v-blockquote-is-success-color) !important;
-  border-color: var(--v-blockquote-is-success-color) !important;
+  background-color: var(--blockquote-is-success-base) !important;
+  color: var(--blockquote-is-success-color) !important;
+  border-color: var(--blockquote-is-success-color) !important;
   border: 1px solid !important;
 }
 
 blockquote.is-success * {
-  color: var(--v-blockquote-is-success-color) !important;
+  color: var(--blockquote-is-success-color) !important;
 }
 
 blockquote.is-danger {
-  background-color: var(--v-blockquote-is-danger-base) !important;
-  color: var(--v-blockquote-is-danger-color) !important;
-  border-color: var(--v-blockquote-is-danger-color) !important;
+  background-color: var(--blockquote-is-danger-base) !important;
+  color: var(--blockquote-is-danger-color) !important;
+  border-color: var(--blockquote-is-danger-color) !important;
   border: 1px solid !important;
 }
 
 blockquote.is-danger * {
-  color: var(--v-blockquote-is-danger-color) !important;
+  color: var(--blockquote-is-danger-color) !important;
 }
 
 blockquote.is-warning.variant .blockquote-title {
-  background-color: var(--v-blockquote-is-warning-color);
+  background-color: var(--blockquote-is-warning-color);
 }
 blockquote.is-info.variant .blockquote-title {
-  background-color: var(--v-blockquote-is-info-color);
+  background-color: var(--blockquote-is-info-color);
 }
 blockquote.is-success.variant .blockquote-title {
-  background-color: var(--v-blockquote-is-success-color);
+  background-color: var(--blockquote-is-success-color);
 }
 blockquote.is-danger.variant .blockquote-title {
-  background-color: var(--v-blockquote-is-danger-color);
+  background-color: var(--blockquote-is-danger-color);
 }
 blockquote.variant .blockquote-title {
-  background-color: var(--v-blockquote-color);
+  background-color: var(--blockquote-color);
 }
 
 /* < --- > */
 
 blockquote {
-  background-color: var(--v-blockquote-base) !important;
-  border-radius: var(--v-blockquote-border-radius) !important;
-  color: var(--v-blockquote-color) !important;
-  border: 1px solid var(--v-blockquote-color) !important;
-  box-shadow: 0 0 2px 0 var(--v-blockquote-box-shadow) !important;
+  background-color: var(--blockquote-base) !important;
+  border-radius: var(--blockquote-border-radius) !important;
+  color: var(--blockquote-color) !important;
+  border: 1px solid var(--blockquote-color) !important;
+  box-shadow: 0 0 2px 0 var(--blockquote-box-shadow) !important;
   font-size: 20px;
   padding: 0.5rem !important;
   margin: 1rem 0rem;
@@ -217,7 +218,7 @@ blockquote {
 }
 
 blockquote * {
-  color: var(--v-blockquote-color) !important;
+  color: var(--blockquote-color) !important;
 }
 
 blockquote .blockquote-title {
@@ -233,15 +234,26 @@ blockquote.variant .blockquote-title {
   position: absolute;
   top: -1.2em;
   background-color: currentColor;
-  color: var(--v-primary-natural-white) !important;
+  color: var(--text-900) !important;
   padding-inline: 1em;
   border-bottom: none;
-  border-radius: var(--v-blockquote-border-radius)
-    var(--v-blockquote-border-radius) 0 0;
-  background-color: var(--v-blockquote-base);
+  border-radius: var(--blockquote-border-radius)
+    var(--blockquote-border-radius) 0 0;
+  background-color: var(--blockquote-base);
 }
 
 /* Headers */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-900);
+}
+
+
 h1 {
   font-size: 28px;
   margin-block: 0.6em 0.3em;
@@ -250,7 +262,7 @@ h1 {
 h2 {
   font-size: 24px;
   margin-block: 0.6em 0.3em;
-  background: #3d46a9;
+  background: var(--accent-primary);
   padding: 0.2em 0.3em;
 }
 
@@ -260,7 +272,7 @@ h5,
 h6 {
   font-size: 20px;
   margin-block: 0.6em 0.3em;
-  background: #313131;
+  background: var(--text-background-600);
   padding: 0.2em 0.3em;
 }
 
@@ -268,7 +280,7 @@ h4,
 h5,
 h6 {
   font-size: 16px;
-  background: #151515;
+  background: var(--text-background-800);
 }
 
 /* Headers ~ Anchors */
@@ -280,7 +292,7 @@ h6 a.anchorjs-link {
   opacity: 0;
   transition: opacity 0.2s;
   z-index: 0;
-  color: var(--v-primary-natural-white);
+  color: var(--text-900);
 }
 
 h1:hover a.anchorjs-link,
@@ -293,7 +305,7 @@ h6:hover a.anchorjs-link {
 }
 
 p {
-  color: var(--v-primary-natural);
+  color: var(--text-primary);
   padding: .5em 0 0;
   margin: 0;
 }
@@ -312,7 +324,7 @@ h4:has(~ .subtitle) {
 }
 
 .subtitle a {
-  background: var(--v-background-mute);
+  background: var(--background-mute);
   padding-inline: .5em;
 }
 
@@ -321,11 +333,11 @@ code,
 var,
 samp {
   font-size: 0.9em;
-  background: var(--v-primary-natural-dark-darken);
-  color: var(--v-color-code);
-  border: 1px solid var(--v-primary-natural-dark-lighten);
+  background: var(--text-background-700);
+  color: var(--color-code);
+  border: 1px solid var(--text-background-900);
   padding: 0 5px;
-  font: var(--v-font-family);
+  font: var(--font-family);
   font-weight: 400;
   box-shadow: none;
   font-style: normal;
@@ -334,7 +346,7 @@ samp {
 kbd {
   font-size: 0.9em;
   background: rgba(0, 0, 0, 0.4);
-  color: var(--v-primary-natural);
+  color: var(--text-primary);
   padding: 2px 6px;
   font-family: montserrat;
   font-weight: 600;
@@ -360,13 +372,13 @@ hr {
 }
 
 a {
-  color: var(--v-color-link);
+  color: var(--color-link);
   text-decoration: none;
   transition: color 0.3s ease-in-out;
 }
 
 a:hover {
-  color: var(--v-color-link-hover);
+  color: var(--color-link-hover);
   cursor: pointer;
   transition: color 0.3s ease-in-out;
 }
@@ -377,7 +389,7 @@ table {
 }
 
 thead tr td {
-  background: var(--v-background-soft);
+  background: var(--background-soft);
   padding-block: 0.3em !important;
   padding-inline: 0.6em !important;
   text-align: center;
@@ -385,18 +397,18 @@ thead tr td {
 }
 
 tbody tr td {
-  background: var(--v-background-mute);
+  background: var(--background-mute);
   padding-block: 0.5em !important;
   padding-inline: 0.6em !important;
 }
 
 tbody tr:nth-child(even) td {
-  background: var(--v-background-soft);
+  background: var(--background-soft);
 }
 
 table td {
-  border: 1px solid var(--v-background-darken);
-  color: var(--v-primary-natural-white);
+  border: 1px solid var(--background-darken);
+  color: var(--text-900);
 }
 
 table .table-right {
@@ -410,8 +422,8 @@ table .table-left {
 }
 
 table button {
-  background: var(--v-background-soft);
-  color: var(--v-primary-natural);
+  background: var(--background-soft);
+  color: var(--text-primary);
   outline: none;
   border: none;
   text-align: center;
@@ -419,7 +431,7 @@ table button {
 
 table button:active,
 table button:focus-visible {
-  background: var(--v-background-mute);
+  background: var(--background-mute);
 }
 
 table .table-settings {
@@ -490,7 +502,7 @@ ul.list {
 ul.button-grid a,
 ul.button-grid li {
   text-decoration: none;
-  color: var(--v-primary-natural);
+  color: var(--text-primary);
 }
 
 ul.button-grid li {
@@ -498,8 +510,8 @@ ul.button-grid li {
   padding: 5px 20px;
   font-weight: bold;
   font-size: 22px;
-  background: var(--v-background-soft);
-  border-radius: var(--v-blockquote-border-radius);
+  background: var(--background-soft);
+  border-radius: var(--blockquote-border-radius);
   transition: all 500ms;
   display: flex;
   animation: button-grid-load 750ms ease-in-out;
@@ -511,7 +523,7 @@ ul.button-grid li {
 ul.button-grid li:hover {
   box-shadow: #000 0px 0px 20px;
   transition: all 0.3s;
-  background: var(--v-background-light);
+  background: var(--background-light);
   scale: 1.03;
 }
 ul.button-grid li img {
@@ -547,11 +559,11 @@ ul.grid-list {
   margin: 0.8em 0em;
 }
 ul.grid-list li {
-  background: var(--v-background);
+  background: var(--background-primary);
   padding: 0.6rem 1rem;
 }
 ul.grid-list li:nth-child(odd) {
-  background: var(---v-background-alt);
+  background: var(---background-alt);
   padding: 0.6rem 1rem;
 }
 /* Utility Classes */
@@ -569,9 +581,9 @@ ul.grid-list li:nth-child(odd) {
 /* Documentaion Helpers */
 /* ==================== */
 .url-parameter-novalue::before {
-  color: var(--v-color-code);
-  background: var(--v-primary-natural-dark-darken);
-  border: 1px solid var(--v-primary-natural-dark-lighten);
+  color: var(--color-code);
+  background: var(--text-background-primary-darken);
+  border: 1px solid var(--text-background-700);
   padding-inline: 0.3em;
   border-radius: 100vmax;
 }

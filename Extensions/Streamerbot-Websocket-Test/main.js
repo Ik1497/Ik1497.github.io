@@ -15,7 +15,7 @@ function connectws() {
     ws.onopen = function () {
       ws.send(
         JSON.stringify({
-          request: "GetEvents",
+          request: "GetInfo",
           id: "123",
         })
       );

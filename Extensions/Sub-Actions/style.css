@@ -17,7 +17,7 @@ html {
     font-size: var(--font-size);
     font-family: Arial;
     color: #fff;
-    background: var(--v-background);
+    background: var(--background-primary);
     width: 100%;
     height: 100vh;
     overflow: hidden;
@@ -26,11 +26,11 @@ html {
 }
 
 ::-webkit-scrollbar {
-    background: var(--v-background-soft);
+    background: var(--background-soft);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--v-background-light);
+    background: var(--background-light);
 }
 
 /* --- */
@@ -38,7 +38,7 @@ html {
 /* --- */
 
 nav {
-    background: var(--v-background-alt);
+    background: var(--background-alt);
     width: 20em;
 }
 
@@ -60,7 +60,7 @@ nav > ul li {
 }
 
 nav > ul li button {
-    background: var(--v-background-alt);
+    background: var(--background-alt);
     border: 0;
     border-radius: 5px;
     outline: 0;
@@ -76,7 +76,7 @@ nav > ul li button {
 nav > ul li button:active,
 nav > ul li button:focus-visible,
 nav > ul li button:hover {
-    background: var(--v-background-soft);
+    background: var(--background-soft);
 }
 
 nav > ul li.nav-active button {
@@ -109,7 +109,7 @@ main .event-items li {
     width: 100%;
     padding-inline: .5em;
 
-    background: var(--v-background-soft);
+    background: var(--background-soft);
     border: 0;
     border-radius: 5px;
     outline: 0;

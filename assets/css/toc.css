@@ -7,7 +7,7 @@ ul.table-of-contents {
     grid-area: body--toc;
     margin-right: auto;
     margin-top: 6rem;
-    background: var(--v-background-soft);
+    background: var(--background-soft);
     height: fit-content;
     max-height: 80vh;
     width: 17.5rem;
@@ -35,7 +35,7 @@ ul.table-of-contents button {
 
 ul.table-of-contents button:hover,
 ul.table-of-contents button:focus-visible {
-    background: var(--v-background-light);
+    background: var(--background-light);
 }
 
 ul.table-of-contents li.heading-tag-h3 button {
