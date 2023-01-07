@@ -262,7 +262,7 @@ h1 {
 h2 {
   font-size: 24px;
   margin-block: 0.6em 0.3em;
-  background: var(--accent-primary);
+  background: var(--accent-alt);
   padding: 0.2em 0.3em;
 }
 
