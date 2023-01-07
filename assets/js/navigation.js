@@ -23,7 +23,7 @@ async function app() {
             }
           }
 
-          navItemList += `<li title="${navItem.name} aria-label="${navItem.name}"${navActive}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
+          navItemList += `<li title="${navItem.name}" aria-label="${navItem.name}"${navActive}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
         }
       });
 
