@@ -43,3 +43,43 @@ body[data-theme="light"] {
 
   --color-code: #003266;
 }
+
+@media (prefers-color-scheme: light) {
+  body[data-theme="auto"] {
+    --background-primary: #dddddd;
+    --background-alt: #e4e4e4;
+    --background-darken: #bdbdbd;
+    --background-soft: #d6d6d6;
+    --background-mute: #cbcbcb;
+    --background-light: #a3a3a3;
+    --background-lighten: #7a7a7a;
+  
+    --text-100: #888888;
+    --text-200: #777777;
+    --text-300: #666666;
+    --text-400: #555555;
+    --text-500: #444444;
+    --text-600: #333333;
+    --text-700: #222222;
+    --text-800: #111111;
+    --text-900: #000000;
+    --text-primary: rgba(0, 0, 0, 0.87);
+  
+    --text-background-100: #777777;
+    --text-background-200: #888888;
+    --text-background-300: #999999;
+    --text-background-400: #aaaaaa;
+    --text-background-500: #bbbbbb;
+    --text-background-600: #cccccc;
+    --text-background-700: #dddddd;
+    --text-background-800: #eeeeee;
+    --text-background-900: #ffffff;
+    --text-background-primary: rgba(255, 255, 255, 0.87);
+  
+    --blockquote-is-warning-color: #ccaa43;
+    --blockquote-is-success-color: #35a673;
+    --blockquote-color: #555;
+  
+    --color-code: #003266;
+  }
+}

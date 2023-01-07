@@ -8,7 +8,7 @@
 }
 
 .dropdown .dropdown__title {
-    display: inline-block;
+    padding-block: .5rem;
 }
 
 .dropdown .dropdown__item-section {
@@ -27,6 +27,7 @@
     padding-block: .5rem;
     padding-inline: 1rem;
     display: inline-block;
+    min-width: 15rem;
 }
 
 .dropdown .dropdown__current-item .dropdown__current-item-name::after {
@@ -53,6 +54,7 @@
     padding-inline: .5rem;
     padding-block: .5rem;
     cursor: pointer;
+    min-width: 15rem;
 }
 
 .dropdown:hover .dropdown__items .dropdown__items-item:active,

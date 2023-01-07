@@ -76,7 +76,7 @@ header.header-primary aside .settings:active {
   left: 50%;
   transform: translate(-50%, -50%);
   border: 4px solid var(--background-light);
-  border-radius: 2rem;
+  border-radius: 1rem;
   overflow: hidden;
 }
 
