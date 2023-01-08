@@ -4,8 +4,8 @@
         "wind": "Breezie",
         "cloud": "Înnorat",
         "fog": "Foggy",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Ploaie",
+        "snow": "Ninsoare",
         "thunder": "Furtună"
     }
 }
