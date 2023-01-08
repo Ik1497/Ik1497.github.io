@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "Звичайний",
+        "wind": "Брізі",
+        "cloud": "Хмарно",
+        "fog": "Туманно",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "Гроза"
+    }
+}
