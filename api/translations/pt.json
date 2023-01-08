@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "Padrão",
+        "wind": "Abreviação",
+        "cloud": "Nublado",
+        "fog": "Nevoeiro",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "Trovoadas"
+    }
+}
