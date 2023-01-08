@@ -4,8 +4,8 @@
         "wind": "Chleba",
         "cloud": "Zataženo",
         "fog": "Mlhavý",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Dešťové srážky",
+        "snow": "Sníh",
         "thunder": "Bouřka"
     }
 }
