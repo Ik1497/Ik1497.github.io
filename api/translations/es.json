@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "Regular",
+        "wind": "Brisa",
+        "cloud": "Nublado",
+        "fog": "Foggia",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "Tormenta"
+    }
+}
