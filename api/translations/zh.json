@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "常规的",
+        "wind": "微风",
+        "cloud": "多云",
+        "fog": "雾",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "雷雨"
+    }
+}
