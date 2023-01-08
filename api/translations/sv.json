@@ -4,8 +4,8 @@
         "wind": "Breezy",
         "cloud": "Molnigt",
         "fog": "Dimmigt",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Regn",
+        "snow": "Snö",
         "thunder": "Åskväder"
     }
 }
