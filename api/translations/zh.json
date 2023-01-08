@@ -4,8 +4,8 @@
         "wind": "微风",
         "cloud": "多云",
         "fog": "雾",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "雨",
+        "snow": "雪",
         "thunder": "雷雨"
     }
 }
