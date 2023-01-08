@@ -4,8 +4,8 @@
         "wind": "Abreviação",
         "cloud": "Nublado",
         "fog": "Nevoeiro",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Chuva",
+        "snow": "Neve",
         "thunder": "Trovoadas"
     }
 }
