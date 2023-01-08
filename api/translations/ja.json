@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "標準",
+        "wind": "Breezy",
+        "cloud": "曇り",
+        "fog": "Foggy",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "雷雨"
+    }
+}
