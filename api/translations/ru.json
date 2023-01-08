@@ -4,8 +4,8 @@
         "wind": "Зимой",
         "cloud": "Облачно",
         "fog": "Туман",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Дождь",
+        "snow": "Снег",
         "thunder": "Гроза"
     }
 }
