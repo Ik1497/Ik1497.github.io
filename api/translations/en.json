@@ -1,7 +1,7 @@
 {
     "weather": {
         "regular": "Regular",
-        "wind": "Breezy",
+        "breeze": "Breezy",
         "cloud": "Cloudy",
         "fog": "Foggy",
         "rain": "Rain",
