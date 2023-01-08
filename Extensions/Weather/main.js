@@ -55,17 +55,24 @@ async function app() {
   let temperature = weather.current_weather.temperature
   let weatherCode = weather.current_weather.weathercode
 
-  let day = weather.current_weather.time.split(`T`)[1]
+  console.log(new URLSearchParams(window.location.search).get("force-time"))
 
-  day = day.split(`:`)[0]
-  if (day >= 7 && day <= 21) {
-    day = `day`
+  let day;
+  if (new URLSearchParams(window.location.search).get("force-time") === null) {
+    day = weather.current_weather.time.split(`T`)[1]
+
+    day = day.split(`:`)[0]
+    if (day >= 7 && day <= 21) {
+      day = `day`
+    } else {
+      day = `night`
+    }
   } else {
-    day = `night`
+    day = new URLSearchParams(window.location.search).get("force-time")
   }
 
   let iconType = `animated`
-  if (new URLSearchParams(window.location.search).get(`animated`) != undefined) iconType = `animated`
+  if (new URLSearchParams(window.location.search).get(`animation-off`) != undefined) iconType = `static`
 
   let randomIcon;
   let weatherName;
@@ -145,17 +152,40 @@ async function app() {
       ws.addEventListener("message", (event) => {
         if (!event.data) return
         const data = JSON.parse(event.data)
-        console.log(data)
         if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the Events/Requests"); return }
         let runningAction = data?.data.name
-
-        console.log(`receiving`, runningAction)
         
         if (runningAction === fetchAction) {
-          console.log(`running`, JSON.stringify(wsBody))
           ws.send(JSON.stringify(wsBody))
         }
       })
     }
   }
 }
+
+setInterval(() => {
+  location.reload()
+}, 300000);
+
+//////////////////////
+/// URL Paramaters ///
+//////////////////////
+// General
+const params = new URLSearchParams(window.location.search)
+var root = document.querySelector(":root")
+
+// Font
+let fontFamily = params.get("font-family")
+root.style.setProperty("--font-family", fontFamily)
+
+let fontWeight = params.get("font-weight")
+root.style.setProperty("--font-weight", fontWeight)
+
+let fontStyle = params.get("font-style")
+root.style.setProperty("--font-style", fontStyle)
+
+let fontSize = params.get("font-size")
+root.style.setProperty("--font-size", fontSize)
+
+let fontColor = params.get("font-color")
+root.style.setProperty("--font-color", fontColor)

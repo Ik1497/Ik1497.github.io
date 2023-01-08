@@ -1,0 +1,210 @@
+<script>
+  var date = "8/12/2022";
+  var time = "11:15";
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta property="og:title" content="Weather Widget">
+    <title>Weather Widget | Streamer.bot Actions</title>
+
+    <meta name="og:site_name" content="Streamer.bot Actions">
+    <meta property="og:image" content="/assets/images/favicon.png">
+    <meta name="theme-color" content="#B80086">
+
+    <meta property="og:description" content="Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="/assets/js/head.js"></script>
+  </head>
+  <body>
+    <main>
+      <header class="page-info">
+        <p class="title">Weather Widget</p>
+        <p class="description">Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.</p>
+      </header>
+      <h2>Configuration</h2>
+      <h3>Streamer.bot</h3>
+      <p>
+        <blockquote class="is-info">Coming Soon!</blockquote>
+      </p>
+      <h3>OBS Studio</h3>
+      <p>
+        1. Make a browser source in OBS Studio with the settings:
+        <code>Width = 400</code>, <code>Height = 5000</code>.<br>
+        2. Put the URL of the widget in the Browser Source, find URL
+        <a href="#widget">here</a>.<br>
+      </p>
+      <h2>Widget</h2>
+      <p>
+        Put this URL into OBS: <a href="https://ik1497.github.io/Extensions/Weather/">https://ik1497.github.io/Extensions/Weather/</a>
+      </p>
+      <img class="img-400" src="./overview.gif" alt="overview.gif">
+      <h3>URL Parameters</h3>
+      <ul class="button-grid">
+        <a href="/Extensions/Basics/URL-Parameters">
+          <li>
+            <i class="mdi mdi-google-chrome"></i>
+            <strong>
+              URL Parameters
+              <em>An explanation, on how to use these parameters in your browser source</em>
+            </strong>
+          </li>
+        </a>
+      </ul>
+      <h4>Font</h4>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>font-family</code></td>
+            <td class="table-left">
+              The font family, <code>default: Uni Sans CAPS</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-weight</code></td>
+            <td class="table-left">
+              The font weight, <code>default: 900</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-style</code></td>
+            <td class="table-left">
+              The font style, <code>default: normal</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-size</code></td>
+            <td class="table-left">
+              The font size, <code>default: 1.5em</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-color</code></td>
+            <td class="table-left">
+              The font and the svg color: <code>default: #181818</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <h4>Gap</h4>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>gap-height</code></td>
+            <td class="table-left">
+              The height of the gap between the rows of chips
+              <code>default: .2em</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>gap-width</code></td>
+            <td class="table-left">
+              The width of the gap between the chips <code>default: .5em</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Chips</h4>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>chip-background</code></td>
+            <td class="table-left">
+              The background of the chips
+              <code>default: #ff4d4d</code>.<br>Doesn't work with hex, use
+              RGB, HSL, etc.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>chip-border-radius</code></td>
+            <td class="table-left">
+              The border radius of the chips <code>default: 0</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Themes</h4>
+      <p class="subtitle">use ?theme</p>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>big</code></td>
+            <td class="table-left">
+              If you think it's not noticable enough you can have an even bigger
+              one!
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Extra</h4>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>exclude</code></td>
+            <td class="table-left">
+              The audio sources to exclude  <code>no default</code>.<br>
+              This can go in a string if you have only one e.g. <code>?exclude=[A] Music</code>.<br>
+              If you have more it can be comma seperated or an array e.g. <code>?exclude=[A] Music,[A] TTS</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>include</code></td>
+            <td class="table-left">
+              The audio sources to only include <code>no default</code>.<br>
+              This can go in a string if you have only one e.g. <code>?include=[A] Music</code>.<br>
+              If you have more it can be comma seperated or an array e.g. <code>?include=[A] Music,[A] TTS</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <p>
+        Make it your own with URL Parameters! This example image below uses:<br>
+        <code>https://ik1497.github.io/Extensions/Mute-Indicator?chip-background=rgb(255,255, 255)&chip-border-radius=20px&exclude=[A] Music</code>
+      </p>
+
+      <img
+        class="img-400 margin-top"
+        src="./overview-url-paramaters.png"
+        alt="overview-url-paramaters.png"
+     >
+      <p>
+        For any suggestions about this widget or any theme feel free to send me
+        a DM on discord or open an <a href="/Links/Issues">issue</a>.
+      </p>
+    </main>
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>

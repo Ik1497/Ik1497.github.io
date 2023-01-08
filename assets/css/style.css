@@ -15,8 +15,9 @@ html {
   scroll-padding-top: 4em;
 }
 
+
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -35,6 +36,10 @@ html {
 ::selection {
   background: var(--accent-primary);
   color: var(--text-900);
+}
+
+main::-webkit-scrollbar {
+  width: var(--scrollbar-width, 0px);
 }
 
 * {
