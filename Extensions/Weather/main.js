@@ -55,8 +55,6 @@ async function app() {
   let temperature = weather.current_weather.temperature
   let weatherCode = weather.current_weather.weathercode
 
-  console.log(new URLSearchParams(window.location.search).get("force-time"))
-
   let day;
   if (new URLSearchParams(window.location.search).get("force-time") === null) {
     day = weather.current_weather.time.split(`T`)[1]

@@ -39,11 +39,11 @@ html {
 }
 
 body[data-time="night"] .weather-widget {
-    background: linear-gradient(hsl(220, 12%, 10%), hsl(255, 20%, 4%));
+    background: linear-gradient(hsl(224, 14%, 15%), hsl(255, 20%, 4%));
 }
 
 body[data-time="day"] .weather-widget {
-    background: linear-gradient(hsl(194, 100%, 50%), hsl(219, 100%, 50%));
+    background: linear-gradient(hsl(194, 97%, 44%), hsl(219, 94%, 41%));
 }
 
 .weather-widget .weather-subtitle {
