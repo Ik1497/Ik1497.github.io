@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "Almindelig",
+        "wind": "Breezy",
+        "cloud": "Overskyet",
+        "fog": "Tåget",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "Tordenvejr"
+    }
+}
