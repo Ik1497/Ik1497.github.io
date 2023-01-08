@@ -4,8 +4,8 @@
         "wind": "Luise",
         "cloud": "bewölkt",
         "fog": "Negativ",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Regen",
+        "snow": "Schnee",
         "thunder": "Gewitter"
     }
 }
