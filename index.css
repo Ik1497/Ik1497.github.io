@@ -136,6 +136,7 @@ footer {
 .top-section {
     display: grid;
     grid-template-areas: "main-text logo";
+    padding-top: 3rem;
 }
 
 .top-section .main-text {
@@ -143,6 +144,8 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    place-self: start;
+    margin-bottom: auto;
 }
 
 .top-section .main-text .title {
@@ -179,7 +182,7 @@ footer {
     width: 100%;
     position: absolute;
     aspect-ratio: 1;
-    filter: blur(100px);
+    filter: blur(40px);
     border-radius: 100vmax;
 }
 
