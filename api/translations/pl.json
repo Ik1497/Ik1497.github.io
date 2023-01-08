@@ -4,8 +4,8 @@
         "wind": "Mroźny",
         "cloud": "Chmura",
         "fog": "Mgła",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Deszcz",
+        "snow": "Śnieg",
         "thunder": "Burza z piorunami"
     }
 }

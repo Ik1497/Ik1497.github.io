@@ -4,8 +4,8 @@
         "wind": "Brise",
         "cloud": "Nuageux",
         "fog": "Brouillard",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Pluie",
+        "snow": "Neige",
         "thunder": "Orage"
     }
 }

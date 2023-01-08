@@ -4,8 +4,8 @@
         "wind": "Breezy",
         "cloud": "Nuvoloso",
         "fog": "Nebbia",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Pioggia",
+        "snow": "Neve",
         "thunder": "Temporale"
     }
 }

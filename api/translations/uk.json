@@ -4,8 +4,8 @@
         "wind": "Брізі",
         "cloud": "Хмарно",
         "fog": "Туманно",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Дощ",
+        "snow": "Сніг",
         "thunder": "Гроза"
     }
 }

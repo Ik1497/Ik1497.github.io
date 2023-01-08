@@ -4,8 +4,8 @@
         "wind": "Ontbijt",
         "cloud": "Bewolkt",
         "fog": "Mistig",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Regen",
+        "snow": "Sneeuw",
         "thunder": "Onweer"
     }
 }
