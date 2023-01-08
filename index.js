@@ -107,8 +107,16 @@ for (let itemsLength = 0; itemsLength < page.items.length; itemsLength++) {
         itemGridTitle = `SOON...`
     }
 
+    let hrefSuffix = ``
+
+    if (location.hostname === `127.0.0.1` || location.hostname === `localhost`) {
+        if (index.href.slice(-1) != `/`) {
+            hrefSuffix = `.html`
+        }
+    }
+
     
-    document.querySelector(`section.recent-extensions ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item${enabled}" title="${itemGridTitle}" aria-label="${itemGridTitle}"><a href="${index.href}" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p${(itemsLength * 2) + 2}s"><div class="background"></div><i class="icon ${index.icon}"></i><p class="title">${index.name}</p><p class="description">${index.description}</p></article></a></li>`)
+    document.querySelector(`section.recent-extensions ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item${enabled}" title="${itemGridTitle}" aria-label="${itemGridTitle}"><a href="${index.href}${hrefSuffix}" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p${(itemsLength * 2) + 2}s"><div class="background"></div><i class="icon ${index.icon}"></i><p class="title">${index.name}</p><p class="description">${index.description}</p></article></a></li>`)
 }
 
 // ---------- //
