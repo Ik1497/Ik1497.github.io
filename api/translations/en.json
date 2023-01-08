@@ -4,8 +4,8 @@
         "wind": "Breezy",
         "cloud": "Cloudy",
         "fog": "Foggy",
-        "rain": "Rain",
-        "snow": "Snow",
+        "rain": "Rainy",
+        "snow": "Snowy",
         "thunder": "Thunderstorm"
     }
 }
