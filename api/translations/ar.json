@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "عادي",
+        "wind": "برايزي",
+        "cloud": "غيوم",
+        "fog": "الضباب",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "عاصفة رعدية"
+    }
+}

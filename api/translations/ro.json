@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "Normală",
+        "wind": "Breezie",
+        "cloud": "Înnorat",
+        "fog": "Foggy",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "Furtună"
+    }
+}

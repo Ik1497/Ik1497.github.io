@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "Běžný",
+        "wind": "Chleba",
+        "cloud": "Zataženo",
+        "fog": "Mlhavý",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "Bouřka"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "Normaal",
+        "wind": "Ontbijt",
+        "cloud": "Bewolkt",
+        "fog": "Mistig",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "Onweer"
+    }
+}
