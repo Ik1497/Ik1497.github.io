@@ -4,8 +4,8 @@
         "wind": "Bryt",
         "cloud": "Overskyet",
         "fog": "Tåke",
-        "rain": "Rainy",
-        "snow": "Snowy",
+        "rain": "Regn",
+        "snow": "Snø",
         "thunder": "Tordenvær"
     }
 }
