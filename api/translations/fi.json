@@ -1,0 +1,11 @@
+{
+    "weather": {
+        "regular": "Tavallinen",
+        "wind": "¶ y",
+        "cloud": "Pilvinen",
+        "fog": "Sumua",
+        "rain": "Rainy",
+        "snow": "Snowy",
+        "thunder": "Ukkosmyrsky"
+    }
+}
