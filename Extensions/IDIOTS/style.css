@@ -19,11 +19,15 @@
 
 .idiot-image .idiot-text {
     position: absolute;
-    left: 410px;
-    bottom: -5px;
-    font-size: 5rem;
+    left: 250px;
+    bottom: 15px;
+    font-size: 4rem;
     font-weight: 900;
     color: var(--text-900);
+    background: var(--accent-alt);
+    line-height: 1;
+    padding-block: .5rem;
+    padding-inline: 1rem;
 }
 
 .idiot-grid {
