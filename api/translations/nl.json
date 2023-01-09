@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Normaal",
-        "wind": "Ontbijt",
+        "sun": "Sunny",
+        "breeze": "Breedte",
         "cloud": "Bewolkt",
         "fog": "Mistig",
         "rain": "Regen",
