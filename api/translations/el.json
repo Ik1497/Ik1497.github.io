@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Κυρ",
         "breeze": "Αεράκι",
         "cloud": "Συννεφιά",
         "fog": "Ομιχλώδης",
         "rain": "Βροχή",
         "snow": "Χιόνι",
         "thunder": "Καταιγίδα"
+    },
+    "music": {
+        "defaultSongTitle": "Αναπαραγωγή τραγουδιού",
+        "defaultSongArtist": "για να λειτουργήσει αυτό το widget!"
     }
 }
