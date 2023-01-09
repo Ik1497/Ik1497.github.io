@@ -44,7 +44,6 @@ let iconMap = [
 ]
 
 let lang = new URLSearchParams(window.location.search).get("lang") || `en`
-console.log(lang)
 
 
 app()
@@ -57,7 +56,6 @@ async function app() {
   langData = await langData.json()
   langData = langData.weather
   langDataArray = Object.entries(langData)
-  console.log(`lang`, langDataArray)
   let temperature;
   let weatherCode = weather.current_weather.weathercode
 
