@@ -38,7 +38,14 @@ let page = {
             name: "Music Widget",
             description: "Music Widget for Spotify",
             icon: "mdi mdi-spotify",
-            href: "/Extensions/Music/",
+            href: "/Extensions/Music/Widget/Docs",
+            enabled: false
+        },
+        {
+            name: "Minimal Music Widget",
+            description: "Minimal Music Widget for Spotify",
+            icon: "mdi mdi-spotify",
+            href: "/Extensions/Music/Minimal/Docs",
             enabled: false
         },
         {
@@ -49,17 +56,10 @@ let page = {
             enabled: false
         },
         {
-            name: "Lorem ipsum dolor sit amet.",
-            description: "Lorem ipsum dolor sit amet.",
-            icon: "mdi mdi-solid",
-            href: "",
-            enabled: false
-        },
-        {
-            name: "Lorem ipsum dolor sit amet.",
-            description: "Lorem ipsum dolor sit amet.",
-            icon: "mdi mdi-solid",
-            href: "",
+            name: "Weather Widget",
+            description: "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
+            icon: "mdi mdi-weather-lightning",
+            href: "/Extensions/Weather/Docs",
             enabled: false
         }
     ]

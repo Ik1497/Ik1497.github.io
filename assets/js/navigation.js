@@ -12,9 +12,45 @@ async function app() {
       
       navItemGroup.groupItems.forEach(navItem => {
         if (navItem.type === `link` && navItem.enabled != false) {
+          let published = navItem.channel ?? `public`
           let navActive = ``
-          if (location.pathname.replace(`.html`, ``) === navItem.href.replace(`.html`, ``)) {
+
+          // If page is published and user has access
+          if (published === `beta` && localStorage.getItem(`websiteSettings__visibilityChannel`) === `beta`) { 
+            navItem.name += ` (BETA)`
+          }
+          
+          if (location.pathname.replace(`index.html`, ``).replace(`.html`, ``) === navItem.href.replace(`.html`, ``)) {
+
             navActive += ` class="nav-active"`
+            
+            
+            if (location.pathname.replace(`index.html`, ``).replace(`.html`, ``) != `/`) {
+              document.title = `${navItem.name} | Streamer.bot Actions`
+              document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
+              <header class="page-info">
+                <p class="title">${navItem.name}</p>
+                <p class="description">${navItem.description}</p>
+              </header>
+              `)
+
+              let editDate = navItem.lastEdited.date
+              let editTime = navItem.lastEdited.time
+
+              if (editDate != null || editTime != null) {
+                document.querySelector(`footer.footer-info .footer-update`).innerHTML = `Last updated: ${editTime}, ${editDate}`
+              }
+
+              // If page is unpublished and user has no access
+              if (published === `beta` && localStorage.getItem(`websiteSettings__visibilityChannel`) != `beta`) { 
+                if (location.hostname === `127.0.0.1` || location.hostname === `localhost`) {
+                  window.location = `/403.html`
+                } else {
+                  window.location = `/403`
+                }
+              }
+
+            }
           }
 
           if (location.hostname === `127.0.0.1` || location.hostname === `localhost`) {
@@ -23,11 +59,8 @@ async function app() {
             }
           }
 
-          let published = navItem.channel ?? `public`
-          if (published === `beta` && localStorage.getItem(`websiteSettings__visibilityChannel`) === `beta`) { 
-            navItem.name += ` (BETA)`
-          }
           
+          // If page is published or user has access
           if (published != `beta` || localStorage.getItem(`websiteSettings__visibilityChannel`) === `beta`) { 
             navItemList += `<li title="${navItem.name}" aria-label="${navItem.name}"${navActive}${published}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
           }

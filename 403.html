@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta property="og:title" content="404">
+    <title>404 | Streamer.bot Actions</title>
+
+    <meta name="og:site_name" content="Streamer.bot Actions">
+    <meta property="og:image" content="/assets/images/favicon.png">
+    <link rel="shortcut icon" href="https://ik1497.github.io/assets/images/favicon.png" type="image/x-icon">
+    <meta name="theme-color" content="#B80086">
+
+    <meta property="og:description" content="This page does not exist">
+
+    <link
+      rel="stylesheet"
+      href="/node_modules/@mdi/font/css/materialdesignicons.css"
+   >
+    <link rel="stylesheet" href="/assets/css/root.css">
+    <script src="/assets/js/head.js"></script>
+  </head>
+  <body>
+    <main>
+      <i class="mdi mdi-shield-account-outline"></i>
+      <div class="main-text">403</div>
+      <div class="bottom-text">Access Denied</div>
+      <div class="buttons">
+        <a class="button alt" onclick="history.go(-2)">Go Back</a>
+        <a href="/" class="button main">Home</a>
+      </div>
+    </main>
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/header.js"></script>
+  </body>
+</html>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url(/assets/css/style.css);
+
+footer.footer-info {
+  display: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Inter;
+  font-size: 16px;
+  color: var(--text-900);
+  background: var(--background-primary);
+  height: 100vh;
+  line-height: 1;
+}
+
+main {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+ 
+main i.mdi {
+  font-size: 7em;
+}
+
+main .main-text {
+  font-size: 7em;
+  font-weight: 900;
+}
+
+main .bottom-text {
+  font-size: 3em;
+  font-weight: 700;
+  color: var(--text-600);
+}
+
+main .buttons {
+  margin-top: 2em;
+}
+
+main .button {
+  font-size: 3em;
+  border: 3px solid;
+  border-radius: 100vmax;
+  padding-inline: .5em;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+main .button:hover {
+  color: var(--color-link-hover)!important;
+}
+
+main .button.alt {
+  color: var(--text-400);
+}
+
+main .button.main {
+  color: var(--accent-primary);
+}
+
+</style>

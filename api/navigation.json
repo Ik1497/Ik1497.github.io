@@ -1,45 +1,67 @@
 [
-    {
-      "name": "General",
-      "type": "group",
-      "groupItems": [
-        {
-          "name": "Home",
-          "icon": "mdi mdi-home",
-          "href": "/",
-          "type": "link"
+  {
+    "name": "General",
+    "type": "group",
+    "groupItems": [
+      {
+        "name": "Home",
+        "description": "Everything you NEED for streaming!",
+        "icon": "mdi mdi-home",
+        "href": "/",
+        "type": "link",
+        "lastEdited": {
+          "date": "09/01/2023",
+          "time": "9:29"
         }
-      ]
-    },
-    {
-      "name": "Extensions",
-      "type": "group",
-      "groupItems": [
-        {
-          "name": "Local Script Actions Handler",
-          "icon": "mdi mdi-script-text-play",
-          "href": "/Extensions/Local-Script-Action-Handler/Docs",
-          "type": "link"
+      }
+    ]
+  },
+  {
+    "name": "Extensions",
+    "type": "group",
+    "groupItems": [
+      {
+        "name": "Local Script Actions Handler",
+        "description": "Run action with Local Scripts.",
+        "icon": "mdi mdi-script-text-play",
+        "href": "/Extensions/Local-Script-Action-Handler/Docs",
+        "type": "link",
+        "home": 1,
+        "lastEdited": {
+          "date": "09/01/2023",
+          "time": "9:29"
         }
-      ]
-    },
-    {
-      "name": "Widgets",
-      "type": "group",
-      "groupItems": [
-        {
-          "name": "Mute Indicator",
-          "icon": "mdi mdi-volume-mute",
-          "href": "/Extensions/Mute-Indicator/Docs",
-          "type": "link"
-        },
-        {
-          "name": "Weather Widget",
-          "icon": "mdi mdi-weather-lightning",
-          "href": "/Extensions/Weather/Docs",
-          "type": "link",
-          "channel": "beta"
+      }
+    ]
+  },
+  {
+    "name": "Widgets",
+    "type": "group",
+    "groupItems": [
+      {
+        "name": "Weather Widget",
+        "description": "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
+        "icon": "mdi mdi-weather-lightning",
+        "href": "/Extensions/Weather/Docs",
+        "type": "link",
+        "channel": "beta",
+        "lastEdited": {
+          "date": "09/01/2023",
+          "time": "9:29"
         }
-      ]
-    }
+      },
+      {
+        "name": "Mute Indicator",
+        "description": "Mute Indicator so you can see if and what sources are muted.",
+        "icon": "mdi mdi-volume-mute",
+        "href": "/Extensions/Mute-Indicator/Docs",
+        "type": "link",
+        "home": 2,
+        "lastEdited": {
+          "date": "09/01/2023",
+          "time": "9:29"
+        }
+      }
+    ]
+  }
 ]
