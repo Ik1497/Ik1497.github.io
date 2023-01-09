@@ -56,11 +56,14 @@ async function app() {
   langData = await langData.json()
   langData = langData.weather
   langDataArray = Object.entries(langData)
-  let temperature;
-  let weatherCode = weather.current_weather.weathercode
 
-  if (new URLSearchParams(window.location.search).get("unit").toUpperCase() === `F`) {
-    temperature = Math.round((weather.current_weather.temperature * 9/5) + 32)
+  let weatherCode = weather.current_weather.weathercode
+  let temperature;
+  let unit;
+
+  unit = new URLSearchParams(window.location.search).get("unit") || `C`
+  if (unit.toUpperCase() === `F`) {
+    temperature = Math.round(((weather.current_weather.temperature * 9/5) + 32) * 10) / 10
     unit = `F`
   } else {
     temperature = weather.current_weather.temperature
