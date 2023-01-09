@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Słońce",
         "breeze": "Brykiet",
         "cloud": "Chmura",
         "fog": "Mgła",
         "rain": "Deszcz",
         "snow": "Śnieg",
         "thunder": "Burza z piorunami"
+    },
+    "music": {
+        "defaultSongTitle": "Odtwórz utwór",
+        "defaultSongArtist": "aby ten widżet działał!"
     }
 }
