@@ -1,13 +1,13 @@
 let iconMap = [
   {
-    name: `Regular`,
-    id: `regular`,
+    name: `Sunny`,
+    id: `sun`,
     iconGroup: {day: [`day`], night: [`night`], misc: []},
     weatherCode: [0, 1]
   },
   {
-    name: `Breezy`,
-    id: `wind`,
+    name: `Breeze`,
+    id: `breeze`,
     iconGroup: {day: [`cloudy-day-1`, `cloudy-day-2`, `cloudy-day-3`], night: [`cloudy-night-1`, `cloudy-night-2`, `cloudy-night-3`], misc: []},
     weatherCode: [2]
   },
@@ -24,13 +24,13 @@ let iconMap = [
     weatherCode: [45, 48]
   },
   {
-    name: `Rainy`,
+    name: `Rain`,
     id: `rain`,
     iconGroup: {day: [`rainy-1`, `rainy-2`, `rainy-3`], night: [`rainy-4`, `rainy-5`, `rainy-6`, `rainy-7`], misc: []},
     weatherCode: [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82]
   },
   {
-    name: `Snowy`,
+    name: `Snow`,
     id: `snow`,
     iconGroup: {day: [`snowy-1`, `snowy-2`, `snowy-3`], night: [`snowy-4`, `snowy-5`, `snowy-6`], misc: []},
     weatherCode: [71, 73, 75, 77, 85, 86]
@@ -43,6 +43,9 @@ let iconMap = [
   }
 ]
 
+let lang = new URLSearchParams(window.location.search).get("lang") || `en`
+console.log(lang)
+
 
 app()
 
@@ -50,17 +53,30 @@ async function app() {
   let weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.382158355677774&longitude=4.887103035690015&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode`)
   weather = await weather.json()
 
-  console.log(`Fetched weather:`, weather)
-
-  let temperature = weather.current_weather.temperature
+  let langData = await fetch(`/api/translations/${lang}.json`)
+  langData = await langData.json()
+  langData = langData.weather
+  langDataArray = Object.entries(langData)
+  console.log(`lang`, langDataArray)
+  let temperature;
   let weatherCode = weather.current_weather.weathercode
+
+  console.log(`unit`, new URLSearchParams(window.location.search).get("unit").toLowerCase())
+  if (new URLSearchParams(window.location.search).get("unit").toUpperCase() === `F`) {
+    temperature = Math.round((weather.current_weather.temperature * 9/5) + 32)
+    unit = `F`
+  } else {
+    temperature = weather.current_weather.temperature
+    unit = `C`
+  }
+
 
   let day;
   if (new URLSearchParams(window.location.search).get("force-time") === null) {
     day = weather.current_weather.time.split(`T`)[1]
 
     day = day.split(`:`)[0]
-    if (day >= 7 && day <= 21) {
+    if (day >= 7 && day <= 19) {
       day = `day`
     } else {
       day = `night`
@@ -79,7 +95,14 @@ async function app() {
     iconMapIcon.weatherCode.forEach(iconMapIconWeatherCode => {
       if (iconMapIconWeatherCode === weatherCode) {
 
-        weatherName = iconMapIcon.name
+        
+        langDataArray.forEach(langDataId => {
+          if (langDataId[0] === iconMapIcon.id) {
+            weatherName = langDataId[1]
+          }
+        });
+
+
         if (iconMapIcon.iconGroup.misc.toString() === ``) {
           
           if (day === `day`) {
@@ -100,65 +123,7 @@ async function app() {
 
   document.body.setAttribute(`data-time`, day)
   
-  document.body.insertAdjacentHTML(`afterbegin`, `<div class="weather-widget"><img class="weather-icon" src="./icons/${iconType}/${randomIcon}.svg"><p class="weather-subtitle">${weatherName}</p><p class="temperature">${temperature}</p></div>`)
-
-  connectws()
-
-  function connectws() {
-    if ("WebSocket" in window) {
-      let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/"
-      const ws = new WebSocket(wsServerUrl)
-      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...")
-
-      ws.onclose = function () {
-        setTimeout(connectws, 10000)
-        console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to Streamer.bot, reconnecting every 10s...")
-      }
-
-      ws.onopen = function () {
-        ws.send(
-          JSON.stringify({
-            request: "Subscribe",
-            events: {
-              raw: ["Action"],
-            },
-            id: "123",
-          })
-        )
-        console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot")
-        document.querySelector("body").insertAdjacentHTML(`afterbegin`,`<ul class="Mute-Indicator"></ul>`)
-      }
-      
-      let outputAction = `Weather Widget -- Outputted Data`
-      let fetchAction = `Weather Widget -- Request Data`
-
-      let wsBody = {
-        request: "DoAction",
-        action: {
-          name: outputAction,
-        },
-        args: {
-          temperature: weather.current_weather.temperature,
-          time: weather.current_weather.time,
-          weatherCode: weather.current_weather.weathercode,
-          windDirection: weather.current_weather.winddirection,
-          windSpeed: weather.current_weather.windspeed
-        },
-        id: "123",
-      }
-
-      ws.addEventListener("message", (event) => {
-        if (!event.data) return
-        const data = JSON.parse(event.data)
-        if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the Events/Requests"); return }
-        let runningAction = data?.data.name
-        
-        if (runningAction === fetchAction) {
-          ws.send(JSON.stringify(wsBody))
-        }
-      })
-    }
-  }
+  document.body.insertAdjacentHTML(`afterbegin`, `<div class="weather-widget"><img class="weather-icon" src="./icons/${iconType}/${randomIcon}.svg"><p class="weather-subtitle">${weatherName}</p><p class="temperature">${temperature}<small>°${unit}</small></p></div>`)
 }
 
 setInterval(() => {

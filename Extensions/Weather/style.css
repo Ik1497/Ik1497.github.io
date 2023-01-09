@@ -54,6 +54,11 @@ body[data-time="day"] .weather-widget {
     font-size: calc(var(--font-size) * 3.5);
 }
 
+.weather-widget .temperature small {
+    font-size: calc(var(--font-size) * 2.5);
+    color: #ccc;
+}
+
 .weather-widget img {
     width: calc(var(--font-size) * 17.5);
     height: calc(var(--font-size) * 17.5);
