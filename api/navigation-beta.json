@@ -1,47 +1,6 @@
-[
-  {
-    "name": "Home",
-    "icon": "mdi mdi-home",
-    "href": "/",
-    "type": "link"
-  },
-  {
-    "type": "hr"
-  },
-  {
-    "name": "Extensions",
-    "type": "label"
-  },
-  {
-    "name": "Local Script Actions Handler",
-    "icon": "mdi mdi-script-text-play",
-    "href": "/Extensions/Local-Script-Action-Handler/Docs",
-    "type": "link"
-  },
-  {
-    "type": "hr"
-  },
-  {
-    "name": "Widgets",
-    "type": "label"
-  },
-  {
-    "name": "Music Widget",
-    "icon": "mdi mdi-spotify",
-    "href": "/Extensions/Music/",
-    "type": "link"
-  },
-  {
-    "name": "Mute Indicator",
-    "icon": "mdi mdi-volume-mute",
-    "href": "/Extensions/Mute-Indicator/Docs",
-    "type": "link"
-  },
-  {
-    "type": "hr"
-  },
-  {
-    "name": "Tools",
-    "type": "label"
-  }
-]
+{
+  "name": "Music Widget",
+  "icon": "mdi mdi-spotify",
+  "href": "/Extensions/Music/",
+  "type": "link"
+}

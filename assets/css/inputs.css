@@ -43,12 +43,12 @@
     position: absolute;
 }
 
-.dropdown:focus-within .dropdown__items {
+.dropdown:hover .dropdown__items {
     display: block;
     width: 100%;
 }
 
-.dropdown:focus-within .dropdown__items .dropdown__items-item {
+.dropdown:hover .dropdown__items .dropdown__items-item {
     border: 0;
     border: 1px solid var(--background-soft);
     outline: 0;
@@ -59,6 +59,6 @@
     width: 100%;
 }
 
-.dropdown:focus-within .dropdown__items .dropdown__items-item:active {
+.dropdown:hover .dropdown__items .dropdown__items-item:active {
     background: var(--background-soft);
 }

@@ -23,7 +23,14 @@ async function app() {
             }
           }
 
-          navItemList += `<li title="${navItem.name}" aria-label="${navItem.name}"${navActive}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
+          let published = navItem.channel ?? `public`
+          if (published === `beta` && localStorage.getItem(`websiteSettings__visibilityChannel`) === `beta`) { 
+            navItem.name += ` (BETA)`
+          }
+          
+          if (published != `beta` || localStorage.getItem(`websiteSettings__visibilityChannel`) === `beta`) { 
+            navItemList += `<li title="${navItem.name}" aria-label="${navItem.name}"${navActive}${published}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
+          }
         }
       });
 

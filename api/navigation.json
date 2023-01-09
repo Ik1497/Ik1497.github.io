@@ -32,6 +32,13 @@
           "icon": "mdi mdi-volume-mute",
           "href": "/Extensions/Mute-Indicator/Docs",
           "type": "link"
+        },
+        {
+          "name": "Weather Widget",
+          "icon": "mdi mdi-weather-lightning",
+          "href": "/Extensions/Weather/Docs",
+          "type": "link",
+          "channel": "beta"
         }
       ]
     }
