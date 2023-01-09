@@ -17,4 +17,6 @@ async function app() {
     for (let imagesRunTime = 0; imagesRunTime < (idiot.images + 1); imagesRunTime++) {
         document.querySelector(`main .idiot-grid`).insertAdjacentHTML(`beforeend`, `<img src="./images/messages/${idiot.user}-${imagesRunTime}.png">`)
     }
+
+    document.querySelector(`main .idiot-grid`).insertAdjacentHTML(`afterbegin`, `<p style="padding: 0; padding-left: 1rem;">${idiot.images + 1}x an idiot<br>${idiot.user.replaceAll(`-`, ``)}</p>`)
 }
