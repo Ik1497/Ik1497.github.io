@@ -587,14 +587,13 @@ ul.grid-list li:nth-child(odd) {
 /* ==================== */
 .url-parameter-novalue::before {
   color: var(--color-code);
-  background: var(--text-background-primary-darken);
-  border: 1px solid var(--text-background-700);
+  background: var(--text-background-700);
+  border: 1px solid var(--text-background-900);
   padding-inline: 0.3em;
-  border-radius: 100vmax;
 }
 
 .url-parameter-novalue::before {
-  content: "Doesn't allow any values";
+  content: "Doesn't allow any values, see URL Parmaters page above";
 }
 
 [class*=img-] {
