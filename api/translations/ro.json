@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Normală",
-        "wind": "Breezie",
+        "sun": "Sunny",
+        "breeze": "Rupeţi",
         "cloud": "Înnorat",
         "fog": "Foggy",
         "rain": "Ploaie",

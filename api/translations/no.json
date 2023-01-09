@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Vanlig",
-        "wind": "Bryt",
+        "sun": "Sunny",
+        "breeze": "Pause",
         "cloud": "Overskyet",
         "fog": "Tåke",
         "rain": "Regn",

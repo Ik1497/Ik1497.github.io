@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Regolare",
-        "wind": "Breezy",
+        "sun": "Sunny",
+        "breeze": "Brezza",
         "cloud": "Nuvoloso",
         "fog": "Nebbia",
         "rain": "Pioggia",

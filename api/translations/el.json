@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Κανονική",
-        "wind": "Breezy",
+        "sun": "Sunny",
+        "breeze": "Αεράκι",
         "cloud": "Συννεφιά",
         "fog": "Ομιχλώδης",
         "rain": "Βροχή",

@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Běžný",
-        "wind": "Chleba",
+        "sun": "Sunny",
+        "breeze": "Vápno",
         "cloud": "Zataženo",
         "fog": "Mlhavý",
         "rain": "Dešťové srážky",

@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "標準",
-        "wind": "Breezy",
+        "sun": "Sunny",
+        "breeze": "ブリーズ",
         "cloud": "曇り",
         "fog": "Foggy",
         "rain": "雨",

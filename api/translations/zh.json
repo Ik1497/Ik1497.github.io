@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "常规的",
-        "wind": "微风",
+        "sun": "Sunny",
+        "breeze": "微风",
         "cloud": "多云",
         "fog": "雾",
         "rain": "雨",

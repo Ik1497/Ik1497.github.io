@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Tavallinen",
-        "wind": "¶ y",
+        "sun": "Sunny",
+        "breeze": "Breeze",
         "cloud": "Pilvinen",
         "fog": "Sumua",
         "rain": "Sadetta",

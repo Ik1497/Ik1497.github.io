@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Padrão",
-        "wind": "Abreviação",
+        "sun": "Sunny",
+        "breeze": "brisa",
         "cloud": "Nublado",
         "fog": "Nevoeiro",
         "rain": "Chuva",
