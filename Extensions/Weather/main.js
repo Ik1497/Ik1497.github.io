@@ -61,7 +61,6 @@ async function app() {
   let temperature;
   let weatherCode = weather.current_weather.weathercode
 
-  console.log(`unit`, new URLSearchParams(window.location.search).get("unit").toLowerCase())
   if (new URLSearchParams(window.location.search).get("unit").toUpperCase() === `F`) {
     temperature = Math.round((weather.current_weather.temperature * 9/5) + 32)
     unit = `F`
