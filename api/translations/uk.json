@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Звичайний",
-        "wind": "Брізі",
+        "sun": "Sunny",
+        "breeze": "Бриз",
         "cloud": "Хмарно",
         "fog": "Туманно",
         "rain": "Дощ",
