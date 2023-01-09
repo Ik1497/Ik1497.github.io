@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "dom",
         "breeze": "brisa",
         "cloud": "Nublado",
         "fog": "Nevoeiro",
         "rain": "Chuva",
         "snow": "Neve",
         "thunder": "Trovoadas"
+    },
+    "music": {
+        "defaultSongTitle": "Tocar uma música",
+        "defaultSongArtist": "para este widget funcionar!"
     }
 }
