@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "الشمس",
         "breeze": "نزيف",
         "cloud": "غيوم",
         "fog": "الضباب",
         "rain": "المطر",
         "snow": "الثلج",
         "thunder": "عاصفة رعدية"
+    },
+    "music": {
+        "defaultSongTitle": "تشغيل أغنية",
+        "defaultSongArtist": "لتعمل أداة التحكم هذه!"
     }
 }

@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "zo",
         "breeze": "Breedte",
         "cloud": "Bewolkt",
         "fog": "Mistig",
         "rain": "Regen",
         "snow": "Sneeuw",
         "thunder": "Onweer"
+    },
+    "music": {
+        "defaultSongTitle": "Speel een nummer af",
+        "defaultSongArtist": "om deze widget te laten werken!"
     }
 }

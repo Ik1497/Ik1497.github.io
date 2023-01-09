@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Su",
         "breeze": "Breeze",
         "cloud": "Pilvinen",
         "fog": "Sumua",
         "rain": "Sadetta",
         "snow": "Lumi",
         "thunder": "Ukkosmyrsky"
+    },
+    "music": {
+        "defaultSongTitle": "Soita kappale",
+        "defaultSongArtist": "jotta tämä widget toimisi!"
     }
 }

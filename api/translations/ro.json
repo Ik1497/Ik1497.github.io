@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Soare",
         "breeze": "Rupeţi",
         "cloud": "Înnorat",
         "fog": "Foggy",
         "rain": "Ploaie",
         "snow": "Ninsoare",
         "thunder": "Furtună"
+    },
+    "music": {
+        "defaultSongTitle": "Redă o piesă",
+        "defaultSongArtist": "pentru acest widget să funcţioneze!"
     }
 }

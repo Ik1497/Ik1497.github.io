@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Søn",
         "breeze": "Vind",
         "cloud": "Overskyet",
         "fog": "Tåget",
         "rain": "Regn",
         "snow": "Sne",
         "thunder": "Tordenvejr"
+    },
+    "music": {
+        "defaultSongTitle": "Spil en sang",
+        "defaultSongArtist": "for denne widget til at virke!"
     }
 }

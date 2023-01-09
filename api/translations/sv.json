@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Sön",
         "breeze": "Bris",
         "cloud": "Molnigt",
         "fog": "Dimmigt",
         "rain": "Regn",
         "snow": "Snö",
         "thunder": "Åskväder"
+    },
+    "music": {
+        "defaultSongTitle": "Spela en låt",
+        "defaultSongArtist": "för att denna widget ska fungera!"
     }
 }

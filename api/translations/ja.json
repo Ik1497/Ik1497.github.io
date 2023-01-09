@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "日",
         "breeze": "ブリーズ",
         "cloud": "曇り",
         "fog": "Foggy",
         "rain": "雨",
         "snow": "雪",
         "thunder": "雷雨"
+    },
+    "music": {
+        "defaultSongTitle": "曲を再生",
+        "defaultSongArtist": "このウィジェットを動作させます！"
     }
 }

@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Sonne",
         "breeze": "Brise",
         "cloud": "bewölkt",
         "fog": "Negativ",
         "rain": "Regen",
         "snow": "Schnee",
         "thunder": "Gewitter"
+    },
+    "music": {
+        "defaultSongTitle": "Lied abspielen",
+        "defaultSongArtist": "damit dieses Widget funktioniert!"
     }
 }

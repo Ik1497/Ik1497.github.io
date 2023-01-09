@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Slunce",
         "breeze": "Vápno",
         "cloud": "Zataženo",
         "fog": "Mlhavý",
         "rain": "Dešťové srážky",
         "snow": "Sníh",
         "thunder": "Bouřka"
+    },
+    "music": {
+        "defaultSongTitle": "Přehrát skladbu",
+        "defaultSongArtist": "aby tento widget fungoval!"
     }
 }
