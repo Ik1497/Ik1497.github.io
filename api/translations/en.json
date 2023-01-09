@@ -7,5 +7,9 @@
         "rain": "Rain",
         "snow": "Snow",
         "thunder": "Thunderstorm"
+    },
+    "music": {
+        "defaultSongTitle": "Play a Song",
+        "defaultSongArtist": "for this widget to work!"
     }
 }
