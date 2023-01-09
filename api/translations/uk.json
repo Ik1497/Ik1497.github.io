@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "НД",
         "breeze": "Бриз",
         "cloud": "Хмарно",
         "fog": "Туманно",
         "rain": "Дощ",
         "snow": "Сніг",
         "thunder": "Гроза"
+    },
+    "music": {
+        "defaultSongTitle": "Грати пісню",
+        "defaultSongArtist": "для того щоб цей віджет працював!"
     }
 }
