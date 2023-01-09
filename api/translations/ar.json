@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "عادي",
-        "wind": "برايزي",
+        "sun": "Sunny",
+        "breeze": "نزيف",
         "cloud": "غيوم",
         "fog": "الضباب",
         "rain": "المطر",
