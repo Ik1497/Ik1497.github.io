@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Вс",
         "breeze": "Ветер",
         "cloud": "Облачно",
         "fog": "Туман",
         "rain": "Дождь",
         "snow": "Снег",
         "thunder": "Гроза"
+    },
+    "music": {
+        "defaultSongTitle": "Играть песню",
+        "defaultSongArtist": "для этого виджета работает!"
     }
 }
