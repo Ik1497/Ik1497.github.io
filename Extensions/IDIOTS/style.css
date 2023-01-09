@@ -1,0 +1,33 @@
+.idiot-image {
+    position: relative;
+}
+
+.idiot-image img.background-image {
+    max-width: 100%;
+    width: 100%;
+}
+
+.idiot-image img.forground-image {
+    width: 333px;
+    height: 450px;
+    background: var(--background-primary);
+    border-radius: 50%;
+    position: absolute;
+    left: 349px;
+    top: 109px;
+}
+
+.idiot-image .idiot-text {
+    position: absolute;
+    left: 410px;
+    bottom: -5px;
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--text-900);
+}
+
+.idiot-grid {
+    display: grid;
+    background: #36393f;
+    row-gap: .5rem;
+}

@@ -123,7 +123,7 @@ async function app() {
 
   document.body.setAttribute(`data-time`, day)
   
-  document.body.insertAdjacentHTML(`afterbegin`, `<div class="weather-widget"><img class="weather-icon" src="./icons/${iconType}/${randomIcon}.svg"><p class="weather-subtitle">${weatherName}</p><p class="temperature">${temperature}<small>°${unit}</small></p></div>`)
+  document.body.insertAdjacentHTML(`afterbegin`, `<div class="weather-widget"><img class="weather-icon" src="./icons/${iconType}/${randomIcon}.svg"><p class="weather-subtitle">${weatherName}</p><p class="temperature">${temperature}<small>&deg;${unit}</small></p></div>`)
 }
 
 setInterval(() => {
