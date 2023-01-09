@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Vanlig",
-        "wind": "Breezy",
+        "sun": "Sunny",
+        "breeze": "Bris",
         "cloud": "Molnigt",
         "fog": "Dimmigt",
         "rain": "Regn",
