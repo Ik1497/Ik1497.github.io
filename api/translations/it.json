@@ -1,11 +1,15 @@
 {
     "weather": {
-        "sun": "Sunny",
+        "sun": "Sun",
         "breeze": "Brezza",
         "cloud": "Nuvoloso",
         "fog": "Nebbia",
         "rain": "Pioggia",
         "snow": "Neve",
         "thunder": "Temporale"
+    },
+    "music": {
+        "defaultSongTitle": "Riproduci un brano",
+        "defaultSongArtist": "perché questo widget funzioni!"
     }
 }
