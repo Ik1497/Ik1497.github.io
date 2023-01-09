@@ -1,8 +1,8 @@
 //////////////////////
 /// Default Values ///
 //////////////////////
-var artistNameDefault = "for this widget to work!";
 var songNameDefault = "Play a Song";
+var artistNameDefault = "for this widget to work!";
 var albumArtDefault = "./placeholder.png";
 var durationDefault = "N/A";
 
