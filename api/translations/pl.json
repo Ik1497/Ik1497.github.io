@@ -1,7 +1,7 @@
 {
     "weather": {
-        "regular": "Regularne",
-        "wind": "Mroźny",
+        "sun": "Sunny",
+        "breeze": "Brykiet",
         "cloud": "Chmura",
         "fog": "Mgła",
         "rain": "Deszcz",
