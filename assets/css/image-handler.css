@@ -1,0 +1,25 @@
+img {
+    cursor: pointer;
+}
+
+body:has(.image-zoomed) {
+    /* pointer-events: none; */
+    overflow: hidden;
+}
+
+body:has(.image-zoomed) > *:not(.image-zoomed) {
+    opacity: .5;
+}
+
+.image-zoomed {
+    position: fixed;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    inset: 0;
+}
+
+.image-zoomed img {
+    max-width: 100%;
+    width: 80vw;
+}

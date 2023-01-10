@@ -124,7 +124,7 @@ function connectws() {
 }
 
 //////////////////////
-/// URL Paramaters ///
+/// URL parameters ///
 //////////////////////
 // General
 const params = new URLSearchParams(window.location.search);

@@ -36,9 +36,9 @@
         Put this URL into OBS: <a href="https://ik1497.github.io/Extensions/Weather/">https://ik1497.github.io/Extensions/Weather/</a>
       </p>
       <h3>Day</h3>
-      <img class="img-400" src="./overview-day.gif" alt="overview.gif">
+      <img class="img-400" src="./overview-day.gif" alt="overview-day.gif">
       <h3>Night</h3>
-      <img class="img-400" src="./overview-night.gif" alt="overview.gif">
+      <img class="img-400" src="./overview-night.gif" alt="overview-night.gif">
       <h3>URL Parameters</h3>
       <ul class="button-grid">
         <a href="/Extensions/Basics/URL-Parameters">
@@ -82,6 +82,21 @@
           </tr>
         </tbody>
       </table>
+      <h4>Background</h4>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>background</code></td>
+            <td class="table-left">Change the background color, allows <a href="https://cssgradient.io/">CSS gradients</a>.<br>Doesn't allow hex codes, use something like HSL, RGB, etc. (this will remove day/night background and only use this one).<br><code>Default Day: linear-gradient(hsl(194, 97%, 44%), hsl(219, 94%, 41%))</code>.<br><code>Default Night: linear-gradient(hsl(224, 14%, 15%), hsl(255, 20%, 4%))</code>.</td>
+          </tr>
+        </tbody>
+      </table>
       <h4>Misc</h4>
       <table>
         <thead>
@@ -93,11 +108,11 @@
         <tbody>
           <tr>
             <td class="table-right"><code>lang</code></td>
-            <td class="table-left">The language of the widget <code>default: en</code>.<br>This is auto translated, if you spot wrong translations, send me a DM on Discord.</td>
+            <td class="table-left">The language of the widget <code>default: en</code>.<br>This is auto translated, if you spot wrong translations, send me a DM on Discord.<br>Choose between: ar, cs, da, de, el, en, es, fi, fr, it, ja, nl, no, pl, pt, ro, ru, sv, uk, zh.</td>
           </tr>
           <tr>
             <td class="table-right"><code>force-time</code></td>
-            <td class="table-left">If you want the widget to have the same look in night and day <code>no default</code>.<br>Choose between <code>day</code> and <code>night</code>.</td>
+            <td class="table-left">If you want the widget to have the same look in night and day <code>no default</code>.<br>Choose between <code>day</code> and <code>night</code>.<br><strong>Note:</strong> the background and icons change with this.</td>
           </tr>
           <tr>
             <td class="table-right"><code>animation-off</code></td>
@@ -108,10 +123,9 @@
       <br>
       <p>
         Make it your own with URL Parameters! This example image below uses:<br>
-        <code>https://ik1497.github.io/Extensions/Mute-Indicator?chip-background=rgb(255,255, 255)&chip-border-radius=20px&exclude=[A] Music</code>
+        <code>http://localhost:5500/Extensions/Weather/?lang=ja&animation-off&force-time=night&background=linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(0,39,255,1) 100%)</code>
       </p>
-
-      <img class="img-400 margin-top" src="./overview-url-paramaters.png" alt="overview-url-paramaters.png">
+      <img class="img-400 margin-top" src="./overview-url-parameters.png" alt="overview-url-parameters.png">
       <p>
         For any suggestions about this widget or any theme feel free to send me
         a DM on discord or open an <a href="/Links/Issues">issue</a>.

@@ -1,56 +1,14 @@
-let iconMap = [
-  {
-    name: `Sunny`,
-    id: `sun`,
-    iconGroup: {day: [`day`], night: [`night`], misc: []},
-    weatherCode: [0, 1]
-  },
-  {
-    name: `Breeze`,
-    id: `breeze`,
-    iconGroup: {day: [`cloudy-day-1`, `cloudy-day-2`, `cloudy-day-3`], night: [`cloudy-night-1`, `cloudy-night-2`, `cloudy-night-3`], misc: []},
-    weatherCode: [2]
-  },
-  {
-    name: `Cloudy`,
-    id: `cloud`,
-    iconGroup: {day: [], night: [], misc: [`cloudy`]},
-    weatherCode: [3]
-  },
-  {
-    name: `Foggy`,
-    id: `fog`,
-    iconGroup: {day: [], night: [], misc: [`cloudy`]},
-    weatherCode: [45, 48]
-  },
-  {
-    name: `Rain`,
-    id: `rain`,
-    iconGroup: {day: [`rainy-1`, `rainy-2`, `rainy-3`], night: [`rainy-4`, `rainy-5`, `rainy-6`, `rainy-7`], misc: []},
-    weatherCode: [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82]
-  },
-  {
-    name: `Snow`,
-    id: `snow`,
-    iconGroup: {day: [`snowy-1`, `snowy-2`, `snowy-3`], night: [`snowy-4`, `snowy-5`, `snowy-6`], misc: []},
-    weatherCode: [71, 73, 75, 77, 85, 86]
-  },
-  {
-    name: `Thunderstorm`,
-    id: `thunder`,
-    iconGroup: {day: [], night: [], misc: [`thunder`]},
-    weatherCode: [95, 96, 99]
-  }
-]
-
 let lang = new URLSearchParams(window.location.search).get("lang") || `en`
-
+document.documentElement.setAttribute(`lang`, lang);
 
 app()
 
 async function app() {
   let weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.382158355677774&longitude=4.887103035690015&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode`)
   weather = await weather.json()
+
+  let iconMap = await fetch(`./iconmap.json`)
+  iconMap = await iconMap.json()
 
   let langData = await fetch(`/api/translations/${lang}.json`)
   langData = await langData.json()
@@ -131,7 +89,7 @@ setInterval(() => {
 }, 300000);
 
 //////////////////////
-/// URL Paramaters ///
+/// URL parameters ///
 //////////////////////
 // General
 const params = new URLSearchParams(window.location.search)
@@ -152,3 +110,8 @@ root.style.setProperty("--font-size", fontSize)
 
 let fontColor = params.get("font-color")
 root.style.setProperty("--font-color", fontColor)
+
+// Background
+
+let background = params.get("background")
+root.style.setProperty("--background", background)

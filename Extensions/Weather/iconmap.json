@@ -1,0 +1,37 @@
+[
+  {
+    "id": "sun",
+    "iconGroup": {"day": ["day"], "night": ["night"], "misc": []},
+    "weatherCode": [0, 1]
+  },
+  {
+    "id": "breeze",
+    "iconGroup": {"day": ["cloudy-day-1", "cloudy-day-2", "cloudy-day-3"], "night": ["cloudy-night-1", "cloudy-night-2", "cloudy-night-3"], "misc": []},
+    "weatherCode": [2]
+  },
+  {
+    "id": "cloud",
+    "iconGroup": {"day": [], "night": [], "misc": ["cloudy"]},
+    "weatherCode": [3]
+  },
+  {
+    "id": "fog",
+    "iconGroup": {"day": [], "night": [], "misc": ["cloudy"]},
+    "weatherCode": [45, 48]
+  },
+  {
+    "id": "rain",
+    "iconGroup": {"day": ["rainy-1", "rainy-2", "rainy-3"], "night": ["rainy-4", "rainy-5", "rainy-6", "rainy-7"], "misc": []},
+    "weatherCode": [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82]
+  },
+  {
+    "id": "snow",
+    "iconGroup": {"day": ["snowy-1", "snowy-2", "snowy-3"], "night": ["snowy-4", "snowy-5", "snowy-6"], "misc": []},
+    "weatherCode": [71, 73, 75, 77, 85, 86]
+  },
+  {
+    "id": "thunder",
+    "iconGroup": {"day": [], "night": [], "misc": ["thunder"]},
+    "weatherCode": [95, 96, 99]
+  }
+]

@@ -13,6 +13,7 @@ document.write(`
 <script src="/assets/js/header.js" defer></script>
 <script src="/assets/js/theme.js" defer></script>
 <script src="/assets/js/footer.js" defer></script>
+<script src="/assets/js/image-handler.js" defer></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.0.96/css/materialdesignicons.min.css">
 <script src="/assets/prism/prism.js" defer></script>
