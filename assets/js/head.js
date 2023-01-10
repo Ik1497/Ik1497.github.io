@@ -19,5 +19,4 @@ document.write(`
 <script src="/assets/prism/prism.js" defer></script>
 <link rel="stylesheet" href="/assets/css/style.css">
 
-<script> anchors.options = { placement: 'right', icon: "#" }; anchors.add();</script>
 `);

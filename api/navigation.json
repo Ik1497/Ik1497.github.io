@@ -9,6 +9,7 @@
         "icon": "mdi mdi-home",
         "href": "/",
         "type": "link",
+        "channel": "public",
         "lastEdited": {
           "date": "09/01/2023",
           "time": "9:29"
@@ -26,6 +27,7 @@
         "icon": "mdi mdi-script-text-play",
         "href": "/Extensions/Local-Script-Action-Handler/Docs",
         "type": "link",
+        "channel": "public",
         "home": 1,
         "lastEdited": {
           "date": "09/01/2023",
@@ -46,8 +48,8 @@
         "type": "link",
         "channel": "beta",
         "lastEdited": {
-          "date": "09/01/2023",
-          "time": "9:29"
+          "date": "10/01/2023",
+          "time": "9:31"
         }
       },
       {
@@ -56,6 +58,7 @@
         "icon": "mdi mdi-volume-mute",
         "href": "/Extensions/Mute-Indicator/Docs",
         "type": "link",
+        "channel": "public",
         "home": 2,
         "lastEdited": {
           "date": "09/01/2023",
