@@ -111,7 +111,10 @@ root.style.setProperty("--font-size", fontSize)
 let fontColor = params.get("font-color")
 root.style.setProperty("--font-color", fontColor)
 
-// Background
+// Widget
 
 let background = params.get("background")
 root.style.setProperty("--background", background)
+
+let borderRadius = params.get("border-radius")
+root.style.setProperty("--border-radius", borderRadius)

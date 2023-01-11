@@ -35,6 +35,13 @@ let page = {
             enabled: true
         },
         {
+            name: "Weather Widget",
+            description: "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
+            icon: "mdi mdi-weather-lightning",
+            href: "/Extensions/Weather/Docs",
+            enabled: false
+        },
+        {
             name: "Music Widget",
             description: "Music Widget for Spotify",
             icon: "mdi mdi-spotify",
@@ -53,13 +60,6 @@ let page = {
             description: "Start a timer with Streamer.bot, 4 actions included",
             icon: "mdi mdi-clock",
             href: "/Extensions/Timer/Docs",
-            enabled: false
-        },
-        {
-            name: "Weather Widget",
-            description: "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
-            icon: "mdi mdi-weather-lightning",
-            href: "/Extensions/Weather/Docs",
             enabled: false
         }
     ]
