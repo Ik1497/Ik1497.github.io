@@ -46,10 +46,10 @@
         "icon": "mdi mdi-weather-lightning",
         "href": "/Extensions/Weather/Docs",
         "type": "link",
-        "channel": "beta",
+        "channel": "public",
         "lastEdited": {
-          "date": "10/01/2023",
-          "time": "9:31"
+          "date": "11/01/2023",
+          "time": "18:43"
         }
       },
       {

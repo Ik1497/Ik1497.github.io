@@ -21,6 +21,13 @@ let page = {
     ],
     items: [
         {
+            name: "Weather Widget",
+            description: "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
+            icon: "mdi mdi-weather-lightning",
+            href: "/Extensions/Weather/Docs",
+            enabled: true
+        },
+        {
             name: "Mute Indicator",
             description: "Mute Indicator so you can see if and what sources are muted.",
             icon: "mdi mdi-volume-mute",
@@ -33,13 +40,6 @@ let page = {
             icon: "mdi mdi-script-text-play",
             href: "/Extensions/Local-Script-Action-Handler/Docs",
             enabled: true
-        },
-        {
-            name: "Weather Widget",
-            description: "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
-            icon: "mdi mdi-weather-lightning",
-            href: "/Extensions/Weather/Docs",
-            enabled: false
         },
         {
             name: "Music Widget",

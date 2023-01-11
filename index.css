@@ -36,6 +36,8 @@ li.item-grid-item {
     text-decoration: none;
     transform-style: preserve-3d;
     position: relative;
+    min-height: 140px;
+    height: 100%;
 }
 
 li.item-grid-item.disabled a {
@@ -69,12 +71,11 @@ li.item-grid-item article:hover {
 li.item-grid-item article {
     border: 3px solid var(--background-soft);
     border-radius: 12px;
+    color: var(--text-900);
     padding: 24px;
-    height: 140px;
     transition: all 0.3s ease;
     transform-style: preserve-3d;
     position: relative;
-    color: var(--text-900);
     box-sizing: content-box;
 }
 

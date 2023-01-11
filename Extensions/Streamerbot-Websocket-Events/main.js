@@ -27,8 +27,7 @@ function connectws() {
     ws.addEventListener("message", (event) => {
       if (!event.data) return;
       const data = JSON.parse(event.data);
-      console.log(data);
-
+      console.log(data, JSON.stringify(data))
       // Get all keys e.g. twitch, youTube, etc.
       var keys = [];
 
@@ -39,40 +38,47 @@ function connectws() {
         }
       });
 
+      keys.sort()
+
       keys.forEach(index => {
         // Adds all keys in nav
-        document.querySelector(".nav-list").insertAdjacentHTML(`beforeend`, `<li class="nav-list-item group-${index}"><button>${index}</button></li>`);
-        document.querySelector(`.group-${index}`).addEventListener("click", function(index) {
+        document.querySelector(".nav-list").insertAdjacentHTML(`beforeend`, `<li class="nav-list-item"><button>${index}</button></li>`);
+      });
+
+      document.querySelectorAll(`nav.nav .nav-list .nav-list-item button`).forEach(button => {
+        button.addEventListener("click", function (index) {
           // Event listener when someone clicks on a nav item
-          let path = index.path[1];
-          path.classList.forEach(index => {
+          button.parentNode.classList.forEach(click => {
             // Adds nav-active to the clicked nav item
-            document.querySelectorAll(".nav-active").forEach(index => {
+            document.querySelectorAll(".nav-active").forEach(item => {
               // removes all previous nav-actibe classes
-              document.querySelector(".nav-active").classList.remove("nav-active");
+              item.classList.remove("nav-active")
             });
-
-            // Add the new nav-active class
-            document.querySelector(`.${index}`).classList.add("nav-active");
-
-            // Add main contents
-            addMainContents(index);
-
+  
+            
           });
+          // Add the new nav-active class
+          button.parentNode.classList.add("nav-active");
+
+          // Add main contents
+          addMainContents(button);
         });
       });
 
       function addMainContents(group) {
-        if (group.includes("group-") === true) {
-          document.querySelector(".event-items").parentNode.removeChild(document.querySelector(".event-items"))
-          document.querySelector("main").insertAdjacentHTML(`beforeend`, `<ul class="event-items"></ul>`);
-          group = group.replace("group-", "");
-          
-          data.events.twitch.forEach(index => {
-            document.querySelector(".event-items").insertAdjacentHTML(`beforeend`, `<li class="event-item">${index}</li>`);
+          document.querySelector(".event-items").innerHTML = ``
+          let entries = Object.entries(data.events)
+          console.log(entries)
+          let eventItems = []
+          entries.forEach(entry => {
+            if (entry[0] === group.innerHTML) {
+              eventItems = entry[1]
+            }
+          });
+          eventItems.forEach(item => {
+            document.querySelector(".event-items").insertAdjacentHTML(`beforeend`, `<li class="event-item">${item}</li>`);
           });
         }
-      }
     });
   }
 }
