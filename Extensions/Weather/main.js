@@ -2,13 +2,10 @@ let lang = new URLSearchParams(window.location.search).get("lang") || `en`
 document.documentElement.setAttribute(`lang`, lang);
 
 let coords = {}
-coords.latitude = (new URLSearchParams(window.location.search).get("lat") || null)
-coords.longitude = (new URLSearchParams(window.location.search).get("lon") || null)
-if (coords.latitude === null || coords.longitude === null) {
-  alert(`fill in the ?lat=xxx&lon=xxx after the url, the widget can't work if you don't`)
-} else {
-  app()
-}
+coords.latitude = (new URLSearchParams(window.location.search).get("lat") || `52.52`)
+coords.longitude = (new URLSearchParams(window.location.search).get("lon") || `13.419998`)
+
+app()
 
 async function app() {
   let weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode`)
