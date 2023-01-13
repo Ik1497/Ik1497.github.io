@@ -394,7 +394,7 @@ table {
   border-spacing: 0;
 }
 
-thead tr td {
+thead tr th {
   background: var(--background-soft);
   padding-block: 0.3em !important;
   padding-inline: 0.6em !important;
@@ -425,37 +425,6 @@ table .table-center {
 }
 table .table-left {
   text-align: left;
-}
-
-table button {
-  background: var(--background-soft);
-  color: var(--text-primary);
-  outline: none;
-  border: none;
-  text-align: center;
-}
-
-table button:active,
-table button:focus-visible {
-  background: var(--background-mute);
-}
-
-table .table-settings {
-  display: flex;
-  flex-direction: column;
-  min-width: fit-content;
-}
-
-table .table-settings button {
-  padding: .3em;
-}
-
-table[data-settings-menu=closed] .table-settings {
-  display: none;
-}
-
-table[data-settings-menu=opened] .table-settings {
-  display: flex;
 }
 
 /* Footer */

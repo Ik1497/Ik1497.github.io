@@ -42,97 +42,13 @@
         </a>
       </ul>
       <h4>Font</h4>
-      <table>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>font-family</code></td>
-            <td class="table-left">The font family <code>default: Uni Sans CAPS</code>.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>font-weight</code></td>
-            <td class="table-left">The font weight <code>default: 900</code>.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>font-style</code></td>
-            <td class="table-left">The font style <code>default: normal</code>.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>font-size</code></td>
-            <td class="table-left">The font size <code>default: 1rem</code>.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>font-color</code></td>
-            <td class="table-left">The font and the svg color <code>default: #181818</code>.</td>
-          </tr>
-        </tbody>
-      </table>
+      <table data-table="fonts"></table>
       <h4>Location</h4>
-      <table>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>lat</code></td>
-            <td class="table-left">The latitude <code>Default: 52.52</code>.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>lon</code></td>
-            <td class="table-left">The longitude <code>Default: 13.419998</code>.</td>
-          </tr>
-        </tbody>
-      </table>
+      <table data-table="location"></table>
       <h4>Widget</h4>
-      <table>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>border-radius</code></td>
-            <td class="table-left">The border radius of the widget <code>Default: 2rem</code>.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>background</code></td>
-            <td class="table-left">Change the background color, allows <a href="https://cssgradient.io/">CSS gradients</a>.<br>Doesn't allow hex codes, use something like HSL, RGB, etc. (this will remove day/night background and only use this one).<br><code>Default Day: linear-gradient(hsl(194, 97%, 44%), hsl(219, 94%, 41%))</code>.<br><code>Default Night: linear-gradient(hsl(224, 14%, 15%), hsl(255, 20%, 4%))</code>.</td>
-          </tr>
-        </tbody>
-      </table>
+      <table data-table="widget"></table>
       <h4>Misc</h4>
-      <table>
-        <thead>
-          <tr>
-            <td class="table-right">Name</td>
-            <td class="table-left">Description</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="table-right"><code>lang</code></td>
-            <td class="table-left">The language of the widget <code>default: en</code>.<br>This is auto translated, if you spot wrong translations, send me a DM on Discord.<br>Choose between: ar, cs, da, de, el, en, es, fi, fr, it, ja, nl, no, pl, pt, ro, ru, sv, uk, zh.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>force-time</code></td>
-            <td class="table-left">If you want the widget to have the same look in night and day <code>no default</code>.<br>Choose between <code>day</code> and <code>night</code>.<br><strong>Note:</strong> the background and icons change with this.</td>
-          </tr>
-          <tr>
-            <td class="table-right"><code>animation-off</code></td>
-            <td class="table-left">Turns the animated icons off.<br><span class="url-parameter-novalue"></span>.</td>
-          </tr>
-        </tbody>
-      </table>
+      <table data-table="misc"></table>
       <br>
       <p>
         Make it your own with URL Parameters! This example image below uses:<br>
@@ -144,5 +60,77 @@
         a DM on discord or open an <a href="/Links/Issues">issue</a>.
       </p>
     </main>
+    <script>
+      let tableData = [
+        {
+          id: `fonts`,
+          contents: [
+            {
+              Name: `font-family`,
+              Description: `The font family, <code>default: Uni Sans CAPS</code>.`
+            },
+            {
+              Name: `font-weight`,
+              Description: `The font weight, <code>default: 900</code>.`
+            },
+            {
+              Name: `font-style`,
+              Description: `The font style <code>default: normal</code>.`
+            },
+            {
+              Name: `font-size`,
+              Description: `The font size <code>default: 1rem</code>.`
+            },
+            {
+              Name: `font-color`,
+              Description: `The font color <code>default: #ffffff</code>.`
+            }
+          ]
+        },
+        {
+          id: `location`,
+          contents: [
+            {
+              Name: `lat`,
+              Description: `The latitude <code>Default: 52.52</code>.`
+            },
+            {
+              Name: `lon`,
+              Description: `The longitude <code>Default: 13.419998</code>.`
+            }
+          ]
+        },
+        {
+          id: `widget`,
+          contents: [
+            {
+              Name: `border-radius`,
+              Description: `The border radius of the widget <code>Default: 2rem</code>.`
+            },
+            {
+              Name: `background`,
+              Description: `Changes the background color, allows <a href="https://cssgradient.io/">CSS gradients</a>.<br>Doesn't allow hex codes, use something like HSL, RGB, etc. (this will remove day/night background and only use this one).<br><code>Default Day: linear-gradient(hsl(194, 97%, 44%), hsl(219, 94%, 41%))</code>.<br><code>Default Night: linear-gradient(hsl(224, 14%, 15%), hsl(255, 20%, 4%))</code>.`
+            }
+          ]
+        },
+        {
+          id: `misc`,
+          contents: [
+            {
+              Name: `lang`,
+              Description: `The language of the widget <code>default: en</code>.<br>This is auto translated, if you spot wrong translations, send me a DM on Discord.<br>Choose between: ar, cs, da, de, el, en, es, fi, fr, it, ja, nl, no, pl, pt, ro, ru, sv, uk, zh.`
+            },
+            {
+              Name: `force-time`,
+              Description: `If you want the widget to have the same look in night and day <code>no default</code>.<br>Choose between <code>day</code> and <code>night</code>.<br><strong>Note:</strong> the background and icons change with this.`
+            },
+            {
+              Name: `animation-off`,
+              Description: `Turns the animated icons off.<br><span class="url-parameter-novalue"></span>.`
+            }
+          ]
+        }
+      ]
+    </script>
   </body>
 </html>
