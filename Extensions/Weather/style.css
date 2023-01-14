@@ -50,6 +50,11 @@ body[data-time="day"] .weather-widget {
     font-size: calc(var(--font-size) * 2);
 }
 
+.weather-widget .weather-subtitle small {
+    font-size: calc(var(--font-size) * 1.5);
+    color: #ddd;
+}
+
 .weather-widget .temperature {
     font-size: calc(var(--font-size) * 3.5);
 }

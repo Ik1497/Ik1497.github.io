@@ -31,7 +31,6 @@ if (tableData != undefined) {
             Object.values(tableContent).forEach(tableBodyValues => {
                 td += `<td style="text-align: center;">${tableBodyValues}</td>`
             });
-            console.log(td)
             selectedTable.querySelector(`tbody`).innerHTML += `<tr>${td}</tr>`
 
         });
@@ -46,6 +45,3 @@ if (tableData != undefined) {
         });
     });
 }
-
-// <tr><td class="table-right">Name</td><td class="table-left">Description</td></tr>
-// <tr><td class="table-right"><code>font-family</code></td><td class="table-left">The font family <code>default: Uni Sans CAPS</code>.</td></tr>
