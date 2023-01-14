@@ -49,6 +49,12 @@
       <table data-table="widget"></table>
       <h4>Misc</h4>
       <table data-table="misc"></table>
+      <h4>Weather Name</h4>
+      <table data-table="weather-name"></table>
+      <h4>Open Weather Map</h4>
+      <p class="no-padding">You can use the Open Weather Map API for this widget, it requires the <code>open-weather-map-api-key</code> url parameter. When you have given this API key the weather widget will use this data for the icons and temprature. All URL parameters will work the same.</p>
+      <p>Example: <code>https://ik1497.github.io/Extensions/Weather/?lat=52.52&lon=13.419998&open-weather-map-api-key=&lt;your api key&gt;</code></p><br>
+      <table data-table="openweathermap"></table>
       <br>
       <p>
         Make it your own with URL Parameters! This example image below uses:<br>
@@ -129,6 +135,15 @@
               Description: `Sets the automated weather name to a customized name for things like your location (<code>?lang</code> will have no effect) <code>No Default</code>.`
             },
             {
+              Name: `animation-off`,
+              Description: `Turns the animated icons off.<br><span class="url-parameter-novalue"></span>.`
+            }
+          ]
+        },
+        {
+          id: `weather-name`,
+          contents: [
+            {
               Name: `weather-name-prefix`,
               Description: `A text you can add before the weather name <code>No Default</code>.`
             },
@@ -139,10 +154,15 @@
             {
               Name: `weather-name-subtitle`,
               Description: `A text you can add under the weather name <code>No Default</code>.`
-            },
+            }
+          ]
+        },
+        {
+          id: `openweathermap`,
+          contents: [
             {
-              Name: `animation-off`,
-              Description: `Turns the animated icons off.<br><span class="url-parameter-novalue"></span>.`
+              Name: `open-weather-map-api-key`,
+              Description: `Your open weather map API key, can be generated <a href="https://home.openweathermap.org/api_keys">here</a> (note: need an account for this) <code>No Default</code>.`
             }
           ]
         }

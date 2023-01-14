@@ -312,8 +312,12 @@ h6:hover a.anchorjs-link {
 
 p {
   color: var(--text-primary);
-  padding: .5em 0 0;
+  padding-block: .5em;
   margin: 0;
+}
+
+p.no-padding {
+  padding-block: 0;
 }
 
 .subtitle {
