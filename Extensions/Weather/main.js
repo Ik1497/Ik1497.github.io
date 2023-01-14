@@ -10,10 +10,10 @@ app()
 async function app() {
   let weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode`)
   weather = await weather.json()
-
+  
   let iconMap = await fetch(`./iconmap.json`)
   iconMap = await iconMap.json()
-
+  
   let langData = await fetch(`/api/translations/${lang}.json`)
   langData = await langData.json()
   langData = langData.weather
@@ -22,6 +22,10 @@ async function app() {
   let weatherCode = weather.current_weather.weathercode
   let temperature;
   let unit;
+
+  console.log(`Weather`, weather)
+  console.log(`Iconmap`, iconMap)
+  console.log(`Language Data`, langData)
 
   unit = new URLSearchParams(window.location.search).get("unit") || `C`
   if (unit.toUpperCase() === `F`) {
@@ -82,6 +86,8 @@ async function app() {
       }
     });
   });
+
+  if (new URLSearchParams(window.location.search).get(`force-weather-name`) != null) weatherName = new URLSearchParams(window.location.search).get(`force-weather-name`)
 
   document.body.setAttribute(`data-time`, day)
   
