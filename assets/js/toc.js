@@ -24,7 +24,6 @@ if (headings.length != 0) {
             .replaceAll(`:`, ``)
             .replaceAll(`;`, ``)
             .replaceAll(`+`, ``)
-            .replaceAll(`-`, ``)
 
         heading.id = headingName
 

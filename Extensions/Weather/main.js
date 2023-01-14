@@ -87,7 +87,6 @@ async function app() {
     day = new URLSearchParams(window.location.search).get("force-icon-time").toLowerCase()
   }
   
-  weatherCode = `02d`
   if (weatherType === `openMeteo`) {
     iconMap.forEach(iconMapIcon => {
       iconMapIcon.weatherCode.forEach(iconMapIconWeatherCode => {
