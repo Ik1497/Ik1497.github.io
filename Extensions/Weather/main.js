@@ -127,7 +127,6 @@ async function app() {
             }
           });
 
-          console.log(iconMapIcon.iconGroup.misc.toString())
           if (iconMapIcon.iconGroup.misc.toString() === ``) {
               
             if (day === `day`) {
