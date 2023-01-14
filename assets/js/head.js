@@ -18,5 +18,4 @@ document.write(`
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.0.96/css/materialdesignicons.min.css">
 <script src="/assets/prism/prism.js" defer></script>
 <link rel="stylesheet" href="/assets/css/style.css">
-
 `);

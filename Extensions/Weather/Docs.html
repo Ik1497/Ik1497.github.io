@@ -53,7 +53,7 @@
       <table data-table="weather-name"></table>
       <h4>Open Weather Map</h4>
       <p class="no-padding">You can use the Open Weather Map API for this widget, it requires the <code>open-weather-map-api-key</code> url parameter. When you have given this API key the weather widget will use this data for the icons and temprature. All URL parameters will work the same.</p>
-      <p>Example: <code>https://ik1497.github.io/Extensions/Weather/?lat=52.52&lon=13.419998&open-weather-map-api-key=&lt;your api key&gt;</code></p><br>
+      <p>Example: <code>https://ik1497.github.io/Extensions/Weather/?lat=52.52&lon=13.419998&open-weather-map-api-key=&lt;your api key&gt;</code></p>
       <table data-table="openweathermap"></table>
       <br>
       <p>
@@ -127,16 +127,20 @@
               Description: `The language of the widget <code>Default: en</code>.<br>This is auto translated, if you spot wrong translations, send me a DM on Discord.<br>Choose between: ar, cs, da, de, el, en, es, fi, fr, it, ja, nl, no, pl, pt_BR, pt, ro, ru, sv, uk, zh-Hans, zh.`
             },
             {
+              Name: `animation-off`,
+              Description: `Turns the animated icons off.<br><span class="url-parameter-novalue"></span>.`
+            },
+            {
               Name: `force-time`,
-              Description: `If you want the widget to have the same look in night and day <code>No Fefault</code>.<br>Choose between <code>day</code> and <code>night</code>.<br><strong>Note:</strong> the background and icons change with this.`
+              Description: `Lets the widget have the same look in night and day (changes background and icons, icons can be changed with <code>force-icon-time</code>) <code>No Default</code>.<br>Choose between <code>day</code> and <code>night</code>.`
+            },
+            {
+              Name: `force-icon-time`,
+              Description: `Lets the icons have the same look in night and day <code>No Default</code>.<br>Choose between <code>day</code> and <code>night</code>.`
             },
             {
               Name: `force-weather-name`,
               Description: `Sets the automated weather name to a customized name for things like your location (<code>?lang</code> will have no effect) <code>No Default</code>.`
-            },
-            {
-              Name: `animation-off`,
-              Description: `Turns the animated icons off.<br><span class="url-parameter-novalue"></span>.`
             }
           ]
         },

@@ -59,7 +59,7 @@ async function app() {
   console.log(`Language Data`, langData)
 
 
-  if (new URLSearchParams(window.location.search).get("force-time") === null) {
+  if (new URLSearchParams(window.location.search).get("force-time").toLowerCase() === null) {
     if (weatherType === `openMeteo`) {
       day = day.split(`T`)[1]
   
@@ -73,8 +73,8 @@ async function app() {
     }
   } 
   
-  if (new URLSearchParams(window.location.search).get("force-time") != null) {
-    day = new URLSearchParams(window.location.search).get("force-time")
+  if (new URLSearchParams(window.location.search).get("force-time").toLowerCase() != null) {
+    day = new URLSearchParams(window.location.search).get("force-time").toLowerCase()
   }
   document.body.setAttribute(`data-time`, day)
   
@@ -83,10 +83,11 @@ async function app() {
 
   let randomIcon;
   let weatherName;
-  if (new URLSearchParams(window.location.search).get("force-icons-time") != null) {
-    day = new URLSearchParams(window.location.search).get("force-icons-time")
+  if (new URLSearchParams(window.location.search).get("force-icon-time").toLowerCase() != null) {
+    day = new URLSearchParams(window.location.search).get("force-icon-time").toLowerCase()
   }
   
+  weatherCode = `02d`
   if (weatherType === `openMeteo`) {
     iconMap.forEach(iconMapIcon => {
       iconMapIcon.weatherCode.forEach(iconMapIconWeatherCode => {
@@ -126,6 +127,7 @@ async function app() {
             }
           });
 
+          console.log(iconMapIcon.iconGroup.misc.toString())
           if (iconMapIcon.iconGroup.misc.toString() === ``) {
               
             if (day === `day`) {
