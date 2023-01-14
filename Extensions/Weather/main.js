@@ -59,7 +59,7 @@ async function app() {
   console.log(`Language Data`, langData)
 
 
-  if (new URLSearchParams(window.location.search).get("force-time").toLowerCase() === null) {
+  if (new URLSearchParams(window.location.search).get("force-time") === null) {
     if (weatherType === `openMeteo`) {
       day = day.split(`T`)[1]
   
@@ -73,7 +73,7 @@ async function app() {
     }
   } 
   
-  if (new URLSearchParams(window.location.search).get("force-time").toLowerCase() != null) {
+  if (new URLSearchParams(window.location.search).get("force-time") != null) {
     day = new URLSearchParams(window.location.search).get("force-time").toLowerCase()
   }
   document.body.setAttribute(`data-time`, day)
@@ -83,7 +83,7 @@ async function app() {
 
   let randomIcon;
   let weatherName;
-  if (new URLSearchParams(window.location.search).get("force-icon-time").toLowerCase() != null) {
+  if (new URLSearchParams(window.location.search).get("force-icon-time") != null) {
     day = new URLSearchParams(window.location.search).get("force-icon-time").toLowerCase()
   }
   
