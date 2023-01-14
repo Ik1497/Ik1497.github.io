@@ -90,11 +90,7 @@ async function app() {
   if (new URLSearchParams(window.location.search).get(`force-weather-name`) != null) weatherName = new URLSearchParams(window.location.search).get(`force-weather-name`)
   if (new URLSearchParams(window.location.search).get(`weather-name-prefix`) != null) weatherName += new URLSearchParams(window.location.search).get(`weather-name-prefix`)
   if (new URLSearchParams(window.location.search).get(`weather-name-suffix`) != null) weatherName = weatherName + new URLSearchParams(window.location.search).get(`weather-name-suffix`)
-
-  if (weatherName.includes(`\\n`)) {
-    weatherName = weatherName.split(`\\n`)
-    weatherName = `${weatherName[0]}<br><small>${weatherName[1]}</small>`
-  }
+  if (new URLSearchParams(window.location.search).get(`weather-name-subtitle`) != null) weatherName = `${weatherName}<br><small>${new URLSearchParams(window.location.search).get(`weather-name-subtitle`)}</small>`
 
   document.body.setAttribute(`data-time`, day)
   
