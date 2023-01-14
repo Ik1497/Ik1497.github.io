@@ -147,7 +147,7 @@ async function app() {
 
   }
 
-  if (new URLSearchParams(window.location.search).get(`force-weather-name`) != null) weatherName = new URLSearchParams(window.location.search).get(`force-weather-name`)
+  if (new URLSearchParams(window.location.search).get(`weather-name`) != null) weatherName = new URLSearchParams(window.location.search).get(`force-weather-name`)
   if (new URLSearchParams(window.location.search).get(`weather-name-prefix`) != null) weatherName += new URLSearchParams(window.location.search).get(`weather-name-prefix`)
   if (new URLSearchParams(window.location.search).get(`weather-name-suffix`) != null) weatherName = weatherName + new URLSearchParams(window.location.search).get(`weather-name-suffix`)
   if (new URLSearchParams(window.location.search).get(`weather-name-subtitle`) != null) weatherName = `${weatherName}<br><small>${new URLSearchParams(window.location.search).get(`weather-name-subtitle`)}</small>`
