@@ -27,6 +27,21 @@ document.querySelector(`header aside button.connect-websocket`).addEventListener
   window.location = `?ws=ws://${document.querySelector(`header aside .form-area .url`).value}:${document.querySelector(`header aside .form-area .port`).value}${document.querySelector(`header aside .form-area .endpoint`).value}`
 })
 
+document.querySelector(`nav.navbar > input[type=search]`).addEventListener(`keydown`, function () {
+  setTimeout(() => {    
+    let currentSearchTerm = document.querySelector(`nav.navbar > input[type=search]`).value
+    document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(listItem => {
+      if (!listItem.querySelector(`button p.title`).innerText.toLowerCase().includes(currentSearchTerm)) {
+        listItem.setAttribute(`hidden`, ``)
+        listItem.setAttribute(`aria-hidden`, `true`)
+      } else {
+        listItem.removeAttribute(`hidden`)
+        listItem.setAttribute(`aria-hidden`, `false`)
+      }
+    });
+  }, 50);
+})
+
 connectws()
 
 async function connectws() {
@@ -67,7 +82,9 @@ async function connectws() {
       const data = JSON.parse(event.data)
       console.log(data)
       if (data.id === `GetInfo`) {
-        document.querySelector(`header aside`).innerHTML = `${data.info.os} • Streamer.bot - ${data.info.name} (${data.info.version})`
+        let instanceOS = data.info.os
+        if (data.info.os === `windows`) instanceOS = `<span class="mdi mdi-microsoft-windows"> Windows</span>`
+        document.querySelector(`header aside`).innerHTML = `${instanceOS} • <span>Streamer.bot</span> - <span>${data.info.name}</span> <span>(${data.info.version})</span>`
         document.title = `${data.info.name} • ${documentTitle}`
       }
 
@@ -127,7 +144,7 @@ async function connectws() {
 
         // Groups Navbar
         uniqueGroups.forEach(group => {
-          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item"><button>${group}</button></li>`)
+          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item"><button><p class="title">${group}</p></button></li>`)
         })
 
         // Button Logic
@@ -197,7 +214,7 @@ async function connectws() {
         ///////////////////
         // Setting Modal //
         ///////////////////
-        let globalArgsHtml = `<div class="settings-modal" data-active-page="global-arguments"><nav><ul><li><button data-page="global-arguments">Global Arguments</button></li><li><button data-page="broadcaster-settings">Broadcaster Settings</button></li></ul></nav><div class="header"><div class="info"><p class="title">Global Arguments</p><p class="description">Arguments that will be assigned to all actions</p></div><button class="close-button">&times</button></div><div class="main"></div></div>`
+        let globalArgsHtml = `<div class="settings-modal" data-active-page="global-arguments"><nav><ul><li class="nav-active"><button data-page="global-arguments">Global Arguments</button></li><li><button data-page="broadcaster-settings">Broadcaster Settings</button></li></ul></nav><div class="header"><div class="info"><p class="title">Global Arguments</p><p class="description">Arguments that will be assigned to all actions</p></div><button class="close-button">&times</button></div><div class="main"></div></div>`
         document.querySelector(`.open-settings-modal`).addEventListener(`click`, function () {
           document.querySelector(`.open-settings-modal`).insertAdjacentHTML(`afterend`, globalArgsHtml)
           document.querySelectorAll(`.settings-modal .header .close-button, .settings-modal .save-button button`).forEach(closeButton => {            
@@ -308,7 +325,7 @@ async function connectws() {
       
       if (location.hash === `#Present-Viewers` && data.id === `GetActiveViewers`) {
         data.viewers.forEach(viewer => {
-          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item" id="${viewer.id}"><button>${viewer.display}</button></li>`)
+          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item" id="${viewer.id}"><button><p class="title">${viewer.display}</p></button></li>`)
         });
 
         document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(navBarListItem => {
@@ -323,6 +340,15 @@ async function connectws() {
 
             data.viewers.forEach(viewer => {
               if (viewer.id === navBarListItem.id) {
+                let previousActive = viewer.previousActive
+                let previousActiveDate = previousActive.split(`T`)[0]
+                let previousActiveTime = previousActive.split(`T`)[1].split(`+`)[0]
+                previousActiveTime = previousActiveTime.split(`:`)
+                previousActiveTime = `${previousActiveTime[0]}:${previousActiveTime[1]}:${previousActiveTime[2].split(`.`)[0]}`
+                let previousActiveTimezone = ``
+                if (previousActive.includes(`+`)) previousActiveTimezone = `UTC +${previousActive.split(`+`)[1]}`
+                if (previousActive.split(`T`)[1].includes(`-`)) previousActiveTimezone = `UTC -${previousActive.split(`T`)[1].split(`-`)[1]}`
+                previousActive = `${previousActiveDate}, ${previousActiveTime} (${previousActiveTimezone})`
                 document.querySelector(`main ul.main-list`).innerHTML = ``
                 document.querySelector(`main ul.main-list`).classList.add(`col-2`)
                 document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`,
@@ -331,8 +357,10 @@ async function connectws() {
                 <li>User Id</li><li>${viewer.id}</li>
                 <li>Role</li><li>${viewer.role}</li>
                 <li>Subscribed</li><li>${viewer.subscribed}</li>
-                <li>Previous Active</li><li>${viewer.previousActive}</li>
+                <li>Previous Active</li><li>${previousActive}</li>
                 <li>Channel Points Used</li><li>${viewer.channelPointsUsed}</li>
+                <li>Exempt</li><li>${viewer.exempt}</li>
+                <li>Groups</li><li>${viewer.groups.toString().replaceAll(`,`, `, `)}</li>
                 </tbody></table>`
                 )
               }

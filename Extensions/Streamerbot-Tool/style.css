@@ -30,6 +30,10 @@ html {
     background: var(--background-light);
 }
 
+[hidden] {
+    display: none!important;
+}
+
 /* ------ */
 /* Header */
 /* ------ */
@@ -146,7 +150,7 @@ header aside button {
     position: relative;
 }
 
-.navbar input[type=search] {
+.navbar > input[type=search] {
     position: absolute;
     top: 6.5em;
     height: 2rem;
