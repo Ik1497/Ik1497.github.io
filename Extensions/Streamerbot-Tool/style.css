@@ -139,7 +139,7 @@ header aside button {
 
 .header-tags a.header-tag-active {
     background: var(--color-link-hover);
-    cursor: wait;
+    cursor: default;
 }
 
 /* --- */
