@@ -1,4 +1,7 @@
-app();
+if (document.body.getAttribute(`data-layout-hidden`) === null) {
+  app();
+}
+
 
 async function app() {
   let navItemsArray = await fetch(`/api/navigation.json`)

@@ -1,6 +1,6 @@
 let headings = document.querySelectorAll(`h2, h3, h4, h5, h6`)
 
-if (headings.length != 0) {
+if (headings.length != 0 || document.body.getAttribute(`data-layout-hidden`) === null) {
     document.querySelector(`main`).insertAdjacentHTML(`afterend`, `<ul class="table-of-contents"></ul>`);
     
     headings.forEach(heading => {

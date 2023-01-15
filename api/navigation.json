@@ -66,5 +66,23 @@
         }
       }
     ]
+  },
+  {
+    "name": "Tools",
+    "type": "group",
+    "groupItems": [
+      {
+        "name": "Streamer.bot Instance Tools",
+        "description": "Manage your Streamer.bot instance with ease!",
+        "icon": "mdi mdi-toolbox",
+        "href": "/Extensions/Streamerbot-Tool/",
+        "type": "link",
+        "channel": "beta",
+        "lastEdited": {
+          "date": "15/01/2023",
+          "time": "16:37"
+        }
+      }
+    ]
   }
 ]

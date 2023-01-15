@@ -1,20 +1,27 @@
-let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
-let headerHtml = `<header><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">Streamer.bot Tool</p><p class="description">by Ik1497</p></div></div><aside>${headerAside}</aside></header>`
+let documentTitle = `Streamer.bot Instance Tools | Streamer.bot Actions`
+document.title = documentTitle
 
-let headTag_active__Actions = ``
-let headTag_active__ActionHistory = ``
+let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
+let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">Streamer.bot Instance Tools</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
 
 window.addEventListener('hashchange', () => {
   location.reload()
 });
+
+let headTag_active__Actions = ``
+let headTag_active__ActionHistory = ``
+let headTag_active__PresentViewers = ``
+
 if (location.hash === `#Actions`) headTag_active__Actions = ` class="header-tag-active"`
 if (location.hash === `#Actions-History`) headTag_active__ActionHistory = ` class="header-tag-active"`
+if (location.hash === `#Present-Viewers`) headTag_active__PresentViewers = ` class="header-tag-active"`
 if (location.hash === ``) location.href = `#Actions`
 
 let headTag__Actions = `<a href="#Actions"${headTag_active__Actions}>Actions</a>`
-let headTag__ActionHistory = `<a href="#Actions-History"${headTag_active__ActionHistory}>Action History</a>`
-let headerTags = `<div class="header-tags">${headTag__Actions}${headTag__ActionHistory}</div>`
-document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}${headerTags}<nav class="navbar"><ul class="navbar-list"></ul></nav><main><ul class="actions"></ul></main>`)
+let headTag__ActionHistory = `<a href="#Actions-History"${headTag_active__ActionHistory}>Action History (SOON)</a>`
+let headTag__PresentViewers = `<a href="#Present-Viewers"${headTag_active__PresentViewers}>Present Viewers</a>`
+let headerTags = `<div class="header-tags">${headTag__Actions}${headTag__ActionHistory}${headTag__PresentViewers}</div>`
+document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}${headerTags}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
 
 document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function () {
   window.location = `?ws=ws://${document.querySelector(`header aside .form-area .url`).value}:${document.querySelector(`header aside .form-area .port`).value}${document.querySelector(`header aside .form-area .endpoint`).value}`
@@ -40,6 +47,7 @@ async function connectws() {
       document.querySelector(`header aside`).innerHTML = headerAside
       document.querySelector(`header aside button.connect-websocket`).innerText = `Connect`
       document.querySelector(`header aside`).setAttribute(`data-connection`, `disconnected`)
+      location.reload()
     }
 
     ws.onopen = function () {
@@ -59,10 +67,17 @@ async function connectws() {
       const data = JSON.parse(event.data)
       console.log(data)
       if (data.id === `GetInfo`) {
-        document.querySelector(`header aside`).innerHTML = `${data.info.os} • Streamer.bot - ${data.info.name} ${data.info.version}`
+        document.querySelector(`header aside`).innerHTML = `${data.info.os} • Streamer.bot - ${data.info.name} (${data.info.version})`
+        document.title = `${data.info.name} • ${documentTitle}`
       }
 
       if (location.hash === `#Actions` && data.id === `GetInfo`) {
+        ws.send(
+          JSON.stringify({
+            request: "GetBroadcaster",
+            id: "GetBroadcaster",
+          })
+        )
         ws.send(
           JSON.stringify({
             request: "GetActions",
@@ -79,16 +94,23 @@ async function connectws() {
             id: `Subscribe`,
           })
         )
+      } else if (location.hash === `#Present-Viewers` && data.id === `GetInfo`) {
+        ws.send(
+          JSON.stringify({
+            request: `GetActiveViewers`,
+            id: `GetActiveViewers`,
+          })
+        )
       }
 
-      if (location.hash === `#Actions-History` && data.id === `Subscribe`) {
-
-      }
+      if (data.id === `GetBroadcaster`) broadcaster = data
 
       if (location.hash === `#Actions` && data.id === `GetActions`) {
-        // ------ //
+        document.body.insertAdjacentHTML(`afterbegin`, `<div title="Open Global Arguments" class="open-settings-modal mdi mdi-cog"></div>`)
+
+        ////////////
         // NAVBAR //
-        // ------ //
+        ////////////
 
         let uniqueGroups = []
         
@@ -126,24 +148,36 @@ async function connectws() {
 
             // Add Main Contents
 
-            document.querySelector(`main ul.actions`).parentNode.removeChild(document.querySelector(`main ul.actions`))
-
-            document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `<ul class="actions"></ul>`)
+            document.querySelector(`main ul.main-list`).innerHTML = ``
             buttonHtmlText = buttonHtml.innerText
             if (buttonHtmlText === "None") buttonHtmlText = ""
             data.actions.forEach(action => {
               if (action.group === buttonHtmlText) {
-                document.querySelector(`main ul.actions`).insertAdjacentHTML(`beforeend`, `<li><p class="action-name">${action.name}</p><button title="Execute Action">Execute</button></li>`)
+                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li><p class="action-name">${action.name}</p><button title="Execute Action">Execute</button></li>`)
               }
             })
+
+            // Broadcaster Variables
+            let broadcasterObj = {}
+            broadcasterObj.user = broadcaster?.platforms?.twitch?.broadcastUser ?? `ik1497`
+            broadcasterObj.userName = broadcaster?.platforms?.twitch?.broadcastUserName ?? `ik1497`
+            broadcasterObj.userId = broadcaster?.platforms?.twitch?.broadcastUserId ?? `695682330`
+            broadcasterObj.isAffiliate = broadcaster?.platforms?.twitch?.broadcasterIsAffiliate ?? `false`
+            broadcasterObj.isPartner = broadcaster?.platforms?.twitch?.broadcasterIsPartner ?? `false`
+            console.log(broadcasterObj)
 
             // Execute Button
             let globalArguments = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
             globalArguments = JSON.parse(globalArguments)
             globalArguments = Object.entries(globalArguments)
+            globalArguments.push([`broadcastUser`, broadcasterObj.user])
+            globalArguments.push([`broadcastUserName`, broadcasterObj.userName])
+            globalArguments.push([`broadcastUserId`, broadcasterObj.userId])
+            globalArguments.push([`broadcastIsAffiliate`, broadcasterObj.isAffiliate])
+            globalArguments.push([`broadcastIsPartner`, broadcasterObj.isPartner])
             globalArguments.push([`source`, `StreamerbotTool`])
             globalArguments = Object.fromEntries(globalArguments)
-            document.querySelectorAll(`main ul.actions button`).forEach(buttonHtml => {
+            document.querySelectorAll(`main ul.main-list button`).forEach(buttonHtml => {
               buttonHtml.addEventListener(`click`, function () { 
                 ws.send(
                   JSON.stringify({
@@ -152,69 +186,96 @@ async function connectws() {
                       name: buttonHtml.parentNode.querySelector(`p.action-name`).innerText
                     },
                     args: globalArguments,
-                    id: "123",
+                    id: "DoAction",
                   })
                 )
-                console.log(JSON.stringify({
-                  request: "DoAction",
-                  action: {
-                    name: buttonHtml.parentNode.querySelector(`p.action-name`).innerText
-                  },
-                  args: globalArguments,
-                  id: "123",
-                }))
               })
             })
           })
         })
 
-
-        //////////////////////
-        // Global Arguments //
-        //////////////////////
-        let globalArgsHtml = `<div class="global-args"><div class="header"><div class="info"><p class="title">Global Arguments</p><p class="description">Arguments that will be assigned to all actions</p></div><button class="close-button">&times</button></div><div class="main"><table class="add-contents"><thead><tr><th>Argument</th><th>Value</th></tr></thead><tbody><tr><td class="argument"><input type="text" placeholder="Argument"></td><td class="value"><input type="text" placeholder="Value"></td><td><button title="Add Argument"class="add-row mdi mdi-plus-box"></button></td></tr></tbody></table></div></div>`
-        document.querySelector(`.open-global-args`).addEventListener(`click`, function () {
-          document.querySelector(`.open-global-args`).insertAdjacentHTML(`afterend`, globalArgsHtml)
-          document.querySelectorAll(`.global-args .header .close-button, .global-args .save-button button`).forEach(closeButton => {            
+        ///////////////////
+        // Setting Modal //
+        ///////////////////
+        let globalArgsHtml = `<div class="settings-modal" data-active-page="global-arguments"><nav><ul><li><button data-page="global-arguments">Global Arguments</button></li><li><button data-page="broadcaster-settings">Broadcaster Settings</button></li></ul></nav><div class="header"><div class="info"><p class="title">Global Arguments</p><p class="description">Arguments that will be assigned to all actions</p></div><button class="close-button">&times</button></div><div class="main"></div></div>`
+        document.querySelector(`.open-settings-modal`).addEventListener(`click`, function () {
+          document.querySelector(`.open-settings-modal`).insertAdjacentHTML(`afterend`, globalArgsHtml)
+          document.querySelectorAll(`.settings-modal .header .close-button, .settings-modal .save-button button`).forEach(closeButton => {            
             closeButton.addEventListener(`click`, function () {
-              document.querySelector(`.global-args`).parentNode.removeChild(document.querySelector(`.global-args`))
+              document.querySelector(`.settings-modal`).parentNode.removeChild(document.querySelector(`.settings-modal`))
             })
           });
           
-          reloadAddContentsTable()
+          reloadPages()
+          function reloadPages() {
+            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `global-arguments`) reloadGlobalArguments()
+            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `broadcaster-settings`) reloadBroadcasterSettings()
+          }
 
-          document.querySelector(`.global-args .main table.add-contents .add-row`).addEventListener(`click`, function () {
-            let globalArgsData = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
-            globalArgsData = JSON.parse(globalArgsData)
-            globalArgsData = Object.entries(globalArgsData)
-            
-            globalArgsNewData = []
-            globalArgsNewData.push(document.querySelector(`.global-args .main table.add-contents tbody td.argument input`).value)
-            globalArgsNewData.push(document.querySelector(`.global-args .main table.add-contents tbody td.value input`).value)
-            globalArgsData.push(globalArgsNewData)
-            globalArgsData = Object.fromEntries(globalArgsData)
+          document.querySelectorAll(`.settings-modal nav ul li button`).forEach(navButton => {
+            navButton.addEventListener(`click`, function () {
+              navButtonPage = navButton.getAttribute(`data-page`)
+              document.querySelector(`.settings-modal`).setAttribute(`data-active-page`, navButtonPage)
+              navButton.parentNode.classList.add(`nav-active`)
+              document.querySelectorAll(`.settings-modal nav ul li.nav-active`).forEach(navActiveButton => {
+                navActiveButton.classList.remove(`nav-active`)
+              });
+              navButton.parentNode.classList.add(`nav-active`)
+              reloadPages()
+            })
+          });
+        
+          function reloadBroadcasterSettings() {
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Broadcaster Settings • Settings`
+            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Setting of argument for the Broadcast User`
+            document.querySelector(`.settings-modal .main`).innerHTML = `<p>Coming Soon!</p>`
 
-            localStorage.setItem(`streamerbotTool__globalArgs`, JSON.stringify(globalArgsData))
-            
-            document.querySelector(`.global-args .main table.add-contents tbody td.argument input`).value = ``
-            document.querySelector(`.global-args .main table.add-contents tbody td.value input`).value = ``
-            reloadAddContentsTable()
-          })
+          }
 
-          function reloadAddContentsTable() {
-            document.querySelectorAll(`.global-args .main table.add-contents tbody tr:not(:nth-child(1))`).forEach(tableRow => {
-              tableRow.parentNode.removeChild(tableRow)
-            });
+          function reloadGlobalArguments() {
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Global Arguments • Settings`
+            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Arguments that will be assigned to all actions`
+            document.querySelector(`.settings-modal .main`).innerHTML = `<table class="add-contents"><thead><tr><th>Argument</th><th>Value</th></tr></thead><tbody><tr><td class="argument"><input type="text" placeholder="Argument"></td><td class="value"><input type="text" placeholder="Value"></td><td><button title="Add Argument"class="add-row mdi mdi-plus-box"></button></td></tr></tbody></table>`
+
+            document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).focus()
+            document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).select()
 
             let globalArgsData = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
             globalArgsData = JSON.parse(globalArgsData)
             globalArgsData = Object.entries(globalArgsData)
 
             globalArgsData.forEach(globalArgData => {
-              document.querySelector(`.global-args .main table.add-contents tbody`).insertAdjacentHTML(`beforeend`, `<tr><td><input type="text" placeholder="Argument" value="${globalArgData[0]}" disabled></td><td><input type="text" placeholder="Value" value="${globalArgData[1]}" disabled></td><td><button title="Remove Argument" class="remove-row mdi mdi-trash-can"></button></td></tr>`)
+              document.querySelector(`.settings-modal .main table.add-contents tbody`).insertAdjacentHTML(`beforeend`, `<tr><td><input type="text" placeholder="Argument" value="${globalArgData[0]}" disabled></td><td><input type="text" placeholder="Value" value="${globalArgData[1]}" disabled></td><td><button title="Remove Argument" class="remove-row mdi mdi-trash-can"></button></td></tr>`)
             });
 
-            document.querySelectorAll(`.global-args .main table.add-contents .remove-row`).forEach(removeRow => {
+            document.querySelector(`.settings-modal .main table.add-contents .add-row`).addEventListener(`click`, function () {
+              let globalArgsData = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
+              globalArgsData = JSON.parse(globalArgsData)
+              globalArgsData = Object.entries(globalArgsData)
+              
+              globalArgsNewData = []
+              let argumentInput = document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).value
+              let valueInput = document.querySelector(`.settings-modal .main table.add-contents tbody td.value input`).value
+  
+              if (argumentInput === ``) argumentInput = `Argument`
+              if (valueInput === ``) valueInput = `Value`
+  
+              globalArgsNewData.push(argumentInput)
+              globalArgsNewData.push(valueInput)
+              globalArgsData.push(globalArgsNewData)
+              globalArgsData = Object.fromEntries(globalArgsData)
+  
+              localStorage.setItem(`streamerbotTool__globalArgs`, JSON.stringify(globalArgsData))
+              
+              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).value = ``
+              document.querySelector(`.settings-modal .main table.add-contents tbody td.value input`).value = ``
+  
+              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).focus()
+              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).select()
+              reloadGlobalArguments()
+            })
+
+            document.querySelectorAll(`.settings-modal .main table.add-contents .remove-row`).forEach(removeRow => {
               removeRow.addEventListener(`click`, function () {
                 let globalArgsData = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
                 globalArgsData = JSON.parse(globalArgsData)
@@ -234,11 +295,50 @@ async function connectws() {
                 globalArgsData = Object.fromEntries(globalArgsData)
                 localStorage.setItem(`streamerbotTool__globalArgs`, JSON.stringify(globalArgsData))
   
-                reloadAddContentsTable()
+                reloadGlobalArguments()
               })
             });
           }
         })
+      }
+
+      if (location.hash === `#Actions-History` && data.id === `Subscribe`) {
+
+      }
+      
+      if (location.hash === `#Present-Viewers` && data.id === `GetActiveViewers`) {
+        data.viewers.forEach(viewer => {
+          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item" id="${viewer.id}"><button>${viewer.display}</button></li>`)
+        });
+
+        document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(navBarListItem => {
+          navBarListItem.addEventListener(`click`, function () {
+            navBarListItem.classList.add(`nav-active`)
+          
+            document.querySelectorAll(`nav.navbar ul.navbar-list li.nav-active`).forEach(navBarActiveListItem => {
+              navBarActiveListItem.classList.remove(`nav-active`)
+            })
+
+            navBarListItem.classList.add(`nav-active`)
+
+            data.viewers.forEach(viewer => {
+              if (viewer.id === navBarListItem.id) {
+                document.querySelector(`main ul.main-list`).innerHTML = ``
+                document.querySelector(`main ul.main-list`).classList.add(`col-2`)
+                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`,
+                `<li>Display Name</li><li>${viewer.display}</li>
+                <li>Login Name</li><li>${viewer.login}</li>
+                <li>User Id</li><li>${viewer.id}</li>
+                <li>Role</li><li>${viewer.role}</li>
+                <li>Subscribed</li><li>${viewer.subscribed}</li>
+                <li>Previous Active</li><li>${viewer.previousActive}</li>
+                <li>Channel Points Used</li><li>${viewer.channelPointsUsed}</li>
+                </tbody></table>`
+                )
+              }
+            });
+          })
+        });
       }
     })
   }

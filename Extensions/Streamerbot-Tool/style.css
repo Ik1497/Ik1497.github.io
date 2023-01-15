@@ -2,12 +2,6 @@
 @import url(/assets/css/root.css);
 @import url(/assets/css/new-root.css);
 
-:root {
-    --font-size: 1em;
-    --page-accent-color: rgb(0, 145, 255);
-    --page-accent-color-alt: rgb(101, 188, 255);
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -17,9 +11,9 @@
 
 body,
 html {
-    font-size: var(--font-size);
+    font-size: 1em;
     font-family: Arial;
-    color: #fff;
+    color: var(--text-900);
     background: var(--background-primary);
     width: 100%;
     height: 100vh;
@@ -51,6 +45,10 @@ header {
     height: 3em;
 }
 
+header > a {
+    text-decoration: none;
+}
+
 header .main {
     display: flex;
     align-items: center;
@@ -64,10 +62,11 @@ header .main img {
 
 header .main .name {
     font-weight: bold;
+    color: var(--text-900);
 }
 
 header .main .description {
-    color: #ccc;
+    color: var(--text-600);
 }
 
 header aside {
@@ -87,7 +86,7 @@ header aside .form-area label {
 
 header aside .form-area input {
     background: var(--background-alt);
-    color: #fff;
+    color: var(--text-900);
     border: 0;
     outline: 0;
     border-radius: 0;
@@ -97,7 +96,7 @@ header aside .form-area input {
 
 header aside button {
     background: var(--background-alt);
-    color: #fff;
+    color: var(--text-900);
     border: 0;
     outline: 0;
     border-radius: 0;
@@ -116,16 +115,21 @@ header aside button {
     align-items: center;
     column-gap: .5rem;
     padding-inline: .5rem;
+    z-index: 100;
 }
 
 .header-tags a {
     text-decoration: none;
-    color: #fff;
+    color: var(--text-900);
     background: var(--background-light);
     padding-inline: .5rem;
     padding-block: .25rem;
     width: 100%;
     text-align: center;
+}
+
+.header-tags a:hover {
+    background: var(--background-lighten);
 }
 
 .header-tags a.header-tag-active {
@@ -137,16 +141,30 @@ header aside button {
 /* --- */
 
 .navbar {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+
+.navbar input[type=search] {
+    position: absolute;
+    top: 6.5em;
+    height: 2rem;
+    width: 100%;
+    outline: 0;
+    border: 0;
     background: var(--background-alt);
-    width: 20em;
-    margin-top: 5.5em;
+    color: var(--text-900);
+    padding-inline: .75em;
 }
 
 .navbar .navbar-list {
+    width: 20em;
+    background: var(--background-alt);
     display: flex;
     flex-direction: column;
     row-gap: .25em;
-    height: 100vh;
+    height: calc(100vh - 7em);
     overflow-y: auto;
 
     padding-block: 1em;
@@ -161,7 +179,7 @@ header aside button {
 
 .navbar .navbar-list .navbar-list-item .Action-Timestamp {
     font-size: .75em;
-    color: #aaa;
+    color: var(--text-400);
 }
 
 .navbar .navbar-list .navbar-list-item button {
@@ -169,7 +187,7 @@ header aside button {
     border: 0;
     border-radius: 5px;
     outline: 0;
-    color: #fff;
+    color: var(--text-900);
     width: 100%;
     text-align: left;
     padding-inline: .5em;
@@ -199,19 +217,20 @@ header aside button {
 
 main {
     width: 100%;
-    height: 100vh;
     margin-inline: 1em;
     margin-block: 1em;
-    margin-top: 6em;
     overflow-y: auto;
+    margin-top: 6em;
 }
 
-main ul.actions {
+main ul.main-list {
     display: grid;
-    row-gap: .5em;
+    gap: .5em;
+    width: 100%;
+    height: fit-content;
 }
 
-main ul.actions li {
+main ul.main-list li {
     background: var(--background-soft);
     padding-inline: .5em;
     padding-block: .75em;
@@ -219,15 +238,15 @@ main ul.actions li {
     grid-template-columns: 1fr auto;
 }
 
-main ul.actions li p.action-name {
+main ul.main-list li p.action-name {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-main ul.actions li button {
-    color: #cbe3ff;
-    background: #28446d;
+main ul.main-list li button {
+    color: var(--text-900);
+    background: var(--color-link-hover);
     border: 0;
     border-radius: 5px;
     outline: 0;
@@ -242,18 +261,30 @@ main ul.actions li button {
     text-overflow: ellipsis;
 }
 
-main ul.actions li button:active,
-main ul.actions li button:focus-visible,
-main ul.actions li button:hover {
-    color: #7ab8fe;
-    background: #356ec3;
+main ul.main-list li button:active,
+main ul.main-list li button:focus-visible,
+main ul.main-list li button:hover {
+    background: var(--color-link);
+}
+
+main ul.main-list.col-2 {
+    display: grid;
+    grid-template-columns: max-content auto;
+}
+
+main ul.main-list.col-2 li:nth-child(1n) {
+    text-align: right;
+}
+
+main ul.main-list.col-2 li:nth-child(2n) {
+    text-align: left;
 }
 
 /* ----------- */
 /* Global Args */
 /* ----------- */
 
-.global-args {
+.settings-modal {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -267,16 +298,16 @@ main ul.actions li button:hover {
     z-index: 1;
 }
 
-body:has(> .global-args) > *:not(.global-args) {
+body:has(> .settings-modal) > *:not(.settings-modal) {
     opacity: .57;
     pointer-events: none;
 }
 
-body:has(> .global-args) .open-global-args {
+body:has(> .settings-modal) .open-global-args {
     display: none;
 }
 
-.global-args .header {
+.settings-modal .header {
     background: var(--color-link-hover);
     width: 100%;
     height: 3rem;
@@ -286,7 +317,7 @@ body:has(> .global-args) .open-global-args {
     padding-left: .5rem;
 }
 
-.global-args .header .close-button {
+.settings-modal .header .close-button {
     border: 0;
     outline: 0;
     border-radius: 0;
@@ -299,27 +330,64 @@ body:has(> .global-args) .open-global-args {
     cursor: pointer;
 }
 
-.global-args .header .info .title {
+.settings-modal .header .info .title {
     font-weight: bold;
     font-size: 1.25em;
 }
 
-.global-args .header .info .description {
+.settings-modal .header .info .description {
     font-size: .8em;
 }
 
-.global-args .main {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+.settings-modal nav {
+    position: fixed;
+    top: 3.5rem;
+    left: .5rem;
+    width: 20%;
 }
 
-.global-args .main table {
+.settings-modal nav ul {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+}
+
+.settings-modal nav ul li button {
+    width: 100%;
+    text-align: left;
+    color: var(--text-900);
+    background: transparent;
+    outline: 0;
+    border: 0;
+    background: var(--background-primary);
+    padding-inline: .5rem;
+    padding-block: .75rem;
+    border-right: 8px solid transparent;
+    cursor: pointer;
+}
+
+.settings-modal nav ul li.nav-active button {
+    border-color: var(--color-link);
+    cursor: default;
+}
+
+.settings-modal nav ul li:hover:not(.nav-active) button {
+    background: var(--background-soft);
+    border-color: var(--background-light);
+}
+
+.settings-modal .main {
+    width: 80%;
+    margin-left: auto;
     padding-inline: 3em;
 }
 
-.global-args .main table input {
+.settings-modal .main table {
+    width: 100%;
+}
+
+.settings-modal .main table input {
     width: 100%;
     background: var(--background-light);
     color: white;
@@ -330,10 +398,20 @@ body:has(> .global-args) .open-global-args {
     font-size: 1rem;
 }
 
+.settings-modal .main table input:focus-visible,
+.settings-modal .main table td .remove-row:focus-visible,
+.settings-modal .main table td .add-row:focus-visible,
+.settings-modal .save-button button:focus-visible,
+.settings-modal .main table td .remove-row:hover,
+.settings-modal .main table td .add-row:hover,
+.settings-modal .save-button button:hover {
+    background: var(--background-lighten);
+}
 
-.global-args .main table td .remove-row,
-.global-args .main table td .add-row,
-.global-args .save-button button {
+
+.settings-modal .main table td .remove-row,
+.settings-modal .main table td .add-row,
+.settings-modal .save-button button {
     background: var(--background-light);
     color: white;
     outline: 0;
@@ -345,11 +423,11 @@ body:has(> .global-args) .open-global-args {
     cursor: pointer;
 }
 
-.global-args .main table input:disabled {
-    color: #bbb;
+.settings-modal .main table input:disabled {
+    color: var(--text-500);
 }
 
-.open-global-args {
+.open-settings-modal {
     width: 2em;
     height: 2em;
     position: fixed;
