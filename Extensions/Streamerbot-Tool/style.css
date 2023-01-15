@@ -47,6 +47,7 @@ header {
     background: var(--background-soft);
     width: 100%;
     height: 3em;
+    z-index: 100;
 }
 
 header > a {
@@ -138,6 +139,7 @@ header aside button {
 
 .header-tags a.header-tag-active {
     background: var(--color-link-hover);
+    cursor: wait;
 }
 
 /* --- */
@@ -299,7 +301,7 @@ main ul.main-list.col-2 li:nth-child(2n) {
     border: 2px solid var(--background-light);
     border-radius: .5em;
     overflow: hidden;
-    z-index: 1;
+    z-index: 999;
 }
 
 body:has(> .settings-modal) > *:not(.settings-modal) {
@@ -307,7 +309,7 @@ body:has(> .settings-modal) > *:not(.settings-modal) {
     pointer-events: none;
 }
 
-body:has(> .settings-modal) .open-global-args {
+body:has(> .settings-modal) .open-settings-modal {
     display: none;
 }
 
@@ -345,8 +347,8 @@ body:has(> .settings-modal) .open-global-args {
 
 .settings-modal nav {
     position: fixed;
-    top: 3.5rem;
-    left: .5rem;
+    top: 4rem;
+    left: 1rem;
     width: 20%;
 }
 
@@ -443,6 +445,7 @@ body:has(> .settings-modal) .open-global-args {
     justify-content: center;
     border-radius: 100vmax;
     cursor: pointer;
+    z-index: 100;
 }
 
 /* ------------- */

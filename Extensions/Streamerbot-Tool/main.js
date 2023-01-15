@@ -11,16 +11,19 @@ window.addEventListener('hashchange', () => {
 let headTag_active__Actions = ``
 let headTag_active__ActionHistory = ``
 let headTag_active__PresentViewers = ``
+let headTag_active__WebsocketEvents = ``
 
 if (location.hash === `#Actions`) headTag_active__Actions = ` class="header-tag-active"`
 if (location.hash === `#Actions-History`) headTag_active__ActionHistory = ` class="header-tag-active"`
 if (location.hash === `#Present-Viewers`) headTag_active__PresentViewers = ` class="header-tag-active"`
+if (location.hash === `#Websocket-Events`) headTag_active__WebsocketEvents = ` class="header-tag-active"`
 if (location.hash === ``) location.href = `#Actions`
 
 let headTag__Actions = `<a href="#Actions"${headTag_active__Actions}>Actions</a>`
 let headTag__ActionHistory = `<a href="#Actions-History"${headTag_active__ActionHistory}>Action History (SOON)</a>`
 let headTag__PresentViewers = `<a href="#Present-Viewers"${headTag_active__PresentViewers}>Present Viewers</a>`
-let headerTags = `<div class="header-tags">${headTag__Actions}${headTag__ActionHistory}${headTag__PresentViewers}</div>`
+let headTag__WebsocketEvents = `<a href="#Websocket-Events"${headTag_active__WebsocketEvents}>Websocket Events</a>`
+let headerTags = `<div class="header-tags">${headTag__Actions}${headTag__ActionHistory}${headTag__PresentViewers}${headTag__WebsocketEvents}</div>`
 document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}${headerTags}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
 
 document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function () {
@@ -54,7 +57,8 @@ async function connectws() {
     console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...")
     document.querySelector(`header aside button.connect-websocket`).innerText = `Connecting...`
     document.querySelector(`header aside`).setAttribute(`data-connection`, `connecting`)
-
+    document.documentElement.style.cursor = `wait`
+    
     ws.onclose = function () {
       setTimeout(connectws, 10000)
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to Streamer.bot, reconnecting every 10s...")
@@ -62,19 +66,21 @@ async function connectws() {
       document.querySelector(`header aside`).innerHTML = headerAside
       document.querySelector(`header aside button.connect-websocket`).innerText = `Connect`
       document.querySelector(`header aside`).setAttribute(`data-connection`, `disconnected`)
+      document.documentElement.style.cursor = ``
       location.reload()
     }
-
+    
     ws.onopen = function () {
       ws.send(
         JSON.stringify({
           request: "GetInfo",
           id: "GetInfo",
         })
-      )
-      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot")
-      document.querySelector(`header aside button.connect-websocket`).innerText = `Connected`
-      document.querySelector(`header aside`).setAttribute(`data-connection`, `connected`)
+        )
+        console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot")
+        document.querySelector(`header aside button.connect-websocket`).innerText = `Connected`
+        document.querySelector(`header aside`).setAttribute(`data-connection`, `connected`)
+        document.documentElement.style.cursor = ``
     }
     
     ws.addEventListener("message", (event) => {
@@ -116,6 +122,13 @@ async function connectws() {
           JSON.stringify({
             request: `GetActiveViewers`,
             id: `GetActiveViewers`,
+          })
+        )
+      } else if (location.hash === `#Websocket-Events` && data.id === `GetInfo`) {
+        ws.send(
+          JSON.stringify({
+            request: `GetEvents`,
+            id: `GetEvents`,
           })
         )
       }
@@ -363,6 +376,36 @@ async function connectws() {
                 <li>Groups</li><li>${viewer.groups.toString().replaceAll(`,`, `, `)}</li>
                 </tbody></table>`
                 )
+              }
+            });
+          })
+        });
+      }
+
+      if (location.hash === `#Websocket-Events` && data.id === `GetEvents`) {
+        let wsEvents = Object.entries(data.events)
+        wsEvents.sort()
+        wsEvents.forEach(wsEvent => {
+          console.log(wsEvent[0])
+          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item"><button><p class="title">${wsEvent[0]}</p></button></li>`)
+        });
+
+        document.querySelectorAll(`nav.navbar ul.navbar-list li.navbar-list-item`).forEach(navBarListItem => {
+          navBarListItem.querySelector(`button`).addEventListener(`click`, function () {
+            navBarListItem.classList.add(`nav-active`)
+            document.querySelectorAll(`nav.navbar ul.navbar-list li.navbar-list-item.nav-active`).forEach(navActiveListItem => {
+              navActiveListItem.classList.remove(`nav-active`)
+            });
+            navBarListItem.classList.add(`nav-active`)
+
+            document.querySelector(`main ul.main-list`).innerHTML = ``
+
+            wsEvents.forEach(wsEvent => {
+              if (wsEvent[0] === navBarListItem.querySelector(`button p.title`).innerText) {
+                console.log(wsEvent[0], navBarListItem.querySelector(`button p.title`).innerText, wsEvent[1])
+                wsEvent[1].forEach(wsEventItem => {
+                  document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li>${wsEventItem}</li>`)
+                });
               }
             });
           })
