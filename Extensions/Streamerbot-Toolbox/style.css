@@ -253,6 +253,7 @@ main ul.main-list li.list-title {
     font-weight: 700;
 }
 
+main ul.main-list li,
 main ul.main-list li p {
     overflow: hidden;
     white-space: nowrap;
