@@ -32,8 +32,9 @@ document.querySelector(`header aside button.connect-websocket`).addEventListener
 
 document.querySelector(`nav.navbar > input[type=search]`).addEventListener(`keydown`, function () {
   setTimeout(() => {    
-    let currentSearchTerm = document.querySelector(`nav.navbar > input[type=search]`).value
+    let currentSearchTerm = document.querySelector(`nav.navbar > input[type=search]`).value.toLowerCase()
     document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(listItem => {
+      console.log(listItem.querySelector(`button p.title`).innerText.toLowerCase())
       if (!listItem.querySelector(`button p.title`).innerText.toLowerCase().includes(currentSearchTerm)) {
         listItem.setAttribute(`hidden`, ``)
         listItem.setAttribute(`aria-hidden`, `true`)
