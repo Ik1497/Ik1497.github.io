@@ -401,7 +401,10 @@ async function connectws() {
             document.querySelector(`main ul.main-list`).innerHTML = ``
 
             wsEvents.forEach(wsEvent => {
+              wsEvent[1].sort()
+
               if (wsEvent[0] === navBarListItem.querySelector(`button p.title`).innerText) {
+                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li style="text-align: center; font-weight: 700;">${wsEvent[0]}, ${wsEvent[1].length} Events</li>`)
                 console.log(wsEvent[0], navBarListItem.querySelector(`button p.title`).innerText, wsEvent[1])
                 wsEvent[1].forEach(wsEventItem => {
                   document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li>${wsEventItem}</li>`)
