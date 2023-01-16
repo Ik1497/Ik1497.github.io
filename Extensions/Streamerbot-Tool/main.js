@@ -34,7 +34,6 @@ document.querySelector(`nav.navbar > input[type=search]`).addEventListener(`keyd
   setTimeout(() => {    
     let currentSearchTerm = document.querySelector(`nav.navbar > input[type=search]`).value.toLowerCase()
     document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(listItem => {
-      console.log(listItem.querySelector(`button p.title`).innerText.toLowerCase())
       if (!listItem.querySelector(`button p.title`).innerText.toLowerCase().includes(currentSearchTerm)) {
         listItem.setAttribute(`hidden`, ``)
         listItem.setAttribute(`aria-hidden`, `true`)
@@ -195,7 +194,6 @@ async function connectws() {
             broadcasterObj.userId = broadcaster?.platforms?.twitch?.broadcastUserId ?? `695682330`
             broadcasterObj.isAffiliate = broadcaster?.platforms?.twitch?.broadcasterIsAffiliate ?? `false`
             broadcasterObj.isPartner = broadcaster?.platforms?.twitch?.broadcasterIsPartner ?? `false`
-            console.log(broadcasterObj)
 
             // Execute Button
             let globalArguments = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
@@ -311,13 +309,10 @@ async function connectws() {
                 let globalArgsData = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
                 globalArgsData = JSON.parse(globalArgsData)
                 globalArgsData = Object.entries(globalArgsData)
-                console.log(globalArgsData)
                 
                 let globalArgIndex = 0
                 globalArgsData.forEach(globalArgData => {
                   if (globalArgData[0] === removeRow.parentNode.parentNode.querySelector(`input`).value) {
-                    console.log(globalArgData, globalArgIndex)
-                    console.log(removeRow.parentNode.parentNode.querySelector(`input`).value)
                     globalArgsData.splice(globalArgIndex, 1)
                   }
                   globalArgIndex = globalArgIndex + 1
@@ -387,7 +382,6 @@ async function connectws() {
         let wsEvents = Object.entries(data.events)
         wsEvents.sort()
         wsEvents.forEach(wsEvent => {
-          console.log(wsEvent[0])
           document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item"><button><p class="title">${wsEvent[0]}</p></button></li>`)
         });
 
@@ -406,7 +400,6 @@ async function connectws() {
 
               if (wsEvent[0] === navBarListItem.querySelector(`button p.title`).innerText) {
                 document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li style="text-align: center; font-weight: 700;">${wsEvent[0]}, ${wsEvent[1].length} Events</li>`)
-                console.log(wsEvent[0], navBarListItem.querySelector(`button p.title`).innerText, wsEvent[1])
                 wsEvent[1].forEach(wsEventItem => {
                   document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li>${wsEventItem}</li>`)
                 });

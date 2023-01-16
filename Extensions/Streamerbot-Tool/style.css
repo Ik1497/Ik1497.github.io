@@ -129,7 +129,8 @@ header aside button {
     background: var(--background-light);
     padding-inline: .5rem;
     padding-block: .25rem;
-    width: 100%;
+    width: fit-content;
+    border-radius: 100vmax;
     text-align: center;
 }
 
@@ -452,7 +453,7 @@ body:has(> .settings-modal) .open-settings-modal {
 /* Media Queries */
 /* ------------- */
 
-@media (max-width: 60em) {
+@media (max-width: 50em) {
     body {
         flex-direction: column;
         display: none;
