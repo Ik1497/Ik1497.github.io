@@ -1,30 +1,37 @@
 let documentTitle = `Streamer.bot Toolbox | Streamer.bot Actions`
 document.title = documentTitle
 
-let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
-let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">Streamer.bot Instance Tools</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
 
 window.addEventListener('hashchange', () => {
   location.reload()
 });
 
-let headTag_active__Actions = ``
-let headTag_active__ActionHistory = ``
-let headTag_active__PresentViewers = ``
-let headTag_active__WebsocketEvents = ``
+let headerTagsMap = [
+  `Actions`,
+  `Action History`,
+  `Present Viewers`,
+  `Websocket Events`,
+  `Chat (WIP)`
+]
 
-if (location.hash === `#Actions`) headTag_active__Actions = ` class="header-tag-active"`
-if (location.hash === `#Actions-History`) headTag_active__ActionHistory = ` class="header-tag-active"`
-if (location.hash === `#Present-Viewers`) headTag_active__PresentViewers = ` class="header-tag-active"`
-if (location.hash === `#Websocket-Events`) headTag_active__WebsocketEvents = ` class="header-tag-active"`
+let headerTags = ``
+
+headerTagsMap.forEach(headerTag => {
+  let headerTagActive = ``
+  if (headerTag === `Chat (WIP)`) headerTag = `Chat`
+  let headerTagHash = headerTag.replaceAll(` `, `-`)
+  if (location.hash === `#${headerTagHash}`) headerTagActive = ` class="header-tag-active"`
+  if (headerTag === `Chat`) headerTag = `Chat (WIP)`
+  headerTags += `<a href="#${headerTagHash}" title="${headerTag}"${headerTagActive}>${headerTag}</a>`
+});
+
+headerTags = `<ul class="header-tags">${headerTags}</ul>`
+
 if (location.hash === ``) location.href = `#Actions`
 
-let headTag__Actions = `<a href="#Actions"${headTag_active__Actions}>Actions</a>`
-let headTag__ActionHistory = `<a style="pointer-events: none;" href="#Actions-History"${headTag_active__ActionHistory}>Action History</a>`
-let headTag__PresentViewers = `<a href="#Present-Viewers"${headTag_active__PresentViewers}>Present Viewers</a>`
-let headTag__WebsocketEvents = `<a href="#Websocket-Events"${headTag_active__WebsocketEvents}>Websocket Events</a>`
-let headerTags = `<div class="header-tags">${headTag__Actions}${headTag__ActionHistory}${headTag__PresentViewers}${headTag__WebsocketEvents}</div>`
-document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}${headerTags}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
+let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
+let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">Streamer.bot Instance Tools</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside>${headerTags}</header>`
+document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
 
 document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function () {
   window.location = `?ws=ws://${document.querySelector(`header aside .form-area .url`).value}:${document.querySelector(`header aside .form-area .port`).value}${document.querySelector(`header aside .form-area .endpoint`).value}`
@@ -90,7 +97,7 @@ async function connectws() {
       if (data.id === `GetInfo`) {
         let instanceOS = data.info.os
         if (data.info.os === `windows`) instanceOS = `<span class="mdi mdi-microsoft-windows"> Windows</span>`
-        document.querySelector(`header aside`).innerHTML = `${instanceOS} • <span>Streamer.bot</span> - <span>${data.info.name}</span> <span>(${data.info.version})</span>`
+        document.querySelector(`header aside`).innerHTML = `<p class="instance-info">${instanceOS} • <span>Streamer.bot</span> - <span>${data.info.name}</span> <span>(${data.info.version})</span></p>`
         document.title = `${data.info.name} • ${documentTitle}`
       }
 
@@ -114,7 +121,7 @@ async function connectws() {
             events: {
               raw: [`ActionCompleted`, `Action`]
             },
-            id: `Subscribe`,
+            id: `ActionCompleted`,
           })
         )
       } else if (location.hash === `#Present-Viewers` && data.id === `GetInfo`) {
@@ -129,6 +136,17 @@ async function connectws() {
           JSON.stringify({
             request: `GetEvents`,
             id: `GetEvents`,
+          })
+        )
+      } else if (location.hash === `#Chat` && data.id === `GetInfo`) {
+        ws.send(
+          JSON.stringify({
+            request: `Subscribe`,
+            events: {
+              twitch: [`ChatMessage`],
+              youTube: [`Message`]
+            },
+            id: `Chat`,
           })
         )
       }
@@ -180,13 +198,17 @@ async function connectws() {
 
             document.querySelector(`main ul.main-list`).innerHTML = ``
             buttonHtmlText = buttonHtml.innerText
-            document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li class="list-title">${buttonHtmlText}</li>`)
             if (buttonHtmlText === "None") buttonHtmlText = ""
+            let actionCount = 0
             data.actions.forEach(action => {
               if (action.group === buttonHtmlText) {
+                actionCount++
                 document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li><p class="action-name">${action.name}</p><button title="Execute Action">Execute</button></li>`)
               }
             })
+            if (buttonHtmlText === "") buttonHtmlText = "None"
+            document.querySelector(`main ul.main-list`).insertAdjacentHTML(`afterbegin`, `<li class="list-title">${buttonHtmlText}, ${actionCount} Actions</li>`)
+            if (buttonHtmlText === "None") buttonHtmlText = ""
 
             // Broadcaster Variables
             let broadcasterObj = {}
@@ -361,8 +383,8 @@ async function connectws() {
                 previousActive = `${previousActiveDate}, ${previousActiveTime} (${previousActiveTimezone})`
                 document.querySelector(`main ul.main-list`).innerHTML = ``
                 document.querySelector(`main ul.main-list`).classList.add(`col-2`)
-                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`,
-                `<li>Display Name</li><li>${viewer.display}</li>
+                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`,`
+                <li>Display Name</li><li>${viewer.display}</li>
                 <li>Login Name</li><li>${viewer.login}</li>
                 <li>User Id</li><li>${viewer.id}</li>
                 <li>Role</li><li>${viewer.role}</li>
@@ -371,8 +393,8 @@ async function connectws() {
                 <li>Channel Points Used</li><li>${viewer.channelPointsUsed}</li>
                 <li>Exempt</li><li>${viewer.exempt}</li>
                 <li>Groups</li><li>${viewer.groups.toString().replaceAll(`,`, `, `)}</li>
-                </tbody></table>`
-                )
+                </tbody></table>
+                `)
               }
             });
           })
@@ -408,6 +430,88 @@ async function connectws() {
             });
           })
         });
+      }
+
+      if (location.hash === `#Chat` && data.id === `Chat`) {
+        document.querySelector(`main ul.main-list`).setAttribute(`data-view`, `all`)
+        document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `
+        <li class="navbar-list-item nav-active" id="all"><button><p class="title">All</p></button></li>
+        <li class="navbar-list-item" id="twitch"><button><p class="title">Twitch</p></button></li>
+        <li class="navbar-list-item" id="youtube"><button><p class="title">YouTube</p></button></li>
+        `)
+
+        document.querySelector(`nav.navbar ul.navbar-list li#all`).addEventListener(`click`, function () {
+          document.querySelectorAll(`main ul.main-list li`).forEach(listItem => {
+            listItem.setAttribute(`hidden`, ``)
+            listItem.removeAttribute(`hidden`)
+          });
+
+          this.classList.add(`nav-active`)
+          document.querySelectorAll(`nav.navbar ul.navbar-list li.nav-active`).forEach(navActiveListItem => {
+            navActiveListItem.classList.remove(`nav-active`)
+          });
+          this.classList.add(`nav-active`)
+          document.querySelector(`main ul.main-list`).setAttribute(`data-view`, `all`)
+        })
+
+        document.querySelector(`nav.navbar ul.navbar-list li#twitch`).addEventListener(`click`, function () {
+          document.querySelectorAll(`main ul.main-list li`).forEach(listItem => {
+            let eventSource = listItem.getAttribute(`data-source`) || ``
+            if (eventSource != `Twitch`) {
+              listItem.setAttribute(`hidden`, ``)
+            } else {
+              listItem.setAttribute(`hidden`, ``)
+              listItem.removeAttribute(`hidden`)
+            }
+          });
+
+          this.classList.add(`nav-active`)
+          document.querySelectorAll(`nav.navbar ul.navbar-list li.nav-active`).forEach(navActiveListItem => {
+            navActiveListItem.classList.remove(`nav-active`)
+          });
+          this.classList.add(`nav-active`)
+          document.querySelector(`main ul.main-list`).setAttribute(`data-view`, `twitch`)
+        })
+        
+        document.querySelector(`nav.navbar ul.navbar-list li#youtube`).addEventListener(`click`, function () {
+          document.querySelectorAll(`main ul.main-list li`).forEach(listItem => {
+            let eventSource = listItem.getAttribute(`data-source`) || ``
+            if (eventSource != `YouTube`) {
+              listItem.setAttribute(`hidden`, ``)
+            } else {
+              listItem.setAttribute(`hidden`, ``)
+              listItem.removeAttribute(`hidden`)
+            }
+          });
+
+          this.classList.add(`nav-active`)
+          document.querySelectorAll(`nav.navbar ul.navbar-list li.nav-active`).forEach(navActiveListItem => {
+            navActiveListItem.classList.remove(`nav-active`)
+          });
+          this.classList.add(`nav-active`)
+          document.querySelector(`main ul.main-list`).setAttribute(`data-view`, `youtube`)
+        })
+      }
+      
+      if (location.hash === `#Chat` && data?.event?.source === `Twitch` || data?.event?.source === `YouTube` && data?.event?.type === `ChatMessage`|| data?.event?.type === `Message`) {
+        let chatIcon = ``
+        if (data.event.source === `Twitch`) chatIcon = `mdi mdi-twitch`
+        if (data.event.source === `YouTube`) chatIcon = `mdi mdi-youtube`
+
+        let hidden = ``
+        let view = document.querySelector(`main ul.main-list`).getAttribute(`data-view`)
+        
+        if (view === `twitch` && data?.event?.source != `Twitch`) hidden = ` hidden`
+        if (view === `youtube` && data?.event?.source != `YouTube`) hidden = ` hidden`
+
+        document.querySelector(`main ul.main-list`).insertAdjacentHTML(`afterbegin`, `
+        <li data-source="${data.event.source}" data-message-id="${data.data.msgId}"${hidden}>
+          <div class="${chatIcon}" style="display: flex; gap: .5rem; align-items: center;">
+            <p style="color: ${data.data.message.color};">${data.data.message.username}</p>
+            <p>${data.data.message.message}</p>
+          </div>
+        </li>
+        `)
       }
     })
   }
