@@ -180,6 +180,7 @@ async function connectws() {
 
             document.querySelector(`main ul.main-list`).innerHTML = ``
             buttonHtmlText = buttonHtml.innerText
+            document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li class="list-title">${buttonHtmlText}</li>`)
             if (buttonHtmlText === "None") buttonHtmlText = ""
             data.actions.forEach(action => {
               if (action.group === buttonHtmlText) {

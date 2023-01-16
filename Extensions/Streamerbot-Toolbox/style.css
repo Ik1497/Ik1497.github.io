@@ -24,6 +24,7 @@ html {
 
 ::-webkit-scrollbar {
     background: var(--background-soft);
+    width: 16px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -121,6 +122,8 @@ header aside button {
     column-gap: .5rem;
     padding-inline: .5rem;
     z-index: 100;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .header-tags a {
@@ -129,7 +132,7 @@ header aside button {
     background: var(--background-light);
     padding-inline: .5rem;
     padding-block: .25rem;
-    width: fit-content;
+    min-width: max-content;
     border-radius: 100vmax;
     text-align: center;
 }
