@@ -1,4 +1,5 @@
-let documentTitle = `Streamer.bot Toolbox | Streamer.bot Actions`
+let version = `1.0.0`
+let documentTitle = `Streamer.bot Toolbox v${version} | Streamer.bot Actions`
 document.title = documentTitle
 
 
@@ -30,7 +31,7 @@ headerTags = `<ul class="header-tags">${headerTags}</ul>`
 if (location.hash === ``) location.href = `#Actions`
 
 let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
-let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">Streamer.bot Instance Tools</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside>${headerTags}</header>`
+let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">Streamer.bot Toolbox v${version}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside>${headerTags}</header>`
 document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
 
 document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function () {
@@ -97,7 +98,10 @@ async function connectws() {
       if (data.id === `GetInfo`) {
         let instanceOS = data.info.os
         if (data.info.os === `windows`) instanceOS = `<span class="mdi mdi-microsoft-windows"> Windows</span>`
-        document.querySelector(`header aside`).innerHTML = `<p class="instance-info">${instanceOS} • <span>Streamer.bot</span> - <span>${data.info.name}</span> <span>(${data.info.version})</span></p>`
+        document.querySelector(`header aside`).innerHTML = `
+        <p class="instance-info">Streamer.bot - ${data.info.name}
+        <small>${data.info.instanceId}<br>
+        ${instanceOS} • ${data.info.version}</small></p>`
         document.title = `${data.info.name} • ${documentTitle}`
       }
 
@@ -114,12 +118,12 @@ async function connectws() {
             id: "GetActions",
           })
         )
-      } else if (location.hash === `#Actions-History` && data.id === `GetInfo`) {
+      } else if (location.hash === `#Action-History` && data.id === `GetInfo`) {
         ws.send(
           JSON.stringify({
             request: `Subscribe`,
             events: {
-              raw: [`ActionCompleted`, `Action`]
+              raw: [`Action`]
             },
             id: `ActionCompleted`,
           })
@@ -147,6 +151,12 @@ async function connectws() {
               youTube: [`Message`]
             },
             id: `Chat`,
+          })
+        )
+        ws.send(
+          JSON.stringify({
+            request: `GetActions`,
+            id: `GetActions`,
           })
         )
       }
@@ -351,8 +361,35 @@ async function connectws() {
         })
       }
 
-      if (location.hash === `#Actions-History` && data.id === `Subscribe`) {
+      if (location.hash === `#Action-History` && data.id === `ActionCompleted`) {
+        document.querySelector(`main`).innerHTML = ``
+      }
 
+      if (location.hash === `#Action-History` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
+        document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`afterbegin`, `<li class="navbar-list-item" data-id="${data.data.arguments.runningActionId}"><button>${data.data.name}</button></li>`)
+        let listContents = ``
+        let arguments = Object.entries(data.data.arguments)
+        arguments.forEach(argument => {
+          listContents += `<li>${argument[0]}</li><li>${argument[1]}</li>`
+        });
+        document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `
+        <ul class="main-list col-2" data-id="${data.data.arguments.runningActionId}" hidden>
+          ${listContents}
+        </ul>
+        `)
+
+        document.querySelector(`nav.navbar ul.navbar-list li button`).addEventListener(`click`, function () {
+          let actionId = this.parentNode.getAttribute(`data-id`)
+          this.parentNode.classList.add(`nav-active`)
+          document.querySelectorAll(`nav.navbar ul.navbar-list li.nav-active`).forEach(navActiveButton => {
+            navActiveButton.classList.remove(`nav-active`)
+          });
+          this.parentNode.classList.add(`nav-active`)
+          document.querySelectorAll(`main ul.main-list`).forEach(mainList => {
+            mainList.setAttribute(`hidden`, ``)
+          });
+          document.querySelector(`main ul.main-list[data-id="${actionId}"]`).removeAttribute(`hidden`)
+        })
       }
       
       if (location.hash === `#Present-Viewers` && data.id === `GetActiveViewers`) {
@@ -432,7 +469,7 @@ async function connectws() {
         });
       }
 
-      if (location.hash === `#Chat` && data.id === `Chat`) {
+      if (location.hash === `#Chat` && data.id === `GetActions`) {
         document.querySelector(`main ul.main-list`).setAttribute(`data-view`, `all`)
         document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `
         <li class="navbar-list-item nav-active" id="all"><button><p class="title">All</p></button></li>
