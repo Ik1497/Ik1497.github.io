@@ -1,6 +1,7 @@
 @import url(/assets/fonts/font.css);
 @import url(/assets/css/root.css);
 @import url(/assets/css/new-root.css);
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 * {
     margin: 0;
@@ -12,7 +13,7 @@
 body,
 html {
     font-size: 1em;
-    font-family: Arial;
+    font-family: Inter;
     color: var(--text-900);
     background: var(--background-primary);
     width: 100%;
@@ -212,7 +213,6 @@ header aside button {
     padding-inline: .5em;
     padding-block: 1em;
     cursor: pointer;
-    font-family: Arial;
 
     overflow: hidden;
     white-space: nowrap;
@@ -280,7 +280,6 @@ main ul.main-list li button {
     padding-inline: .5em;
     padding-block: .25em;
     cursor: pointer;
-    font-family: Arial;
 
     overflow: hidden;
     white-space: nowrap;
