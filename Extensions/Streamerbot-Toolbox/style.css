@@ -155,8 +155,8 @@ header aside button {
 
 .navbar > input[type=search] {
     position: absolute;
-    top: 6.5em;
-    height: 2rem;
+    top: 6.75em;
+    height: 2.5rem;
     width: 100%;
     outline: 0;
     border: 0;
@@ -171,7 +171,7 @@ header aside button {
     display: flex;
     flex-direction: column;
     row-gap: .25em;
-    height: calc(100vh - 7em);
+    height: calc(100vh - 8em);
     overflow-y: auto;
 
     padding-block: 1em;
@@ -245,15 +245,20 @@ main ul.main-list li {
     grid-template-columns: 1fr auto;
 }
 
-main ul.main-list li p.action-name {
+main ul.main-list li.list-title {
+    text-align: center;
+    font-weight: 700;
+}
+
+main ul.main-list li p {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 main ul.main-list li button {
-    color: var(--text-900);
-    background: var(--color-link-hover);
+    color: #a4ceff;
+    background: #285292;
     border: 0;
     border-radius: 5px;
     outline: 0;
@@ -271,7 +276,7 @@ main ul.main-list li button {
 main ul.main-list li button:active,
 main ul.main-list li button:focus-visible,
 main ul.main-list li button:hover {
-    background: var(--color-link);
+    background: var(--color-link-hover);
 }
 
 main ul.main-list.col-2 {

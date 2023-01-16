@@ -1,4 +1,4 @@
-let documentTitle = `Streamer.bot Instance Tools | Streamer.bot Actions`
+let documentTitle = `Streamer.bot Toolbox | Streamer.bot Actions`
 document.title = documentTitle
 
 let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
@@ -20,7 +20,7 @@ if (location.hash === `#Websocket-Events`) headTag_active__WebsocketEvents = ` c
 if (location.hash === ``) location.href = `#Actions`
 
 let headTag__Actions = `<a href="#Actions"${headTag_active__Actions}>Actions</a>`
-let headTag__ActionHistory = `<a href="#Actions-History"${headTag_active__ActionHistory}>Action History (SOON)</a>`
+let headTag__ActionHistory = `<a style="pointer-events: none;" href="#Actions-History"${headTag_active__ActionHistory}>Action History</a>`
 let headTag__PresentViewers = `<a href="#Present-Viewers"${headTag_active__PresentViewers}>Present Viewers</a>`
 let headTag__WebsocketEvents = `<a href="#Websocket-Events"${headTag_active__WebsocketEvents}>Websocket Events</a>`
 let headerTags = `<div class="header-tags">${headTag__Actions}${headTag__ActionHistory}${headTag__PresentViewers}${headTag__WebsocketEvents}</div>`
@@ -399,7 +399,7 @@ async function connectws() {
               wsEvent[1].sort()
 
               if (wsEvent[0] === navBarListItem.querySelector(`button p.title`).innerText) {
-                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li style="text-align: center; font-weight: 700;">${wsEvent[0]}, ${wsEvent[1].length} Events</li>`)
+                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li class="list-title">${wsEvent[0]}, ${wsEvent[1].length} Events</li>`)
                 wsEvent[1].forEach(wsEventItem => {
                   document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li>${wsEventItem}</li>`)
                 });

@@ -72,10 +72,10 @@
     "type": "group",
     "groupItems": [
       {
-        "name": "Streamer.bot Instance Tools",
+        "name": "Streamer.bot Toolbox",
         "description": "Manage your Streamer.bot instance with ease!",
         "icon": "mdi mdi-toolbox",
-        "href": "/Extensions/Streamerbot-Tool/",
+        "href": "/Extensions/Streamerbot-Toolbox/",
         "type": "link",
         "channel": "beta",
         "lastEdited": {
