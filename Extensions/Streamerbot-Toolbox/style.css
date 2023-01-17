@@ -420,10 +420,20 @@ body:has(> .settings-modal) .open-settings-modal {
     width: 80%;
     margin-left: auto;
     padding-inline: 3em;
+    padding-block: 1rem;
 }
 
 .settings-modal .main table {
     width: 100%;
+}
+
+.settings-modal .main table thead th {
+    background: var(--background-light);
+    font-weight: 700;
+}
+
+.settings-modal .main table tbody td.text {
+    background: var(--background-light);
 }
 
 .settings-modal .main table input {

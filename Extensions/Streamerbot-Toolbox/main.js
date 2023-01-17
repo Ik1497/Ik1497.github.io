@@ -2,12 +2,12 @@ let version = `1.0.0`
 let documentTitle = `Streamer.bot Toolbox v${version} | Streamer.bot Actions`
 document.title = documentTitle
 
-
 window.addEventListener('hashchange', () => {
   location.reload()
 });
 
 let headerTagsMap = [
+  `About`,
   `Actions`,
   `Action History`,
   `Present Viewers`,
@@ -28,7 +28,7 @@ headerTagsMap.forEach(headerTag => {
 
 headerTags = `<ul class="header-tags">${headerTags}</ul>`
 
-if (location.hash === ``) location.href = `#Actions`
+if (location.hash === ``) location.href = `#About`
 
 let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
 let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">Streamer.bot Toolbox v${version}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside>${headerTags}</header>`
@@ -95,6 +95,7 @@ async function connectws() {
       if (!event.data) return
       const data = JSON.parse(event.data)
       console.log(data)
+      let instance
       if (data.id === `GetInfo`) {
         let instanceOS = data.info.os
         if (data.info.os === `windows`) instanceOS = `<span class="mdi mdi-microsoft-windows"> Windows</span>`
@@ -103,9 +104,17 @@ async function connectws() {
         <small>${data.info.instanceId}<br>
         ${instanceOS} • ${data.info.version}</small></p>`
         document.title = `${data.info.name} • ${documentTitle}`
+
+        instance = data.info
       }
 
       if (location.hash === `#Actions` && data.id === `GetInfo`) {
+        ws.send(
+          JSON.stringify({
+            request: "GetActions",
+            id: "GetActions",
+          })
+        )
         ws.send(
           JSON.stringify({
             request: "GetBroadcaster",
@@ -114,8 +123,15 @@ async function connectws() {
         )
         ws.send(
           JSON.stringify({
-            request: "GetActions",
-            id: "GetActions",
+            request: "GetActiveViewers",
+            id: "GetActiveViewers",
+          })
+        )
+      } else if (location.hash === `#About` && data.id === `GetInfo`) {
+        ws.send(
+          JSON.stringify({
+            request: "GetBroadcaster",
+            id: "GetBroadcaster",
           })
         )
       } else if (location.hash === `#Action-History` && data.id === `GetInfo`) {
@@ -162,9 +178,190 @@ async function connectws() {
       }
 
       if (data.id === `GetBroadcaster`) broadcaster = data
+      if (data.id === `GetActiveViewers`) presentViewers = data
+
+      if (location.hash === `#About` && data.id === `GetBroadcaster`) {
+        document.body.removeChild(document.querySelector(`nav.navbar`))
+        let welcomeMessage = `Welcome!`
+        if (data.connected.includes(`youtube`)) welcomeMessage = `Welcome ${data.platforms.youtube.broadcastUser}!`
+        if (data.connected.includes(`twitch`)) welcomeMessage = `Welcome ${data.platforms.twitch.broadcastUser}!`
+        document.body.querySelector(`main`).innerHTML = `
+        <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
+        <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
+        <p>this tool is currently a very work in progress, feautures may come and go over time.</p>
+        <br>
+        <p>This tool requires your <code>Server/Clients</code> --> <code>Websocket Server</code> to be enabled.</p>
+        `
+      }
+
+      if (data.id === `GetInfo`) {
+        ///////////////////
+        // Setting Modal //
+        ///////////////////
+        document.body.insertAdjacentHTML(`afterbegin`, `<div title="Open Settings" class="open-settings-modal mdi mdi-cog"></div>`)
+
+        let globalArgsHtml = `<div class="settings-modal" data-active-page="integrations">
+        <nav><ul>
+          <li class="nav-active"><button data-page="integrations">Integrations</button></li>
+          <li><button data-page="global-arguments">Global Arguments</button></li>
+          <li><button data-page="broadcaster">Broadcaster</button></li>
+          <li><button data-page="random-users">Random Users</button></li>
+        </ul></nav>
+        <div class="header"><div class="info"><p class="title"></p><p class="description"></p></div><button class="close-button">&times</button></div><div class="main"></div></div>`
+        document.querySelector(`.open-settings-modal`).addEventListener(`click`, function () {
+          document.querySelector(`.open-settings-modal`).insertAdjacentHTML(`afterend`, globalArgsHtml)
+          
+          reloadPages()
+          function reloadPages() {
+            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `integrations`) reloadIntegrations()
+            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `global-arguments`) reloadGlobalArguments()
+            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `broadcaster`) reloadBroadcaster()
+            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `random-users`) reloadRandomUsers()
+          }
+
+          document.querySelectorAll(`.settings-modal .header .close-button, .settings-modal .save-button button`).forEach(closeButton => {            
+            closeButton.addEventListener(`click`, function () {
+              reloadPages()
+              document.querySelector(`.settings-modal`).parentNode.removeChild(document.querySelector(`.settings-modal`))
+            })
+          });
+
+          document.querySelectorAll(`.settings-modal nav ul li button`).forEach(navButton => {
+            navButton.addEventListener(`click`, function () {
+              navButtonPage = navButton.getAttribute(`data-page`)
+              document.querySelector(`.settings-modal`).setAttribute(`data-active-page`, navButtonPage)
+              navButton.parentNode.classList.add(`nav-active`)
+              document.querySelectorAll(`.settings-modal nav ul li.nav-active`).forEach(navActiveButton => {
+                navActiveButton.classList.remove(`nav-active`)
+              });
+              navButton.parentNode.classList.add(`nav-active`)
+              reloadPages()
+            })
+          });
+
+          function reloadIntegrations() {
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Integrations • Settings`
+            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `All integrations that can be connected`
+
+            document.querySelector(`.settings-modal .main`).innerHTML = `
+            <p class="mdi mdi-check"> Streamer.bot (${instance.version}) • ${wsServerUrl}</p>
+            `
+
+          }
+        
+          function reloadBroadcaster() {
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Broadcaster Settings • Settings`
+            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Setting of argument for the Broadcast User`
+
+            let options = {
+              Twitch: `<option>Twitch</option>`,
+              YouTube: `<option>YouTube</option>`
+            }
+            let broadcastService = localStorage.getItem(`streamerbotToolbox__broadcastService`)
+
+            if (broadcastService === `Twitch`) {
+              options = options.Twitch + options.YouTube
+            } else if (broadcastService === `YouTube`) {
+              options = options.YouTube + options.Twitch
+            } else {
+              options = options.Twitch + options.YouTube
+            }
+            
+            document.querySelector(`.settings-modal .main`).innerHTML = `<p>Choose Between YouTube or Twitch</p><small>When the service is disconnected no broadcaster variables will be emitted</small><p><select>${options}</select></p>`
+
+            document.querySelector(`.settings-modal .main select`).addEventListener(`click`, function () {
+              localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.settings-modal .main select`).value)
+            })
+          }
+
+          function reloadRandomUsers() {
+            let prevRandomUsers = localStorage.getItem(`streamerbotToolbox__randomUsers`) || 0
+            if (prevRandomUsers <= 0) prevRandomUsers = `0`
+            if (isNaN(prevRandomUsers)) prevRandomUsers = `0`
+            console.log(`prevRandomUsers`, prevRandomUsers)
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Random Users • Settings`
+            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Random user variables`
+            document.querySelector(`.settings-modal .main`).innerHTML = `<div class="form-group"><label>Random Users:</label> <input type="number" value="${prevRandomUsers}"></div>`           
+            
+            document.querySelector(`.settings-modal .main input`).addEventListener(`keydown`, function () {
+              setTimeout(() => {
+                let randomUsers = document.querySelector(`.settings-modal .main input`).value
+                console.log(randomUsers)
+                if (randomUsers <= 0) randomUsers = 0
+                if (isNaN(randomUsers)) randomUsers = 0
+                localStorage.setItem(`streamerbotToolbox__randomUsers`, randomUsers)
+              }, 50);
+            })
+          }
+
+          function reloadGlobalArguments() {
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Global Arguments • Settings`
+            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Arguments that will be assigned to all actions`
+            document.querySelector(`.settings-modal .main`).innerHTML = `<table class="add-contents"><thead><tr><th>Argument</th><th>Value</th></tr></thead><tbody><tr><td class="argument"><input type="text" placeholder="Argument"></td><td class="value"><input type="text" placeholder="Value"></td><td><button title="Add Argument"class="add-row mdi mdi-plus-box"></button></td></tr></tbody></table>`
+
+            document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).focus()
+            document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).select()
+
+            let globalArgsData = localStorage.getItem(`streamerbotToolbox__globalArgs`) || `{}`
+            globalArgsData = JSON.parse(globalArgsData)
+            globalArgsData = Object.entries(globalArgsData)
+
+            globalArgsData.forEach(globalArgData => {
+              document.querySelector(`.settings-modal .main table.add-contents tbody`).insertAdjacentHTML(`beforeend`, `<tr><td><input type="text" placeholder="Argument" value="${globalArgData[0]}" disabled></td><td><input type="text" placeholder="Value" value="${globalArgData[1]}" disabled></td><td><button title="Remove Argument" class="remove-row mdi mdi-trash-can"></button></td></tr>`)
+            });
+
+            document.querySelector(`.settings-modal .main table.add-contents .add-row`).addEventListener(`click`, function () {
+              let globalArgsData = localStorage.getItem(`streamerbotToolbox__globalArgs`) || `{}`
+              globalArgsData = JSON.parse(globalArgsData)
+              globalArgsData = Object.entries(globalArgsData)
+              
+              globalArgsNewData = []
+              let argumentInput = document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).value
+              let valueInput = document.querySelector(`.settings-modal .main table.add-contents tbody td.value input`).value
+
+              if (argumentInput === ``) argumentInput = `Argument`
+              if (valueInput === ``) valueInput = `Value`
+
+              globalArgsNewData.push(argumentInput)
+              globalArgsNewData.push(valueInput)
+              globalArgsData.push(globalArgsNewData)
+              globalArgsData = Object.fromEntries(globalArgsData)
+
+              localStorage.setItem(`streamerbotToolbox__globalArgs`, JSON.stringify(globalArgsData))
+              
+              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).value = ``
+              document.querySelector(`.settings-modal .main table.add-contents tbody td.value input`).value = ``
+
+              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).focus()
+              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).select()
+              reloadGlobalArguments()
+            })
+
+            document.querySelectorAll(`.settings-modal .main table.add-contents .remove-row`).forEach(removeRow => {
+              removeRow.addEventListener(`click`, function () {
+                let globalArgsData = localStorage.getItem(`streamerbotToolbox__globalArgs`) || `{}`
+                globalArgsData = JSON.parse(globalArgsData)
+                globalArgsData = Object.entries(globalArgsData)
+                
+                let globalArgIndex = 0
+                globalArgsData.forEach(globalArgData => {
+                  if (globalArgData[0] === removeRow.parentNode.parentNode.querySelector(`input`).value) {
+                    globalArgsData.splice(globalArgIndex, 1)
+                  }
+                  globalArgIndex = globalArgIndex + 1
+                });
+                
+                globalArgsData = Object.fromEntries(globalArgsData)
+                localStorage.setItem(`streamerbotToolbox__globalArgs`, JSON.stringify(globalArgsData))
+
+                reloadGlobalArguments()
+              })
+            });
+          }
+        })
+      }
 
       if (location.hash === `#Actions` && data.id === `GetActions`) {
-        document.body.insertAdjacentHTML(`afterbegin`, `<div title="Open Global Arguments" class="open-settings-modal mdi mdi-cog"></div>`)
 
         ////////////
         // NAVBAR //
@@ -219,28 +416,57 @@ async function connectws() {
             if (buttonHtmlText === "") buttonHtmlText = "None"
             document.querySelector(`main ul.main-list`).insertAdjacentHTML(`afterbegin`, `<li class="list-title">${buttonHtmlText}, ${actionCount} Actions</li>`)
             if (buttonHtmlText === "None") buttonHtmlText = ""
-
-            // Broadcaster Variables
-            let broadcasterObj = {}
-            broadcasterObj.user = broadcaster?.platforms?.twitch?.broadcastUser ?? `ik1497`
-            broadcasterObj.userName = broadcaster?.platforms?.twitch?.broadcastUserName ?? `ik1497`
-            broadcasterObj.userId = broadcaster?.platforms?.twitch?.broadcastUserId ?? `695682330`
-            broadcasterObj.isAffiliate = broadcaster?.platforms?.twitch?.broadcasterIsAffiliate ?? `false`
-            broadcasterObj.isPartner = broadcaster?.platforms?.twitch?.broadcasterIsPartner ?? `false`
-
-            // Execute Button
-            let globalArguments = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
-            globalArguments = JSON.parse(globalArguments)
-            globalArguments = Object.entries(globalArguments)
-            globalArguments.push([`broadcastUser`, broadcasterObj.user])
-            globalArguments.push([`broadcastUserName`, broadcasterObj.userName])
-            globalArguments.push([`broadcastUserId`, broadcasterObj.userId])
-            globalArguments.push([`broadcastIsAffiliate`, broadcasterObj.isAffiliate])
-            globalArguments.push([`broadcastIsPartner`, broadcasterObj.isPartner])
-            globalArguments.push([`source`, `StreamerbotTool`])
-            globalArguments = Object.fromEntries(globalArguments)
+            
             document.querySelectorAll(`main ul.main-list button`).forEach(buttonHtml => {
               buttonHtml.addEventListener(`click`, function () { 
+                let broadcasterObj = {}
+
+                if (broadcaster?.connected.includes(`twitch`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `Twitch`) {
+                  broadcasterObj.user = broadcaster?.platforms?.twitch?.broadcastUser ?? `ik1497`
+                  broadcasterObj.userName = broadcaster?.platforms?.twitch?.broadcastUserName ?? `ik1497`
+                  broadcasterObj.userId = broadcaster?.platforms?.twitch?.broadcastUserId ?? `695682330`
+                  broadcasterObj.isAffiliate = broadcaster?.platforms?.twitch?.broadcasterIsAffiliate ?? `false`
+                  broadcasterObj.isPartner = broadcaster?.platforms?.twitch?.broadcasterIsPartner ?? `false`
+                }
+
+                if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
+                  broadcasterObj.userName = broadcaster?.platforms?.youtube?.broadcastUserName ?? `Ik1497 Tutorials`
+                  broadcasterObj.userId = broadcaster?.platforms?.youtube?.broadcastUserId ?? `UCl3oatIf9tYopHaZHvnH3xw`
+                  broadcasterObj.prfileImage = broadcaster?.platforms?.youtube?.broadcastUserProfileImage ?? `https://yt3.ggpht.com/VpC8_9WcDEKcPSvnD6p1iGT_S2_XxdeZtL6tTL2axexj0SpG-c4Wx8i5lYNbJtvmzwCnzm9Bsg=s88-c-k-c0x00ffffff-no-rj`
+                }
+
+                let globalArguments = localStorage.getItem(`streamerbotToolbox__globalArgs`) || `{}`
+                globalArguments = JSON.parse(globalArguments)
+                globalArguments = Object.entries(globalArguments)
+
+                if (broadcaster?.connected.includes(`twitch`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `Twitch`) {
+                  globalArguments.push([`broadcastUser`, broadcasterObj.user])
+                  globalArguments.push([`broadcastUserName`, broadcasterObj.userName])
+                  globalArguments.push([`broadcastUserId`, broadcasterObj.userId])
+                  globalArguments.push([`broadcastIsAffiliate`, broadcasterObj.isAffiliate])
+                  globalArguments.push([`broadcastIsPartner`, broadcasterObj.isPartner])
+                }
+                
+                if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
+                  globalArguments.push([`broadcastUserName`, broadcasterObj.userName])
+                  globalArguments.push([`broadcastUserId`, broadcasterObj.userId])
+                  globalArguments.push([`broadcastUserProfileImage`, broadcasterObj.prfileImage])
+                }
+
+                let randomUserCount = localStorage.getItem(`streamerbotToolbox__randomUsers`)
+                if (randomUserCount <= 0) randomUserCount = 0
+                if (isNaN(randomUserCount)) randomUserCount = 0
+                if (randomUserCount > 0 && presentViewers.viewers.length > 0) {
+                  for (let presentViewerRunTime = 0; presentViewerRunTime < randomUserCount; presentViewerRunTime++) {                    
+                    let randomUser = presentViewers.viewers[Math.floor(Math.random()*presentViewers.viewers.length)];
+                    globalArguments.push([`randomUser${presentViewerRunTime}`, randomUser.display])
+                    globalArguments.push([`randomUserName${presentViewerRunTime}`, randomUser.login])
+                    globalArguments.push([`randomUserId${presentViewerRunTime}`, randomUser.id])  
+                  }
+                }
+                
+                globalArguments = Object.fromEntries(globalArguments)
+                
                 ws.send(
                   JSON.stringify({
                     request: "DoAction",
@@ -254,110 +480,6 @@ async function connectws() {
               })
             })
           })
-        })
-
-        ///////////////////
-        // Setting Modal //
-        ///////////////////
-        let globalArgsHtml = `<div class="settings-modal" data-active-page="global-arguments"><nav><ul><li class="nav-active"><button data-page="global-arguments">Global Arguments</button></li><li><button data-page="broadcaster-settings">Broadcaster Settings</button></li></ul></nav><div class="header"><div class="info"><p class="title">Global Arguments</p><p class="description">Arguments that will be assigned to all actions</p></div><button class="close-button">&times</button></div><div class="main"></div></div>`
-        document.querySelector(`.open-settings-modal`).addEventListener(`click`, function () {
-          document.querySelector(`.open-settings-modal`).insertAdjacentHTML(`afterend`, globalArgsHtml)
-          document.querySelectorAll(`.settings-modal .header .close-button, .settings-modal .save-button button`).forEach(closeButton => {            
-            closeButton.addEventListener(`click`, function () {
-              document.querySelector(`.settings-modal`).parentNode.removeChild(document.querySelector(`.settings-modal`))
-            })
-          });
-          
-          reloadPages()
-          function reloadPages() {
-            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `global-arguments`) reloadGlobalArguments()
-            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `broadcaster-settings`) reloadBroadcasterSettings()
-          }
-
-          document.querySelectorAll(`.settings-modal nav ul li button`).forEach(navButton => {
-            navButton.addEventListener(`click`, function () {
-              navButtonPage = navButton.getAttribute(`data-page`)
-              document.querySelector(`.settings-modal`).setAttribute(`data-active-page`, navButtonPage)
-              navButton.parentNode.classList.add(`nav-active`)
-              document.querySelectorAll(`.settings-modal nav ul li.nav-active`).forEach(navActiveButton => {
-                navActiveButton.classList.remove(`nav-active`)
-              });
-              navButton.parentNode.classList.add(`nav-active`)
-              reloadPages()
-            })
-          });
-        
-          function reloadBroadcasterSettings() {
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Broadcaster Settings • Settings`
-            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Setting of argument for the Broadcast User`
-            document.querySelector(`.settings-modal .main`).innerHTML = `<p>Coming Soon!</p>`
-
-          }
-
-          function reloadGlobalArguments() {
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Global Arguments • Settings`
-            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Arguments that will be assigned to all actions`
-            document.querySelector(`.settings-modal .main`).innerHTML = `<table class="add-contents"><thead><tr><th>Argument</th><th>Value</th></tr></thead><tbody><tr><td class="argument"><input type="text" placeholder="Argument"></td><td class="value"><input type="text" placeholder="Value"></td><td><button title="Add Argument"class="add-row mdi mdi-plus-box"></button></td></tr></tbody></table>`
-
-            document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).focus()
-            document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).select()
-
-            let globalArgsData = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
-            globalArgsData = JSON.parse(globalArgsData)
-            globalArgsData = Object.entries(globalArgsData)
-
-            globalArgsData.forEach(globalArgData => {
-              document.querySelector(`.settings-modal .main table.add-contents tbody`).insertAdjacentHTML(`beforeend`, `<tr><td><input type="text" placeholder="Argument" value="${globalArgData[0]}" disabled></td><td><input type="text" placeholder="Value" value="${globalArgData[1]}" disabled></td><td><button title="Remove Argument" class="remove-row mdi mdi-trash-can"></button></td></tr>`)
-            });
-
-            document.querySelector(`.settings-modal .main table.add-contents .add-row`).addEventListener(`click`, function () {
-              let globalArgsData = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
-              globalArgsData = JSON.parse(globalArgsData)
-              globalArgsData = Object.entries(globalArgsData)
-              
-              globalArgsNewData = []
-              let argumentInput = document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).value
-              let valueInput = document.querySelector(`.settings-modal .main table.add-contents tbody td.value input`).value
-  
-              if (argumentInput === ``) argumentInput = `Argument`
-              if (valueInput === ``) valueInput = `Value`
-  
-              globalArgsNewData.push(argumentInput)
-              globalArgsNewData.push(valueInput)
-              globalArgsData.push(globalArgsNewData)
-              globalArgsData = Object.fromEntries(globalArgsData)
-  
-              localStorage.setItem(`streamerbotTool__globalArgs`, JSON.stringify(globalArgsData))
-              
-              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).value = ``
-              document.querySelector(`.settings-modal .main table.add-contents tbody td.value input`).value = ``
-  
-              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).focus()
-              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).select()
-              reloadGlobalArguments()
-            })
-
-            document.querySelectorAll(`.settings-modal .main table.add-contents .remove-row`).forEach(removeRow => {
-              removeRow.addEventListener(`click`, function () {
-                let globalArgsData = localStorage.getItem(`streamerbotTool__globalArgs`) || `{}`
-                globalArgsData = JSON.parse(globalArgsData)
-                globalArgsData = Object.entries(globalArgsData)
-                
-                let globalArgIndex = 0
-                globalArgsData.forEach(globalArgData => {
-                  if (globalArgData[0] === removeRow.parentNode.parentNode.querySelector(`input`).value) {
-                    globalArgsData.splice(globalArgIndex, 1)
-                  }
-                  globalArgIndex = globalArgIndex + 1
-                });
-                
-                globalArgsData = Object.fromEntries(globalArgsData)
-                localStorage.setItem(`streamerbotTool__globalArgs`, JSON.stringify(globalArgsData))
-  
-                reloadGlobalArguments()
-              })
-            });
-          }
         })
       }
 
