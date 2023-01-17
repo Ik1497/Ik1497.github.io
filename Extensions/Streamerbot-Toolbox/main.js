@@ -1,4 +1,4 @@
-let version = `1.0.0`
+let version = `1.0.0-pre`
 let documentTitle = `Streamer.bot Toolbox v${version} | Streamer.bot Actions`
 document.title = documentTitle
 
@@ -8,27 +8,29 @@ let headerTagsMap = [
   `Action History`,
   `Present Viewers`,
   `Websocket Events`,
-  `Chat (WIP)`
+  `Chat`
 ]
 
-let headerTags = ``
+
+if (location.hash === ``) location.href = `#About`
+
+let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
+let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">Streamer.bot Toolbox v${version}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
+document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
+
+document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `<ul class="header-tags"></ul>`)
 
 headerTagsMap.forEach(headerTag => {
   let headerTagActive = ``
   if (headerTag === `Chat (WIP)`) headerTag = `Chat`
   let headerTagHash = headerTag.replaceAll(` `, `-`)
   if (location.hash === `#${headerTagHash}`) headerTagActive = ` class="header-tag-active"`
-  if (headerTag === `Chat`) headerTag = `Chat (WIP)`
-  headerTags += `<a href="#${headerTagHash}" title="${headerTag}"${headerTagActive}>${headerTag}</a>`
+  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<a href="#${headerTagHash}" title="${headerTag}"${headerTagActive}>${headerTag}</a>`)
+
+  document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `<main class="nested" data-page-hash="${headerTagHash}"></main>`)
 });
 
-headerTags = `<ul class="header-tags">${headerTags}</ul>`
-
-if (location.hash === ``) location.href = `#About`
-
-let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
-let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">Streamer.bot Toolbox v${version}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside>${headerTags}</header>`
-document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
+if (!headerTagsMap.includes(location.hash.replace(`#`, ``))) document.body.classList.add(`404`)
 
 document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function () {
   window.location = `?ws=ws://${document.querySelector(`header aside .form-area .url`).value}:${document.querySelector(`header aside .form-area .port`).value}${document.querySelector(`header aside .form-area .endpoint`).value}`
@@ -76,6 +78,7 @@ async function connectws() {
       document.querySelector(`header aside`).setAttribute(`data-connection`, `disconnected`)
       document.documentElement.style.cursor = ``
       location.reload()
+      document.body.classList.add(`disconnected`)
     }
     
     ws.onopen = function () {
@@ -89,6 +92,7 @@ async function connectws() {
         document.querySelector(`header aside button.connect-websocket`).innerText = `Connected`
         document.querySelector(`header aside`).setAttribute(`data-connection`, `connected`)
         document.documentElement.style.cursor = ``
+        document.body.classList.remove(`disconnected`)
     }
     
     ws.addEventListener("message", (event) => {
@@ -181,17 +185,28 @@ async function connectws() {
       if (data.id === `GetActiveViewers`) presentViewers = data
 
       if (location.hash === `#About` && data.id === `GetBroadcaster`) {
-        document.body.removeChild(document.querySelector(`nav.navbar`))
-        let welcomeMessage = `Welcome!`
-        if (data.connected.includes(`youtube`)) welcomeMessage = `Welcome ${data.platforms.youtube.broadcastUser}!`
-        if (data.connected.includes(`twitch`)) welcomeMessage = `Welcome ${data.platforms.twitch.broadcastUser}!`
-        document.body.querySelector(`main`).innerHTML = `
-        <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
-        <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
-        <p>this tool is currently a very work in progress, feautures may come and go over time.</p>
-        <br>
-        <p>This tool requires your <code>Server/Clients</code> --> <code>Websocket Server</code> to be enabled.</p>
-        `
+        AboutAsyncPage()
+        async function AboutAsyncPage() {
+          document.body.removeChild(document.querySelector(`nav.navbar`))
+          let welcomeMessage = `Welcome!`
+          let profileImage = ``
+          if (data.connected.includes(`youtube`)) profileImage = data.platforms.youtube.broadcastUserProfileImage
+          if (data.connected.includes(`twitch`)) profileImage = await fetch(`https://decapi.me/twitch/avatar/${data.platforms.twitch.broadcastUserName}`)
+          if (data.connected.includes(`twitch`)) profileImage = await profileImage.text()
+
+          if (profileImage != ``) profileImage = `<img style="width: 1em; height: 1em; border-radius: 100vmax; margin-right: .125em" src="${profileImage}" alt="Broadcaster's Avatar">`
+  
+          console.log(profileImage)
+          if (data.connected.includes(`youtube`)) welcomeMessage = `Welcome, <span style="display: flex; align-items: center;">${profileImage}${data.platforms.youtube.broadcastUserName}!</span>`
+          if (data.connected.includes(`twitch`)) welcomeMessage = `Welcome, <span style="display: flex; align-items: center;">${profileImage}${data.platforms.twitch.broadcastUser}!</span>`
+          document.body.querySelector(`main`).innerHTML = `
+          <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
+          <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
+          <p>this tool is currently a very work in progress, feautures may come and go over time.</p>
+          <br>
+          <p>This tool requires your <code>Server/Clients</code> --> <code>Websocket Server</code> to be enabled.</p>
+          `
+        }
       }
 
       if (data.id === `GetInfo`) {
@@ -254,21 +269,23 @@ async function connectws() {
             document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Setting of argument for the Broadcast User`
 
             let options = {
+              Disabled: `<option>Disabled</option>`,
               Twitch: `<option>Twitch</option>`,
               YouTube: `<option>YouTube</option>`
             }
-            let broadcastService = localStorage.getItem(`streamerbotToolbox__broadcastService`)
+            let broadcastService = localStorage.getItem(`streamerbotToolbox__broadcastService`) || `Off`
 
             if (broadcastService === `Twitch`) {
-              options = options.Twitch + options.YouTube
+              options = options.Twitch + options.Twitch + options.Disabled
             } else if (broadcastService === `YouTube`) {
-              options = options.YouTube + options.Twitch
-            } else {
-              options = options.Twitch + options.YouTube
+              options = options.YouTube + options.Twitch + options.Disabled
+            } else if (broadcastService === `Off`) {
+              options = options.Disabled + options.Twitch + options.YouTube
             }
             
             document.querySelector(`.settings-modal .main`).innerHTML = `<p>Choose Between YouTube or Twitch</p><small>When the service is disconnected no broadcaster variables will be emitted</small><p><select>${options}</select></p>`
 
+            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.settings-modal .main select`).value)
             document.querySelector(`.settings-modal .main select`).addEventListener(`click`, function () {
               localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.settings-modal .main select`).value)
             })
@@ -282,6 +299,8 @@ async function connectws() {
             document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Random user variables`
             document.querySelector(`.settings-modal .main`).innerHTML = `<div class="form-group"><label>Random Users:</label> <input type="number" value="${prevRandomUsers}"></div>`           
             
+            localStorage.setItem(`streamerbotToolbox__randomUsers`, document.querySelector(`.settings-modal .main input`).value)
+
             document.querySelector(`.settings-modal .main input`).addEventListener(`keydown`, function () {
               setTimeout(() => {
                 let randomUsers = document.querySelector(`.settings-modal .main input`).value
@@ -462,6 +481,8 @@ async function connectws() {
                     globalArguments.push([`randomUserId${presentViewerRunTime}`, randomUser.id])  
                   }
                 }
+
+                globalArguments.push([`source`, `StreamerbotToolbox`])  
                 
                 globalArguments = Object.fromEntries(globalArguments)
                 
@@ -492,7 +513,7 @@ async function connectws() {
         arguments.forEach(argument => {
           listContents += `<li>${argument[0]}</li><li>${argument[1]}</li>`
         });
-        document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `
+        document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
         <ul class="main-list col-2" data-id="${data.data.arguments.runningActionId}" hidden>
           ${listContents}
         </ul>

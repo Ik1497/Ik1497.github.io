@@ -23,6 +23,11 @@ html {
     display: flex;
 }
 
+body.disconnected > *:not(header),
+body.disconnected .header-tags {
+    display: none;
+}
+
 ::-webkit-scrollbar {
     background: var(--background-soft);
     width: 16px;
@@ -234,7 +239,7 @@ header aside button {
 /* main */
 /* ---- */
 
-main {
+main:not(.nested) {
     width: 100%;
     margin-inline: 1em;
     margin-right: 1em;
@@ -243,14 +248,14 @@ main {
     margin-top: 7em;
 }
 
-main ul.main-list {
+main:not(.nested) ul.main-list {
     display: grid;
     gap: .5em;
     width: 100%;
     height: fit-content;
 }
 
-main ul.main-list li {
+main:not(.nested) ul.main-list li {
     background: var(--background-soft);
     padding-inline: .5em;
     padding-block: .75em;
@@ -258,19 +263,19 @@ main ul.main-list li {
     grid-template-columns: 1fr auto;
 }
 
-main ul.main-list li.list-title {
+main:not(.nested) ul.main-list li.list-title {
     text-align: center;
     font-weight: 700;
 }
 
-main ul.main-list li,
-main ul.main-list li p {
+main:not(.nested) ul.main-list li,
+main:not(.nested) ul.main-list li p {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-main ul.main-list li button {
+main:not(.nested) ul.main-list li button {
     color: #a4ceff;
     background: #285292;
     border: 0;
@@ -286,36 +291,36 @@ main ul.main-list li button {
     text-overflow: ellipsis;
 }
 
-main ul.main-list li button:active,
-main ul.main-list li button:focus-visible,
-main ul.main-list li button:hover {
+main:not(.nested) ul.main-list li button:active,
+main:not(.nested) .main-list li button:focus-visible,
+main:not(.nested) .main-list li button:hover {
     background: var(--color-link-hover);
 }
 
-main ul.main-list.col-2 {
+main:not(.nested) .main-list.col-2 {
     display: grid;
     grid-template-columns: max-content auto;
 }
 
-main ul.main-list.col-2 li:nth-child(1n) {
+main:not(.nested) .main-list.col-2 li:nth-child(1n) {
     text-align: right;
 }
 
-main ul.main-list.col-2 li:nth-child(2n) {
+main:not(.nested) .main-list.col-2 li:nth-child(2n) {
     text-align: left;
 }
 
-main ul li > div.mdi.mdi-twitch::before,
-main ul li > div.mdi.mdi-youtube::before {
+main:not(.nested) li > div.mdi.mdi-twitch::before,
+main:not(.nested) li > div.mdi.mdi-youtube::before {
     padding: .25rem;
     border-radius: 8px;
 }
 
-main ul li > div.mdi.mdi-twitch::before {
+main:not(.nested) li > div.mdi.mdi-twitch::before {
     background: #6441a5;
 }
 
-main ul li > div.mdi.mdi-youtube::before {
+main:not(.nested) li > div.mdi.mdi-youtube::before {
     background: #ff0000;
 }
 
@@ -332,7 +337,7 @@ main ul li > div.mdi.mdi-youtube::before {
     width: 60vw;
     height: 70vh;
     border: 2px solid var(--background-light);
-    border-radius: .5em;
+    border-radius: 1rem;
     overflow: hidden;
     z-index: 999;
 }
