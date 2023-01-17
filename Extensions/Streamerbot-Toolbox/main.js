@@ -2,10 +2,6 @@ let version = `1.0.0`
 let documentTitle = `Streamer.bot Toolbox v${version} | Streamer.bot Actions`
 document.title = documentTitle
 
-window.addEventListener('hashchange', () => {
-  location.reload()
-});
-
 let headerTagsMap = [
   `About`,
   `Actions`,
@@ -52,6 +48,10 @@ document.querySelector(`nav.navbar > input[type=search]`).addEventListener(`keyd
     });
   }, 50);
 })
+
+window.addEventListener('hashchange', () => {
+  location.reload()
+});
 
 connectws()
 
@@ -278,7 +278,6 @@ async function connectws() {
             let prevRandomUsers = localStorage.getItem(`streamerbotToolbox__randomUsers`) || 0
             if (prevRandomUsers <= 0) prevRandomUsers = `0`
             if (isNaN(prevRandomUsers)) prevRandomUsers = `0`
-            console.log(`prevRandomUsers`, prevRandomUsers)
             document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Random Users • Settings`
             document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Random user variables`
             document.querySelector(`.settings-modal .main`).innerHTML = `<div class="form-group"><label>Random Users:</label> <input type="number" value="${prevRandomUsers}"></div>`           
@@ -286,7 +285,6 @@ async function connectws() {
             document.querySelector(`.settings-modal .main input`).addEventListener(`keydown`, function () {
               setTimeout(() => {
                 let randomUsers = document.querySelector(`.settings-modal .main input`).value
-                console.log(randomUsers)
                 if (randomUsers <= 0) randomUsers = 0
                 if (isNaN(randomUsers)) randomUsers = 0
                 localStorage.setItem(`streamerbotToolbox__randomUsers`, randomUsers)
