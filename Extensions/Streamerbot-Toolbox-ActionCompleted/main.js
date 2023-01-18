@@ -1,5 +1,5 @@
 let version = `1.0.0-pre`
-let title = `Streamer.bot Toolbox v${version}`
+let title = `Streamer.bot Toolbox with ActionCompleted v${version}`
 let documentTitle = `${title} | Streamer.bot Actions`
 document.title = documentTitle
 
@@ -144,7 +144,7 @@ async function connectws() {
           JSON.stringify({
             request: `Subscribe`,
             events: {
-              raw: [`Action`]
+              raw: [`Action`, `ActionCompleted`]
             },
             id: `ActionCompleted`,
           })
