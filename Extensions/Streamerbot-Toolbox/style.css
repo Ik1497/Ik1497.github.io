@@ -324,11 +324,12 @@ main:not(.nested) li>div.mdi.mdi-youtube::before {
   background: #ff0000;
 }
 
-/* ----------- */
-/* Global Args */
-/* ----------- */
+/* -------------- */
+/* Settings Modal */
+/* -------------- */
 
-.settings-modal {
+.settings-modal,
+.settings-modal-alt {
   position: fixed;
   left: 50%;
   top: 50%;
@@ -342,7 +343,21 @@ main:not(.nested) li>div.mdi.mdi-youtube::before {
   z-index: 999;
 }
 
-body:has(> .settings-modal)>*:not(.settings-modal) {
+.settings-modal-alt.small {
+  width: 30vw;
+  height: 40vh;
+}
+
+.settings-modal-alt {
+  padding: 2rem;
+}
+
+body:has(> .settings-modal-alt) > .settings-modal {
+  display: none;
+}
+
+body:has(> .settings-modal) > *:not(.settings-modal),
+body:has(> .settings-modal-alt) > *:not(.settings-modal-alt) {
   opacity: .57;
   pointer-events: none;
 }

@@ -144,7 +144,7 @@ async function connectws() {
           JSON.stringify({
             request: `Subscribe`,
             events: {
-              raw: [`Action`]
+              raw: [`Action`, `ActionCompleted`]
             },
             id: `ActionCompleted`,
           })
@@ -514,7 +514,7 @@ async function connectws() {
         document.querySelector(`main`).innerHTML = ``
       }
 
-      if (location.hash === `#Action-History` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
+      if (location.hash === `#Action-History` && data?.event?.source === `Raw`) {
         document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`afterbegin`, `<li class="navbar-list-item" data-id="${data.data.arguments.runningActionId}"><button>${data.data.name}</button></li>`)
         let listContents = ``
         let arguments = Object.entries(data.data.arguments)
