@@ -4,41 +4,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
 }
 
 body,
 html {
-    font-size: 1em;
-    font-family: Inter;
-    color: var(--text-900);
-    background: var(--background-primary);
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+  font-size: 1em;
+  font-family: Inter;
+  color: var(--text-900);
+  background: var(--background-primary);
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 
-    display: flex;
+  display: flex;
 }
 
-body.disconnected > *:not(header),
+body.disconnected>*:not(header),
 body.disconnected .header-tags {
-    display: none;
+  display: none;
 }
 
 ::-webkit-scrollbar {
-    background: var(--background-soft);
-    width: 16px;
+  background: var(--background-soft);
+  width: 16px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--background-light);
+  background: var(--background-light);
 }
 
 [hidden] {
-    display: none!important;
+  display: none !important;
 }
 
 /* ------ */
@@ -46,120 +46,120 @@ body.disconnected .header-tags {
 /* ------ */
 
 header {
-    display: flex;
-    justify-content: space-between;
-    padding-inline: .5em;
-    position: fixed;
-    background: var(--background-soft);
-    width: 100%;
-    height: 6rem;
-    z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: .5em;
+  position: fixed;
+  background: var(--background-soft);
+  width: 100%;
+  height: 6rem;
+  z-index: 100;
 }
 
-header > a {
-    text-decoration: none;
+header>a {
+  text-decoration: none;
 }
 
 header .main {
-    display: flex;
-    align-items: center;
-    column-gap: .4em;
-    height: 2.5em;
-    margin-bottom: auto;
-    padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  column-gap: .4em;
+  height: 2.5em;
+  margin-bottom: auto;
+  padding-top: 1rem;
 }
-    
+
 header .main img {
-    width: 2.5em;
+  width: 2.5em;
 }
 
 header .main .name {
-    font-weight: bold;
-    color: var(--text-900);
+  font-weight: bold;
+  color: var(--text-900);
 }
 
 header .main .description {
-    color: var(--text-600);
+  color: var(--text-600);
 }
 
 header aside {
-    display: flex;
-    column-gap: .5em;
-    align-self: center;
+  display: flex;
+  column-gap: .5em;
+  align-self: center;
 }
 
 header aside p.instance-info {
-    font-size: 1.25rem;
-    text-align: right;
+  font-size: 1.25rem;
+  text-align: right;
 }
 
 header aside p.instance-info small {
-    display: block;
-    font-size: .9rem;
-    color: var(--text-600);
+  display: block;
+  font-size: .9rem;
+  color: var(--text-600);
 }
 
 header aside .form-area {
-    position: relative;
+  position: relative;
 }
 
 header aside .form-area label {
-    position: absolute;
-    font-size: .5em;
-    padding-inline: .25rem;
+  position: absolute;
+  font-size: .5em;
+  padding-inline: .25rem;
 }
 
 header aside .form-area input {
-    background: var(--background-alt);
-    color: var(--text-900);
-    border: 0;
-    outline: 0;
-    border-radius: 0;
-    padding-top: 1em;
-    padding-inline: .25rem;
+  background: var(--background-alt);
+  color: var(--text-900);
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  padding-top: 1em;
+  padding-inline: .25rem;
 }
 
 header aside button {
-    background: var(--background-alt);
-    color: var(--text-900);
-    border: 0;
-    outline: 0;
-    border-radius: 0;
-    padding-block: .25em;
-    padding-inline: .25rem;
+  background: var(--background-alt);
+  color: var(--text-900);
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  padding-block: .25em;
+  padding-inline: .25rem;
 }
 
 .header-tags {
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    column-gap: .5rem;
-    z-index: 100;
-    overflow-x: auto;
-    overflow-y: hidden;
-    position: absolute;
-    bottom: 0;
-    left: .5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+  z-index: 100;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: absolute;
+  bottom: 0;
+  left: .5rem;
 }
 
 .header-tags a {
-    text-decoration: none;
-    color: var(--text-900);
-    background: var(--background-light);
-    padding-inline: .5rem;
-    padding-block: .25rem;
-    min-width: max-content;
-    border-radius: 100vmax;
-    text-align: center;
+  text-decoration: none;
+  color: var(--text-900);
+  background: var(--background-light);
+  padding-inline: .5rem;
+  padding-block: .25rem;
+  min-width: max-content;
+  border-radius: 100vmax;
+  text-align: center;
 }
 
 .header-tags a:hover {
-    background: var(--background-lighten);
+  background: var(--background-lighten);
 }
 
 .header-tags a.header-tag-active {
-    background: var(--color-link-hover);
-    cursor: default;
+  background: var(--color-link-hover);
+  cursor: default;
 }
 
 /* --- */
@@ -167,72 +167,72 @@ header aside button {
 /* --- */
 
 .navbar {
-    position: fixed;
-    bottom: 0;
+  position: fixed;
+  bottom: 0;
 }
 
-.navbar > input[type=search] {
-    position: absolute;
-    top: -2.5rem;
-    width: 100%;
-    height: 2.5rem;
-    outline: 0;
-    border: 0;
-    background: var(--background-alt);
-    color: var(--text-900);
-    padding-inline: .75em;
+.navbar>input[type=search] {
+  position: absolute;
+  top: -2.5rem;
+  width: 100%;
+  height: 2.5rem;
+  outline: 0;
+  border: 0;
+  background: var(--background-alt);
+  color: var(--text-900);
+  padding-inline: .75em;
 }
 
 .navbar .navbar-list {
-    width: 20em;
-    background: var(--background-alt);
-    display: flex;
-    flex-direction: column;
-    row-gap: .25em;
-    height: calc(100vh - 8.5em);
-    overflow-y: auto;
+  width: 20em;
+  background: var(--background-alt);
+  display: flex;
+  flex-direction: column;
+  row-gap: .25em;
+  height: calc(100vh - 8.5em);
+  overflow-y: auto;
 
-    padding-block: 1em;
+  padding-block: 1em;
 }
 
 .navbar .navbar-list .navbar-list-item {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding-inline: .5em;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-inline: .5em;
 }
 
 .navbar .navbar-list .navbar-list-item .Action-Timestamp {
-    font-size: .75em;
-    color: var(--text-400);
+  font-size: .75em;
+  color: var(--text-400);
 }
 
 .navbar .navbar-list .navbar-list-item button {
-    background: var(--background-alt);
-    border: 0;
-    border-radius: 5px;
-    outline: 0;
-    color: var(--text-900);
-    width: 100%;
-    text-align: left;
-    padding-inline: .5em;
-    padding-block: 1em;
-    cursor: pointer;
+  background: var(--background-alt);
+  border: 0;
+  border-radius: 5px;
+  outline: 0;
+  color: var(--text-900);
+  width: 100%;
+  text-align: left;
+  padding-inline: .5em;
+  padding-block: 1em;
+  cursor: pointer;
 
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .navbar .navbar-list .navbar-list-item button:active,
 .navbar .navbar-list .navbar-list-item button:focus-visible,
 .navbar .navbar-list .navbar-list-item button:hover {
-    background: var(--background-soft);
+  background: var(--background-soft);
 }
 
 .navbar .navbar-list .navbar-list-item.nav-active button {
-    color: #a4ceff;
-    background: #285292;
+  color: #a4ceff;
+  background: #285292;
 }
 
 /* ---- */
@@ -240,88 +240,88 @@ header aside button {
 /* ---- */
 
 main:not(.nested) {
-    width: 100%;
-    margin-inline: 1em;
-    margin-right: 1em;
-    margin-left: 21rem;
-    overflow-y: auto;
-    margin-top: 7em;
+  width: 100%;
+  margin-inline: 1em;
+  margin-right: 1em;
+  margin-left: 21rem;
+  overflow-y: auto;
+  margin-top: 7em;
 }
 
 main:not(.nested) ul.main-list {
-    display: grid;
-    gap: .5em;
-    width: 100%;
-    height: fit-content;
+  display: grid;
+  gap: .5em;
+  width: 100%;
+  height: fit-content;
 }
 
 main:not(.nested) ul.main-list li {
-    background: var(--background-soft);
-    padding-inline: .5em;
-    padding-block: .75em;
-    display: grid;
-    grid-template-columns: 1fr auto;
+  background: var(--background-soft);
+  padding-inline: .5em;
+  padding-block: .75em;
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
 
 main:not(.nested) ul.main-list li.list-title {
-    text-align: center;
-    font-weight: 700;
+  text-align: center;
+  font-weight: 700;
 }
 
 main:not(.nested) ul.main-list li,
 main:not(.nested) ul.main-list li p {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 main:not(.nested) ul.main-list li button {
-    color: #a4ceff;
-    background: #285292;
-    border: 0;
-    border-radius: 5px;
-    outline: 0;
-    width: 100%;
-    padding-inline: .5em;
-    padding-block: .25em;
-    cursor: pointer;
+  color: #a4ceff;
+  background: #285292;
+  border: 0;
+  border-radius: 5px;
+  outline: 0;
+  width: 100%;
+  padding-inline: .5em;
+  padding-block: .25em;
+  cursor: pointer;
 
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 main:not(.nested) ul.main-list li button:active,
 main:not(.nested) .main-list li button:focus-visible,
 main:not(.nested) .main-list li button:hover {
-    background: var(--color-link-hover);
+  background: var(--color-link-hover);
 }
 
 main:not(.nested) .main-list.col-2 {
-    display: grid;
-    grid-template-columns: max-content auto;
+  display: grid;
+  grid-template-columns: max-content auto;
 }
 
 main:not(.nested) .main-list.col-2 li:nth-child(1n) {
-    text-align: right;
+  text-align: right;
 }
 
 main:not(.nested) .main-list.col-2 li:nth-child(2n) {
-    text-align: left;
+  text-align: left;
 }
 
-main:not(.nested) li > div.mdi.mdi-twitch::before,
-main:not(.nested) li > div.mdi.mdi-youtube::before {
-    padding: .25rem;
-    border-radius: 8px;
+main:not(.nested) li>div.mdi.mdi-twitch::before,
+main:not(.nested) li>div.mdi.mdi-youtube::before {
+  padding: .25rem;
+  border-radius: 8px;
 }
 
-main:not(.nested) li > div.mdi.mdi-twitch::before {
-    background: #6441a5;
+main:not(.nested) li>div.mdi.mdi-twitch::before {
+  background: #6441a5;
 }
 
-main:not(.nested) li > div.mdi.mdi-youtube::before {
-    background: #ff0000;
+main:not(.nested) li>div.mdi.mdi-youtube::before {
+  background: #ff0000;
 }
 
 /* ----------- */
@@ -329,127 +329,127 @@ main:not(.nested) li > div.mdi.mdi-youtube::before {
 /* ----------- */
 
 .settings-modal {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--background-alt);
-    width: 60vw;
-    height: 70vh;
-    border: 2px solid var(--background-light);
-    border-radius: 1rem;
-    overflow: hidden;
-    z-index: 999;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--background-alt);
+  width: 60vw;
+  height: 70vh;
+  border: 2px solid var(--background-light);
+  border-radius: 1rem;
+  overflow: hidden;
+  z-index: 999;
 }
 
-body:has(> .settings-modal) > *:not(.settings-modal) {
-    opacity: .57;
-    pointer-events: none;
+body:has(> .settings-modal)>*:not(.settings-modal) {
+  opacity: .57;
+  pointer-events: none;
 }
 
 body:has(> .settings-modal) .open-settings-modal {
-    display: none;
+  display: none;
 }
 
 .settings-modal .header {
-    background: var(--color-link-hover);
-    width: 100%;
-    height: 3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: .5rem;
+  background: var(--color-link-hover);
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: .5rem;
 }
 
 .settings-modal .header .close-button {
-    border: 0;
-    outline: 0;
-    border-radius: 0;
-    width: 3rem;
-    height: 3rem;
-    background: var(--color-link);
-    color: white;
-    font-size: 2em;
-    font-weight: 700;
-    cursor: pointer;
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  width: 3rem;
+  height: 3rem;
+  background: var(--color-link);
+  color: white;
+  font-size: 2em;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .settings-modal .header .info .title {
-    font-weight: bold;
-    font-size: 1.25em;
+  font-weight: bold;
+  font-size: 1.25em;
 }
 
 .settings-modal .header .info .description {
-    font-size: .8em;
+  font-size: .8em;
 }
 
 .settings-modal nav {
-    position: fixed;
-    top: 4rem;
-    left: 1rem;
-    width: 20%;
+  position: fixed;
+  top: 4rem;
+  left: 1rem;
+  width: 20%;
 }
 
 .settings-modal nav ul {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: .5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: .5rem;
 }
 
 .settings-modal nav ul li button {
-    width: 100%;
-    text-align: left;
-    color: var(--text-900);
-    background: transparent;
-    outline: 0;
-    border: 0;
-    background: var(--background-primary);
-    padding-inline: .5rem;
-    padding-block: .75rem;
-    border-right: 8px solid transparent;
-    cursor: pointer;
+  width: 100%;
+  text-align: left;
+  color: var(--text-900);
+  background: transparent;
+  outline: 0;
+  border: 0;
+  background: var(--background-primary);
+  padding-inline: .5rem;
+  padding-block: .75rem;
+  border-right: 8px solid transparent;
+  cursor: pointer;
 }
 
 .settings-modal nav ul li.nav-active button {
-    border-color: var(--color-link);
-    cursor: default;
+  border-color: var(--color-link);
+  cursor: default;
 }
 
 .settings-modal nav ul li:hover:not(.nav-active) button {
-    background: var(--background-soft);
-    border-color: var(--background-light);
+  background: var(--background-soft);
+  border-color: var(--background-light);
 }
 
 .settings-modal .main {
-    width: 80%;
-    margin-left: auto;
-    padding-inline: 3em;
-    padding-block: 1rem;
+  width: 80%;
+  margin-left: auto;
+  padding-inline: 3em;
+  padding-block: 1rem;
 }
 
 .settings-modal .main table {
-    width: 100%;
+  width: 100%;
 }
 
 .settings-modal .main table thead th {
-    background: var(--background-light);
-    font-weight: 700;
+  background: var(--background-light);
+  font-weight: 700;
 }
 
 .settings-modal .main table tbody td.text {
-    background: var(--background-light);
+  background: var(--background-light);
 }
 
 .settings-modal .main table input {
-    width: 100%;
-    background: var(--background-light);
-    color: white;
-    outline: 0;
-    border: 0;
-    border-radius: 0;
-    padding: .25em;
-    font-size: 1rem;
+  width: 100%;
+  background: var(--background-light);
+  color: white;
+  outline: 0;
+  border: 0;
+  border-radius: 0;
+  padding: .25em;
+  font-size: 1rem;
 }
 
 .settings-modal .main table input:focus-visible,
@@ -459,41 +459,41 @@ body:has(> .settings-modal) .open-settings-modal {
 .settings-modal .main table td .remove-row:hover,
 .settings-modal .main table td .add-row:hover,
 .settings-modal .save-button button:hover {
-    background: var(--background-lighten);
+  background: var(--background-lighten);
 }
 
 
 .settings-modal .main table td .remove-row,
 .settings-modal .main table td .add-row,
 .settings-modal .save-button button {
-    background: var(--background-light);
-    color: white;
-    outline: 0;
-    border: 0;
-    border-radius: 0;
-    padding-inline: .25em;
-    padding-block: .25em;
-    font-size: 1rem;
-    cursor: pointer;
+  background: var(--background-light);
+  color: white;
+  outline: 0;
+  border: 0;
+  border-radius: 0;
+  padding-inline: .25em;
+  padding-block: .25em;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .settings-modal .main table input:disabled {
-    color: var(--text-500);
+  color: var(--text-500);
 }
 
 .open-settings-modal {
-    width: 2em;
-    height: 2em;
-    position: fixed;
-    bottom: 1em;
-    right: 1em;
-    background: var(--color-link);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 100vmax;
-    cursor: pointer;
-    z-index: 100;
+  width: 2em;
+  height: 2em;
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  background: var(--color-link);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100vmax;
+  cursor: pointer;
+  z-index: 100;
 }
 
 /* ------------- */
@@ -501,14 +501,14 @@ body:has(> .settings-modal) .open-settings-modal {
 /* ------------- */
 
 @media (max-width: 50em) {
-    body {
-        flex-direction: column;
-        display: none;
-    }
+  body {
+    flex-direction: column;
+    display: none;
+  }
 
-    .navbar,
-    .navbar-list {
-        width: 100%;
-        max-height: 50vh;
-    }
+  .navbar,
+  .navbar-list {
+    width: 100%;
+    max-height: 50vh;
+  }
 }

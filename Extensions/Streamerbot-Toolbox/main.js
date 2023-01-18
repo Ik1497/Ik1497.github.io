@@ -189,17 +189,18 @@ async function connectws() {
         AboutAsyncPage()
         async function AboutAsyncPage() {
           document.body.removeChild(document.querySelector(`nav.navbar`))
-          let welcomeMessage = `Welcome!`
           let profileImage = ``
           if (data.connected.includes(`youtube`)) profileImage = data.platforms.youtube.broadcastUserProfileImage
           if (data.connected.includes(`twitch`)) profileImage = await fetch(`https://decapi.me/twitch/avatar/${data.platforms.twitch.broadcastUserName}`)
           if (data.connected.includes(`twitch`)) profileImage = await profileImage.text()
 
           if (profileImage != ``) profileImage = `<img style="width: 1em; height: 1em; border-radius: 100vmax; margin-right: .125em" src="${profileImage}" alt="Broadcaster's Avatar">`
-  
-          console.log(profileImage)
-          if (data.connected.includes(`youtube`)) welcomeMessage = `Welcome, <span style="display: flex; align-items: center;">${profileImage}${data.platforms.youtube.broadcastUserName}!</span>`
-          if (data.connected.includes(`twitch`)) welcomeMessage = `Welcome, <span style="display: flex; align-items: center;">${profileImage}${data.platforms.twitch.broadcastUser}!</span>`
+          
+          let welcomeMessage = `Welcome!`
+          let welcomeUser = ``
+          if (data.connected.includes(`youtube`)) welcomeUser = data.platforms.youtube.broadcastUserName
+          if (data.connected.includes(`twitch`)) welcomeUser = data.platforms.twitch.broadcastUser
+          if (data.connected.includes(`twitch`) || data.connected.includes(`youtube`)) welcomeMessage = `Welcome, <span style="display: flex; align-items: center;">${profileImage}${welcomeUser}!</span>`
           document.body.querySelector(`main`).innerHTML = `
           <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
           <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
@@ -274,13 +275,13 @@ async function connectws() {
               Twitch: `<option>Twitch</option>`,
               YouTube: `<option>YouTube</option>`
             }
-            let broadcastService = localStorage.getItem(`streamerbotToolbox__broadcastService`) || `Off`
+            let broadcastService = localStorage.getItem(`streamerbotToolbox__broadcastService`) || `Disabled`
 
             if (broadcastService === `Twitch`) {
               options = options.Twitch + options.Twitch + options.Disabled
             } else if (broadcastService === `YouTube`) {
               options = options.YouTube + options.Twitch + options.Disabled
-            } else if (broadcastService === `Off`) {
+            } else if (broadcastService === `Disabled`) {
               options = options.Disabled + options.Twitch + options.YouTube
             }
             
@@ -325,25 +326,31 @@ async function connectws() {
             globalArgsData = Object.entries(globalArgsData)
 
             globalArgsData.forEach(globalArgData => {
-              document.querySelector(`.settings-modal .main table.add-contents tbody`).insertAdjacentHTML(`beforeend`, `<tr><td><input type="text" placeholder="Argument" value="${globalArgData[0]}" disabled></td><td><input type="text" placeholder="Value" value="${globalArgData[1]}" disabled></td><td><button title="Remove Argument" class="remove-row mdi mdi-trash-can"></button></td></tr>`)
+              document.querySelector(`.settings-modal .main table.add-contents tbody`).insertAdjacentHTML(`beforeend`, `<tr><td><input type="text" placeholder="Argument" value="${globalArgData[0]}"></td><td><input type="text" placeholder="Value" value="${globalArgData[1]}"></td><td><button title="Remove Argument" class="remove-row mdi mdi-trash-can"></button></td></tr>`)
             });
 
-            document.querySelector(`.settings-modal .main table.add-contents .add-row`).addEventListener(`click`, function () {
-              let globalArgsData = localStorage.getItem(`streamerbotToolbox__globalArgs`) || `{}`
-              globalArgsData = JSON.parse(globalArgsData)
-              globalArgsData = Object.entries(globalArgsData)
+            // document.querySelector(`.settings-modal .main table.add-contents .add-row`).addEventListener(`click`, GlobalArgumentsAddRow()) 
+            // document.querySelector(`.settings-modal .main table.add-contents tbody tr:not(:first-child) td input`).addEventListener(`keydown`, GlobalArgumentsUpdateRow()) 
+            
+            function GlobalArgumentsUpdateRow() {
               
-              globalArgsNewData = []
-              let argumentInput = document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).value
-              let valueInput = document.querySelector(`.settings-modal .main table.add-contents tbody td.value input`).value
+            }
 
-              if (argumentInput === ``) argumentInput = `Argument`
-              if (valueInput === ``) valueInput = `Value`
+            function GlobalArgumentsAddRow() {
+              let globalArgsData = []
+              document.querySelectorAll(`.settings-modal .main table tbody tr`).forEach(tableRow => {
+                let tableCell1 = tableRow.querySelector(`td:nth-child(1) input`).value
+                let tableCell2 = tableRow.querySelector(`td:nth-child(2) input`).value
 
-              globalArgsNewData.push(argumentInput)
-              globalArgsNewData.push(valueInput)
-              globalArgsData.push(globalArgsNewData)
+                if (tableCell1 === ``) tableCell1 = `Argument`
+                if (tableCell2 === ``) tableCell2 = `Value`
+
+                // globalArgsData.push([tableCell1, tableCell2])
+                console.log([tableCell1, tableCell2])
+              })
+              globalArgsData = Object.entries(globalArgsData)
               globalArgsData = Object.fromEntries(globalArgsData)
+              console.log(globalArgsData)
 
               localStorage.setItem(`streamerbotToolbox__globalArgs`, JSON.stringify(globalArgsData))
               
@@ -353,7 +360,7 @@ async function connectws() {
               document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).focus()
               document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).select()
               reloadGlobalArguments()
-            })
+            }
 
             document.querySelectorAll(`.settings-modal .main table.add-contents .remove-row`).forEach(removeRow => {
               removeRow.addEventListener(`click`, function () {
