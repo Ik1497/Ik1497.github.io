@@ -27,6 +27,10 @@ let headerTagsMap = [
   {
     name: `Chat`,
     integration: `streamer.bot`
+  },
+  {
+    name: `TTS Speak`,
+    integration: `twitchspeaker`
   }
 ]
 
@@ -40,15 +44,26 @@ document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}<na
 document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `<ul class="header-tags"></ul>`)
 
 headerTagsMap.forEach(headerTag => {
+  let hidden = ``
   let headerTagActive = ``
   let headerTagHash = headerTag.name.replaceAll(` `, `-`)
   if (location.hash === `#${headerTagHash}`) headerTagActive = ` class="header-tag-active"`
+  if (headerTag.integration != `streamer.bot`) hidden = ` hidden`
 
-  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<a href="#${headerTagHash}" title="${headerTag.name}"${headerTagActive}>${headerTag.name}</a>`)
-  document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `<main class="nested" data-page-hash="${headerTagHash}"></main>`)
+  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<a href="#${headerTagHash}" title="${headerTag.name}" data-integration="${headerTag.integration}"${headerTagActive}${hidden}>${headerTag.name}</a>`)
+  document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `<main class="nested" data-page-hash="${headerTagHash}></main>`)
 });
 
-if (!headerTagsMap.includes(location.hash.replace(`#`, ``))) document.body.classList.add(`404`)
+let state__404 = true
+
+headerTagsMap.forEach(headerTag => {
+  if (headerTag.name.replaceAll(` `, `-`) === location.hash.replace(`#`, ``)) {
+      state__404 = false
+  }
+});
+
+if (state__404 === true) document.body.classList.add(`not_found`)
+
 
 document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function () {
   window.location = `?ws=ws://${document.querySelector(`header aside .form-area .url`).value}:${document.querySelector(`header aside .form-area .port`).value}${document.querySelector(`header aside .form-area .endpoint`).value}`
@@ -765,6 +780,7 @@ let twitchspeakerConnectionData = localStorage.getItem(`streamerbotToolbox__twit
 
 if (twitchspeakerConnectionData != undefined) {
   twitchspeakerConnectionData = JSON.parse(twitchspeakerConnectionData)
+  document.body.setAttribute(`twitchspeaker-state`, `enabled`)
   connectTwitchSpeakerws()
 }
 
@@ -776,19 +792,81 @@ async function connectTwitchSpeakerws() {
 
     ws.onclose = function () {
       setTimeout(connectTwitchSpeakerws, 10000)
+      document.body.setAttribute(`twitchspeaker-state`, `disconnected`)
+      document.querySelectorAll(`header .header-tags a[data-integration=twitchspeaker]`).forEach(headerTag => {
+        headerTag.setAttribute(`hidden` , ``)
+      });
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to TwitchSpeaker, reconnecting every 10s...")
     }
 
     ws.onopen = function () {
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to TwitchSpeaker")
-      ws.send(JSON.stringify(
-        {
-          request: "Speak",
-          voice: "text",
-          message: "connected to TwitchSpeaker",
-          id: "Speak"
+      document.body.setAttribute(`twitchspeaker-state`, `connected`)
+      document.querySelectorAll(`header .header-tags a[data-integration=twitchspeaker]`).forEach(headerTag => {
+        headerTag.setAttribute(`hidden` , ``)
+        headerTag.removeAttribute(`hidden`)
+      });
+      
+      if (location.hash === `#TTS-Speak`) {
+        document.querySelector(`nav.navbar`).parentNode.removeChild(document.querySelector(`nav.navbar`))
+
+        let defaultSpeakValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || undefined
+        let defaultSpeakVoiceAlias = ``
+        let defaultSpeakMessage = ``
+        if (defaultSpeakValues != undefined) {
+          defaultSpeakValues = JSON.parse(defaultSpeakValues)
+          console.log(`111`)
+          
+          if (defaultSpeakValues.defaultSpeakVoiceAlias != null) {
+            defaultSpeakVoiceAlias = ` value="${defaultSpeakValues.defaultSpeakVoiceAlias}"`
+            console.log(`1112222`)
+          }
+          
+          if (defaultSpeakValues.defaultSpeakMessage != null) {
+            defaultSpeakMessage = ` value="${defaultSpeakValues.defaultSpeakMessage}"`
+          }
+
+          if (defaultSpeakValues === undefined || defaultSpeakValues === null) defaultSpeakValues = ``
+        } else {
+          console.log(`111222233333`)
+          defaultSpeakVoiceAlias = ``
+          defaultSpeakMessage = `This is a test message`
         }
-      ))
+        document.querySelector(`main`).innerHTML = `
+        <div class="form-group">
+          <label for="voice-alias">Voice Alias</label><br>
+          <input type="url" name="voice-alias" id="voice-alias" placeholder="Voice Alias"${defaultSpeakVoiceAlias}>
+        </div><br>
+        <div class="form-group">
+          <label for="message">Message</label><br>
+          <input type="url" name="message" id="message" placeholder="Message"${defaultSpeakMessage}>
+        </div>
+        <button>Speak!</button>`
+
+        document.querySelector(`main button`).addEventListener(`click`, function () {
+          let voiceAlias = document.querySelector(`.form-group input#voice-alias`).value || ``
+          let message = document.querySelector(`.form-group input#message`).value || `This is a test message`
+
+          let twitchspeakerData = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || `{}`
+          twitchspeakerData = JSON.parse(twitchspeakerData)
+          twitchspeakerData = Object.entries(twitchspeakerData)
+          twitchspeakerData.push([`defaultSpeakVoiceAlias`, voiceAlias])
+          twitchspeakerData.push([`defaultSpeakMessage`, message])
+          
+          twitchspeakerData = Object.fromEntries(twitchspeakerData)
+          localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(twitchspeakerData))
+
+          console.log(`sending`)
+          ws.send(JSON.stringify({
+              request: "Speak",
+              voice: voiceAlias,
+              message: message,
+              id: "Speak"
+            }
+          ))
+          console.log(`sended`)
+        })
+      }
     }
 
     ws.addEventListener("message", (event) => {

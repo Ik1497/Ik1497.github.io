@@ -28,6 +28,21 @@ body.disconnected .header-tags {
   display: none;
 }
 
+body.not_found main:not(.nested)::after {
+  content: "404";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 10rem;
+  font-weight: 900;
+  backdrop-filter: blur(3px);
+}
+
+body.not_found nav.navbar {
+  filter: blur(3px);
+}
+
 ::-webkit-scrollbar {
   background: var(--background-soft);
   width: 16px;
@@ -250,6 +265,7 @@ main:not(.nested) {
   margin-left: 21rem;
   overflow-y: auto;
   margin-top: 7em;
+  position: relative;
 }
 
 main:not(.nested) ul.main-list {
