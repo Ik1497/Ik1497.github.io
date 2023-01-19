@@ -765,17 +765,17 @@ let twitchspeakerConnectionData = localStorage.getItem(`streamerbotToolbox__twit
 
 if (twitchspeakerConnectionData != undefined) {
   twitchspeakerConnectionData = JSON.parse(twitchspeakerConnectionData)
-  connecTwitchSpeakerws()
+  connectTwitchSpeakerws()
 }
 
-async function connecTwitchSpeakerws() {
+async function connectTwitchSpeakerws() {
   if ("WebSocket" in window) {
     let wsServerUrl = `ws://${twitchspeakerConnectionData.host}:${twitchspeakerConnectionData.port}${twitchspeakerConnectionData.endpoint}`
     const ws = new WebSocket(wsServerUrl)
     console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to TwitchSpeaker...")
 
     ws.onclose = function () {
-      setTimeout(connecTwitchSpeakerws, 10000)
+      setTimeout(connectTwitchSpeakerws, 10000)
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to TwitchSpeaker, reconnecting every 10s...")
     }
 

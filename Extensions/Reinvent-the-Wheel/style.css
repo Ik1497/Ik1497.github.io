@@ -1,0 +1,38 @@
+.idiot-image {
+    position: relative;
+}
+
+.idiot-image img.background-image {
+    max-width: 100%;
+    width: 100%;
+}
+
+.idiot-image img.forground-image {
+    width: 104px;
+    height: 177px;
+    background: var(--background-primary);
+    border-radius: 50%;
+    position: absolute;
+    left: 343px;
+    top: 287px;
+    transform: rotate(351deg);
+}
+
+.idiot-image .idiot-text {
+    position: absolute;
+    left: 250px;
+    bottom: 15px;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--text-900);
+    background: var(--accent-alt);
+    line-height: 1;
+    padding-block: .5rem;
+    padding-inline: 1rem;
+}
+
+.idiot-grid {
+    display: grid;
+    background: #36393f;
+    row-gap: .5rem;
+}
