@@ -4,12 +4,30 @@ let documentTitle = `${title} | Streamer.bot Actions`
 document.title = documentTitle
 
 let headerTagsMap = [
-  `About`,
-  `Actions`,
-  `Action History`,
-  `Present Viewers`,
-  `Websocket Events`,
-  `Chat`
+  {
+    name: `About`,
+    integration: `streamer.bot`
+  },
+  {
+    name: `Actions`,
+    integration: `streamer.bot`
+  },
+  {
+    name: `Action History`,
+    integration: `streamer.bot`
+  },
+  {
+    name: `Present Viewers`,
+    integration: `streamer.bot`
+  },
+  {
+    name: `Websocket Events`,
+    integration: `streamer.bot`
+  },
+  {
+    name: `Chat`,
+    integration: `streamer.bot`
+  }
 ]
 
 
@@ -23,11 +41,10 @@ document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `<ul class="hea
 
 headerTagsMap.forEach(headerTag => {
   let headerTagActive = ``
-  if (headerTag === `Chat (WIP)`) headerTag = `Chat`
-  let headerTagHash = headerTag.replaceAll(` `, `-`)
+  let headerTagHash = headerTag.name.replaceAll(` `, `-`)
   if (location.hash === `#${headerTagHash}`) headerTagActive = ` class="header-tag-active"`
-  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<a href="#${headerTagHash}" title="${headerTag}"${headerTagActive}>${headerTag}</a>`)
 
+  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<a href="#${headerTagHash}" title="${headerTag.name}"${headerTagActive}>${headerTag.name}</a>`)
   document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `<main class="nested" data-page-hash="${headerTagHash}"></main>`)
 });
 
@@ -224,7 +241,10 @@ async function connectws() {
           <li><button data-page="broadcaster">Broadcaster</button></li>
           <li><button data-page="random-users">Random Users</button></li>
         </ul></nav>
-        <div class="header"><div class="info"><p class="title"></p><p class="description"></p></div><button class="close-button">&times</button></div><div class="main"></div></div>`
+        <div class="header">
+          <div class="info"><p class="title"></p><p class="description"></p></div>
+          <button class="close-button" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)">&times</button></div><div class="main">
+        </div></div>`
         document.querySelector(`.open-settings-modal`).addEventListener(`click`, function () {
           document.querySelector(`.open-settings-modal`).insertAdjacentHTML(`afterend`, globalArgsHtml)
           
@@ -235,13 +255,6 @@ async function connectws() {
             if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `broadcaster`) reloadBroadcaster()
             if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `random-users`) reloadRandomUsers()
           }
-
-          document.querySelectorAll(`.settings-modal .header .close-button, .settings-modal .save-button button`).forEach(closeButton => {            
-            closeButton.addEventListener(`click`, function () {
-              reloadPages()
-              document.querySelector(`.settings-modal`).parentNode.removeChild(document.querySelector(`.settings-modal`))
-            })
-          });
 
           document.querySelectorAll(`.settings-modal nav ul li button`).forEach(navButton => {
             navButton.addEventListener(`click`, function () {
@@ -261,9 +274,47 @@ async function connectws() {
             document.querySelector(`.settings-modal .header .info .description`).innerHTML = `All integrations that can be connected`
 
             document.querySelector(`.settings-modal .main`).innerHTML = `
-            <p class="mdi mdi-check"> Streamer.bot (${instance.version}) • ${wsServerUrl}</p>
+            <ul class="integrations-list">
+              <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
+              <li class="mdi mdi-plus" data-integration="twitchspeaker"> TwitchSpeaker <button>Connect!</button></p>
+            </ul>
             `
 
+            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration=twitchspeaker] button`).addEventListener(`click`, function () {
+              document.body.insertAdjacentHTML(`afterbegin`, `
+                <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
+                <button class="close-button mdi mdi-close" onclick="this.parentNode.parentNode.removeChild(this.parentNode)"></button>
+                <div class="main"><h2>Connect TwitchSpeaker!</h3><table><tbody>
+                  <tr>
+                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Host</label></td>
+                    <td style="text-align: left;"><input type="url" name="websocket-host" id="websocket-host" value="localhost" placeholder="localhost"></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Port</label></td>
+                    <td style="text-align: left;"><input type="url" name="websocket-port" id="websocket-port" value="7580" placeholder="7580"></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Endpoint</label></td>
+                    <td style="text-align: left;"><input type="url" name="websocket-endpoint" id="websocket-endpoint" value="/" placeholder="/"></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td style="text-align: right;"><button class="connect-button">Connect!</button></td>
+                  </tr>
+                </tbody></table></div></div>
+              `)
+
+              document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
+                let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table`)
+                console.log(`CONNECT!`)
+                localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(
+                  {
+                    host: table.querySelector(`tbody tr td input#websocket-host`).value,
+                    port: table.querySelector(`tbody tr td input#websocket-port`).value,
+                    endpoint: table.querySelector(`tbody tr td input#websocket-endpoint`).value
+                  }))
+              })
+            })
           }
         
           function reloadBroadcaster() {
@@ -514,16 +565,19 @@ async function connectws() {
         document.querySelector(`main`).innerHTML = ``
       }
 
-      if (location.hash === `#Action-History` && data?.event?.source === `Raw`) {
-        document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`afterbegin`, `<li class="navbar-list-item" data-id="${data.data.arguments.runningActionId}"><button>${data.data.name}</button></li>`)
+      if (location.hash === `#Action-History` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
+        document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`afterbegin`, `<li class="navbar-list-item" data-id="${data.data.arguments.runningActionId}" data-state="pending"><button>${data.data.name}</button></li>`)
         let listContents = ``
         let arguments = Object.entries(data.data.arguments)
         arguments.forEach(argument => {
           listContents += `<li>${argument[0]}</li><li>${argument[1]}</li>`
         });
         document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
-        <ul class="main-list col-2" data-id="${data.data.arguments.runningActionId}" hidden>
-          ${listContents}
+        <ul data-id="${data.data.arguments.runningActionId}" class="main-list-wrapper" hidden>
+          <div class="data-variable-state tags">
+          <ul class="main-list col-2" data-variable-state="pending">
+            ${listContents}
+          </ul>
         </ul>
         `)
 
@@ -534,11 +588,15 @@ async function connectws() {
             navActiveButton.classList.remove(`nav-active`)
           });
           this.parentNode.classList.add(`nav-active`)
-          document.querySelectorAll(`main ul.main-list`).forEach(mainList => {
+          document.querySelectorAll(`main ul.main-list-wrapper`).forEach(mainList => {
             mainList.setAttribute(`hidden`, ``)
           });
-          document.querySelector(`main ul.main-list[data-id="${actionId}"]`).removeAttribute(`hidden`)
+          document.querySelector(`main ul.main-list-wrapper[data-id="${actionId}"]`).removeAttribute(`hidden`)
         })
+      }
+
+      if (location.hash === `#Action-History` && data?.event?.source === `Raw` && data?.event?.type === `"ActionCompleted"`) {
+        document.querySelector(`nav.navbar ul.navbar-list li[data-id=${data.data.arguments.runningActionId}]`).setAttribute(`data-state`, `completed`)  
       }
       
       if (location.hash === `#Present-Viewers` && data.id === `GetActiveViewers`) {
@@ -699,6 +757,44 @@ async function connectws() {
         </li>
         `)
       }
+    })
+  }
+}
+
+let twitchspeakerConnectionData = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || undefined
+
+if (twitchspeakerConnectionData != undefined) {
+  twitchspeakerConnectionData = JSON.parse(twitchspeakerConnectionData)
+  connecTwitchSpeakerws()
+}
+
+async function connecTwitchSpeakerws() {
+  if ("WebSocket" in window) {
+    let wsServerUrl = `ws://${twitchspeakerConnectionData.host}:${twitchspeakerConnectionData.port}${twitchspeakerConnectionData.endpoint}`
+    const ws = new WebSocket(wsServerUrl)
+    console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to TwitchSpeaker...")
+
+    ws.onclose = function () {
+      setTimeout(connecTwitchSpeakerws, 10000)
+      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to TwitchSpeaker, reconnecting every 10s...")
+    }
+
+    ws.onopen = function () {
+      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to TwitchSpeaker")
+      ws.send(JSON.stringify(
+        {
+          request: "Speak",
+          voice: "text",
+          message: "connected to TwitchSpeaker",
+          id: "Speak"
+        }
+      ))
+    }
+
+    ws.addEventListener("message", (event) => {
+      if (!event.data) return
+      const data = JSON.parse(event.data)
+      console.log(data)
     })
   }
 }

@@ -1,3 +1,5 @@
+let voice = new URLSearchParams(window.location.search).get(`voice`) || `tts`
+
 app()
 
 async function app() {
@@ -19,4 +21,31 @@ async function app() {
     }
 
     document.querySelector(`main .idiot-grid`).insertAdjacentHTML(`afterbegin`, `<p style="padding: 0; padding-left: 1rem;">${idiot.images + 1}x an idiot<br>${idiot.user.replaceAll(`-`, ` `)}</p>`)
+    connecTwitchSpeakerws()
+    
+    async function connecTwitchSpeakerws() {
+      if ("WebSocket" in window) {
+        let wsServerUrl = `ws://localhost:7580/`
+        const ws = new WebSocket(wsServerUrl)
+        console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to TwitchSpeaker...")
+    
+        ws.onopen = function () {
+          console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to TwitchSpeaker")
+          ws.send(JSON.stringify(
+            {
+              request: "Speak",
+              voice: voice,
+              message: idiot.user + " Is an idiot!",
+              id: "Speak"
+            }
+          ))
+        }
+    
+        ws.addEventListener("message", (event) => {
+          if (!event.data) return
+          const data = JSON.parse(event.data)
+          console.log(data)
+        })
+      }
+    }
 }

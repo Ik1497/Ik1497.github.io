@@ -41,6 +41,10 @@ body.disconnected .header-tags {
   display: none !important;
 }
 
+ul {
+  list-style: none;
+}
+
 /* ------ */
 /* Header */
 /* ------ */
@@ -56,7 +60,7 @@ header {
   z-index: 100;
 }
 
-header>a {
+header > a {
   text-decoration: none;
 }
 
@@ -356,10 +360,23 @@ body:has(> .settings-modal-alt) > .settings-modal {
   display: none;
 }
 
-body:has(> .settings-modal) > *:not(.settings-modal),
+body:has(> .settings-modal):not(:has(.settings-modal-alt)) > *:not(.settings-modal),
 body:has(> .settings-modal-alt) > *:not(.settings-modal-alt) {
   opacity: .57;
   pointer-events: none;
+}
+
+.settings-modal-alt .close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--accent-alt);
+  border-radius: 100vmax;
+  padding: .25rem;
+  outline: none;
+  border: none;
+  color: var(--text-900);
+  cursor: pointer;
 }
 
 body:has(> .settings-modal) .open-settings-modal {
