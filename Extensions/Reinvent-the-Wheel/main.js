@@ -9,7 +9,7 @@ async function app() {
     let idiot = idiots[randomIdiotsIndex];
     if (new URLSearchParams(window.location.search).get(`force`) != null) {
         idiots.forEach(idiotList => {
-            if (idiotList.user === new URLSearchParams(window.location.search).get(`force`)) {
+            if (idiotList.user.toLowerCase() === new URLSearchParams(window.location.search).get(`force`).toLowerCase()) {
                 idiot = idiotList
             }
         });
