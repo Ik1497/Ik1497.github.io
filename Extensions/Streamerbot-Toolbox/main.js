@@ -29,6 +29,10 @@ let headerTagsMap = [
     integration: `streamer.bot`
   },
   {
+    name: `Test`,
+    integration: `streamer.bot`
+  },
+  {
     name: `TwitchSpeaker`,
     integration: `twitchspeaker`
   }
@@ -51,7 +55,7 @@ headerTagsMap.forEach(headerTag => {
   if (headerTag.integration != `streamer.bot`) hidden = ` hidden`
 
   document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<li${headerTagActive}><a href="#${headerTagHash}" title="${headerTag.name}" data-integration="${headerTag.integration}"${hidden}>${headerTag.name}</a></li$>`)
-  document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `<main class="nested" data-page-hash="${headerTagHash}></main>`)
+  // document.querySelector(`main`).innerHTML = `<main class="nested" data-page-hash="${headerTagHash}></main>`
 });
 
 let state__404 = true
