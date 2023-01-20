@@ -1,7 +1,7 @@
 {
     "weather": {
-        "sun": "zo",
-        "breeze": "Breedte",
+        "sun": "Zon",
+        "breeze": "Briesje",
         "cloud": "Bewolkt",
         "fog": "Mistig",
         "rain": "Regen",
