@@ -991,6 +991,8 @@ async function connectTwitchSpeakerws() {
               id: "Enable"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Enable`)
         })
 
         document.querySelector(`main .tags li button[title="Disable"]`).addEventListener(`click`, function () {
@@ -999,6 +1001,8 @@ async function connectTwitchSpeakerws() {
               id: "Disable"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Disable`)
         })
 
         document.querySelector(`main .tags li button[title="Pause"]`).addEventListener(`click`, function () {
@@ -1007,6 +1011,8 @@ async function connectTwitchSpeakerws() {
               id: "Pause"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Pause`)
         })
 
         document.querySelector(`main .tags li button[title="Resume"]`).addEventListener(`click`, function () {
@@ -1015,6 +1021,8 @@ async function connectTwitchSpeakerws() {
               id: "Resume"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Resume`)
         })
 
         document.querySelector(`main .tags li button[title="On"]`).addEventListener(`click`, function () {
@@ -1023,6 +1031,8 @@ async function connectTwitchSpeakerws() {
               id: "On"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `On`)
         })
         
         document.querySelector(`main .tags li button[title="Off"]`).addEventListener(`click`, function () {
@@ -1031,6 +1041,8 @@ async function connectTwitchSpeakerws() {
               id: "Off"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Off`)
         })
 
         document.querySelector(`main .tags li button[title="Stop"]`).addEventListener(`click`, function () {
@@ -1039,6 +1051,8 @@ async function connectTwitchSpeakerws() {
               id: "Stop"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Stop`)
         })
 
         document.querySelector(`main .tags li button[title="Clear"]`).addEventListener(`click`, function () {
@@ -1047,42 +1061,52 @@ async function connectTwitchSpeakerws() {
               id: "Clear"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Clear`)
         })
 
         document.querySelector(`main .tags li button[title="Enable Events"]`).addEventListener(`click`, function () {
           ws.send(JSON.stringify({
               request: "Events",
               state: "on",
-              id: "Clear"
+              id: "Enable Events"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Enable Events`)
         })
 
         document.querySelector(`main .tags li button[title="Disable Events"]`).addEventListener(`click`, function () {
           ws.send(JSON.stringify({
               request: "Events",
               state: "off",
-              id: "Clear"
+              id: "Disable Events"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Disable Events`)
         })
 
         document.querySelector(`main .tags li button[title="Speaking Mode: All"]`).addEventListener(`click`, function () {
           ws.send(JSON.stringify({
               request: "Mode",
               mode: "all",
-              id: "Clear"
+              id: "Speaking Mode: All"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Speaking Mode: All`)
         })
 
         document.querySelector(`main .tags li button[title="Speaking Mode: Command"]`).addEventListener(`click`, function () {
           ws.send(JSON.stringify({
               request: "Mode",
               mode: "command",
-              id: "Clear"
+              id: "Speaking Mode: Command"
             }
           ))
+
+          sendNotification(`twitchspeaker`, `Speaking Mode: Command`)
         })
       }
     }
@@ -1090,7 +1114,14 @@ async function connectTwitchSpeakerws() {
     ws.addEventListener("message", (event) => {
       if (!event.data) return
       const data = JSON.parse(event.data)
-      console.log(data)
+      if (!JSON.stringify(data).includes(`"status":"ok"`)) console.log(JSON.stringify(data))
     })
   }
+}
+
+function sendNotification(service, text) {
+  let serviceName = service
+  if (service === `twitchspeaker`) serviceName = `TwitchSpeaker`
+  if (service === `streamer.bot`) serviceName = `Streamer.bot`
+  console.log(`%c[${serviceName}]%c ${text}`, `color: #8c75fa;`, `color: white;`)
 }
