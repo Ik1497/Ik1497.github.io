@@ -29,10 +29,6 @@ let headerTagsMap = [
     integration: `streamer.bot`
   },
   {
-    name: `Test`,
-    integration: `streamer.bot`
-  },
-  {
     name: `TwitchSpeaker`,
     integration: `twitchspeaker`
   }
