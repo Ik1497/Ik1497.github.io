@@ -41,16 +41,16 @@ let headerAside = `<div class="form-area"><label>Url</label><input type="url" va
 let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">${title}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
 document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
 
-document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `<ul class="header-tags"></ul>`)
+document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `<ul class="header-tags tags"></ul>`)
 
 headerTagsMap.forEach(headerTag => {
   let hidden = ``
   let headerTagActive = ``
   let headerTagHash = headerTag.name.replaceAll(` `, `-`)
-  if (location.hash === `#${headerTagHash}`) headerTagActive = ` class="header-tag-active"`
+  if (location.hash === `#${headerTagHash}`) headerTagActive = ` class="tag-active"`
   if (headerTag.integration != `streamer.bot`) hidden = ` hidden`
 
-  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<a href="#${headerTagHash}" title="${headerTag.name}" data-integration="${headerTag.integration}"${headerTagActive}${hidden}>${headerTag.name}</a>`)
+  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<li${headerTagActive}><a href="#${headerTagHash}" title="${headerTag.name}" data-integration="${headerTag.integration}"${hidden}>${headerTag.name}</a></li$>`)
   document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `<main class="nested" data-page-hash="${headerTagHash}></main>`)
 });
 
@@ -594,20 +594,51 @@ async function connectws() {
       }
 
       if (location.hash === `#Action-History` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
-        document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`afterbegin`, `<li class="navbar-list-item" data-id="${data.data.arguments.runningActionId}" data-state="pending"><button>${data.data.name}</button></li>`)
+        document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`afterbegin`, `<li class="navbar-list-item" data-id="${data.data.id}" data-action-state="pending"><button>${data.data.name}</button></li>`)
         let listContents = ``
         let arguments = Object.entries(data.data.arguments)
         arguments.forEach(argument => {
           listContents += `<li>${argument[0]}</li><li>${argument[1]}</li>`
         });
         document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
-        <ul data-id="${data.data.arguments.runningActionId}" class="main-list-wrapper" hidden>
-          <div class="data-variable-state tags">
-          <ul class="main-list col-2" data-variable-state="pending">
-            ${listContents}
+        <ul data-id="${data.data.id}" class="main-list-wrapper" hidden>
+          <div class="info">
+            <h2>${data.data.name}</h2>
+            <p>${data.data.actionId}</p>
+            <br>
+          </div>
+          <ul class="tags">
+            <li title="Pending" class="tag-active"><button>Pending</button></li>
+            <li title="Completed"><button>Completed</button></li>
+          </ul>
+          <ul class="action-state-wrapper">
+            <ul class="main-list col-2" data-action-state="pending">
+              ${listContents}
+            </ul>
+            <ul class="main-list col-2" data-action-state="completed" hidden></ul>
           </ul>
         </ul>
         `)
+
+        document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Pending] button`).addEventListener(`click`, function () {
+          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Pending]`).classList.add(`tag-active`)
+          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Completed]`).classList.remove(`tag-active`)
+
+          document.querySelector(`main ul[data-id="${data.data.id}"] .action-state-wrapper ul[data-action-state=completed]`).setAttribute(`hidden`, ``)
+
+          document.querySelector(`main ul[data-id="${data.data.id}"] .action-state-wrapper ul[data-action-state=pending]`).setAttribute(`hidden`, ``)
+          document.querySelector(`main ul[data-id="${data.data.id}"] .action-state-wrapper ul[data-action-state=pending]`).removeAttribute(`hidden`)
+        })
+        
+        document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Completed] button`).addEventListener(`click`, function () {
+          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Completed]`).classList.add(`tag-active`)
+          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Pending]`).classList.remove(`tag-active`)
+
+          document.querySelector(`main ul[data-id="${data.data.id}"] .action-state-wrapper ul[data-action-state=pending]`).setAttribute(`hidden`, ``)
+
+          document.querySelector(`main ul[data-id="${data.data.id}"] .action-state-wrapper ul[data-action-state=completed]`).setAttribute(`hidden`, ``)
+          document.querySelector(`main ul[data-id="${data.data.id}"] .action-state-wrapper ul[data-action-state=completed]`).removeAttribute(`hidden`)
+        })
 
         document.querySelector(`nav.navbar ul.navbar-list li button`).addEventListener(`click`, function () {
           let actionId = this.parentNode.getAttribute(`data-id`)
@@ -623,8 +654,65 @@ async function connectws() {
         })
       }
 
-      if (location.hash === `#Action-History` && data?.event?.source === `Raw` && data?.event?.type === `"ActionCompleted"`) {
-        document.querySelector(`nav.navbar ul.navbar-list li[data-id=${data.data.arguments.runningActionId}]`).setAttribute(`data-state`, `completed`)  
+      if (location.hash === `#Action-History` && data?.event?.source === `Raw` && data?.event?.type === `ActionCompleted`) {
+        document.querySelector(`nav.navbar ul.navbar-list li[data-id="${data.data.id}"]`).setAttribute(`data-state`, `completed`)  
+        let listContents = ``
+        let arguments = Object.entries(data.data.arguments)
+        arguments.forEach(argument => {
+          listContents += `<li>${argument[0]}</li><li>${argument[1]}</li>`
+        });
+        document.querySelector(`main ul[data-id="${data.data.id}"] ul.action-state-wrapper ul[data-action-state=completed]`).innerHTML = listContents
+
+        let queuedAt = data.data.queuedAt
+        let queuedAtDate = queuedAt.split(`T`)[0]
+        let queuedAtTime = queuedAt.split(`T`)[1].split(`+`)[0]
+        queuedAtTime = queuedAtTime.split(`:`)
+        queuedAtTime = `${queuedAtTime[0]}:${queuedAtTime[1]}:${queuedAtTime[2].split(`.`)[0]}`
+        let queuedAtTimezone = ``
+        if (queuedAt.includes(`+`)) queuedAtTimezone = `UTC +${queuedAt.split(`+`)[1]}`
+        if (queuedAt.split(`T`)[1].includes(`-`)) queuedAtTimezone = `UTC -${queuedAt.split(`T`)[1].split(`-`)[1]}`
+        queuedAt = `${queuedAtDate}, ${queuedAtTime} (${queuedAtTimezone})`
+
+        let startedAt = data.data.startedAt
+        let startedAtDate = startedAt.split(`T`)[0]
+        let startedAtTime = startedAt.split(`T`)[1].split(`+`)[0]
+        startedAtTime = startedAtTime.split(`:`)
+        startedAtTime = `${startedAtTime[0]}:${startedAtTime[1]}:${startedAtTime[2].split(`.`)[0]}`
+        let startedAtTimezone = ``
+        if (startedAt.includes(`+`)) startedAtTimezone = `UTC +${startedAt.split(`+`)[1]}`
+        if (startedAt.split(`T`)[1].includes(`-`)) startedAtTimezone = `UTC -${startedAt.split(`T`)[1].split(`-`)[1]}`
+        startedAt = `${startedAtDate}, ${startedAtTime} (${startedAtTimezone})`
+
+        let completedAt = data.data.completedAt
+        let completedAtDate = completedAt.split(`T`)[0]
+        let completedAtTime = completedAt.split(`T`)[1].split(`+`)[0]
+        completedAtTime = completedAtTime.split(`:`)
+        completedAtTime = `${completedAtTime[0]}:${completedAtTime[1]}:${completedAtTime[2].split(`.`)[0]}`
+        let completedAtTimezone = ``
+        if (completedAt.includes(`+`)) completedAtTimezone = `UTC +${completedAt.split(`+`)[1]}`
+        if (completedAt.split(`T`)[1].includes(`-`)) completedAtTimezone = `UTC -${completedAt.split(`T`)[1].split(`-`)[1]}`
+        completedAt = `${completedAtDate}, ${completedAtTime} (${completedAtTimezone})`
+
+        document.querySelector(`main ul[data-id="${data.data.id}"] .info`).insertAdjacentHTML(`beforeend`, `
+        <table class="styled">
+          <tr>
+            <td style="text-align: right">Queued</td>
+            <td style="text-align: left">${queuedAt}</td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Started</td>
+            <td style="text-align: left">${startedAt}</td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Completed</td>
+            <td style="text-align: left">${completedAt}</td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Duration</td>
+            <td style="text-align: left">${data.data.duration}</td>
+          </tr>
+        </table>
+        `)
       }
       
       if (location.hash === `#Present-Viewers` && data.id === `GetActiveViewers`) {

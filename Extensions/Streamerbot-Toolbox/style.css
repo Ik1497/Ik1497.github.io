@@ -149,19 +149,24 @@ header aside button {
 }
 
 .header-tags {
-  height: 2.5rem;
+  position: absolute;
+  bottom: 0;
+  left: .5rem;
+}
+
+.tags {
   display: flex;
   align-items: center;
   column-gap: .5rem;
   z-index: 100;
   overflow-x: auto;
   overflow-y: hidden;
-  position: absolute;
-  bottom: 0;
-  left: .5rem;
+  padding-bottom: .5rem;
+  height: 3rem;
 }
 
-.header-tags a {
+.tags li a,
+.tags li button {
   text-decoration: none;
   color: var(--text-900);
   background: var(--background-light);
@@ -170,15 +175,37 @@ header aside button {
   min-width: max-content;
   border-radius: 100vmax;
   text-align: center;
+  text-decoration: none;
+  border-radius: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
-.header-tags a:hover {
+.tags li:hover a,
+.tags li:hover button {
   background: var(--background-lighten);
 }
 
-.header-tags a.header-tag-active {
+.tags li.tag-active a,
+.tags li.tag-active button {
   background: var(--color-link-hover);
   cursor: default;
+}
+
+/* ----- */
+/* table */
+/* ----- */
+
+table.styled {
+  border-spacing: 0;
+}
+
+table.styled td {
+  border: 2px solid var(--background-alt);
+  background: var(--background-soft);
+  padding-inline: .25rem;
+  padding-block: .4rem
 }
 
 /* --- */
