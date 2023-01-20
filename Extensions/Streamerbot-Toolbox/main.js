@@ -243,6 +243,10 @@ async function connectws() {
           <p>this tool is currently a very work in progress, feautures may come and go over time.</p>
           <br>
           <p>This tool requires your <code>Server/Clients</code> --> <code>Websocket Server</code> to be enabled.</p>
+          <br>
+          <p>Integrations:</p>
+          <p>• Streamer.bot</p>
+          <p>• TwitchSpeaker</p>
           `
         }
       }

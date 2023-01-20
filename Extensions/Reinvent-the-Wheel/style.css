@@ -8,14 +8,14 @@
 }
 
 .idiot-image img.forground-image {
-    width: 104px;
-    height: 177px;
+    width: 79px;
+    height: 135px;
     background: var(--background-primary);
     border-radius: 50%;
     position: absolute;
-    left: 343px;
-    top: 287px;
-    transform: rotate(351deg);
+    left: 596px;
+    top: 364px;
+    transform: rotate(7deg);
 }
 
 .idiot-image .idiot-text {
