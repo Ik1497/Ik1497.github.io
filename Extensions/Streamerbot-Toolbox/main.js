@@ -287,49 +287,62 @@ async function connectws() {
           function reloadIntegrations() {
             document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Integrations • Settings`
             document.querySelector(`.settings-modal .header .info .description`).innerHTML = `All integrations that can be connected`
+            
+            let integrationsList__twitchspeaker = `<li class="mdi mdi-plus" data-integration="twitchspeaker"> TwitchSpeaker <button>Connect!</button></p>`
 
+            if (document.body.getAttribute(`twitchspeaker-state`) === null) {
+            } else if (document.body.getAttribute(`twitchspeaker-state`) === `connected`) {
+              let integrationsList__twitchspeaker_wsUrl = localStorage.getItem(`streamerbotToolbox__twitchspeaker`)
+              integrationsList__twitchspeaker_wsUrl = JSON.parse(integrationsList__twitchspeaker_wsUrl)
+              integrationsList__twitchspeaker_wsUrl = `ws://${integrationsList__twitchspeaker_wsUrl.host}:${integrationsList__twitchspeaker_wsUrl.port}${integrationsList__twitchspeaker_wsUrl.endpoint}`
+              integrationsList__twitchspeaker = `<li class="mdi mdi-check" data-integration="twitchspeaker"> TwitchSpeaker (Connected) • ${integrationsList__twitchspeaker_wsUrl}</p>`
+            } else if (document.body.getAttribute(`twitchspeaker-state`) === `disconnected`) {
+              integrationsList__twitchspeaker = `<li class="mdi mdi-reload" data-integration="twitchspeaker"> TwitchSpeaker (Reconnecting)</p>`
+            }
             document.querySelector(`.settings-modal .main`).innerHTML = `
             <ul class="integrations-list">
               <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
-              <li class="mdi mdi-plus" data-integration="twitchspeaker"> TwitchSpeaker <button>Connect!</button></p>
+              ${integrationsList__twitchspeaker}
             </ul>
             `
 
-            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration=twitchspeaker] button`).addEventListener(`click`, function () {
-              document.body.insertAdjacentHTML(`afterbegin`, `
-                <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
-                <button class="close-button mdi mdi-close" onclick="this.parentNode.parentNode.removeChild(this.parentNode)"></button>
-                <div class="main"><h2>Connect TwitchSpeaker!</h3><table><tbody>
-                  <tr>
-                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Host</label></td>
-                    <td style="text-align: left;"><input type="url" name="websocket-host" id="websocket-host" value="localhost" placeholder="localhost"></td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Port</label></td>
-                    <td style="text-align: left;"><input type="url" name="websocket-port" id="websocket-port" value="7580" placeholder="7580"></td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Endpoint</label></td>
-                    <td style="text-align: left;"><input type="url" name="websocket-endpoint" id="websocket-endpoint" value="/" placeholder="/"></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td style="text-align: right;"><button class="connect-button">Connect!</button></td>
-                  </tr>
-                </tbody></table></div></div>
-              `)
-
-              document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
-                let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table`)
-                console.log(`CONNECT!`)
-                localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(
-                  {
-                    host: table.querySelector(`tbody tr td input#websocket-host`).value,
-                    port: table.querySelector(`tbody tr td input#websocket-port`).value,
-                    endpoint: table.querySelector(`tbody tr td input#websocket-endpoint`).value
-                  }))
+            if (document.body.getAttribute(`twitchspeaker-state`) != `connected` && document.body.getAttribute(`twitchspeaker-state`) != `disconnected`) {
+              document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration=twitchspeaker] button`).addEventListener(`click`, function () {
+                document.body.insertAdjacentHTML(`afterbegin`, `
+                  <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
+                  <button class="close-button mdi mdi-close" onclick="this.parentNode.parentNode.removeChild(this.parentNode)"></button>
+                  <div class="main"><h2>Connect TwitchSpeaker!</h3><table><tbody>
+                    <tr>
+                      <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Host</label></td>
+                      <td style="text-align: left;"><input type="url" name="websocket-host" id="websocket-host" value="localhost" placeholder="localhost"></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Port</label></td>
+                      <td style="text-align: left;"><input type="url" name="websocket-port" id="websocket-port" value="7580" placeholder="7580"></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Endpoint</label></td>
+                      <td style="text-align: left;"><input type="url" name="websocket-endpoint" id="websocket-endpoint" value="/" placeholder="/"></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td style="text-align: right;"><button class="connect-button">Connect!</button></td>
+                    </tr>
+                  </tbody></table></div></div>
+                `)
+  
+                document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
+                  let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table`)
+                  localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(
+                    {
+                      host: table.querySelector(`tbody tr td input#websocket-host`).value,
+                      port: table.querySelector(`tbody tr td input#websocket-port`).value,
+                      endpoint: table.querySelector(`tbody tr td input#websocket-endpoint`).value
+                    }))
+                  window.reload()
+                })
               })
-            })
+            }
           }
         
           function reloadBroadcaster() {
@@ -815,11 +828,9 @@ async function connectTwitchSpeakerws() {
         let defaultSpeakMessage = ``
         if (defaultSpeakValues != undefined) {
           defaultSpeakValues = JSON.parse(defaultSpeakValues)
-          console.log(`111`)
           
           if (defaultSpeakValues.defaultSpeakVoiceAlias != null) {
             defaultSpeakVoiceAlias = ` value="${defaultSpeakValues.defaultSpeakVoiceAlias}"`
-            console.log(`1112222`)
           }
           
           if (defaultSpeakValues.defaultSpeakMessage != null) {
@@ -828,24 +839,28 @@ async function connectTwitchSpeakerws() {
 
           if (defaultSpeakValues === undefined || defaultSpeakValues === null) defaultSpeakValues = ``
         } else {
-          console.log(`111222233333`)
           defaultSpeakVoiceAlias = ``
           defaultSpeakMessage = `This is a test message`
         }
         document.querySelector(`main`).innerHTML = `
         <div class="form-group">
           <label for="voice-alias">Voice Alias</label><br>
-          <input type="url" name="voice-alias" id="voice-alias" placeholder="Voice Alias"${defaultSpeakVoiceAlias}>
+          <input type="text" name="voice-alias" id="voice-alias" placeholder="Voice Alias"${defaultSpeakVoiceAlias}>
         </div><br>
         <div class="form-group">
           <label for="message">Message</label><br>
-          <input type="url" name="message" id="message" placeholder="Message"${defaultSpeakMessage}>
+          <input type="text" name="message" id="message" placeholder="Message"${defaultSpeakMessage}>
         </div>
+        <div class="form-group">
+          <input type="checkbox" name="bad-words-filter" id="bad-words-filter">
+          <label for="bad-words-filter">Bad Words Filter</label>
+        </div><br>
         <button>Speak!</button>`
 
         document.querySelector(`main button`).addEventListener(`click`, function () {
           let voiceAlias = document.querySelector(`.form-group input#voice-alias`).value || ``
           let message = document.querySelector(`.form-group input#message`).value || `This is a test message`
+          let badWordsFilter = document.querySelector(`.form-group input#bad-words-filter`).checked
 
           let twitchspeakerData = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || `{}`
           twitchspeakerData = JSON.parse(twitchspeakerData)
@@ -856,15 +871,23 @@ async function connectTwitchSpeakerws() {
           twitchspeakerData = Object.fromEntries(twitchspeakerData)
           localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(twitchspeakerData))
 
-          console.log(`sending`)
           ws.send(JSON.stringify({
               request: "Speak",
               voice: voiceAlias,
               message: message,
+              badWordFilter: badWordsFilter,
               id: "Speak"
             }
           ))
-          console.log(`sended`)
+
+          console.log(JSON.stringify({
+            request: "Speak",
+            voice: voiceAlias,
+            message: message,
+            badWordFilter: badWordsFilter,
+            id: "Speak"
+          }
+        ))
         })
       }
     }
