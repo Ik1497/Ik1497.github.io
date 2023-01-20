@@ -286,13 +286,20 @@ table.styled td {
 /* ---- */
 
 main:not(.nested) {
-  width: 100%;
-  margin-inline: 1em;
-  margin-right: 1em;
+  padding-inline: 1rem;
+  margin-right: 1rem;
   margin-left: 21rem;
   overflow-y: auto;
-  margin-top: 7em;
+  margin-top: 7rem;
   position: relative;
+
+  width: 100%;
+  max-width: 120rem;
+  margin-right: auto;
+}
+
+main.full {
+  margin-inline: auto;
 }
 
 main:not(.nested) ul.main-list {
@@ -569,6 +576,34 @@ body:has(> .settings-modal) .open-settings-modal {
   border-radius: 100vmax;
   cursor: pointer;
   z-index: 100;
+}
+
+/* ----------- */
+/* Form Groups */
+/* ----------- */
+
+.form-group.styled input:not([type=checkbox]) {
+  padding-block: 1rem;
+  padding-inline: .5rem;
+  width: 100%;
+  background: var(--background-soft);
+  color: var(--text-900);
+  outline: none;
+  border: none;
+  border-radius: none;
+  display: block;
+}
+
+.form-group.styled{
+  margin-block: .5rem
+}
+
+.form-group.styled.no-margin {
+  margin-block: none;
+}
+
+.form-group.styled input:focus-visible:not([type=checkbox]) {
+  background: var(--background-light);
 }
 
 /* ------------- */

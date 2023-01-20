@@ -29,7 +29,7 @@ let headerTagsMap = [
     integration: `streamer.bot`
   },
   {
-    name: `TTS Speak`,
+    name: `TwitchSpeaker`,
     integration: `twitchspeaker`
   }
 ]
@@ -908,8 +908,9 @@ async function connectTwitchSpeakerws() {
         headerTag.removeAttribute(`hidden`)
       });
       
-      if (location.hash === `#TTS-Speak`) {
+      if (location.hash === `#TwitchSpeaker`) {
         document.querySelector(`nav.navbar`).parentNode.removeChild(document.querySelector(`nav.navbar`))
+        document.querySelector(`main`).classList.add(`full`)
 
         let defaultSpeakValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || undefined
         let defaultSpeakVoiceAlias = ``
@@ -931,21 +932,35 @@ async function connectTwitchSpeakerws() {
           defaultSpeakMessage = `This is a test message`
         }
         document.querySelector(`main`).innerHTML = `
-        <div class="form-group">
-          <label for="voice-alias">Voice Alias</label><br>
+        <ul class="tags">
+          <li><button title="Enable">Enable</button></li>
+          <li><button title="Disable">Disable</button></li>
+          <li><button title="Pause">Pause</button></li>
+          <li><button title="Resume">Resume</button></li>
+          <li><button title="On">On</button></li>
+          <li><button title="Off">Off</button></li>
+          <li><button title="Stop">Stop</button></li>
+          <li><button title="Clear">Clear</button></li>
+          <li><button title="Disable Events">Disable Events</button></li>
+          <li><button title="Enable Events">Enable Events</button></li>
+          <li><button title="Speaking Mode: All">Speaking Mode: All</button></li>
+          <li><button title="Speaking Mode: Command">Speaking Mode: Command</button></li>
+        </ul>
+        <div class="form-group styled">
+          <label for="voice-alias">Voice Alias</label>
           <input type="text" name="voice-alias" id="voice-alias" placeholder="Voice Alias"${defaultSpeakVoiceAlias}>
-        </div><br>
-        <div class="form-group">
-          <label for="message">Message</label><br>
+        </div>
+        <div class="form-group styled">
+          <label for="message">Message</label>
           <input type="text" name="message" id="message" placeholder="Message"${defaultSpeakMessage}>
         </div>
-        <div class="form-group">
+        <div class="form-group styled">
           <input type="checkbox" name="bad-words-filter" id="bad-words-filter">
           <label for="bad-words-filter">Bad Words Filter</label>
-        </div><br>
-        <button>Speak!</button>`
+        </div>
+        <button class="styled speak">Speak!</button>`
 
-        document.querySelector(`main button`).addEventListener(`click`, function () {
+        document.querySelector(`main button.speak`).addEventListener(`click`, function () {
           let voiceAlias = document.querySelector(`.form-group input#voice-alias`).value || ``
           let message = document.querySelector(`.form-group input#message`).value || `This is a test message`
           let badWordsFilter = document.querySelector(`.form-group input#bad-words-filter`).checked
@@ -968,14 +983,106 @@ async function connectTwitchSpeakerws() {
             }
           ))
 
-          console.log(JSON.stringify({
-            request: "Speak",
-            voice: voiceAlias,
-            message: message,
-            badWordFilter: badWordsFilter,
-            id: "Speak"
-          }
-        ))
+        })
+
+        document.querySelector(`main .tags li button[title="Enable"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Enable",
+              id: "Enable"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="Disable"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Disable",
+              id: "Disable"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="Pause"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Pause",
+              id: "Pause"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="Resume"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Resume",
+              id: "Resume"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="On"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "On",
+              id: "On"
+            }
+          ))
+        })
+        
+        document.querySelector(`main .tags li button[title="Off"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Off",
+              id: "Off"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="Stop"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Stop",
+              id: "Stop"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="Clear"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Clear",
+              id: "Clear"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="Enable Events"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Events",
+              state: "on",
+              id: "Clear"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="Disable Events"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Events",
+              state: "off",
+              id: "Clear"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="Speaking Mode: All"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Mode",
+              mode: "all",
+              id: "Clear"
+            }
+          ))
+        })
+
+        document.querySelector(`main .tags li button[title="Speaking Mode: Command"]`).addEventListener(`click`, function () {
+          ws.send(JSON.stringify({
+              request: "Mode",
+              mode: "command",
+              id: "Clear"
+            }
+          ))
         })
       }
     }
