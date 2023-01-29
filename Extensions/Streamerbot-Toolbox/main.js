@@ -46,18 +46,25 @@ document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `<ul class="hea
 headerTagsMap.forEach(headerTag => {
   let hidden = ``
   let headerTagActive = ``
-  let headerTagHash = headerTag.name.replaceAll(` `, `-`)
+
+  let headerTagHash = headerTag.name
+    .replaceAll(` `, `-`)
+    .replaceAll(`.`, ``)
+  
   if (location.hash === `#${headerTagHash}`) headerTagActive = ` class="tag-active"`
-  if (headerTag.integration != `streamer.bot`) hidden = ` hidden`
+  if (headerTag.integration != `streamer.bot` && headerTag.integration != `streamerbotIdeas`) hidden = ` hidden`
 
   document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<li${headerTagActive}><a href="#${headerTagHash}" title="${headerTag.name}" data-integration="${headerTag.integration}"${hidden}>${headerTag.name}</a></li$>`)
-  // document.querySelector(`main`).innerHTML = `<main class="nested" data-page-hash="${headerTagHash}></main>`
 });
 
 let state__404 = true
 
 headerTagsMap.forEach(headerTag => {
-  if (headerTag.name.replaceAll(` `, `-`) === location.hash.replace(`#`, ``)) {
+  let headerTagHash = headerTag.name
+    .replaceAll(` `, `-`)
+    .replaceAll(`.`, ``)
+  
+  if (headerTagHash === location.hash.replace(`#`, ``)) {
       state__404 = false
   }
 });
@@ -93,6 +100,9 @@ connectws()
 async function connectws() {
   let eventArgsMap = await fetch(`./eventArgsMap.json`)
   eventArgsMap = await eventArgsMap.json()
+
+  let randomEventArgs = await fetch(`./random.json`)
+  randomEventArgs = await randomEventArgs.json()
 
   if ("WebSocket" in window) {
     let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/"
@@ -133,7 +143,7 @@ async function connectws() {
       const data = JSON.parse(event.data)
       console.log(data)
       let instance
-      if (data.id === `GetInfo`) {
+      if (data?.id === `GetInfo`) {
         let instanceOS = data.info.os
         if (data.info.os === `windows`) instanceOS = `<span class="mdi mdi-microsoft-windows"> Windows</span>`
         document.querySelector(`header aside`).innerHTML = `
@@ -174,9 +184,15 @@ async function connectws() {
       } else if (location.hash === `#Action-History` && data.id === `GetInfo`) {
         ws.send(
           JSON.stringify({
+            request: `GetActions`,
+            id: `GetActions`,
+          })
+        )
+        ws.send(
+          JSON.stringify({
             request: `Subscribe`,
             events: {
-              raw: [`Action`, `ActionCompleted`]
+              raw: [`Action`, `ActionCompleted`, `SubAction`]
             },
             id: `ActionCompleted`,
           })
@@ -292,6 +308,14 @@ async function connectws() {
             document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Integrations • Settings`
             document.querySelector(`.settings-modal .header .info .description`).innerHTML = `All integrations that can be connected`
             
+            document.querySelector(`.settings-modal .main`).innerHTML = `
+            <ul class="integrations-list">
+              <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
+            </ul>
+            `
+
+            // TwitchSpeaker
+            
             let integrationsList__twitchspeaker = `<li class="mdi mdi-plus" data-integration="twitchspeaker"> TwitchSpeaker <button>Connect!</button></p>`
 
             if (document.body.getAttribute(`twitchspeaker-state`) === null) {
@@ -299,54 +323,109 @@ async function connectws() {
               let integrationsList__twitchspeaker_wsUrl = localStorage.getItem(`streamerbotToolbox__twitchspeaker`)
               integrationsList__twitchspeaker_wsUrl = JSON.parse(integrationsList__twitchspeaker_wsUrl)
               integrationsList__twitchspeaker_wsUrl = `ws://${integrationsList__twitchspeaker_wsUrl.host}:${integrationsList__twitchspeaker_wsUrl.port}${integrationsList__twitchspeaker_wsUrl.endpoint}`
-              integrationsList__twitchspeaker = `<li class="mdi mdi-check" data-integration="twitchspeaker"> TwitchSpeaker (Connected) • ${integrationsList__twitchspeaker_wsUrl}</p>`
+              integrationsList__twitchspeaker = `<li class="mdi mdi-check" data-integration="twitchspeaker"> TwitchSpeaker (Connected) • ${integrationsList__twitchspeaker_wsUrl} <button class="mdi mdi-cog"></button></p>`
             } else if (document.body.getAttribute(`twitchspeaker-state`) === `disconnected`) {
-              integrationsList__twitchspeaker = `<li class="mdi mdi-reload" data-integration="twitchspeaker"> TwitchSpeaker (Reconnecting)</p>`
+              integrationsList__twitchspeaker = `<li class="mdi mdi-reload" data-integration="twitchspeaker"> TwitchSpeaker <button>Reconnect!</button></p>`
             }
-            document.querySelector(`.settings-modal .main`).innerHTML = `
-            <ul class="integrations-list">
-              <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
-              ${integrationsList__twitchspeaker}
-            </ul>
-            `
 
-            if (document.body.getAttribute(`twitchspeaker-state`) != `connected` && document.body.getAttribute(`twitchspeaker-state`) != `disconnected`) {
-              document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration=twitchspeaker] button`).addEventListener(`click`, function () {
-                document.body.insertAdjacentHTML(`afterbegin`, `
-                  <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
-                  <button class="close-button mdi mdi-close" onclick="this.parentNode.parentNode.removeChild(this.parentNode)"></button>
-                  <div class="main"><h2>Connect TwitchSpeaker!</h3><table><tbody>
-                    <tr>
-                      <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Host</label></td>
-                      <td style="text-align: left;"><input type="url" name="websocket-host" id="websocket-host" value="localhost" placeholder="localhost"></td>
-                    </tr>
-                    <tr>
-                      <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Port</label></td>
-                      <td style="text-align: left;"><input type="url" name="websocket-port" id="websocket-port" value="7580" placeholder="7580"></td>
-                    </tr>
-                    <tr>
-                      <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Endpoint</label></td>
-                      <td style="text-align: left;"><input type="url" name="websocket-endpoint" id="websocket-endpoint" value="/" placeholder="/"></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td style="text-align: right;"><button class="connect-button">Connect!</button></td>
-                    </tr>
-                  </tbody></table></div></div>
-                `)
-  
-                document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
-                  let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table`)
-                  localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(
-                    {
-                      host: table.querySelector(`tbody tr td input#websocket-host`).value,
-                      port: table.querySelector(`tbody tr td input#websocket-port`).value,
-                      endpoint: table.querySelector(`tbody tr td input#websocket-endpoint`).value
-                    }))
-                  window.reload()
-                })
+            document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__twitchspeaker)
+            
+            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="twitchspeaker"] button`).addEventListener(`click`, function () {
+              let twitchspeakerDefaultValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`)
+              if (twitchspeakerDefaultValues === null) {
+                twitchspeakerDefaultValues = {}
+                twitchspeakerDefaultValues.host     = `localhost`
+                twitchspeakerDefaultValues.port     = `7580`
+                twitchspeakerDefaultValues.endpoint = `/`
+              } else {
+                twitchspeakerDefaultValues = JSON.parse(twitchspeakerDefaultValues)
+              }
+
+              document.body.insertAdjacentHTML(`afterbegin`, `
+                <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
+                <button class="close-button mdi mdi-close" onclick="location.reload()"></button>
+                <div class="main"><h2>TwitchSpeaker</h3><br><table><tbody>
+                  <tr>
+                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Host</label></td>
+                    <td style="text-align: left;"><input type="url" name="websocket-host" id="websocket-host" value="${twitchspeakerDefaultValues.host}" placeholder="${twitchspeakerDefaultValues.host}"></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Port</label></td>
+                    <td style="text-align: left;"><input type="url" name="websocket-port" id="websocket-port" value="${twitchspeakerDefaultValues.port}" placeholder="${twitchspeakerDefaultValues.port}"></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Endpoint</label></td>
+                    <td style="text-align: left;"><input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${twitchspeakerDefaultValues.endpoint}" placeholder="${twitchspeakerDefaultValues.endpoint}"></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td style="text-align: right;"><button class="connect-button">Connect!</button></td>
+                  </tr>
+                </tbody></table></div></div>
+              `)
+
+              document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
+                let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table`)
+                localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(
+                  {
+                    host: table.querySelector(`tbody tr td input#websocket-host`).value,
+                    port: table.querySelector(`tbody tr td input#websocket-port`).value,
+                    endpoint: table.querySelector(`tbody tr td input#websocket-endpoint`).value
+                  }))
+                location.reload()
               })
+            })
+
+            // Streamer.bot Ideas
+            /*
+            let integrationsList__streamerbotIdeas = `<li class="mdi mdi-plus" data-integration="streamerbotIdeas"> Streamer.bot Ideas <button>Enable!</button></p>`
+
+            if (document.body.getAttribute(`streamerbotIdeas-state`) === null) {
+            } else if (document.body.getAttribute(`streamerbotIdeas-state`) === `enabled`) {
+              integrationsList__streamerbotIdeas = `<li class="mdi mdi-check" data-integration="streamerbotIdeas"> Streamer.bot Ideas (Enabled) <button class="mdi mdi-cog"></button></p>`
             }
+
+            document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__streamerbotIdeas)
+
+            let streamerbotIdeasDefaultValues = localStorage.getItem(`streamerbotToolbox__streamerbotIdeas`)
+
+            if (streamerbotIdeasDefaultValues === null) {
+              streamerbotIdeasDefaultValues = {}
+              streamerbotIdeasDefaultValues.apiKey = ``
+            } else {
+              streamerbotIdeasDefaultValues = JSON.parse(streamerbotIdeasDefaultValues)
+            }
+
+            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration=streamerbotIdeas] button`).addEventListener(`click`, function () {
+              document.body.insertAdjacentHTML(`afterbegin`, `
+                <div class="settings-modal-alt small" data-settings-modal-alt="streamerbotIdeas-connection">
+                <button class="close-button mdi mdi-close" onclick="location.reload()"></button>
+                <div class="main"><h2>Streamerbot Ideas</h3><br><table><tbody>
+                  <tr>
+                    <td style="text-align: right; padding-right: .25rem;"><label for="apiKey">API Key</label></td>
+                    <td style="text-align: left;"><input type="url" name="apiKey" id="apiKey" value="${streamerbotIdeasDefaultValues.apiKey}" placeholder="${streamerbotIdeasDefaultValues.apiKey}"></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td style="text-align: right;"><button class="connect-button">Enable!</button></td>
+                  </tr>
+                </tbody></table></div></div>
+              `)
+
+              document.querySelector(`.settings-modal-alt[data-settings-modal-alt=streamerbotIdeas-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
+                let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=streamerbotIdeas-connection] .main table`)
+
+                let apiKey = table.querySelector(`tbody tr td input#apiKey`).value
+                if (apiKey != ``) {
+                  localStorage.setItem(`streamerbotToolbox__streamerbotIdeas`, JSON.stringify(
+                    {
+                      apiKey: apiKey
+                    }))
+                }
+                location.reload()
+              })
+            })
+            */
           }
         
           function reloadBroadcaster() {
@@ -471,6 +550,22 @@ async function connectws() {
 
       if (location.hash === `#Actions` && data.id === `GetActions`) {
 
+        document.querySelector(`main`).classList.add(`col-2`)
+
+        let eventTestDropdown = ``
+        let eventArgsEntries = Object.entries(eventArgsMap)
+        eventArgsEntries.forEach(eventArgEntry => {
+          eventTestDropdown += `<option value="${eventArgEntry[0]}">[${eventArgEntry[1].category.toUpperCase()}] ${eventArgEntry[0]}</option>`
+        });
+        eventTestDropdown = `<select><option value="None">None</option>${eventTestDropdown}</select>`
+
+        document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `
+        <div class="events-handler">
+          <h2>Emulate Events</h2>
+          ${eventTestDropdown}
+        </div>
+        `)
+
         ////////////
         // NAVBAR //
         ////////////
@@ -480,17 +575,26 @@ async function connectws() {
         // Unique Groups Array
         data.actions.forEach(action => {
           if (action.group === "") {
-
           } else if (!uniqueGroups.includes(action.group)) {
             uniqueGroups.push(action.group)
           }
         })
         uniqueGroups = uniqueGroups.sort()
         uniqueGroups.unshift("None")
-
+        uniqueGroups.unshift("All")
+        
         // Groups Navbar
         uniqueGroups.forEach(group => {
-          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item"><button><p class="title">${group}</p></button></li>`)
+          let actionCount = 0
+          data.actions.forEach(action => {
+            if (action.group === ``) action.group = `None`
+            if (group === action.group || group === `All`) {
+              actionCount++
+            }
+          })
+          let action = `${actionCount} Actions`
+          if (actionCount === 1) action = `${actionCount} Action`
+          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item"><button><p class="title">${group}</p><p class="description">${action}</p></button></li>`)
         })
 
         // Button Logic
@@ -512,13 +616,13 @@ async function connectws() {
             // Add Main Contents
 
             document.querySelector(`main ul.main-list`).innerHTML = ``
-            buttonHtmlText = buttonHtml.innerText
-            if (buttonHtmlText === "None") buttonHtmlText = ""
+            buttonHtmlText = buttonHtml.querySelector(`p.title`).innerText
+            if (buttonHtmlText === "") buttonHtmlText = `None`
             let actionCount = 0
             data.actions.forEach(action => {
-              if (action.group === buttonHtmlText) {
+              if (action.group === buttonHtmlText || buttonHtmlText === `All`) {
                 actionCount++
-                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li><p class="action-name">${action.name}</p><button title="Execute Action">Execute</button></li>`)
+                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li><p class="action-name">${action.name}</p><div class="button-group"><button title="Execute Action">Execute</button></div></li>`)
               }
             })
             if (buttonHtmlText === "") buttonHtmlText = "None"
@@ -540,7 +644,7 @@ async function connectws() {
                 if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
                   broadcasterObj.userName = broadcaster?.platforms?.youtube?.broadcastUserName ?? `Ik1497 Tutorials`
                   broadcasterObj.userId = broadcaster?.platforms?.youtube?.broadcastUserId ?? `UCl3oatIf9tYopHaZHvnH3xw`
-                  broadcasterObj.prfileImage = broadcaster?.platforms?.youtube?.broadcastUserProfileImage ?? `https://yt3.ggpht.com/VpC8_9WcDEKcPSvnD6p1iGT_S2_XxdeZtL6tTL2axexj0SpG-c4Wx8i5lYNbJtvmzwCnzm9Bsg=s88-c-k-c0x00ffffff-no-rj`
+                  broadcasterObj.profileImage = broadcaster?.platforms?.youtube?.broadcastUserProfileImage ?? `https://yt3.ggpht.com/VpC8_9WcDEKcPSvnD6p1iGT_S2_XxdeZtL6tTL2axexj0SpG-c4Wx8i5lYNbJtvmzwCnzm9Bsg=s88-c-k-c0x00ffffff-no-rj`
                 }
 
                 let globalArguments = localStorage.getItem(`streamerbotToolbox__globalArgs`) || `{}`
@@ -558,7 +662,7 @@ async function connectws() {
                 if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
                   globalArguments.push([`broadcastUserName`, broadcasterObj.userName])
                   globalArguments.push([`broadcastUserId`, broadcasterObj.userId])
-                  globalArguments.push([`broadcastUserProfileImage`, broadcasterObj.prfileImage])
+                  globalArguments.push([`broadcastUserProfileImage`, broadcasterObj.profileImage])
                 }
 
                 let randomUserCount = localStorage.getItem(`streamerbotToolbox__randomUsers`)
@@ -573,15 +677,64 @@ async function connectws() {
                   }
                 }
 
-                globalArguments.push([`source`, `StreamerbotToolbox`])  
+                globalArguments.push([`source`, `StreamerbotToolbox`])
+
+                let selectedEventArgs = document.querySelector(`main .events-handler select`).value
+                eventArgsEntries.forEach(eventArgsEntry => {
+                  if (eventArgsEntry[0] === selectedEventArgs) {
+                    let randomEventArgs__user = randomEventArgs.user[Math.floor(Math.random()*randomEventArgs.user.length)]
+
+                    Object.entries(eventArgsEntry[1].arguments).forEach(arg => {
+                      let randomEventArgs__message = randomEventArgs.message[Math.floor(Math.random()*randomEventArgs.message.length)]
+
+                      if (arg[0] === `userId`)              arg[1] = randomEventArgs__user.userId
+                      if (arg[0] === `userName`)            arg[1] = randomEventArgs__user.userName
+                      if (arg[0] === `user`)                arg[1] = randomEventArgs__user.user
+                      if (arg[0] === `userType`)            arg[1] = randomEventArgs__user.userType
+                      if (arg[0] === `isSubscribed`)        arg[1] = randomEventArgs__user.isSubscribed
+                      if (arg[0] === `isVip`)               arg[1] = randomEventArgs__user.isVip
+                      if (arg[0] === `isModerator`)         arg[1] = randomEventArgs__user.isModerator
+                      if (arg[0] === `userPreviousActive`)  arg[1] = randomEventArgs__user.userPreviousActive
+
+                      if (arg[0] === `rawInput`)           arg[1] = randomEventArgs__message
+                      if (arg[0] === `rawInputEscaped`)    arg[1] = encodeURI(randomEventArgs__message)
+                      if (arg[0] === `rawInputUrlEncoded`) arg[1] = encodeURI(randomEventArgs__message)
+                      if (arg[0] === `message`)            arg[1] = randomEventArgs__message
+                      if (arg[0] === `messageStripped`)    arg[1] = randomEventArgs__message
+                      if (arg[0] === `rawInput`) randomEventArgs__message.split(` `).forEach((input, index) => {
+                        globalArguments.push([`input${index}`,           input])
+                        globalArguments.push([`inputEscaped${index}`,    encodeURI(input)])
+                        globalArguments.push([`inputUrlEncoded${index}`, encodeURI(input)])
+                      });
+
+                      if (arg[0] === `tagCount`) {
+                        let randomEventArgs__tagCount = Math.floor(Math.random() * 5) + 1
+                        let randomEventArgs__tagsDelimited = []
+                        arg[1] = `${randomEventArgs__tagCount}`
+                        globalArguments.push([`tags`, 'System.Collections.Generic.List`1[System.String]'])
+
+                        for (let randomEventArgs__tagRunTime = 0; randomEventArgs__tagRunTime < randomEventArgs__tagCount; randomEventArgs__tagRunTime++) {
+                          let randomEventArgs__tags = randomEventArgs.tags[Math.floor(Math.random()*randomEventArgs.tags.length)]
+                          globalArguments.push([`tag${randomEventArgs__tagRunTime}`, randomEventArgs__tags])
+                          randomEventArgs__tagsDelimited.push(randomEventArgs__tags)
+                        }
+
+                        globalArguments.push([`tagsDelimited`, randomEventArgs__tagsDelimited.join(`,`)])
+                      }
+                      
+                      globalArguments.push(arg)
+                    });
+                  }
+                });
                 
                 globalArguments = Object.fromEntries(globalArguments)
+                console.log(`Adding`, globalArguments)
                 
                 ws.send(
                   JSON.stringify({
                     request: "DoAction",
                     action: {
-                      name: buttonHtml.parentNode.querySelector(`p.action-name`).innerText
+                      name: buttonHtml.parentNode.parentNode.querySelector(`p.action-name`).innerText
                     },
                     args: globalArguments,
                     id: "DoAction",
@@ -593,13 +746,27 @@ async function connectws() {
         })
       }
 
+      function GetAction(id) {
+        console.log(`getting actions`, actions)
+        actions.forEach(action => {
+          if (action.id = id) {
+            return action
+          }
+        });
+      }
+
+
       if (location.hash === `#Action-History` && data.id === `ActionCompleted`) {
         document.querySelector(`main`).innerHTML = ``
       }
 
       if (location.hash === `#Action-History` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
-        document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`afterbegin`, `<li class="navbar-list-item" data-id="${data.data.id}" data-action-state="pending"><button>${data.data.name}</button></li>`)
+        document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`afterbegin`, `<li class="navbar-list-item" data-id="${data.data.id}" data-action-state="pending"><button><p class="title">${data.data.name}</p></button></li>`)
         let listContents = ``
+        let action = GetAction(data.data.id)
+        console.log(action)
+        let subActionCount = `${action.subaction_count} Sub Actions`
+        if (action.subaction_count === 0) subActionCount = `${action.subaction_count} Sub Action`
         let arguments = Object.entries(data.data.arguments)
         arguments.forEach(argument => {
           listContents += `<li>${argument[0]}</li><li>${argument[1]}</li>`
@@ -608,6 +775,7 @@ async function connectws() {
         <ul data-id="${data.data.id}" class="main-list-wrapper" hidden>
           <div class="info">
             <h2>${data.data.name}</h2>
+            <p>${data.data.actionId}</p>
             <p>${data.data.actionId}</p>
             <br>
           </div>
@@ -713,10 +881,14 @@ async function connectws() {
           </tr>
           <tr>
             <td style="text-align: right">Duration</td>
-            <td style="text-align: left">${data.data.duration}</td>
+            <td style="text-align: left">${Math.round(data.data.duration)}ms</td>
           </tr>
         </table>
         `)
+      }
+
+      if (location.hash === `#Action-History` && data?.event?.source === `Raw` && data?.event?.type === `SubAction`) {
+
       }
       
       if (location.hash === `#Present-Viewers` && data.id === `GetActiveViewers`) {
@@ -1121,6 +1293,32 @@ async function connectTwitchSpeakerws() {
       if (!JSON.stringify(data).includes(`"status":"ok"`)) console.log(JSON.stringify(data))
     })
   }
+}
+
+// streamerbotIdeas()
+
+async function streamerbotIdeas() {
+  let ideasUrl = `https://ideas.streamer.bot`
+  let ideasData = {}
+
+  let streamerbotIdeasApiKey
+  let streamerbotIdeasLocalData = localStorage.getItem(`streamerbotToolbox__streamerbotIdeas`)
+
+  if (streamerbotIdeasLocalData === null) {
+  } else if (streamerbotIdeasLocalData.apiKey === null) {
+  } else {
+    document.body.setAttribute(`streamerbotIdeas-state`, `enabled`)
+    streamerbotIdeasApiKey = streamerbotIdeasLocalData.apiKey
+  }
+
+  // ideasData.posts = await fetch(`${ideasUrl}/api/v1/posts?limit=50&view=recent`)
+  // ideasData.posts = await ideasData.posts.json()
+
+  ideasData.tags = await fetch(`${ideasUrl}/api/v1/tags`)
+  ideasData.tags = await ideasData.tags.json()
+
+  console.log(ideasData)
+
 }
 
 function sendNotification(service, text) {

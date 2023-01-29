@@ -217,7 +217,7 @@ table.styled td {
   bottom: 0;
 }
 
-.navbar>input[type=search] {
+.navbar > input[type=search] {
   position: absolute;
   top: -2.5rem;
   width: 100%;
@@ -248,9 +248,19 @@ table.styled td {
   padding-inline: .5em;
 }
 
-.navbar .navbar-list .navbar-list-item .Action-Timestamp {
-  font-size: .75em;
+.navbar .navbar-list .navbar-list-item .title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.navbar .navbar-list .navbar-list-item .description {
+  font-size: .9em;
   color: var(--text-400);
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .navbar .navbar-list .navbar-list-item button {
@@ -302,6 +312,12 @@ main.full {
   margin-inline: auto;
 }
 
+main.col-2 {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .5rem;
+}
+
 main:not(.nested) ul.main-list {
   display: grid;
   gap: .5em;
@@ -314,7 +330,7 @@ main:not(.nested) ul.main-list li {
   padding-inline: .5em;
   padding-block: .75em;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto max-content;
 }
 
 main:not(.nested) ul.main-list li.list-title {
@@ -329,13 +345,21 @@ main:not(.nested) ul.main-list li p {
   text-overflow: ellipsis;
 }
 
+main:not(.nested) ul.main-list li select {
+  background: var(--background-alt);
+  color: var(--text-900);
+  border: none;
+  border-radius: none;
+  outline: none;
+}
+
 main:not(.nested) ul.main-list li button {
   color: #a4ceff;
   background: #285292;
   border: 0;
   border-radius: 5px;
   outline: 0;
-  width: 100%;
+  width: max-content;
   padding-inline: .5em;
   padding-block: .25em;
   cursor: pointer;
@@ -376,6 +400,28 @@ main:not(.nested) li>div.mdi.mdi-twitch::before {
 
 main:not(.nested) li>div.mdi.mdi-youtube::before {
   background: #ff0000;
+}
+
+main .events-handler {
+  background: var(--background-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  height: fit-content;
+  padding-inline: .5rem;
+  padding-block: 1rem;
+}
+
+main .events-handler select {
+  background: var(--background-alt);
+  color: var(--text-900);
+  border: none;
+  outline: none;
+  border-radius: none;
+  min-width: 15rem;
+  padding-block: .75rem;
+  padding-inline: .25rem;
 }
 
 /* -------------- */

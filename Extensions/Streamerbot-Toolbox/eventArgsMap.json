@@ -1,25 +1,52 @@
 {
-    "TwitchHypeTrainStart": {
-        "id": "4e28c05a-4262-4549-b465-a6902fe04c80",
-        "level": "1",
-        "startedAt": "1/15/2023 3:12:15 PM",
-        "expiresAt": "1/15/2023 3:14:15 PM",
-        "duration": "120",
-        "percent": "10%",
-        "percentDecimal": "0.1",
-        "top.bits.user": "Streamlabs",
-        "top.bits.userName": "streamlabs",
-        "top.bits.userId": "105166207",
-        "top.bits.total": "100",
-        "actionId": "ffebb276-032e-4065-8b29-10feb67b3f4e",
-        "actionName": "test",
-        "eventSource": "twitch",
-        "broadcastUser": "ik1497",
-        "broadcastUserName": "ik1497",
-        "broadcastUserId": "695682330",
-        "broadcasterIsAffiliate": "False",
-        "broadcasterIsPartner": "False",
-        "runningActionId": "a389daed-6705-4d8e-bd9d-00a2a10eff0c",
-        "actionQueuedAt": "1/15/2023 4:12:15 PM"
+    "StreamOnline": {
+        "category": "twitch",
+        "arguments": {
+            "startedAt": "1/28/2023 6:49:20 PM",
+            "game": "Just Chatting",
+            "gameId": "509658",
+            "tagCount": ""
+        }
+    },
+    "StreamOffline": {
+        "category": "twitch",
+        "arguments": {
+            "endedAt": "1/15/2023 3:12:15 PM"
+        }
+    },
+    "ChatMessage": {
+        "category": "twitch",
+        "arguments": {
+            "msgId": "226ddd35-4d27-4e7d-b506-0d69b4b405d7",
+            "role": "3",
+            "color": "#1E90FF",
+            "colorR": "30",
+            "colorG": "144",
+            "colorB": "255",
+            "emoteCount": "0",
+            "emotes": "System.Collections.Generic.List`1[Twitch.Common.Models.Emote]",
+            "badgeCount": "1",
+            "badges": "System.Collections.Generic.List`1[Twitch.Common.Models.Badge]",
+            "bits": "0",
+            "isAction": "False",
+            "isReply": "False",
+            "firstMessage": "False",
+            "isTest": "False",
+            "isHighlight": "False",
+            "eventSource": "twitch",
+            "rawInput": "",
+            "rawInputEscaped": "",
+            "rawInputUrlEncoded": "",
+            "message": "",
+            "messageStripped": "",
+            "user": "",
+            "userName": "",
+            "userId": "",
+            "userType": "",
+            "isModerator": "",
+            "isVip": "",
+            "isSubscribed": "",
+            "userPreviousActive": ""
+        }
     }
 }

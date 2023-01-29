@@ -15,8 +15,11 @@ function connectws() {
     ws.onopen = function () {
       ws.send(
         JSON.stringify({
-          request: "GetInfo",
-          id: "123",
+          request: "DoAction",
+          action: {
+            name: "test123333333333333"
+          },
+          id: "123"
         })
       );
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot");
