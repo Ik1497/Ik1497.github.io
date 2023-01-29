@@ -322,6 +322,8 @@ main:not(.nested) ul.main-list {
   display: grid;
   gap: .5em;
   width: 100%;
+
+  overflow-y: auto;
   height: fit-content;
 }
 

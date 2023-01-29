@@ -560,10 +560,12 @@ async function connectws() {
         eventTestDropdown = `<select><option value="None">None</option>${eventTestDropdown}</select>`
 
         document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `
-        <div class="events-handler">
-          <h2>Emulate Events</h2>
-          ${eventTestDropdown}
-        </div>
+          <aside>
+            <div class="events-handler">
+            <h2>Emulate Events</h2>
+            ${eventTestDropdown}
+            </div>
+          </aside>
         `)
 
         ////////////
