@@ -1,6 +1,7 @@
 {
     "StreamOnline": {
         "category": "twitch",
+        "display": "Stream Online",
         "arguments": {
             "startedAt": "1/28/2023 6:49:20 PM",
             "game": "Just Chatting",
@@ -10,12 +11,14 @@
     },
     "StreamOffline": {
         "category": "twitch",
+        "display": "Stream Offline",
         "arguments": {
             "endedAt": "1/15/2023 3:12:15 PM"
         }
     },
     "ChatMessage": {
         "category": "twitch",
+        "display": "Chat Message",
         "arguments": {
             "msgId": "226ddd35-4d27-4e7d-b506-0d69b4b405d7",
             "role": "3",

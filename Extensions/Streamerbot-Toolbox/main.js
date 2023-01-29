@@ -37,7 +37,29 @@ let headerTagsMap = [
 
 if (location.hash === ``) location.href = `#About`
 
-let headerAside = `<div class="form-area"><label>Url</label><input type="url" value="localhost" class="url"></div><div class="form-area"><label>Port</label><input type="number" value="8080" max="9999" class="port"></div><div class="form-area"><label>Endpoint</label><input type="text" value="/" class="endpoint"></div><button class="connect-websocket">Connect</button>`
+let streamerbotToolbox__connection = localStorage.getItem(`streamerbotToolbox__connection`)
+if (streamerbotToolbox__connection === undefined || streamerbotToolbox__connection === null || streamerbotToolbox__connection === ``) {
+  streamerbotToolbox__connection = {
+    host: `localhost`,
+    port: `8080`,
+    endpoint: `/`
+  }
+} else {
+  streamerbotToolbox__connection = JSON.parse(streamerbotToolbox__connection)
+  if (streamerbotToolbox__connection.host === undefined) streamerbotToolbox__connection.host = `localhost`
+  if (streamerbotToolbox__connection.port === undefined) streamerbotToolbox__connection.port = `8080`
+  if (streamerbotToolbox__connection.endpoint === undefined) streamerbotToolbox__connection.endpoint = `/`
+}
+
+if (localStorage.getItem(`streamerbotToolbox__connection`) === null) localStorage.setItem(`streamerbotToolbox__connection`, JSON.stringify(streamerbotToolbox__connection))
+
+let wsServerUrl = `ws://${streamerbotToolbox__connection.host}:${streamerbotToolbox__connection.port}${streamerbotToolbox__connection.endpoint}`
+
+let headerAside = `
+<div class="form-area"><label>Url</label><input type="url" value="${streamerbotToolbox__connection.host}" class="url"></div>
+<div class="form-area"><label>Port</label><input type="number" value="${streamerbotToolbox__connection.port}" max="9999" class="port"></div>
+<div class="form-area"><label>Endpoint</label><input type="text" value="${streamerbotToolbox__connection.endpoint}" class="endpoint"></div>
+<button class="connect-websocket">Connect</button>`
 let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">${title}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
 document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
 
@@ -72,8 +94,16 @@ headerTagsMap.forEach(headerTag => {
 if (state__404 === true) document.body.classList.add(`not_found`)
 
 
-document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function () {
-  window.location = `?ws=ws://${document.querySelector(`header aside .form-area .url`).value}:${document.querySelector(`header aside .form-area .port`).value}${document.querySelector(`header aside .form-area .endpoint`).value}`
+document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function (e) {
+  let DOM_streamerbotToolbox__connection = {}
+
+  DOM_streamerbotToolbox__connection.host = document.querySelector(`header aside .form-area .url`).value
+  DOM_streamerbotToolbox__connection.port = document.querySelector(`header aside .form-area .port`).value
+  DOM_streamerbotToolbox__connection.endpoint = document.querySelector(`header aside .form-area .endpoint`).value
+
+  localStorage.setItem(`streamerbotToolbox__connection`, JSON.stringify(DOM_streamerbotToolbox__connection))
+
+  location.reload()
 })
 
 document.querySelector(`nav.navbar > input[type=search]`).addEventListener(`keydown`, function () {
@@ -105,7 +135,6 @@ async function connectws() {
   randomEventArgs = await randomEventArgs.json()
 
   if ("WebSocket" in window) {
-    let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/"
     const ws = new WebSocket(wsServerUrl)
     console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...")
     document.querySelector(`header aside button.connect-websocket`).innerText = `Connecting...`
@@ -120,7 +149,6 @@ async function connectws() {
       document.querySelector(`header aside button.connect-websocket`).innerText = `Connect`
       document.querySelector(`header aside`).setAttribute(`data-connection`, `disconnected`)
       document.documentElement.style.cursor = ``
-      location.reload()
       document.body.classList.add(`disconnected`)
     }
     
@@ -144,15 +172,17 @@ async function connectws() {
       console.log(data)
       let instance
       if (data?.id === `GetInfo`) {
-        let instanceOS = data.info.os
-        if (data.info.os === `windows`) instanceOS = `<span class="mdi mdi-microsoft-windows"> Windows</span>`
+        instance = data.info
+        let instanceOS = instance.os
+        if (instance.os === `windows`) instanceOS = `<span class="mdi mdi-microsoft-windows"> Windows</span>`
+        if (instance.os === `linux`) instanceOS = `<span class="mdi mdi-linux"> Linux</span>`
+        if (instance.os === `macosx`) instanceOS = `<span class="mdi mdi-apple"> MacOS</span>`
         document.querySelector(`header aside`).innerHTML = `
         <p class="instance-info">Streamer.bot - ${data.info.name}
-        <small>${data.info.instanceId}<br>
-        ${instanceOS} • ${data.info.version}</small></p>`
-        document.title = `${data.info.name} • ${documentTitle}`
+        <small>${instance.instanceId}<br>
+        ${instanceOS} • ${instance.version}</small></p>`
+        document.title = `${instance.name} (${instance.version}) • ${documentTitle}`
 
-        instance = data.info
       }
 
       if (location.hash === `#Actions` && data.id === `GetInfo`) {
