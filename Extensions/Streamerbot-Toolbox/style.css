@@ -638,11 +638,13 @@ body:has(> .settings-modal) .open-settings-modal {
   color: var(--text-900);
   outline: none;
   border: none;
-  border-radius: none;
   display: block;
+  border-radius: 8px;
+  border: 2px solid var(--background-alt);
+  margin-block: .5rem
 }
 
-.form-group.styled{
+.form-group.styled {
   margin-block: .5rem
 }
 
@@ -652,6 +654,33 @@ body:has(> .settings-modal) .open-settings-modal {
 
 .form-group.styled input:focus-visible:not([type=checkbox]) {
   background: var(--background-light);
+  border-color: var(--background-lighten);
+}
+
+/* ------ */
+/* Cards */
+/* ----- */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: .5rem;
+}
+
+.card {
+  background: var(--background-soft);
+  padding-inline: .5rem;
+  padding-block: 1rem;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.card hr {
+  border: none;
+  border-bottom: 2px solid var(--text-background-400);
+  margin-block: .5rem;
 }
 
 /* ------------- */

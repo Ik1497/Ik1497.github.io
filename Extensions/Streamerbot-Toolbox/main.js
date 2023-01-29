@@ -29,6 +29,10 @@ let headerTagsMap = [
     integration: `streamer.bot`
   },
   {
+    name: `Global Variables`,
+    integration: `streamer.bot-action-package`
+  },
+  {
     name: `TwitchSpeaker`,
     integration: `twitchspeaker`
   }
@@ -76,7 +80,7 @@ headerTagsMap.forEach(headerTag => {
   if (location.hash === `#${headerTagHash}`) headerTagActive = ` class="tag-active"`
   if (headerTag.integration != `streamer.bot` && headerTag.integration != `streamerbotIdeas`) hidden = ` hidden`
 
-  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<li${headerTagActive}><a href="#${headerTagHash}" title="${headerTag.name}" data-integration="${headerTag.integration}"${hidden}>${headerTag.name}</a></li$>`)
+  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<li${headerTagActive}${hidden}><a href="#${headerTagHash}" title="${headerTag.name}" data-integration="${headerTag.integration}">${headerTag.name}</a></li$>`)
 });
 
 let state__404 = true
@@ -153,11 +157,17 @@ async function connectws() {
     }
     
     ws.onopen = function () {
-      ws.send(
-        JSON.stringify({
-          request: "GetInfo",
-          id: "GetInfo",
-        })
+        ws.send(
+          JSON.stringify({
+            request: "GetInfo",
+            id: "GetInfo",
+          })
+        )
+        ws.send(
+          JSON.stringify({
+            request: "GetActions",
+            id: "onopen_GetActions",
+          })
         )
         console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot")
         document.querySelector(`header aside button.connect-websocket`).innerText = `Connected`
@@ -182,10 +192,27 @@ async function connectws() {
         <small>${instance.instanceId}<br>
         ${instanceOS} • ${instance.version}</small></p>`
         document.title = `${instance.name} (${instance.version}) • ${documentTitle}`
-
       }
 
-      if (location.hash === `#Actions` && data.id === `GetInfo`) {
+      if (data?.id === `onopen_GetActions`) {
+        console.log(data.actions)
+        data.actions.forEach(action => {
+          if (action.name === `Streamer.bot Toolbox Partial - Websocket Handler` && action.group === `Streamer.bot Toolbox Partials (v1.0.0)`) {
+            console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Websocket Handler action found")
+            document.querySelectorAll(`header .header-tags a[data-integration="streamer.bot-action-package"]`).forEach(headerTag => {
+              headerTag.parentNode.removeAttribute(`hidden`)
+            });
+
+            ws.send(JSON.stringify({
+              request: `Subscribe`,
+              id: `WebsocketHandlerAction`,
+              events: {
+                general: [`Custom`]
+              },
+            }))
+          }
+        });
+      } else if (location.hash === `#Actions` && data.id === `GetInfo`) {
         ws.send(
           JSON.stringify({
             request: "GetActions",
@@ -288,7 +315,10 @@ async function connectws() {
           <br>
           <p>Integrations:</p>
           <p>• Streamer.bot</p>
+          <p>• Streamer.bot Action Package (contains global variables, chat features, and more!)</p>
           <p>• TwitchSpeaker</p>
+          <br>
+          <p>Open the settings in bottom right to enable these integrations</p>
           `
         }
       }
@@ -346,7 +376,7 @@ async function connectws() {
 
             // TwitchSpeaker
             
-            let integrationsList__twitchspeaker = `<li class="mdi mdi-plus" data-integration="twitchspeaker"> TwitchSpeaker <button>Connect!</button></p>`
+            let integrationsList__twitchspeaker = `<li class="mdi mdi-plus" data-integration="twitchspeaker"> TwitchSpeaker <button>Connect!</button></li>`
 
             if (document.body.getAttribute(`twitchspeaker-state`) === null) {
             } else if (document.body.getAttribute(`twitchspeaker-state`) === `connected`) {
@@ -393,19 +423,37 @@ async function connectws() {
                   </tr>
                 </tbody></table></div></div>
               `)
-
-              document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
-                let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table`)
-                localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(
-                  {
-                    host: table.querySelector(`tbody tr td input#websocket-host`).value,
-                    port: table.querySelector(`tbody tr td input#websocket-port`).value,
-                    endpoint: table.querySelector(`tbody tr td input#websocket-endpoint`).value
-                  }))
-                location.reload()
+                    
+                document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
+                  let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table`)
+                  localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify({
+                      host: table.querySelector(`tbody tr td input#websocket-host`).value,
+                      port: table.querySelector(`tbody tr td input#websocket-port`).value,
+                      endpoint: table.querySelector(`tbody tr td input#websocket-endpoint`).value
+                    })
+                  )
+                  location.reload()
+                })
               })
-            })
 
+            document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Packages (used for global variables, chat and more) <button id="more-info">Download & More Info</button></li>`)
+
+            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
+              document.body.insertAdjacentHTML(`afterbegin`, `
+              <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
+                <button class="close-button mdi mdi-close" onclick="this.parentNode.remove()"></button>
+                <div class="main">
+                  <h2>Streamer.bot Action Package</h3>
+                  <br>
+                  <p>The Streamer.bot Action Package is used for getting/setting global variables and sending chat messages to Twitch/YouTube.</p>
+                  <br>
+                  <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, these features won't work anymore. Also when your Streamer.bot Action Package is outdated it also won't work anymore and thus you need to re-import it again.</p>
+                  <br>
+                  <button onclick="window.open('./action-package.sb')">Download</button>
+                </div>
+              </div>
+            `)
+            })
             // Streamer.bot Ideas
             /*
             let integrationsList__streamerbotIdeas = `<li class="mdi mdi-plus" data-integration="streamerbotIdeas"> Streamer.bot Ideas <button>Enable!</button></p>`
@@ -1081,6 +1129,117 @@ async function connectws() {
         </li>
         `)
       }
+
+      if (location.hash === `#Global-Variables` && data?.id === `WebsocketHandlerAction`) {
+        document.querySelector(`nav.navbar`).remove()
+        document.querySelector(`main`).classList.add(`full`)
+
+        document.querySelector(`main`).innerHTML = `
+        <div class="card-grid">
+          <div class="card">
+            <p class="card-title">Get Global Variable</p>
+            <hr>
+            <div class="form-group styled">
+              <label for="get-global-variable--variable-name">Variable Name</label>
+              <input type="text" name="voice-alias" id="get-global-variable--variable-name" placeholder="Variable Name" value="">
+            </div>
+            <button class="styled" id="get-global-variable--submit">Run</button>
+            <pre class="styled" id="get-global-variable--output">Output: <span class="output"></span></pre>
+          </div>
+
+          <!--  -->
+          <!--  -->
+
+          <div class="card">
+            <p class="card-title">Set Global Variable</p>
+            <hr>
+            <div class="form-group styled">
+              <label for="set-global-variable--variable-name">Variable Name</label>
+              <input type="text" id="set-global-variable--variable-name" placeholder="Variable Name" value="">
+            </div>
+            <div class="form-group styled">
+              <label for="set-global-variable--value">Value</label>
+              <input type="text" id="set-global-variable--value" placeholder="Value" value="">
+            </div>
+            <button class="styled" id="set-global-variable--submit">Run</button>
+          </div>
+
+          <!--  -->
+          <!--  -->
+
+          <div class="card">
+            <p class="card-title">Unset Global Variable</p>
+            <hr>
+            <div class="form-group styled">
+              <label for="unset-global-variable--variable-name">Variable Name</label>
+              <input type="text" id="unset-global-variable--variable-name" placeholder="Variable Name" value="">
+            </div>
+            <button class="styled" id="unset-global-variable--submit">Run</button>
+          </div>
+        </div>
+        `
+
+        document.getElementById(`get-global-variable--submit`).addEventListener(`click`, () => {
+          let wsDataGlobalVariable = document.getElementById(`get-global-variable--variable-name`).value
+          ws.send(
+            JSON.stringify({
+              request: `DoAction`,
+              action: {
+                name: `Streamer.bot Toolbox Partial - Websocket Handler`
+              },
+              args: {
+                wsRequest: `GetGlobalVariable`,
+                wsData: wsDataGlobalVariable
+              },
+              id: `DoAction`
+            })
+          )
+        })
+
+        document.getElementById(`set-global-variable--submit`).addEventListener(`click`, () => {
+          let wsDataGlobalVariableName = document.getElementById(`set-global-variable--variable-name`).value
+          let wsDataGlobalVariableValue = document.getElementById(`set-global-variable--value`).value
+          ws.send(
+            JSON.stringify({
+              request: `DoAction`,
+              action: {
+                name: `Streamer.bot Toolbox Partial - Websocket Handler`
+              },
+              args: {
+                wsRequest: `SetGlobalVariable`,
+                wsDataName: wsDataGlobalVariableName,
+                wsDataValue: wsDataGlobalVariableValue
+              },
+              id: `DoAction`
+            })
+          )
+        })
+
+        document.getElementById(`unset-global-variable--submit`).addEventListener(`click`, () => {
+          let wsDataGlobalVariable = document.getElementById(`unset-global-variable--variable-name`).value
+          ws.send(
+            JSON.stringify({
+              request: `DoAction`,
+              action: {
+                name: `Streamer.bot Toolbox Partial - Websocket Handler`
+              },
+              args: {
+                wsRequest: `UnsetGlobalVariable`,
+                wsData: wsDataGlobalVariable
+              },
+              id: `DoAction`
+            })
+          )
+        })
+      }
+
+      if (location.hash === `#Global-Variables` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
+        if (data.data.wsRequest === `GetGlobalVariable`) {
+          if (data.data.wsData === ``) data.data.wsData = `Global Variable Doesn't Exist`
+          console.log(`Global Variable:`, data.data.wsData)
+          document.querySelector(`#get-global-variable--output .output`).innerHTML = data.data.wsData
+        }
+      }
     })
   }
 }
@@ -1103,7 +1262,7 @@ async function connectTwitchSpeakerws() {
       setTimeout(connectTwitchSpeakerws, 10000)
       document.body.setAttribute(`twitchspeaker-state`, `disconnected`)
       document.querySelectorAll(`header .header-tags a[data-integration=twitchspeaker]`).forEach(headerTag => {
-        headerTag.setAttribute(`hidden` , ``)
+        headerTag.parentNode.setAttribute(`hidden` , ``)
       });
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to TwitchSpeaker, reconnecting every 10s...")
     }
@@ -1112,12 +1271,12 @@ async function connectTwitchSpeakerws() {
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to TwitchSpeaker")
       document.body.setAttribute(`twitchspeaker-state`, `connected`)
       document.querySelectorAll(`header .header-tags a[data-integration=twitchspeaker]`).forEach(headerTag => {
-        headerTag.setAttribute(`hidden` , ``)
-        headerTag.removeAttribute(`hidden`)
+        headerTag.parentNode.setAttribute(`hidden` , ``)
+        headerTag.parentNode.removeAttribute(`hidden`)
       });
       
       if (location.hash === `#TwitchSpeaker`) {
-        document.querySelector(`nav.navbar`).parentNode.removeChild(document.querySelector(`nav.navbar`))
+        document.querySelector(`nav.navbar`).remove()
         document.querySelector(`main`).classList.add(`full`)
 
         let defaultSpeakValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || undefined
