@@ -195,7 +195,6 @@ async function connectws() {
       }
 
       if (data?.id === `onopen_GetActions`) {
-        console.log(data.actions)
         data.actions.forEach(action => {
           if (action.name === `Streamer.bot Toolbox Partial - Websocket Handler` && action.group === `Streamer.bot Toolbox Partials (v1.0.0)`) {
             console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Websocket Handler action found")
@@ -1235,8 +1234,7 @@ async function connectws() {
 
       if (location.hash === `#Global-Variables` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
         if (data.data.wsRequest === `GetGlobalVariable`) {
-          if (data.data.wsData === ``) data.data.wsData = `Global Variable Doesn't Exist`
-          console.log(`Global Variable:`, data.data.wsData)
+          if (data.data.wsData === ``) data.data.wsData = `Global Variable Doesn't Exist or doesn't have a value`
           document.querySelector(`#get-global-variable--output .output`).innerHTML = data.data.wsData
         }
       }
