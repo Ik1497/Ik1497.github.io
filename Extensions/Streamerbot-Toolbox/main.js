@@ -33,6 +33,10 @@ let headerTagsMap = [
     integration: `streamer.bot-action-package`
   },
   {
+    name: `Commands`,
+    integration: `streamer.bot-action-package`
+  },
+  {
     name: `TwitchSpeaker`,
     integration: `twitchspeaker`
   }
@@ -129,6 +133,10 @@ window.addEventListener('hashchange', () => {
   location.reload()
 });
 
+let streamerbotActionPackage__name  = `Streamer.bot Toolbox Partial - Websocket Handler`
+let streamerbotActionPackage__version = `1.0.0`
+let streamerbotActionPackage__group = `Streamer.bot Toolbox Partials (v${streamerbotActionPackage__version})`
+
 connectws()
 
 async function connectws() {
@@ -166,7 +174,7 @@ async function connectws() {
         ws.send(
           JSON.stringify({
             request: "GetActions",
-            id: "onopen_GetActions",
+            id: "VerifyActions",
           })
         )
         console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot")
@@ -194,9 +202,11 @@ async function connectws() {
         document.title = `${instance.name} (${instance.version}) • ${documentTitle}`
       }
 
-      if (data?.id === `onopen_GetActions`) {
+      if (data?.id === `VerifyActions`) {
+        let dataStreamerbotActionPackage = ``
         data.actions.forEach(action => {
-          if (action.name === `Streamer.bot Toolbox Partial - Websocket Handler` && action.group === `Streamer.bot Toolbox Partials (v1.0.0)`) {
+          dataStreamerbotActionPackage = document.body.getAttribute(`data-streamerbot-action-package`)
+          if (action.name === streamerbotActionPackage__name && action.group === streamerbotActionPackage__group) {
             console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Websocket Handler action found")
             document.querySelectorAll(`header .header-tags a[data-integration="streamer.bot-action-package"]`).forEach(headerTag => {
               headerTag.parentNode.removeAttribute(`hidden`)
@@ -209,6 +219,18 @@ async function connectws() {
                 general: [`Custom`]
               },
             }))
+
+            document.body.setAttribute(`data-streamerbot-action-package`, `installed`)
+          }
+
+
+          if (dataStreamerbotActionPackage != `installed` && action.name === streamerbotActionPackage__name && action.group.replace(`Streamer.bot Toolbox Partials (v`, ``).replace(`)`, ``).replaceAll(`.`, ``) != streamerbotActionPackage__version.replaceAll(`.`, ``) && !isNaN(action.group.replace(`Streamer.bot Toolbox Partials (v`, ``).replace(`)`, ``).replaceAll(`.`, ``))) {
+            document.body.setAttribute(`data-streamerbot-action-package`, `outdated`)
+            document.body.setAttribute(`data-streamerbot-action-package-outdated`, action.group.replace(`Streamer.bot Toolbox Partials (v`, ``).replace(`)`, ``).replaceAll(`.`, ``))
+          } else if (dataStreamerbotActionPackage != `installed` && dataStreamerbotActionPackage != `outdated` && action.name === streamerbotActionPackage__name && action.group != streamerbotActionPackage__group) {
+            document.body.setAttribute(`data-streamerbot-action-package`, `renamed`)
+          } else if (dataStreamerbotActionPackage != `installed` && dataStreamerbotActionPackage != `outdated` && dataStreamerbotActionPackage != `renamed` && action.name != streamerbotActionPackage__name) {
+            document.body.setAttribute(`data-streamerbot-action-package`, `absent`)
           }
         });
       } else if (location.hash === `#Actions` && data.id === `GetInfo`) {
@@ -272,8 +294,8 @@ async function connectws() {
           JSON.stringify({
             request: `Subscribe`,
             events: {
-              twitch: [`ChatMessage`],
-              youTube: [`Message`]
+              twitch: [`ChatMessage`, `ChatMessageDeleted`],
+              youTube: [`Message`, `MessageDeleted`]
             },
             id: `Chat`,
           })
@@ -305,7 +327,32 @@ async function connectws() {
           if (data.connected.includes(`youtube`)) welcomeUser = data.platforms.youtube.broadcastUserName
           if (data.connected.includes(`twitch`)) welcomeUser = data.platforms.twitch.broadcastUser
           if (data.connected.includes(`twitch`) || data.connected.includes(`youtube`)) welcomeMessage = `Welcome, <span style="display: flex; align-items: center;">${profileImage}${welcomeUser}!</span>`
+
+          let dataStreamerbotActionPackage = document.body.getAttribute(`data-streamerbot-action-package`)
+          let errorMessage = ``
+
+          if (dataStreamerbotActionPackage === `outdated`) {
+            errorMessage = `
+            <blockquote class="error">
+              <p class="blockquote-text">Your Streamer.bot Action Package is outdated, please go to the settings and re-install the new version to properly use it again.</p>
+            </blockquote>
+            `
+          } else if (dataStreamerbotActionPackage === `renamed`) {
+            errorMessage = `
+            <blockquote class="warning">
+              <p class="blockquote-text">You've edited something with your Streamer.bot Action Package, please go to the settings and re-install it again.</p>
+            </blockquote>
+            `
+          } else if (dataStreamerbotActionPackage === `absent`) {
+            errorMessage = `
+            <blockquote class="info">
+              <p class="blockquote-text">You don't have the Streamer.bot Action Package installed, thus you don't have access to all the features of this website. Go to settings and install the Streamer.bot Action package.</p>
+            </blockquote>
+            `
+          }
+
           document.body.querySelector(`main`).innerHTML = `
+          ${errorMessage}
           <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
           <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
           <p>this tool is currently a very work in progress, feautures may come and go over time.</p>
@@ -317,7 +364,7 @@ async function connectws() {
           <p>• Streamer.bot Action Package (contains global variables, chat features, and more!)</p>
           <p>• TwitchSpeaker</p>
           <br>
-          <p>Open the settings in bottom right to enable these integrations</p>
+          <p><b>Open the settings in bottom right to enable these integrations or for more info</b></p>
           `
         }
       }
@@ -331,7 +378,6 @@ async function connectws() {
         let globalArgsHtml = `<div class="settings-modal" data-active-page="integrations">
         <nav><ul>
           <li class="nav-active"><button data-page="integrations">Integrations</button></li>
-          <li><button data-page="global-arguments">Global Arguments</button></li>
           <li><button data-page="broadcaster">Broadcaster</button></li>
           <li><button data-page="random-users">Random Users</button></li>
         </ul></nav>
@@ -345,7 +391,6 @@ async function connectws() {
           reloadPages()
           function reloadPages() {
             if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `integrations`) reloadIntegrations()
-            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `global-arguments`) reloadGlobalArguments()
             if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `broadcaster`) reloadBroadcaster()
             if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `random-users`) reloadRandomUsers()
           }
@@ -364,7 +409,7 @@ async function connectws() {
           });
 
           function reloadIntegrations() {
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Integrations • Settings`
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Settings • Integrations`
             document.querySelector(`.settings-modal .header .info .description`).innerHTML = `All integrations that can be connected`
             
             document.querySelector(`.settings-modal .main`).innerHTML = `
@@ -372,6 +417,32 @@ async function connectws() {
               <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
             </ul>
             `
+
+            // Streamer.bot Action Package
+
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download & More Info</button></li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, You've edited something that breaks it <button id="more-info">Please re-install it again</button></li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl}</li>`)
+
+            if (document.body.getAttribute(`data-streamerbot-action-package`) != `installed`) {
+              document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
+                document.body.insertAdjacentHTML(`afterbegin`, `
+                <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
+                  <button class="close-button mdi mdi-close" onclick="this.parentNode.remove()"></button>
+                  <div class="main">
+                    <h2>Streamer.bot Action Package</h3>
+                    <br>
+                    <p>The Streamer.bot Action Package is used for getting/setting global variables and sending chat messages to Twitch/YouTube.</p>
+                    <br>
+                    <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, these features won't work anymore. Also when your Streamer.bot Action Package is outdated it also won't work anymore and thus you need to re-import it again.</p>
+                    <br>
+                    <button onclick="window.open('./action-package.sb')">Download</button>
+                  </div>
+                </div>
+              `)
+              })
+            }
 
             // TwitchSpeaker
             
@@ -434,79 +505,10 @@ async function connectws() {
                   location.reload()
                 })
               })
-
-            document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Packages (used for global variables, chat and more) <button id="more-info">Download & More Info</button></li>`)
-
-            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
-              document.body.insertAdjacentHTML(`afterbegin`, `
-              <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
-                <button class="close-button mdi mdi-close" onclick="this.parentNode.remove()"></button>
-                <div class="main">
-                  <h2>Streamer.bot Action Package</h3>
-                  <br>
-                  <p>The Streamer.bot Action Package is used for getting/setting global variables and sending chat messages to Twitch/YouTube.</p>
-                  <br>
-                  <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, these features won't work anymore. Also when your Streamer.bot Action Package is outdated it also won't work anymore and thus you need to re-import it again.</p>
-                  <br>
-                  <button onclick="window.open('./action-package.sb')">Download</button>
-                </div>
-              </div>
-            `)
-            })
-            // Streamer.bot Ideas
-            /*
-            let integrationsList__streamerbotIdeas = `<li class="mdi mdi-plus" data-integration="streamerbotIdeas"> Streamer.bot Ideas <button>Enable!</button></p>`
-
-            if (document.body.getAttribute(`streamerbotIdeas-state`) === null) {
-            } else if (document.body.getAttribute(`streamerbotIdeas-state`) === `enabled`) {
-              integrationsList__streamerbotIdeas = `<li class="mdi mdi-check" data-integration="streamerbotIdeas"> Streamer.bot Ideas (Enabled) <button class="mdi mdi-cog"></button></p>`
-            }
-
-            document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__streamerbotIdeas)
-
-            let streamerbotIdeasDefaultValues = localStorage.getItem(`streamerbotToolbox__streamerbotIdeas`)
-
-            if (streamerbotIdeasDefaultValues === null) {
-              streamerbotIdeasDefaultValues = {}
-              streamerbotIdeasDefaultValues.apiKey = ``
-            } else {
-              streamerbotIdeasDefaultValues = JSON.parse(streamerbotIdeasDefaultValues)
-            }
-
-            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration=streamerbotIdeas] button`).addEventListener(`click`, function () {
-              document.body.insertAdjacentHTML(`afterbegin`, `
-                <div class="settings-modal-alt small" data-settings-modal-alt="streamerbotIdeas-connection">
-                <button class="close-button mdi mdi-close" onclick="location.reload()"></button>
-                <div class="main"><h2>Streamerbot Ideas</h3><br><table><tbody>
-                  <tr>
-                    <td style="text-align: right; padding-right: .25rem;"><label for="apiKey">API Key</label></td>
-                    <td style="text-align: left;"><input type="url" name="apiKey" id="apiKey" value="${streamerbotIdeasDefaultValues.apiKey}" placeholder="${streamerbotIdeasDefaultValues.apiKey}"></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td style="text-align: right;"><button class="connect-button">Enable!</button></td>
-                  </tr>
-                </tbody></table></div></div>
-              `)
-
-              document.querySelector(`.settings-modal-alt[data-settings-modal-alt=streamerbotIdeas-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
-                let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=streamerbotIdeas-connection] .main table`)
-
-                let apiKey = table.querySelector(`tbody tr td input#apiKey`).value
-                if (apiKey != ``) {
-                  localStorage.setItem(`streamerbotToolbox__streamerbotIdeas`, JSON.stringify(
-                    {
-                      apiKey: apiKey
-                    }))
-                }
-                location.reload()
-              })
-            })
-            */
           }
         
           function reloadBroadcaster() {
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Broadcaster Settings • Settings`
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Settings • Broadcaster `
             document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Setting of argument for the Broadcast User`
 
             let options = {
@@ -533,11 +535,13 @@ async function connectws() {
           }
 
           function reloadRandomUsers() {
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Settings • Random Users`
+            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Random user variables`
+            
             let prevRandomUsers = localStorage.getItem(`streamerbotToolbox__randomUsers`) || 0
             if (prevRandomUsers <= 0) prevRandomUsers = `0`
             if (isNaN(prevRandomUsers)) prevRandomUsers = `0`
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Random Users • Settings`
-            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Random user variables`
+
             document.querySelector(`.settings-modal .main`).innerHTML = `<div class="form-group"><label>Random Users:</label> <input type="number" value="${prevRandomUsers}"></div>`           
             
             localStorage.setItem(`streamerbotToolbox__randomUsers`, document.querySelector(`.settings-modal .main input`).value)
@@ -551,77 +555,6 @@ async function connectws() {
               }, 50);
             })
           }
-
-          function reloadGlobalArguments() {
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Global Arguments • Settings`
-            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Arguments that will be assigned to all actions`
-            document.querySelector(`.settings-modal .main`).innerHTML = `<table class="add-contents"><thead><tr><th>Argument</th><th>Value</th></tr></thead><tbody><tr><td class="argument"><input type="text" placeholder="Argument"></td><td class="value"><input type="text" placeholder="Value"></td><td><button title="Add Argument"class="add-row mdi mdi-plus-box"></button></td></tr></tbody></table>`
-
-            document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).focus()
-            document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).select()
-
-            let globalArgsData = localStorage.getItem(`streamerbotToolbox__globalArgs`) || `{}`
-            globalArgsData = JSON.parse(globalArgsData)
-            globalArgsData = Object.entries(globalArgsData)
-
-            globalArgsData.forEach(globalArgData => {
-              document.querySelector(`.settings-modal .main table.add-contents tbody`).insertAdjacentHTML(`beforeend`, `<tr><td><input type="text" placeholder="Argument" value="${globalArgData[0]}"></td><td><input type="text" placeholder="Value" value="${globalArgData[1]}"></td><td><button title="Remove Argument" class="remove-row mdi mdi-trash-can"></button></td></tr>`)
-            });
-
-            // document.querySelector(`.settings-modal .main table.add-contents .add-row`).addEventListener(`click`, GlobalArgumentsAddRow()) 
-            // document.querySelector(`.settings-modal .main table.add-contents tbody tr:not(:first-child) td input`).addEventListener(`keydown`, GlobalArgumentsUpdateRow()) 
-            
-            function GlobalArgumentsUpdateRow() {
-              
-            }
-
-            function GlobalArgumentsAddRow() {
-              let globalArgsData = []
-              document.querySelectorAll(`.settings-modal .main table tbody tr`).forEach(tableRow => {
-                let tableCell1 = tableRow.querySelector(`td:nth-child(1) input`).value
-                let tableCell2 = tableRow.querySelector(`td:nth-child(2) input`).value
-
-                if (tableCell1 === ``) tableCell1 = `Argument`
-                if (tableCell2 === ``) tableCell2 = `Value`
-
-                // globalArgsData.push([tableCell1, tableCell2])
-                console.log([tableCell1, tableCell2])
-              })
-              globalArgsData = Object.entries(globalArgsData)
-              globalArgsData = Object.fromEntries(globalArgsData)
-              console.log(globalArgsData)
-
-              localStorage.setItem(`streamerbotToolbox__globalArgs`, JSON.stringify(globalArgsData))
-              
-              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).value = ``
-              document.querySelector(`.settings-modal .main table.add-contents tbody td.value input`).value = ``
-
-              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).focus()
-              document.querySelector(`.settings-modal .main table.add-contents tbody td.argument input`).select()
-              reloadGlobalArguments()
-            }
-
-            document.querySelectorAll(`.settings-modal .main table.add-contents .remove-row`).forEach(removeRow => {
-              removeRow.addEventListener(`click`, function () {
-                let globalArgsData = localStorage.getItem(`streamerbotToolbox__globalArgs`) || `{}`
-                globalArgsData = JSON.parse(globalArgsData)
-                globalArgsData = Object.entries(globalArgsData)
-                
-                let globalArgIndex = 0
-                globalArgsData.forEach(globalArgData => {
-                  if (globalArgData[0] === removeRow.parentNode.parentNode.querySelector(`input`).value) {
-                    globalArgsData.splice(globalArgIndex, 1)
-                  }
-                  globalArgIndex = globalArgIndex + 1
-                });
-                
-                globalArgsData = Object.fromEntries(globalArgsData)
-                localStorage.setItem(`streamerbotToolbox__globalArgs`, JSON.stringify(globalArgsData))
-
-                reloadGlobalArguments()
-              })
-            });
-          }
         })
       }
 
@@ -632,19 +565,136 @@ async function connectws() {
         let eventTestDropdown = ``
         let eventArgsEntries = Object.entries(eventArgsMap)
         eventArgsEntries.forEach(eventArgEntry => {
-          eventTestDropdown += `<option value="${eventArgEntry[0]}">[${eventArgEntry[1].category.toUpperCase()}] ${eventArgEntry[0]}</option>`
+          eventTestDropdown += `<option value="${eventArgEntry[0]}">[${eventArgEntry[1].category.toUpperCase()}] ${eventArgEntry[1].display}</option>`
         });
-        eventTestDropdown = `<select><option value="None">None</option>${eventTestDropdown}</select>`
+        eventTestDropdown = `
+        <div class="form-group styled flex align-center">
+          <label for="event-search">Search Event</label>
+          <input id="event-search" type="search" placeholder="search...">
+        </div>        
+        <div class="form-group styled">
+          <select><option value="None">None</option>${eventTestDropdown}</select>
+        </div>`
 
+        
         document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `
-          <aside>
-            <div class="events-handler">
-            <h2>Emulate Events</h2>
-            ${eventTestDropdown}
+        <aside>
+          <div class="card-grid">
+            <div class="card events">
+              <p class="card-title">Emulate Events</p>
+              <hr>
+              ${eventTestDropdown}
             </div>
-          </aside>
+            <div class="card arguments">
+              <p class="card-title">Arguments</p>
+              <hr>
+              <table class="styled full"></table>
+            </div>
+          </div>
+        </aside>
         `)
 
+        document.querySelector(`main aside .card.events input[type="search"]`).addEventListener(`keydown`, () => {
+          setTimeout(() => {
+            let searchTerm = document.querySelector(`main aside .card.events input[type="search"]`).value.toLowerCase()
+            document.querySelectorAll(`main aside .card.events select option`).forEach(option => {
+              if (option.innerHTML.toLowerCase().includes(searchTerm) || option.value.toLowerCase().includes(searchTerm) || searchTerm === ``) {
+                if (option.value != `None`) {
+                  option.setAttribute(`hidden`, ``)
+                  option.removeAttribute(`hidden`)
+                }
+              } else {
+                if (option.value != `None`) {
+                  option.setAttribute(`hidden`, ``)
+                }
+              }
+            });
+          }, 50);
+        })
+            
+        
+        reloadArgumentsTable()
+        
+        function reloadArgumentsTable() {
+          let argumentsTable = document.querySelector(`main aside .card.arguments table`)
+          let argumentsData = Object.entries(JSON.parse(localStorage.getItem(`streamerbotToolbox__arguments`) || `{}`) ?? {}) ?? []
+
+          if (argumentsData.length === 0) {
+            argumentsTable.innerHTML = `
+            <tbody>
+              <tr>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+              </tr>
+            </tbody>`
+
+          } else {
+            argumentsTable.innerHTML = `<tbody></tbody>`
+
+            argumentsData.forEach(arg => {
+              argumentsTable.querySelector(`tbody`).insertAdjacentHTML(`beforeend`, `
+              <tr>
+                <td contenteditable="true">${arg[0]}</td>
+                <td contenteditable="true">${arg[1]}</td>
+              </tr>
+              `)
+            });
+          }
+          updateArgumentsRows()
+        }
+        
+        function updateArgumentsRows() {
+          setTimeout(() => {
+            let argumentsTable = document.querySelector(`main aside .card.arguments table`)
+            argumentsTable.querySelectorAll(`tr:not(:first-child)`).forEach(tableRow => {
+              let tableCellFirst = tableRow.querySelector(`td:first-child`).innerHTML
+              let tableCellLast = tableRow.querySelector(`td:last-child`).innerHTML
+              if (tableCellFirst === `` && tableCellLast === ``) {
+                tableRow.remove()
+              }
+            });
+  
+            let lastRow = argumentsTable.querySelector(`table tr:last-child`)
+            if (
+              lastRow.querySelector(`td:first-child`).innerHTML != `` &&
+              lastRow.querySelector(`td:last-child`).innerHTML != ``
+            ) {
+              argumentsTable.querySelector(`tbody`).insertAdjacentHTML(`beforeend`, `
+              <tr>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+              </tr>
+              `)
+            }
+  
+            argumentsTable.querySelectorAll(`td`).forEach(tableCell => {
+              tableCell.addEventListener(`keydown`, updateArgumentsRows)
+              tableCell.addEventListener(`keydown`, saveArgumentsTable)
+            });
+          }, 50);
+        }
+
+        function saveArgumentsTable() {
+          setTimeout(() => {
+            let argumentsTable = document.querySelector(`main aside .card.arguments table`)
+            let argumentsData = []
+            argumentsTable.querySelectorAll(`tr`).forEach(tableRow => {
+              if (
+                tableRow.querySelector(`td:first-child`).innerHTML != `` &&
+                tableRow.querySelector(`td:last-child`).innerHTML != ``
+              ) {
+                argumentsData.push([
+                  tableRow.querySelector(`td:first-child`).innerHTML,
+                  tableRow.querySelector(`td:last-child`).innerHTML
+                ])
+              }
+            });
+  
+            localStorage.setItem(`streamerbotToolbox__arguments`, JSON.stringify(Object.fromEntries(argumentsData)))
+          }, 50);
+        }
+
+        
         ////////////
         // NAVBAR //
         ////////////
@@ -726,22 +776,20 @@ async function connectws() {
                   broadcasterObj.profileImage = broadcaster?.platforms?.youtube?.broadcastUserProfileImage ?? `https://yt3.ggpht.com/VpC8_9WcDEKcPSvnD6p1iGT_S2_XxdeZtL6tTL2axexj0SpG-c4Wx8i5lYNbJtvmzwCnzm9Bsg=s88-c-k-c0x00ffffff-no-rj`
                 }
 
-                let globalArguments = localStorage.getItem(`streamerbotToolbox__globalArgs`) || `{}`
-                globalArguments = JSON.parse(globalArguments)
-                globalArguments = Object.entries(globalArguments)
+                let arguments = Object.entries(JSON.parse(localStorage.getItem(`streamerbotToolbox__arguments`) || `{}`) ?? {}) ?? []
 
                 if (broadcaster?.connected.includes(`twitch`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `Twitch`) {
-                  globalArguments.push([`broadcastUser`, broadcasterObj.user])
-                  globalArguments.push([`broadcastUserName`, broadcasterObj.userName])
-                  globalArguments.push([`broadcastUserId`, broadcasterObj.userId])
-                  globalArguments.push([`broadcastIsAffiliate`, broadcasterObj.isAffiliate])
-                  globalArguments.push([`broadcastIsPartner`, broadcasterObj.isPartner])
+                  arguments.push([`broadcastUser`, broadcasterObj.user])
+                  arguments.push([`broadcastUserName`, broadcasterObj.userName])
+                  arguments.push([`broadcastUserId`, broadcasterObj.userId])
+                  arguments.push([`broadcastIsAffiliate`, broadcasterObj.isAffiliate])
+                  arguments.push([`broadcastIsPartner`, broadcasterObj.isPartner])
                 }
                 
                 if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
-                  globalArguments.push([`broadcastUserName`, broadcasterObj.userName])
-                  globalArguments.push([`broadcastUserId`, broadcasterObj.userId])
-                  globalArguments.push([`broadcastUserProfileImage`, broadcasterObj.profileImage])
+                  arguments.push([`broadcastUserName`, broadcasterObj.userName])
+                  arguments.push([`broadcastUserId`, broadcasterObj.userId])
+                  arguments.push([`broadcastUserProfileImage`, broadcasterObj.profileImage])
                 }
 
                 let randomUserCount = localStorage.getItem(`streamerbotToolbox__randomUsers`)
@@ -750,15 +798,15 @@ async function connectws() {
                 if (randomUserCount > 0 && presentViewers.viewers.length > 0) {
                   for (let presentViewerRunTime = 0; presentViewerRunTime < randomUserCount; presentViewerRunTime++) {                    
                     let randomUser = presentViewers.viewers[Math.floor(Math.random()*presentViewers.viewers.length)];
-                    globalArguments.push([`randomUser${presentViewerRunTime}`, randomUser.display])
-                    globalArguments.push([`randomUserName${presentViewerRunTime}`, randomUser.login])
-                    globalArguments.push([`randomUserId${presentViewerRunTime}`, randomUser.id])  
+                    arguments.push([`randomUser${presentViewerRunTime}`, randomUser.display])
+                    arguments.push([`randomUserName${presentViewerRunTime}`, randomUser.login])
+                    arguments.push([`randomUserId${presentViewerRunTime}`, randomUser.id])  
                   }
                 }
 
-                globalArguments.push([`source`, `StreamerbotToolbox`])
+                arguments.push([`source`, `StreamerbotToolbox`])
 
-                let selectedEventArgs = document.querySelector(`main .events-handler select`).value
+                let selectedEventArgs = document.querySelector(`main aside .card.events select`).value
                 eventArgsEntries.forEach(eventArgsEntry => {
                   if (eventArgsEntry[0] === selectedEventArgs) {
                     let randomEventArgs__user = randomEventArgs.user[Math.floor(Math.random()*randomEventArgs.user.length)]
@@ -781,33 +829,33 @@ async function connectws() {
                       if (arg[0] === `message`)            arg[1] = randomEventArgs__message
                       if (arg[0] === `messageStripped`)    arg[1] = randomEventArgs__message
                       if (arg[0] === `rawInput`) randomEventArgs__message.split(` `).forEach((input, index) => {
-                        globalArguments.push([`input${index}`,           input])
-                        globalArguments.push([`inputEscaped${index}`,    encodeURI(input)])
-                        globalArguments.push([`inputUrlEncoded${index}`, encodeURI(input)])
+                        arguments.push([`input${index}`,           input])
+                        arguments.push([`inputEscaped${index}`,    encodeURI(input)])
+                        arguments.push([`inputUrlEncoded${index}`, encodeURI(input)])
                       });
 
                       if (arg[0] === `tagCount`) {
                         let randomEventArgs__tagCount = Math.floor(Math.random() * 5) + 1
                         let randomEventArgs__tagsDelimited = []
                         arg[1] = `${randomEventArgs__tagCount}`
-                        globalArguments.push([`tags`, 'System.Collections.Generic.List`1[System.String]'])
+                        arguments.push([`tags`, 'System.Collections.Generic.List`1[System.String]'])
 
                         for (let randomEventArgs__tagRunTime = 0; randomEventArgs__tagRunTime < randomEventArgs__tagCount; randomEventArgs__tagRunTime++) {
                           let randomEventArgs__tags = randomEventArgs.tags[Math.floor(Math.random()*randomEventArgs.tags.length)]
-                          globalArguments.push([`tag${randomEventArgs__tagRunTime}`, randomEventArgs__tags])
+                          arguments.push([`tag${randomEventArgs__tagRunTime}`, randomEventArgs__tags])
                           randomEventArgs__tagsDelimited.push(randomEventArgs__tags)
                         }
 
-                        globalArguments.push([`tagsDelimited`, randomEventArgs__tagsDelimited.join(`,`)])
+                        arguments.push([`tagsDelimited`, randomEventArgs__tagsDelimited.join(`,`)])
                       }
                       
-                      globalArguments.push(arg)
+                      arguments.push(arg)
                     });
                   }
                 });
                 
-                globalArguments = Object.fromEntries(globalArguments)
-                console.log(`Adding`, globalArguments)
+                arguments = Object.fromEntries(arguments)
+                console.log(`Adding`, arguments)
                 
                 ws.send(
                   JSON.stringify({
@@ -815,7 +863,7 @@ async function connectws() {
                     action: {
                       name: buttonHtml.parentNode.parentNode.querySelector(`p.action-name`).innerText
                     },
-                    args: globalArguments,
+                    args: arguments,
                     id: "DoAction",
                   })
                 )
@@ -1047,13 +1095,122 @@ async function connectws() {
         });
       }
 
-      if (location.hash === `#Chat` && data.id === `GetActions`) {
+      if (location.hash === `#Chat` && data.id === `GetInfo`) {
         document.querySelector(`main ul.main-list`).setAttribute(`data-view`, `all`)
         document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `
         <li class="navbar-list-item nav-active" id="all"><button><p class="title">All</p></button></li>
         <li class="navbar-list-item" id="twitch"><button><p class="title">Twitch</p></button></li>
         <li class="navbar-list-item" id="youtube"><button><p class="title">YouTube</p></button></li>
         `)
+
+        document.querySelector(`main ul.main-list`).innerHTML = `
+        <div class="send-message">
+          <div class="form-group styled no-margin">
+            <button class="clear-chat no-border-radius no-margin" title="Clear Chat">Clear Chat</button>
+            <select class="no-border-radius no-margin fit-content">
+              <option value="Twitch">Twitch</option>
+              <option value="TwitchBot">Twitch (BOT)</option>
+              <option value="YouTube">YouTube</option>
+              <option value="All">All</option>
+            </select>
+            <input type="text" placeholder="Send message to chat!" class="no-margin no-border-radius">
+            <button class="submit no-border-radius no-margin">Send</button>
+          </div>
+        </div>`
+
+        
+        document.querySelector(`ul.main-list .send-message button.clear-chat`).addEventListener(`click`, function () {
+          ws.send(
+            JSON.stringify({
+              request: `DoAction`,
+              action: {
+                name: streamerbotActionPackage__name
+              },
+              args: {
+                wsRequest: `TwitchClearChatMessages`
+              },
+              id: `DoAction`
+            })
+          )
+
+          document.querySelectorAll(`ul.main-list li`).forEach(listItem => {
+            listItem.remove()
+          });
+        })
+
+        document.querySelector(`ul.main-list .send-message button.submit`).addEventListener(`click`, SendChatMessage)
+        document.querySelector(`ul.main-list .send-message input`).addEventListener(`keypress`, function (keypress) {
+          if (keypress.key === `Enter`) SendChatMessage()
+        })
+        
+        function SendChatMessage() {
+          let package__chatMessage = document.querySelector(`ul.main-list .send-message input`).value
+          let package__chatService = document.querySelector(`ul.main-list .send-message select`).value
+          document.querySelector(`ul.main-list .send-message input`).value = ``
+          document.querySelector(`ul.main-list .send-message input`).focus()
+          document.querySelector(`ul.main-list .send-message input`).select()
+
+          console.log(`[${package__chatService}] ${package__chatMessage}`)
+
+          let package__args = {}
+
+          if (package__chatService === `All`) {
+            ws.send(
+              JSON.stringify({
+                request: `DoAction`,
+                action: {
+                  name: streamerbotActionPackage__name
+                },
+                args: {
+                  wsRequest: `TwitchSendBroadcasterMessage`,
+                  wsData: package__chatMessage
+                },
+                id: `DoAction`
+              })
+            )
+            ws.send(
+              JSON.stringify({
+                request: `DoAction`,
+                action: {
+                  name: streamerbotActionPackage__name
+                },
+                args: {
+                  wsRequest: `YouTubeSendMessage`,
+                  wsData: package__chatMessage
+                },
+                id: `DoAction`
+              })
+            )
+          } else if (package__chatService === `Twitch`) {
+            package__args = {
+              wsRequest: `TwitchSendBroadcasterMessage`,
+              wsData: package__chatMessage
+            }
+          } else if (package__chatService === `TwitchBot`) {
+            package__args = {
+              wsRequest: `TwitchSendBotMessage`,
+              wsData: package__chatMessage
+            }
+          } else if (package__chatService === `YouTube`) {
+            package__args = {
+              wsRequest: `YouTubeSendMessage`,
+              wsData: package__chatMessage
+            }
+          }
+
+          if (package__chatService != `All`) {
+            ws.send(
+              JSON.stringify({
+                request: `DoAction`,
+                action: {
+                  name: streamerbotActionPackage__name
+                },
+                args: package__args,
+                id: `DoAction`
+              })
+            )
+          }
+        }
 
         document.querySelector(`nav.navbar ul.navbar-list li#all`).addEventListener(`click`, function () {
           document.querySelectorAll(`main ul.main-list li`).forEach(listItem => {
@@ -1108,25 +1265,73 @@ async function connectws() {
         })
       }
       
-      if (location.hash === `#Chat` && data?.event?.source === `Twitch` || data?.event?.source === `YouTube` && data?.event?.type === `ChatMessage`|| data?.event?.type === `Message`) {
-        let chatIcon = ``
-        if (data.event.source === `Twitch`) chatIcon = `mdi mdi-twitch`
-        if (data.event.source === `YouTube`) chatIcon = `mdi mdi-youtube`
+      if (location.hash === `#Chat` && data?.event?.source === `Twitch` && data?.event?.type === `ChatMessage`) {
+        TwitchChatMessageEvent()
+        async function TwitchChatMessageEvent() {  
+          let hidden = ` hidden`
+          let view = document.querySelector(`main ul.main-list`).getAttribute(`data-view`)
+          
+          if (view === `twitch` || view === `all`) hidden = ``
 
-        let hidden = ``
-        let view = document.querySelector(`main ul.main-list`).getAttribute(`data-view`)
-        
-        if (view === `twitch` && data?.event?.source != `Twitch`) hidden = ` hidden`
-        if (view === `youtube` && data?.event?.source != `YouTube`) hidden = ` hidden`
+          let profileImageUrl = await fetch(`https://decapi.me/twitch/avatar/${data.data.message.username}`)
+          profileImageUrl = await profileImageUrl.text()
+  
+          document.querySelector(`main ul.main-list`).insertAdjacentHTML(`afterbegin`, `
+          <li data-source="${data.event.source}" data-message-id="${data.data.message.msgId}"${hidden}>
+          <div style="display: flex; gap: .5rem; align-items: center;">
+            <button class="delete-message mdi mdi-trash-can"></button>
+              <div class="profile-image mdi mdi-twitch" style="display: flex; align-items: center;">
+                <img src="${profileImageUrl}" alt="" style="width: 1rem; height: 1rem; border-radius: 100vmax;">
+              </div>
+              <p style="color: ${data.data.message.color};">${data.data.message.displayName}</p>
+              <p>${data.data.message.message}</p>
+            </div>
+          </li>
+          `)
+        }
 
-        document.querySelector(`main ul.main-list`).insertAdjacentHTML(`afterbegin`, `
-        <li data-source="${data.event.source}" data-message-id="${data.data.msgId}"${hidden}>
-          <div class="${chatIcon}" style="display: flex; gap: .5rem; align-items: center;">
-            <p style="color: ${data.data.message.color};">${data.data.message.username}</p>
-            <p>${data.data.message.message}</p>
-          </div>
-        </li>
-        `)
+          let listItem = document.querySelector(`main ul.main-list li`)
+          console.log(listItem)
+          listItem.querySelector(`.delete-message`).addEventListener(`click`, function () {
+            ws.send(
+              JSON.stringify({
+                request: `DoAction`,
+                action: {
+                  name: streamerbotActionPackage__name
+                },
+                args: {
+                  wsRequest: `TwitchDeleteMessage`,
+                  wsData: listItem.getAttribute(`data-message-id`)
+                },
+                id: `DoAction`
+              })
+            )
+          })
+      }
+
+      if (location.hash === `#Chat` && data?.event?.source === `Twitch` && data?.event?.type === `ChatMessagasdsdae`) {
+        TwitchChatMessageEvent()
+        async function TwitchChatMessageEvent() {  
+          let hidden = ` hidden`
+          let view = document.querySelector(`main ul.main-list`).getAttribute(`data-view`)
+          
+          if (view === `twitch` || view === `all`) hidden = ``
+
+          let profileImageUrl = await fetch(`https://decapi.me/twitch/avatar/${data.data.message.username}`)
+          profileImageUrl = await profileImageUrl.text()
+  
+          document.querySelector(`main ul.main-list`).insertAdjacentHTML(`afterbegin`, `
+          <li data-source="${data.event.source}" data-message-id="${data.data.msgId}"${hidden}>
+            <div style="display: flex; gap: .5rem; align-items: center;">
+              <div class="profile-image mdi mdi-twitch" style="display: flex; align-items: center;">
+                <img src="${profileImageUrl}" alt="" style="width: 1rem; height: 1rem;">
+              </div>
+              <p style="color: ${data.data.message.color};">${data.data.message.displayName}</p>
+              <p>${data.data.message.message}</p>
+            </div>
+          </li>
+          `)
+        }
       }
 
       if (location.hash === `#Global-Variables` && data?.id === `WebsocketHandlerAction`) {
@@ -1140,9 +1345,11 @@ async function connectws() {
             <hr>
             <div class="form-group styled">
               <label for="get-global-variable--variable-name">Variable Name</label>
-              <input type="text" name="voice-alias" id="get-global-variable--variable-name" placeholder="Variable Name" value="">
+              <input type="text" name="voice-alias" id="get-global-variable--variable-name" placeholder="Variable Name" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"getvariable": ""}`).getvariable ?? ``}">
             </div>
-            <button class="styled" id="get-global-variable--submit">Run</button>
+            <div class="form-group styled">
+              <button class="styled" id="get-global-variable--submit">Run</button>
+            </div>
             <pre class="styled" id="get-global-variable--output">Output: <span class="output"></span></pre>
           </div>
 
@@ -1154,13 +1361,15 @@ async function connectws() {
             <hr>
             <div class="form-group styled">
               <label for="set-global-variable--variable-name">Variable Name</label>
-              <input type="text" id="set-global-variable--variable-name" placeholder="Variable Name" value="">
+              <input type="text" id="set-global-variable--variable-name" placeholder="Variable Name" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"setvariable": ""}`).setvariable ?? ``}">
             </div>
             <div class="form-group styled">
               <label for="set-global-variable--value">Value</label>
-              <input type="text" id="set-global-variable--value" placeholder="Value" value="">
+              <input type="text" id="set-global-variable--value" placeholder="Value" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"setvalue": ""}`).setvalue ?? ``}">
             </div>
-            <button class="styled" id="set-global-variable--submit">Run</button>
+            <div class="form-group styled">
+              <button class="styled" id="set-global-variable--submit">Run</button>
+            </div>
           </div>
 
           <!--  -->
@@ -1171,20 +1380,28 @@ async function connectws() {
             <hr>
             <div class="form-group styled">
               <label for="unset-global-variable--variable-name">Variable Name</label>
-              <input type="text" id="unset-global-variable--variable-name" placeholder="Variable Name" value="">
+              <input type="text" id="unset-global-variable--variable-name" placeholder="Variable Name" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"unsetvariable": ""}`).unsetvariable ?? ``}">
             </div>
-            <button class="styled" id="unset-global-variable--submit">Run</button>
+            <div class="form-group styled">
+              <button class="styled" id="unset-global-variable--submit">Run</button>
+            </div>
           </div>
         </div>
         `
 
         document.getElementById(`get-global-variable--submit`).addEventListener(`click`, () => {
           let wsDataGlobalVariable = document.getElementById(`get-global-variable--variable-name`).value
+
+          let streamerbotToolbox__globalVariables = JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{}`)
+          console.log(streamerbotToolbox__globalVariables)
+          streamerbotToolbox__globalVariables.getvariable = wsDataGlobalVariable
+          localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
+          
           ws.send(
             JSON.stringify({
               request: `DoAction`,
               action: {
-                name: `Streamer.bot Toolbox Partial - Websocket Handler`
+                name: streamerbotActionPackage__name
               },
               args: {
                 wsRequest: `GetGlobalVariable`,
@@ -1198,11 +1415,17 @@ async function connectws() {
         document.getElementById(`set-global-variable--submit`).addEventListener(`click`, () => {
           let wsDataGlobalVariableName = document.getElementById(`set-global-variable--variable-name`).value
           let wsDataGlobalVariableValue = document.getElementById(`set-global-variable--value`).value
+
+          let streamerbotToolbox__globalVariables = JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{}`)
+          streamerbotToolbox__globalVariables.setvariable = wsDataGlobalVariableName
+          streamerbotToolbox__globalVariables.setvalue = wsDataGlobalVariableValue
+          localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
+
           ws.send(
             JSON.stringify({
               request: `DoAction`,
               action: {
-                name: `Streamer.bot Toolbox Partial - Websocket Handler`
+                name: streamerbotActionPackage__name
               },
               args: {
                 wsRequest: `SetGlobalVariable`,
@@ -1215,16 +1438,21 @@ async function connectws() {
         })
 
         document.getElementById(`unset-global-variable--submit`).addEventListener(`click`, () => {
-          let wsDataGlobalVariable = document.getElementById(`unset-global-variable--variable-name`).value
+          let wsDataGlobalVariableName = document.getElementById(`unset-global-variable--variable-name`).value
+
+          let streamerbotToolbox__globalVariables = JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{}`)
+          streamerbotToolbox__globalVariables.unsetvariable = wsDataGlobalVariableName
+          localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
+
           ws.send(
             JSON.stringify({
               request: `DoAction`,
               action: {
-                name: `Streamer.bot Toolbox Partial - Websocket Handler`
+                name: streamerbotActionPackage__name
               },
               args: {
                 wsRequest: `UnsetGlobalVariable`,
-                wsData: wsDataGlobalVariable
+                wsData: wsDataGlobalVariableName
               },
               id: `DoAction`
             })
@@ -1234,8 +1462,122 @@ async function connectws() {
 
       if (location.hash === `#Global-Variables` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
         if (data.data.wsRequest === `GetGlobalVariable`) {
-          if (data.data.wsData === ``) data.data.wsData = `Global Variable Doesn't Exist or doesn't have a value`
+          if (data.data.wsData === ``) data.data.wsData = `Global Variable Doesn't Exist or it doesn't have a value`
           document.querySelector(`#get-global-variable--output .output`).innerHTML = data.data.wsData
+        }
+      }
+
+      if (location.hash === `#Commands` && data?.id === `WebsocketHandlerAction`) {
+        ws.send(
+          JSON.stringify({
+            request: `DoAction`,
+            action: {
+              name: streamerbotActionPackage__name
+            },
+            args: {
+              wsRequest: `GetCommands`
+            },
+            id: `DoAction`
+          })
+        )
+      }
+
+      if (location.hash === `#Commands` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
+        if (data.data.wsRequest === `GetCommands`) {
+          if (data.data.wsData != ``) {
+            let commands = data.data.wsData.split(`, `)
+            commands.sort(function (a, b) {
+              return a.toLowerCase().localeCompare(b.toLowerCase());
+            });
+
+            commands.forEach(command => {              
+              document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `
+              <li class="navbar-list-item" data-command-name="${command}">
+                <button>
+                  <p class="title">${command}</p>
+                </button>
+              </li>
+              `)
+            });
+
+            document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(listItem => {
+              listItem.querySelector(`button`).addEventListener(`click`, function () {
+                listItem.classList.add(`nav-active`)
+                
+                document.querySelectorAll(`nav.navbar ul.navbar-list li.nav-active`).forEach(listItem => {
+                  listItem.classList.remove(`nav-active`)
+                });
+
+                listItem.classList.add(`nav-active`)
+
+
+
+                document.querySelector(`main`).innerHTML = `
+                <div class="command-information">
+                  <h2>${listItem.getAttribute(`data-command-name`)}</h2>
+                  <hr>
+                  <div class="form-group styled">
+                    <label for="command-id">Command Id</label>
+                    <input type="text" id="command-id" placeholder="Command Id (this will be automated in the future)" value="">
+                  </div>
+                  <div class="form-group styled">
+                  <label for="command-id">User Name</label>
+                  <input type="text" id="user-name" placeholder="User Name (used in some requests below, optional for most)" value="">
+                </div>
+                </div>
+                <br>
+                <div class="card-grid">
+                  <div class="card enabled-state">
+                    <p class="card-title">Enabled State</p>
+                    <hr>
+                    <div class="form-group styled flex">
+                      <button id="enable">Enable</button>
+                      <button id="disable">Disable</button>
+                    </div>
+                  </div>
+
+                  <!--  -->
+                  <!--  -->
+
+                  <div class="card global-cooldown">
+                    <p class="card-title">Global Cooldown (in seconds)</p>
+                    <hr>
+                    <div class="form-group styled flex">
+                      <button id="reset">Reset</button>
+                      <button id="remove">Remove</button>
+                    </div>
+                    <div class="form-group styled flex">
+                      <input type="number" id="user-cooldown" placeholder="Global Cooldown" value="">
+                      <button id="add">Add</button>
+                      <button id="update">Update</button>
+                    </div>
+                  </div>
+
+                  <!--  -->
+                  <!--  -->
+
+                  <div class="card user-cooldown">
+                    <p class="card-title">User Cooldown (in seconds)</p>
+                    <hr>
+                    <div class="form-group styled flex">
+                      <button id="reset">Reset</button>
+                      <button id="remove">Remove</button>
+                      <button id="reset-all">Reset All</button>
+                      <button id="remove-all">Remove All</button>
+                    </div>
+                    <div class="form-group styled flex">
+                      <input type="number" id="global-cooldown" placeholder="User Cooldown" value="">
+                      <button id="add">Add</button>
+                      <button id="add">Add to all</button>
+                      <button id="update">Update</button>
+                    </div>
+                  </div>
+
+                </div>
+                `
+              })
+            });
+          }
         }
       }
     })
@@ -1323,7 +1665,10 @@ async function connectTwitchSpeakerws() {
           <input type="checkbox" name="bad-words-filter" id="bad-words-filter">
           <label for="bad-words-filter">Bad Words Filter</label>
         </div>
-        <button class="styled speak">Speak!</button>`
+        <div class="form-group styled">
+        <button class="styled speak">Speak!</button>
+        </div>
+        `
 
         document.querySelector(`main button.speak`).addEventListener(`click`, function () {
           let voiceAlias = document.querySelector(`.form-group input#voice-alias`).value || ``
@@ -1347,6 +1692,7 @@ async function connectTwitchSpeakerws() {
               id: "Speak"
             }
           ))
+          sendNotification(`twitchspeaker`, `TTS with the voice alias: "${voiceAlias}", and the text: "${message}"`)
 
         })
 
@@ -1484,35 +1830,8 @@ async function connectTwitchSpeakerws() {
   }
 }
 
-// streamerbotIdeas()
-
-async function streamerbotIdeas() {
-  let ideasUrl = `https://ideas.streamer.bot`
-  let ideasData = {}
-
-  let streamerbotIdeasApiKey
-  let streamerbotIdeasLocalData = localStorage.getItem(`streamerbotToolbox__streamerbotIdeas`)
-
-  if (streamerbotIdeasLocalData === null) {
-  } else if (streamerbotIdeasLocalData.apiKey === null) {
-  } else {
-    document.body.setAttribute(`streamerbotIdeas-state`, `enabled`)
-    streamerbotIdeasApiKey = streamerbotIdeasLocalData.apiKey
-  }
-
-  // ideasData.posts = await fetch(`${ideasUrl}/api/v1/posts?limit=50&view=recent`)
-  // ideasData.posts = await ideasData.posts.json()
-
-  ideasData.tags = await fetch(`${ideasUrl}/api/v1/tags`)
-  ideasData.tags = await ideasData.tags.json()
-
-  console.log(ideasData)
-
-}
-
 function sendNotification(service, text) {
-  let serviceName = service
-  if (service === `twitchspeaker`) serviceName = `TwitchSpeaker`
-  if (service === `streamer.bot`) serviceName = `Streamer.bot`
-  console.log(`%c[${serviceName}]%c ${text}`, `color: #8c75fa;`, `color: white;`)
+  if (service === `twitchspeaker`) service = `TwitchSpeaker`
+  if (service === `streamer.bot`) service = `Streamer.bot`
+  console.log(`%c[${service}]%c ${text}`, `color: #8c75fa;`, `color: white;`)
 }

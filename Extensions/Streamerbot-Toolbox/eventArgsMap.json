@@ -1,5 +1,5 @@
 {
-    "StreamOnline": {
+    "TwitchStreamOnline": {
         "category": "twitch",
         "display": "Stream Online",
         "arguments": {
@@ -9,14 +9,14 @@
             "tagCount": ""
         }
     },
-    "StreamOffline": {
+    "TwitchStreamOffline": {
         "category": "twitch",
         "display": "Stream Offline",
         "arguments": {
             "endedAt": "1/15/2023 3:12:15 PM"
         }
     },
-    "ChatMessage": {
+    "TwitchChatMessage": {
         "category": "twitch",
         "display": "Chat Message",
         "arguments": {
@@ -50,6 +50,26 @@
             "isVip": "",
             "isSubscribed": "",
             "userPreviousActive": ""
+        }
+    },
+    "ObsDisconnected": {
+        "category": "obs",
+        "display": "Disconnected",
+        "arguments": {
+            "obs.id": "8aa94fb4-9e69-45ab-ae7e-c993a536db3c",
+            "obs.name": "OBS",
+            "obs.host": "127.0.0.1"
+        }
+    },
+    "ObsConnected": {
+        "category": "obs",
+        "display": "Connected",
+        "arguments": {
+            "obs.id": "8aa94fb4-9e69-45ab-ae7e-c993a536db3c",
+            "obs.name": "OBS",
+            "obs.host": "127.0.0.1",
+            "obs.studioVersion": "29.0.0",
+            "obs.websocketVersion": "5.1.0"
         }
     }
 }
