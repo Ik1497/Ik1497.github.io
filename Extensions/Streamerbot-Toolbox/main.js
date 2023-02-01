@@ -3,48 +3,6 @@ let title = `Streamer.bot Toolbox v${version}`
 let documentTitle = `${title} | Streamer.bot Actions`
 document.title = documentTitle
 
-let headerTagsMap = [
-  {
-    name: `About`,
-    integration: `streamer.bot`
-  },
-  {
-    name: `Actions`,
-    integration: `streamer.bot`
-  },
-  {
-    name: `Action History`,
-    integration: `streamer.bot`
-  },
-  {
-    name: `Present Viewers`,
-    integration: `streamer.bot`
-  },
-  {
-    name: `Websocket Events`,
-    integration: `streamer.bot`
-  },
-  {
-    name: `Chat`,
-    integration: `streamer.bot`
-  },
-  {
-    name: `Global Variables`,
-    integration: `streamer.bot-action-package`
-  },
-  {
-    name: `Commands`,
-    integration: `streamer.bot-action-package`
-  },
-  {
-    name: `TwitchSpeaker`,
-    integration: `twitchspeaker`
-  }
-]
-
-
-if (location.hash === ``) location.href = `#About`
-
 let streamerbotToolbox__connection = localStorage.getItem(`streamerbotToolbox__connection`)
 if (streamerbotToolbox__connection === undefined || streamerbotToolbox__connection === null || streamerbotToolbox__connection === ``) {
   streamerbotToolbox__connection = {
@@ -63,6 +21,56 @@ if (localStorage.getItem(`streamerbotToolbox__connection`) === null) localStorag
 
 let wsServerUrl = `ws://${streamerbotToolbox__connection.host}:${streamerbotToolbox__connection.port}${streamerbotToolbox__connection.endpoint}`
 
+let headerLinksMap = [
+  {
+    name: `About`,
+    integration: `streamer.bot`,
+    icon: `mdi mdi-view-dashboard-variant`
+  },
+  {
+    name: `Actions`,
+    integration: `streamer.bot`,
+    icon: `mdi mdi-lightning-bolt`
+  },
+  {
+    name: `Action History`,
+    integration: `streamer.bot`,
+    icon: `mdi mdi-lightning-bolt`
+  },
+  {
+    name: `Present Viewers`,
+    integration: `streamer.bot`,
+    icon: `mdi mdi-account-multiple`
+  },
+  {
+    name: `Websocket Events`,
+    integration: `streamer.bot`,
+    icon: `mdi mdi-creation`
+  },
+  {
+    name: `Chat`,
+    integration: `streamer.bot`,
+    icon: `mdi mdi-view-list`
+  },
+  {
+    name: `Global Variables`,
+    integration: `streamer.bot-action-package`,
+    icon: `mdi mdi-earth`
+  },
+  {
+    name: `Commands`,
+    integration: `streamer.bot-action-package`,
+    icon: `mdi mdi-comment-alert`
+  },
+  {
+    name: `TwitchSpeaker`,
+    integration: `twitchspeaker`
+  }
+]
+
+
+if (location.hash === ``) location.href = `#About`
+
 let headerAside = `
 <div class="form-area"><label>Url</label><input type="url" value="${streamerbotToolbox__connection.host}" class="url"></div>
 <div class="form-area"><label>Port</label><input type="number" value="${streamerbotToolbox__connection.port}" max="9999" class="port"></div>
@@ -71,30 +79,36 @@ let headerAside = `
 let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">${title}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
 document.querySelector("body").insertAdjacentHTML(`afterbegin`,`${headerHtml}<nav class="navbar"><input type="search" placeholder="Search..."><ul class="navbar-list"></ul></nav><main><ul class="main-list"></ul></main>`)
 
-document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `<ul class="header-tags tags"></ul>`)
+document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `<ul class="header-links buttons-row"></ul>`)
 
-headerTagsMap.forEach(headerTag => {
+headerLinksMap.forEach(headerLink => {
   let hidden = ``
-  let headerTagActive = ``
+  let headerLinkActive = ``
 
-  let headerTagHash = headerTag.name
+  let headerLinkHash = headerLink.name
     .replaceAll(` `, `-`)
     .replaceAll(`.`, ``)
   
-  if (location.hash === `#${headerTagHash}`) headerTagActive = ` class="tag-active"`
-  if (headerTag.integration != `streamer.bot` && headerTag.integration != `streamerbotIdeas`) hidden = ` hidden`
+  if (location.hash === `#${headerLinkHash}`) headerLinkActive = ` class="link-active"`
+  if (headerLink.integration != `streamer.bot` && headerLink.integration != `streamerbotIdeas`) hidden = ` hidden`
 
-  document.querySelector(`header .header-tags`).insertAdjacentHTML(`beforeend`, `<li${headerTagActive}${hidden}><a href="#${headerTagHash}" title="${headerTag.name}" data-integration="${headerTag.integration}">${headerTag.name}</a></li$>`)
+  document.querySelector(`header .header-links`).insertAdjacentHTML(`beforeend`, `
+  <li${headerLinkActive}${hidden}>
+    <a href="#${headerLinkHash}" title="${headerLink.name}" data-integration="${headerLink.integration}" class="${headerLink.icon || `mdi mdi-chevron-right`}">
+      <span class="button-row-title">${headerLink.name}</span>
+    </a>
+  </li$>
+  `)
 });
 
 let state__404 = true
 
-headerTagsMap.forEach(headerTag => {
-  let headerTagHash = headerTag.name
+headerLinksMap.forEach(headerLink => {
+  let headerLinkHash = headerLink.name
     .replaceAll(` `, `-`)
     .replaceAll(`.`, ``)
   
-  if (headerTagHash === location.hash.replace(`#`, ``)) {
+  if (headerLinkHash === location.hash.replace(`#`, ``)) {
       state__404 = false
   }
 });
@@ -208,8 +222,8 @@ async function connectws() {
           dataStreamerbotActionPackage = document.body.getAttribute(`data-streamerbot-action-package`)
           if (action.name === streamerbotActionPackage__name && action.group === streamerbotActionPackage__group) {
             console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Websocket Handler action found")
-            document.querySelectorAll(`header .header-tags a[data-integration="streamer.bot-action-package"]`).forEach(headerTag => {
-              headerTag.parentNode.removeAttribute(`hidden`)
+            document.querySelectorAll(`header .header-links a[data-integration="streamer.bot-action-package"]`).forEach(headerLink => {
+              headerLink.parentNode.removeAttribute(`hidden`)
             });
 
             ws.send(JSON.stringify({
@@ -907,7 +921,7 @@ async function connectws() {
             <br>
           </div>
           <ul class="tags">
-            <li title="Pending" class="tag-active"><button>Pending</button></li>
+            <li title="Pending" class="link-active"><button>Pending</button></li>
             <li title="Completed"><button>Completed</button></li>
           </ul>
           <ul class="action-state-wrapper">
@@ -920,8 +934,8 @@ async function connectws() {
         `)
 
         document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Pending] button`).addEventListener(`click`, function () {
-          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Pending]`).classList.add(`tag-active`)
-          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Completed]`).classList.remove(`tag-active`)
+          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Pending]`).classList.add(`link-active`)
+          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Completed]`).classList.remove(`link-active`)
 
           document.querySelector(`main ul[data-id="${data.data.id}"] .action-state-wrapper ul[data-action-state=completed]`).setAttribute(`hidden`, ``)
 
@@ -930,8 +944,8 @@ async function connectws() {
         })
         
         document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Completed] button`).addEventListener(`click`, function () {
-          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Completed]`).classList.add(`tag-active`)
-          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Pending]`).classList.remove(`tag-active`)
+          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Completed]`).classList.add(`link-active`)
+          document.querySelector(`main ul[data-id="${data.data.id}"] .tags li[title=Pending]`).classList.remove(`link-active`)
 
           document.querySelector(`main ul[data-id="${data.data.id}"] .action-state-wrapper ul[data-action-state=pending]`).setAttribute(`hidden`, ``)
 
@@ -1913,8 +1927,8 @@ async function connectTwitchSpeakerws() {
     ws.onclose = function () {
       setTimeout(connectTwitchSpeakerws, 10000)
       document.body.setAttribute(`twitchspeaker-state`, `disconnected`)
-      document.querySelectorAll(`header .header-tags a[data-integration=twitchspeaker]`).forEach(headerTag => {
-        headerTag.parentNode.setAttribute(`hidden` , ``)
+      document.querySelectorAll(`header .header-links a[data-integration=twitchspeaker]`).forEach(headerLink => {
+        headerLink.parentNode.setAttribute(`hidden` , ``)
       });
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to TwitchSpeaker, reconnecting every 10s...")
     }
@@ -1922,9 +1936,9 @@ async function connectTwitchSpeakerws() {
     ws.onopen = function () {
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to TwitchSpeaker")
       document.body.setAttribute(`twitchspeaker-state`, `connected`)
-      document.querySelectorAll(`header .header-tags a[data-integration=twitchspeaker]`).forEach(headerTag => {
-        headerTag.parentNode.setAttribute(`hidden` , ``)
-        headerTag.parentNode.removeAttribute(`hidden`)
+      document.querySelectorAll(`header .header-links a[data-integration=twitchspeaker]`).forEach(headerLink => {
+        headerLink.parentNode.setAttribute(`hidden` , ``)
+        headerLink.parentNode.removeAttribute(`hidden`)
       });
       
       if (location.hash === `#TwitchSpeaker`) {

@@ -24,7 +24,7 @@ html {
 }
 
 body.disconnected>*:not(header),
-body.disconnected .header-tags {
+body.disconnected .header-links {
   display: none;
 }
 
@@ -154,10 +154,41 @@ header aside button {
   padding-inline: .25rem;
 }
 
-.header-tags {
+.header-links {
   position: absolute;
-  bottom: 0;
+  bottom: .75rem;
   left: .5rem;
+}
+
+.buttons-row {
+  display: flex;
+  gap: .25rem;
+  flex-wrap: wrap;
+}
+
+.buttons-row a {
+  text-decoration: none;
+  color: var(--text-600);
+  background: var(--background-light);
+  padding-inline: 1rem;
+  padding-block: .25rem;
+  border-radius: .5rem;
+  width: fit-content;
+  height: fit-content;
+  transition: width 1s ease;
+  cursor: pointer;
+}
+
+.buttons-row a .button-row-title {
+  transition: all 1s ease;
+}
+
+.buttons-row li:hover a {
+  background: var(--background-lighten);
+}
+
+.buttons-row li.link-active a {
+  background: var(--color-link-hover);
 }
 
 .tags {
