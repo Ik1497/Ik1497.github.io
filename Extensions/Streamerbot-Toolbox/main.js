@@ -1475,7 +1475,7 @@ async function connectws() {
               name: streamerbotActionPackage__name
             },
             args: {
-              wsRequest: `GetCommands`
+              wsRequest: `GetCommandsFromFile`
             },
             id: `DoAction`
           })
@@ -1483,18 +1483,48 @@ async function connectws() {
       }
 
       if (location.hash === `#Commands` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
-        if (data.data.wsRequest === `GetCommands`) {
+        if (data.data.wsRequest === `GetCommandsFromFile`) {
           if (data.data.wsData != ``) {
-            let commands = data.data.wsData.split(`, `)
-            commands.sort(function (a, b) {
-              return a.toLowerCase().localeCompare(b.toLowerCase());
+            GetCommandsData = JSON.parse(decodeURI(data.data.wsData.replaceAll(`\n`, ``).replaceAll(`\r`, ``)))
+            console.log(GetCommandsData)
+            let commands = GetCommandsData.commands
+            let commandGroups = []
+
+            commands.forEach(command => {
+              if (!Object.keys(Object.fromEntries(commandGroups)).includes(command.group) && command.group != null && command.group != ``) {
+                commandGroups.push([command.group, 0])
+              }
+            });
+            
+            commandGroups.sort(function (a, b) {
+              return a[0].toLowerCase().localeCompare(b[0].toLowerCase());
             });
 
-            commands.forEach(command => {              
+            commandGroups.unshift([`None`, 0])
+            commandGroups.unshift([`All`, 0])
+
+            commands.forEach(command => {
+              commandGroups.forEach(commandGroup => {
+                if (command.group === commandGroup[0]) {
+                  commandGroup[1] = commandGroup[1] + 1
+                } else if (command.group === `` && commandGroup[0] === `None`) {
+                  commandGroup[1] = commandGroup[1] + 1
+                }
+                
+                if (commandGroup[0] === `All`) {
+                  commandGroup[1] = commandGroup[1] + 1
+                }
+              });
+            });
+            
+            commandGroups.forEach(command => {     
+              let commandsText = `${command[1]} Commands`
+              if (command[1] === 1) commandsText = `${command[1]} Command`    
               document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `
-              <li class="navbar-list-item" data-command-name="${command}">
+              <li class="navbar-list-item" data-command-name="${command[0]}" data-command-count="${command[1]}">
                 <button>
-                  <p class="title">${command}</p>
+                  <p class="title">${command[0]}</p>
+                  <p class="description">${commandsText}</p>
                 </button>
               </li>
               `)
@@ -1510,20 +1540,31 @@ async function connectws() {
 
                 listItem.classList.add(`nav-active`)
 
-
+                let selectCommandOptions = ``
+                commands.forEach(command => {
+                  if (listItem.getAttribute(`data-command-name`) === `All`) {
+                    selectCommandOptions += `<option value="${command.id}">${command.command}</option>`
+                  } else if (listItem.getAttribute(`data-command-name`) === `None` && command.group === ``) {
+                    selectCommandOptions += `<option value="${command.id}">${command.command}</option>`
+                  } else if (command.group === listItem.getAttribute(`data-command-name`)) {
+                    selectCommandOptions += `<option value="${command.id}">${command.command}</option>`
+                  }
+                });
 
                 document.querySelector(`main`).innerHTML = `
                 <div class="command-information">
                   <h2>${listItem.getAttribute(`data-command-name`)}</h2>
                   <hr>
                   <div class="form-group styled">
-                    <label for="command-id">Command Id</label>
-                    <input type="text" id="command-id" placeholder="Command Id (this will be automated in the future)" value="">
+                    <label for="command-id">Command</label>
+                    <select>
+                    ${selectCommandOptions}
+                    </select>
                   </div>
                   <div class="form-group styled">
-                  <label for="command-id">User Name</label>
-                  <input type="text" id="user-name" placeholder="User Name (used in some requests below, optional for most)" value="">
-                </div>
+                    <label for="user-name">User Name (used in user cooldown requests)</label>
+                    <input type="text" id="user-name" placeholder="User Name (used in user cooldown requests)" value="">
+                  </div>
                 </div>
                 <br>
                 <div class="card-grid">
@@ -1547,7 +1588,7 @@ async function connectws() {
                       <button id="remove">Remove</button>
                     </div>
                     <div class="form-group styled flex">
-                      <input type="number" id="user-cooldown" placeholder="Global Cooldown" value="">
+                      <input type="number" id="global-cooldown" placeholder="Global Cooldown" value="">
                       <button id="add">Add</button>
                       <button id="update">Update</button>
                     </div>
@@ -1566,15 +1607,286 @@ async function connectws() {
                       <button id="remove-all">Remove All</button>
                     </div>
                     <div class="form-group styled flex">
-                      <input type="number" id="global-cooldown" placeholder="User Cooldown" value="">
+                      <input type="number" id="user-cooldown" placeholder="User Cooldown" value="">
                       <button id="add">Add</button>
-                      <button id="add">Add to all</button>
+                      <button id="add-to-all">Add to all</button>
                       <button id="update">Update</button>
                     </div>
                   </div>
 
                 </div>
                 `
+
+                /// ///////////// ///
+                /// Enabled State ///
+                /// ///////////// ///
+
+                document.querySelector(`main .card-grid .card.enabled-state .form-group #enable`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `EnableCommandById`,
+                        wsData: commandId
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                document.querySelector(`main .card-grid .card.enabled-state .form-group #disable`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `DisableCommandById`,
+                        wsData: commandId
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                /// /////////////// ///
+                /// Global Cooldown ///
+                /// /////////////// ///
+
+                document.querySelector(`main .card-grid .card.global-cooldown .form-group #reset`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandResetGlobalCooldown`,
+                        wsData: commandId
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                document.querySelector(`main .card-grid .card.global-cooldown .form-group #remove`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandRemoveGlobalCooldown`,
+                        wsData: commandId
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                document.querySelector(`main .card-grid .card.global-cooldown .form-group #add`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                  let wsDataDuration = document.querySelector(`main .card-grid .card.global-cooldown .form-group #global-cooldown`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandAddGlobalCooldown`,
+                        wsDataId: commandId,
+                        wsDataDuration: wsDataDuration
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+                
+                document.querySelector(`main .card-grid .card.global-cooldown .form-group #update`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                  let wsDataDuration = document.querySelector(`main .card-grid .card.global-cooldown .form-group #global-cooldown`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandSetGlobalCooldown`,
+                        wsDataId: commandId,
+                        wsDataDuration: wsDataDuration
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                /// ///////////// ///
+                /// User Cooldown ///
+                /// ///////////// ///
+
+                document.querySelector(`main .card-grid .card.user-cooldown .form-group #reset`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                  let wsDataUserId = document.querySelector(`main .command-information .form-group input#user-name`).value || ``
+                  if (wsDataUserId === ``) wsDataUserId = `ik1497`
+                  wsDataUserId = await fetch(`https://decapi.me/twitch/id/${wsDataUserId}`)
+                  wsDataUserId = await wsDataUserId.text()
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandResetUserCooldown`,
+                        wsDataId: commandId,
+                        wsDataUserId: wsDataUserId
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                document.querySelector(`main .card-grid .card.user-cooldown .form-group #remove`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                  let wsDataUserId = document.querySelector(`main .command-information .form-group input#user-name`).value || ``
+                  if (wsDataUserId === ``) wsDataUserId = `ik1497`
+                  wsDataUserId = await fetch(`https://decapi.me/twitch/id/${wsDataUserId}`)
+                  wsDataUserId = await wsDataUserId.text()
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandRemoveUserCooldown`,
+                        wsDataId: commandId,
+                        wsDataUserId: wsDataUserId
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                document.querySelector(`main .card-grid .card.user-cooldown .form-group #reset-all`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandResetAllUserCooldowns`,
+                        wsData: commandId
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                document.querySelector(`main .card-grid .card.user-cooldown .form-group #remove-all`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandRemoveAllUserCooldowns`,
+                        wsData: commandId
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                document.querySelector(`main .card-grid .card.user-cooldown .form-group #add`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                  let wsDataDuration = document.querySelector(`main .card-grid .card.user-cooldown .form-group #user-cooldown`).value
+                  let wsDataUserId = document.querySelector(`main .command-information .form-group input#user-name`).value || ``
+                  if (wsDataUserId === ``) wsDataUserId = `ik1497`
+                  wsDataUserId = await fetch(`https://decapi.me/twitch/id/${wsDataUserId}`)
+                  wsDataUserId = await wsDataUserId.text()
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandAddUserCooldown`,
+                        wsDataId: commandId,
+                        wsDataUserId: wsDataUserId,
+                        wsDataDuration: wsDataDuration
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                document.querySelector(`main .card-grid .card.user-cooldown .form-group #add-to-all`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                  let wsDataDuration = document.querySelector(`main .card-grid .card.user-cooldown .form-group #user-cooldown`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandAddAllUserCooldowns`,
+                        wsDataId: commandId,
+                        wsDataDuration: wsDataDuration
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
+
+                document.querySelector(`main .card-grid .card.user-cooldown .form-group #update`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                  let wsDataDuration = document.querySelector(`main .card-grid .card.user-cooldown .form-group #user-cooldown`).value
+
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `CommandSetUserCooldown`,
+                        wsDataId: commandId,
+                        wsDataDuration: wsDataDuration
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                })
               })
             });
           }
