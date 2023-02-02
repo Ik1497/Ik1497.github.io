@@ -166,29 +166,44 @@ header aside button {
   flex-wrap: wrap;
 }
 
-.buttons-row a {
+.buttons-row a,
+.buttons-row button {
+  border: none;
+  outline: none;
   text-decoration: none;
-  color: var(--text-600);
+  color: var(--text-900);
   background: var(--background-light);
   padding-inline: 1rem;
   padding-block: .25rem;
   border-radius: .5rem;
   width: fit-content;
   height: fit-content;
-  transition: width 1s ease;
-  cursor: pointer;
+  transition-property: background, padding-inline;
+  transition: .25s ease;
+  display: flex;
+  align-items: center;
+  gap: .25rem;
 }
 
-.buttons-row a .button-row-title {
+.buttons-row a .button-row-title,
+.buttons-row button .button-row-title {
   transition: all 1s ease;
 }
 
-.buttons-row li:hover a {
+.buttons-row li:hover a,
+.buttons-row li:hover button {
   background: var(--background-lighten);
+  padding-inline: 2rem;
 }
 
-.buttons-row li.link-active a {
+.buttons-row li.button-active a,
+.buttons-row li.button-active button {
   background: var(--color-link-hover);
+}
+
+.buttons-row li:not(.button-active) a,
+.buttons-row li:not(.button-active) button {
+  cursor: pointer;
 }
 
 .tags {
@@ -220,7 +235,9 @@ header aside button {
 }
 
 .tags li:hover a,
-.tags li:hover button {
+.tags li:hover button,
+.tags li:focus-visible a,
+.tags li:focus-visible button {
   background: var(--background-lighten);
 }
 
@@ -248,19 +265,27 @@ table.styled {
   border-radius: .5rem;
   border: 2px solid var(--background-alt);
   background: var(--background-soft);
+  overflow: hidden;
 }
 
-table.styled td {
+table.styled td,
+table.styled th {
   padding-inline: .25rem;
   padding-block: .4rem
 }
 
-table.styled tr:nth-child(even) {
+table.styled tbody tr:nth-child(even),
+table.styled thead tr {
   background: var(--background-primary);
 }
 
-table.styled tr td:not(:last-child) {
+table.styled tr td:not(:last-child),
+table.styled tr th:not(:last-child) {
   border-right: 2px solid var(--background-alt);
+}
+
+table.styled th {
+  font-weight: 900;
 }
 
 /* --- */
@@ -284,7 +309,8 @@ table.styled tr td:not(:last-child) {
   padding-inline: .75em;
 }
 
-.navbar .navbar-list {
+.navbar .navbar-list,
+ul.styled {
   width: 20em;
   background: var(--background-alt);
   display: flex;
@@ -296,7 +322,14 @@ table.styled tr td:not(:last-child) {
   padding-block: 1em;
 }
 
-.navbar .navbar-list .navbar-list-item {
+ul.styled {
+  width: unset;
+  height: unset;
+  border-radius: .5rem;
+}
+
+.navbar .navbar-list .navbar-list-item,
+ul.styled li {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -318,7 +351,8 @@ table.styled tr td:not(:last-child) {
   text-overflow: ellipsis;
 }
 
-.navbar .navbar-list .navbar-list-item button {
+.navbar .navbar-list .navbar-list-item button,
+ul.styled li button {
   background: var(--background-alt);
   border: 0;
   border-radius: 5px;
@@ -339,6 +373,16 @@ table.styled tr td:not(:last-child) {
 .navbar .navbar-list .navbar-list-item button:focus-visible,
 .navbar .navbar-list .navbar-list-item button:hover {
   background: var(--background-soft);
+}
+
+ul.styled li button:active,
+ul.styled li button:focus-visible,
+ul.styled li button:hover {
+  background: var(--background-mute);
+}
+
+ul.styled li button {
+  background: var(--background-primary);
 }
 
 .navbar .navbar-list .navbar-list-item.nav-active button {
@@ -371,6 +415,10 @@ main:not(.nested) ul.main-list {
   overflow-y: auto;
   height: fit-content;
   position: relative;
+
+  max-height: 50rem;
+  overflow-y: auto;
+  border-radius: .5rem;
 }
 
 main:not(.nested) ul.main-list li {
@@ -462,6 +510,9 @@ main.col-2 {
 
 main.col-2 aside {
   width: 20rem;
+  max-height: 50rem;
+  overflow-y: auto;
+  border-radius: .5rem;
 }
 
 main.col-2 aside .card-grid,
@@ -487,15 +538,27 @@ main.col-2 aside .card {
   max-height: 50rem;
   border: 2px solid var(--background-light);
   border-radius: 1rem;
-  overflow: hidden;
   z-index: 999;
+  overflow: hidden;
+}
+
+.settings-modal-alt .main {
+  overflow: auto;
+  max-height: 90%;
 }
 
 .settings-modal-alt.small {
-  width: 30rem;
-  max-height: 30rem;
-  height: 20rem;
-  max-height: 20rem;
+  width: 35rem;
+  max-height: 35rem;
+  height: 25rem;
+  max-height: 25rem;
+}
+
+.settings-modal-alt.medium {
+  width: 60rem;
+  max-height: 60rem;
+  height: 35rem;
+  max-height: 35rem;
 }
 
 .settings-modal-alt {
@@ -523,6 +586,36 @@ body:has(> .settings-modal-alt) > *:not(.settings-modal-alt) {
   border: none;
   color: var(--text-900);
   cursor: pointer;
+}
+
+.settings-modal-alt .header {
+  margin-bottom: 2rem;
+}
+
+.settings-modal-alt .header h1,
+.settings-modal-alt .header h2,
+.settings-modal-alt .header h3,
+.settings-modal-alt .header h4,
+.settings-modal-alt .header h5,
+.settings-modal-alt .header h6 {
+  display: flex;
+  align-items: center;
+}
+
+.settings-modal-alt .header h1 small,
+.settings-modal-alt .header h2 small,
+.settings-modal-alt .header h3 small,
+.settings-modal-alt .header h4 small,
+.settings-modal-alt .header h5 small,
+.settings-modal-alt .header h6 small {
+  font-size: .75rem;
+  padding-left: .5ch;
+  color: var(--text-700);
+}
+
+.settings-modal-alt .header .subtitle {
+  font-size: .75rem;
+  color: var(--text-500);
 }
 
 body:has(> .settings-modal) .open-settings-modal {
@@ -722,20 +815,24 @@ blockquote.error {
 /* Disabled Styles */
 /* --------------- */
 
-body:not([data-streamerbot-action-package="installed"]) .send-message {
-  filter: blur(1px);
+body:not([data-streamerbot-action-package="installed"]) .send-message * {
+  filter: blur(5px)!important;
+  pointer-events: none!important;
 }
 
 /* ----------- */
 /* Chat Styles */
 /* ----------- */
 
-.send-message .form-group.styled {
-  position: fixed;
-  width: calc(100% - 4rem);
+.send-message {
+  position: absolute;
   bottom: 0;
-  display: flex;
   left: 0;
+  right: 0;
+}
+
+.send-message .form-group {
+  display: flex;
 }
 
 /* ----------- */
@@ -815,6 +912,7 @@ body:not([data-streamerbot-action-package="installed"]) .send-message {
   padding-block: 1rem;
   width: 100%;
   border-radius: .5rem;
+  position: relative;
 }
 
 .card-title {
@@ -860,4 +958,13 @@ body:not([data-streamerbot-action-package="installed"]) .send-message {
 
 .text-right {
   text-align: right;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid.auto-col {
+  --col-width: 600px;
+  grid-template-columns: repeat(auto-fit, minmax(var(--col-width), 1fr));
 }
