@@ -573,8 +573,8 @@ async function connectws() {
           }
 
           document.body.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
-          ${errorMessage}
           <div class="main">
+            ${errorMessage}
             <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
             <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
             <p>this tool is currently a very work in progress, feautures may come and go over time.</p>
