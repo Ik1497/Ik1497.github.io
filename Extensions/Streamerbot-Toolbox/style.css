@@ -23,6 +23,10 @@ html {
   display: flex;
 }
 
+img {
+  max-width: 100%;
+}
+
 body.disconnected>*:not(header),
 body.disconnected .header-links {
   display: none;
@@ -185,11 +189,6 @@ header aside button {
   gap: .25rem;
 }
 
-.buttons-row a .button-row-title,
-.buttons-row button .button-row-title {
-  transition: all 1s ease;
-}
-
 .buttons-row li:hover a,
 .buttons-row li:hover button {
   background: var(--background-lighten);
@@ -266,6 +265,9 @@ table.styled {
   border: 2px solid var(--background-alt);
   background: var(--background-soft);
   overflow: hidden;
+  max-width: 100%;
+  width: 100%;
+  overflow-x: auto;
 }
 
 table.styled td,
@@ -318,8 +320,7 @@ ul.styled {
   row-gap: .25em;
   height: calc(100vh - 8.5em);
   overflow-y: auto;
-
-  padding-block: 1em;
+  padding-block: .5em;
 }
 
 ul.styled {
@@ -525,8 +526,7 @@ main.col-2 aside .card {
 /* Settings Modal */
 /* -------------- */
 
-.settings-modal,
-.settings-modal-alt {
+.settings-modal {
   position: fixed;
   left: 50%;
   top: 50%;
@@ -540,13 +540,27 @@ main.col-2 aside .card {
   border-radius: 1rem;
   z-index: 999;
   overflow: hidden;
+  overflow-y: auto;
 }
 
-.settings-modal-alt .main {
-  width: 100%;
-  height: calc(100% - 6rem);
+.settings-modal-alt-wrapper {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  overflow: hidden;
+  border-radius: .5rem;
+}
+
+.settings-modal-alt {
+  background: var(--background-alt);
+  width: 85vw;
+  max-width: 85rem;
+  height: 70vh;
+  max-height: 50rem;
+  overflow-x: hidden;
   overflow-y: auto;
-  padding-top: 1rem;
 }
 
 .settings-modal-alt.small {
@@ -567,36 +581,41 @@ main.col-2 aside .card {
   padding: 2rem;
 }
 
-body:has(> .settings-modal-alt) > .settings-modal {
-  display: none;
-}
-
-body[data-modal-state] *:not(.settings-modal-alt) {
-  transition: opacity .5s ease;
-}
-
-body:has(> .settings-modal):not(:has(.settings-modal-alt)) > *:not(.settings-modal),
-body[data-modal-state="opening"] > *:not(.settings-modal-alt),
-body[data-modal-state="opened"] > *:not(.settings-modal-alt) {
-  opacity: .57;
-  pointer-events: none;
-}
-
-.settings-modal-alt .close-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: var(--accent-alt);
-  border-radius: 100vmax;
-  padding: .25rem;
-  outline: none;
-  border: none;
-  color: var(--text-900);
-  cursor: pointer;
+.settings-modal-alt {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .settings-modal-alt .header {
-  margin-bottom: 2rem;
+  background: var(--color-link-hover);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
+  padding-inline: 1rem;
+  overflow: hidden;
+}
+
+.settings-modal-alt .close-button {
+  padding: .25rem;
+  border-radius: none;
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  
+  font-weight: 900;
+  color: var(--text-900);
+  border: 2px solid currentColor;
+  border-radius: .25rem;
+  margin-left: auto;
 }
 
 .settings-modal-alt .header h1,
@@ -622,11 +641,13 @@ body[data-modal-state="opened"] > *:not(.settings-modal-alt) {
 
 .settings-modal-alt .header .subtitle {
   font-size: .75rem;
-  color: var(--text-500);
+  color: var(--text-800);
 }
 
-body:has(> .settings-modal) .open-settings-modal {
-  display: none;
+.settings-modal-alt .main {
+  width: 100%;
+  height: 100%;
+  padding-top: 3rem;
 }
 
 .settings-modal .header {
@@ -774,6 +795,28 @@ body:has(> .settings-modal) .open-settings-modal {
   z-index: 100;
 }
 
+/* Opacity Styles */
+
+body:has(> .settings-modal) .open-settings-modal {
+  display: none;
+}
+
+body:has(> .settings-modal-alt-wrapper) > .settings-modal {
+  display: none;
+}
+
+body[data-modal-state=closing] > *:not(.settings-modal-alt-wrapper) {
+  transition: opacity .5s ease;
+}
+
+body:has(> .settings-modal):not(:has(.settings-modal-alt)) > *:not(.settings-modal),
+body[data-modal-state="opening"] > *:not(.settings-modal-alt-wrapper),
+body[data-modal-state="opened"] > *:not(.settings-modal-alt-wrapper) {
+  transition: opacity .5s ease;
+  opacity: .57;
+  pointer-events: none;
+}
+
 /* Animations */
 
 body[data-modal-state="opening"] .settings-modal-alt {
@@ -914,6 +957,30 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
   cursor: pointer;
 }
 
+.form-group.styled input:focus-visible:not([type=checkbox]),
+.form-group.styled button:active,
+.form-group.styled select:focus-visible {
+  background: var(--background-light);
+  border-color: var(--background-lighten);
+}
+
+/* Style Classes */
+
+.form-group.styled button.outlined {
+  background: none;
+  border-radius: .35rem;
+  color: var(--text-900);
+  font-weight: 900;
+  border: 2px solid currentColor;
+  padding-block: .2rem;
+}
+
+.form-group.styled button.outlined:active {
+  color: var(--text-500);
+}
+
+/* Helper Classes */
+
 .form-group.styled input:not([type=checkbox]).no-margin,
 .form-group.styled button.no-margin,
 .form-group.styled select.no-margin {
@@ -930,15 +997,9 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
   margin-block: .5rem
 }
 
-.form-group.styled.no-margin {
+.form-group.styled.no-margin,
+.form-group.styled.no-margin button {
   margin-block: 0;
-}
-
-.form-group.styled input:focus-visible:not([type=checkbox]),
-.form-group.styled button:active,
-.form-group.styled select:focus-visible {
-  background: var(--background-light);
-  border-color: var(--background-lighten);
 }
 
 /* ------ */
@@ -960,8 +1021,17 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
   position: relative;
 }
 
-.card-title {
+.card .card-header {
+  display: flex;
+  align-items: center;
+}
+
+.card .card-title {
   font-weight: bold;
+}
+
+.card .card-title-end {
+  margin-left: auto;
 }
 
 /* ------------- */

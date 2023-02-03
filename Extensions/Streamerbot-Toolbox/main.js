@@ -54,7 +54,7 @@ let headerLinksMap = [
   },
   {
     name: `OBS Studio`,
-    integration: `twitchspeaker`
+    integration: `streamer.bot-action-package`
   },
   {
     name: `TwitchSpeaker`,
@@ -70,7 +70,7 @@ let headerAside = `
 <div class="form-area"><label>Port</label><input type="number" value="${streamerbotToolbox__connection.port}" max="9999" class="port"></div>
 <div class="form-area"><label>Endpoint</label><input type="text" value="${streamerbotToolbox__connection.endpoint}" class="endpoint"></div>
 <button class="connect-websocket">Connect</button>`
-let headerHtml = `<header><a href=""><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">${title}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
+let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">${title}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
 document.querySelector("body").insertAdjacentHTML(`afterbegin`,`
 ${headerHtml}
 <nav class="navbar">
@@ -538,28 +538,22 @@ async function connectws() {
           function reloadObsStudio() {
             document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Settings • OBS Studio`
             document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Settings for OBS Studio`
-            
-            let streamerbotToolbox__obsStudio = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: `0`}
-            if (streamerbotToolbox__obsStudio <= 0) streamerbotToolbox__obsStudio.connection = 0
-            if (isNaN(streamerbotToolbox__obsStudio)) streamerbotToolbox__obsStudio.connection = 0
 
             document.querySelector(`.settings-modal .main`).innerHTML = `
             <div class="form-group styled">
               <p>OBS Studio is fully managed with Streamer.bot in combination with the Streamer.bot Action Package</p>
               <br>
               <label>Connection</label>
-              <input type="number" value="${streamerbotToolbox__obsStudio.connection}">
+              <input type="number" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"navSwitchScenes": true}`).connection}">
             </div>
             `
             
-            localStorage.setItem(`streamerbotToolbox__obsStudio`, JSON.stringify(streamerbotToolbox__obsStudio))
-
             document.querySelector(`.settings-modal .main input`).addEventListener(`keydown`, function () {
               setTimeout(() => {
-                let streamerbotToolbox__obsStudio = {}
+                let streamerbotToolbox__obsStudio = localStorage.getItem(`streamerbotToolbox__obsStudio`) || `{}`
+                streamerbotToolbox__obsStudio = JSON.parse(streamerbotToolbox__obsStudio) || {}
                 streamerbotToolbox__obsStudio.connection = document.querySelector(`.settings-modal .main input`).value
                 if (streamerbotToolbox__obsStudio.connection <= 0) streamerbotToolbox__obsStudio.connection = 0
-                if (isNaN(streamerbotToolbox__obsStudio.connection)) streamerbotToolbox__obsStudio.connection = 0
                 localStorage.setItem(`streamerbotToolbox__obsStudio`, JSON.stringify(streamerbotToolbox__obsStudio))
               }, 50);
             })
@@ -571,7 +565,10 @@ async function connectws() {
 
         document.body.querySelector(`main`).innerHTML = `
         <div class="card" style="height: calc(100% - 8rem); max-height: calc(100vh - 8rem);" data-view="all">
-          <p class="card-title">Chat</p>
+          <div class="card-header">
+            <p class="card-title">Chat</p>
+            <p class="card-title-end"><div class="form-group styled no-margin"><button class="outlined" onclick="createModal('<blockquote>Coming Soon!</blockquote>', 'Chat Settings', undefined, 'small', {})">Settings</button></div></p>
+          </div>
           <hr>
           <ul class="chat-messages" style="overflow: auto;height: calc(100vh - 20rem);max-height: calc(100vh - 20rem);width: 100%;display: flex;flex-direction: column;gap: .25rem;"></ul>
           <div class="send-message">
@@ -650,6 +647,7 @@ async function connectws() {
             <p>Features:</p>
             <p>• Action Management with Custom Arguments, Event Emulatation and Action History</p>
             <p>• Present Viewers List</p>
+            <p>• View chat and send messages to chat</p>
             <p>• View all websocket events</p>
             <p>• Add/Update/Remove Global Arguments</p>
             <p>• Change command settings</p>
@@ -806,17 +804,23 @@ async function connectws() {
         <aside>
           <div class="card-grid">
             <div class="card events">
-              <p class="card-title">Emulate Events</p>
+              <div class="card-header">
+                <p class="card-title">Emulate Events</p>
+              </div>
               <hr>
               ${eventTestDropdown}
             </div>
             <div class="card arguments">
-              <p class="card-title">Arguments</p>
+              <div class="card-header">
+                <p class="card-title">Arguments</p>
+              </div>
               <hr>
               <table class="styled full"></table>
             </div>
             <div class="card action-history">
-              <p class="card-title">Action History</p>
+              <div class="card-header">
+                <p class="card-title">Action History</p>
+              </div>
               <hr>
               <ul class="styled"></ul>
             </div>
@@ -1102,63 +1106,30 @@ async function connectws() {
       }
 
       if (location.hash === `#Actions` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
-        let actionHistoryQueued__List = document.querySelector(`main aside .card.action-history ul`)
-
-        let actionHistoryQueued__ListItem = document.createElement(`li`)
-        actionHistoryQueued__ListItem.setAttribute(`data-action-running-id`, data.data.id)
-        actionHistoryQueued__ListItem.setAttribute(`data-action-id`, data.data.actionId)
-        actionHistoryQueued__ListItem.setAttribute(`data-action-queued-data`, JSON.stringify(data))
-        actionHistoryQueued__ListItem.setAttribute(`data-action-state`, `queued`)
-
-        let actionHistoryQueued__Title = document.createElement(`p`)
-        actionHistoryQueued__Title.classList.add(`title`)
-        actionHistoryQueued__Title.innerHTML = data.data.name
-
-        let actionHistoryQueued__Button = document.createElement(`button`)
-        
-        actionHistoryQueued__Button.append(actionHistoryQueued__Title)
-        actionHistoryQueued__ListItem.append(actionHistoryQueued__Button)
-        actionHistoryQueued__List.prepend(actionHistoryQueued__ListItem)
-
-        
-        actionHistoryQueued__Button.addEventListener(`click`, () => {
-          let actionHistoryQueued__table = ``
-          let actionHistoryQueued__arguments = actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)
-          actionHistoryQueued__arguments = JSON.parse(actionHistoryQueued__arguments).data.arguments ?? {}
-
-          Object.entries(actionHistoryQueued__arguments).forEach(argument => {
-            actionHistoryQueued__table += `
-            <tr>
-              <td style="text-align: right;">${argument[0]}</td>
-              <td style="text-align: left;">${argument[1]}</td>
-            </tr>
-            `
-          });
+        if (data.data.name != `Streamer.bot Toolbox Partial - Websocket Handler`) {
+          let actionHistoryQueued__List = document.querySelector(`main aside .card.action-history ul`)
   
-          actionHistoryQueued__table = `
-          <table class="styled" hidden id="queued">
-            <thead>
-              <th style="text-align: right;">Argument</th>
-              <th style="text-align: left;">Value</th>
-            </thead>
-            <tbody>
-              ${actionHistoryQueued__table}
-            </tbody>
-          </table>
-          `
-
-          if (actionHistoryQueued__ListItem.getAttribute(`data-action-state`) === `completed`) {
-            actionHistoryQueued__arguments = actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)
+          let actionHistoryQueued__ListItem = document.createElement(`li`)
+          actionHistoryQueued__ListItem.setAttribute(`data-action-running-id`, data.data.id)
+          actionHistoryQueued__ListItem.setAttribute(`data-action-id`, data.data.actionId)
+          actionHistoryQueued__ListItem.setAttribute(`data-action-queued-data`, JSON.stringify(data))
+          actionHistoryQueued__ListItem.setAttribute(`data-action-state`, `queued`)
+  
+          let actionHistoryQueued__Title = document.createElement(`p`)
+          actionHistoryQueued__Title.classList.add(`title`)
+          actionHistoryQueued__Title.innerHTML = data.data.name
+  
+          let actionHistoryQueued__Button = document.createElement(`button`)
+          
+          actionHistoryQueued__Button.append(actionHistoryQueued__Title)
+          actionHistoryQueued__ListItem.append(actionHistoryQueued__Button)
+          actionHistoryQueued__List.prepend(actionHistoryQueued__ListItem)
+  
+          
+          actionHistoryQueued__Button.addEventListener(`click`, () => {
+            let actionHistoryQueued__table = ``
+            let actionHistoryQueued__arguments = actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)
             actionHistoryQueued__arguments = JSON.parse(actionHistoryQueued__arguments).data.arguments ?? {}
-    
-            actionHistoryQueued__table += `
-            <table class="styled" hidden id="completed">
-              <thead>
-                <th style="text-align: right;">Argument</th>
-                <th style="text-align: left;">Value</th>
-              </thead>
-              <tbody>
-            `
   
             Object.entries(actionHistoryQueued__arguments).forEach(argument => {
               actionHistoryQueued__table += `
@@ -1168,119 +1139,147 @@ async function connectws() {
               </tr>
               `
             });
-
-            actionHistoryQueued__table += `
+    
+            actionHistoryQueued__table = `
+            <table class="styled" hidden id="queued">
+              <thead>
+                <th style="text-align: right;">Argument</th>
+                <th style="text-align: left;">Value</th>
+              </thead>
+              <tbody>
+                ${actionHistoryQueued__table}
               </tbody>
             </table>
             `
-          }
-
-          document.body.insertAdjacentHTML(`afterbegin`, `
-          <div class="settings-modal-alt medium" data-settings-modal-alt="action-history">
-            <button class="close-button mdi mdi-close" onclick="this.parentNode.remove()"></button>
-            <div class="header">
-              <h2 class="title">${data.data.name}<small>• ${formatStreamerbotTimestamp(data.data.arguments.actionQueuedAt)}</small></h2>
-              <p class="subtitle">${data.data.actionId}</p>
-            </div>
-            <div class="main">
-              <h3>Arguments</h3>
-              <br>
-              ${actionHistoryQueued__table}
-              <div class="form-group styled re-run">
-                <button id="re-run">Re-run</button>
-              </div>
-            </div>
-          </div>
-          `)
-
-          if (actionHistoryQueued__ListItem.getAttribute(`data-action-state`) === `completed`) {
-            let actionHistoryCompletedDialog__List = document.createElement(`ul`)
-            actionHistoryCompletedDialog__List.className = `buttons-row`
-
-            let actionHistoryCompletedDialog__QueuedListItem = document.createElement(`li`)
-            
-            let actionHistoryCompletedDialog__CompletedListItem = document.createElement(`li`)
-            
-            let actionHistoryCompletedDialog__QueuedButton = document.createElement(`button`)
-            actionHistoryCompletedDialog__QueuedButton.innerHTML = `Queued`
-            actionHistoryCompletedDialog__QueuedButton.className = `mdi mdi-clock-fast`
-            
-            let actionHistoryCompletedDialog__CompletedButton = document.createElement(`button`)
-            actionHistoryCompletedDialog__CompletedButton.innerHTML = `Completed`
-            actionHistoryCompletedDialog__CompletedButton.className = `mdi mdi-check-bold`
-
-            actionHistoryCompletedDialog__QueuedListItem.append(actionHistoryCompletedDialog__QueuedButton)
-            actionHistoryCompletedDialog__CompletedListItem.append(actionHistoryCompletedDialog__CompletedButton)
-            actionHistoryCompletedDialog__CompletedListItem.className = `button-active`
-
-            actionHistoryCompletedDialog__List.append(actionHistoryCompletedDialog__QueuedListItem)
-            actionHistoryCompletedDialog__List.append(actionHistoryCompletedDialog__CompletedListItem)
-
-            actionHistoryCompletedDialog__QueuedButton.addEventListener(`click`, () => {
-              actionHistoryCompletedDialog__QueuedListItem.classList.add(`button-active`)
-
-              actionHistoryCompletedDialog__CompletedListItem.classList.add(`button-active`)
-              actionHistoryCompletedDialog__CompletedListItem.classList.remove(`button-active`)
-              reloadButtonStates()
-            })
-
-            actionHistoryCompletedDialog__CompletedButton.addEventListener(`click`, () => {
-              actionHistoryCompletedDialog__CompletedListItem.classList.add(`button-active`)
-
-              actionHistoryCompletedDialog__QueuedListItem.classList.add(`button-active`)
-              actionHistoryCompletedDialog__QueuedListItem.classList.remove(`button-active`)
-              reloadButtonStates()
-            })
-
-            reloadButtonStates()
-
-            function reloadButtonStates() {
-              if (actionHistoryCompletedDialog__CompletedListItem.classList.contains(`button-active`)) {
-                document.querySelector(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .main table#completed`).setAttribute(`hidden`, ``)
-                document.querySelector(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .main table#completed`).removeAttribute(`hidden`)
-                
-                document.querySelector(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .main table#queued`).setAttribute(`hidden`, ``)
-
-              } else if (actionHistoryCompletedDialog__QueuedListItem.classList.contains(`button-active`)) {
-                document.querySelector(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .main table#queued`).setAttribute(`hidden`, ``)
-                document.querySelector(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .main table#queued`).removeAttribute(`hidden`)
-                
-                document.querySelector(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .main table#completed`).setAttribute(`hidden`, ``)
-
-              }
+  
+            if (actionHistoryQueued__ListItem.getAttribute(`data-action-state`) === `completed`) {
+              actionHistoryQueued__arguments = actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)
+              actionHistoryQueued__arguments = JSON.parse(actionHistoryQueued__arguments).data.arguments ?? {}
+      
+              actionHistoryQueued__table += `
+              <table class="styled" hidden id="completed">
+                <thead>
+                  <th style="text-align: right;">Argument</th>
+                  <th style="text-align: left;">Value</th>
+                </thead>
+                <tbody>
+              `
+    
+              Object.entries(actionHistoryQueued__arguments).forEach(argument => {
+                actionHistoryQueued__table += `
+                <tr>
+                  <td style="text-align: right;">${argument[0]}</td>
+                  <td style="text-align: left;">${argument[1]}</td>
+                </tr>
+                `
+              });
+  
+              actionHistoryQueued__table += `
+                </tbody>
+              </table>
+              `
             }
-
-            document.querySelector(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .header`).append(document.createElement(`br`))
-            document.querySelector(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .header`).append(actionHistoryCompletedDialog__List)
-          }
-
-          document.querySelector(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .main .form-group.re-run button#re-run`).addEventListener(`click`, () => {
-            let arguments = []
-            document.querySelectorAll(`.settings-modal-alt.medium[data-settings-modal-alt="action-history"] .main table:not([hidden]) tbody tr`).forEach(tableRow => {
-              arguments.push([
-                tableRow.querySelector(`td:first-child`).innerHTML,
-                tableRow.querySelector(`td:last-child`).innerHTML
-              ])
-            });
-            arguments = Object.fromEntries(arguments)
-            ws.send(
-              JSON.stringify({
-                request: "DoAction",
-                action: {
-                  id: data.data.actionId
-                },
-                args: arguments,
-                id: "DoAction",
+  
+            createModal(`
+            <h3>Arguments</h3>
+            <br>
+            ${actionHistoryQueued__table}
+            <div class="form-group styled re-run">
+              <button id="re-run">Re-run</button>
+            </div>
+            `, `${data.data.name}<small>• ${formatStreamerbotTimestamp(data.data.arguments.actionQueuedAt)}</small>`, data.data.actionId, `medium`, {})
+  
+            if (actionHistoryQueued__ListItem.getAttribute(`data-action-state`) === `completed`) {
+              let actionHistoryCompletedDialog__List = document.createElement(`ul`)
+              actionHistoryCompletedDialog__List.className = `buttons-row`
+  
+              let actionHistoryCompletedDialog__QueuedListItem = document.createElement(`li`)
+              
+              let actionHistoryCompletedDialog__CompletedListItem = document.createElement(`li`)
+              
+              let actionHistoryCompletedDialog__QueuedButton = document.createElement(`button`)
+              actionHistoryCompletedDialog__QueuedButton.innerHTML = `Queued`
+              actionHistoryCompletedDialog__QueuedButton.className = `mdi mdi-clock-fast`
+              
+              let actionHistoryCompletedDialog__CompletedButton = document.createElement(`button`)
+              actionHistoryCompletedDialog__CompletedButton.innerHTML = `Completed`
+              actionHistoryCompletedDialog__CompletedButton.className = `mdi mdi-check-bold`
+  
+              actionHistoryCompletedDialog__QueuedListItem.append(actionHistoryCompletedDialog__QueuedButton)
+              actionHistoryCompletedDialog__CompletedListItem.append(actionHistoryCompletedDialog__CompletedButton)
+              actionHistoryCompletedDialog__CompletedListItem.className = `button-active`
+  
+              actionHistoryCompletedDialog__List.append(actionHistoryCompletedDialog__QueuedListItem)
+              actionHistoryCompletedDialog__List.append(actionHistoryCompletedDialog__CompletedListItem)
+              actionHistoryCompletedDialog__List.style.paddingBottom = `1rem`
+  
+              actionHistoryCompletedDialog__QueuedButton.addEventListener(`click`, () => {
+                actionHistoryCompletedDialog__QueuedListItem.classList.add(`button-active`)
+  
+                actionHistoryCompletedDialog__CompletedListItem.classList.add(`button-active`)
+                actionHistoryCompletedDialog__CompletedListItem.classList.remove(`button-active`)
+                reloadButtonStates()
               })
-            )
+  
+              actionHistoryCompletedDialog__CompletedButton.addEventListener(`click`, () => {
+                actionHistoryCompletedDialog__CompletedListItem.classList.add(`button-active`)
+  
+                actionHistoryCompletedDialog__QueuedListItem.classList.add(`button-active`)
+                actionHistoryCompletedDialog__QueuedListItem.classList.remove(`button-active`)
+                reloadButtonStates()
+              })
+  
+              reloadButtonStates()
+  
+              function reloadButtonStates() {
+                if (actionHistoryCompletedDialog__CompletedListItem.classList.contains(`button-active`)) {
+                  document.querySelector(`.settings-modal-alt .main table#completed`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.settings-modal-alt .main table#completed`).removeAttribute(`hidden`)
+                  
+                  document.querySelector(`.settings-modal-alt .main table#queued`).setAttribute(`hidden`, ``)
+  
+                } else if (actionHistoryCompletedDialog__QueuedListItem.classList.contains(`button-active`)) {
+                  document.querySelector(`.settings-modal-alt .main table#queued`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.settings-modal-alt .main table#queued`).removeAttribute(`hidden`)
+                  
+                  document.querySelector(`.settings-modal-alt .main table#completed`).setAttribute(`hidden`, ``)
+  
+                }
+              }
+  
+              document.querySelector(`.settings-modal-alt .main`).prepend(actionHistoryCompletedDialog__List)
+            }
+  
+            document.querySelector(`.settings-modal-alt .main .form-group.re-run button#re-run`).addEventListener(`click`, () => {
+              let arguments = []
+              document.querySelectorAll(`.settings-modal-alt .main table:not([hidden]) tbody tr`).forEach(tableRow => {
+                arguments.push([
+                  tableRow.querySelector(`td:first-child`).innerHTML,
+                  tableRow.querySelector(`td:last-child`).innerHTML
+                ])
+              });
+              arguments = Object.fromEntries(arguments)
+              ws.send(
+                JSON.stringify({
+                  request: "DoAction",
+                  action: {
+                    id: data.data.actionId
+                  },
+                  args: arguments,
+                  id: "DoAction",
+                })
+              )
+            })
           })
-        })
+        }
       }
 
       if (location.hash === `#Actions` && data?.event?.source === `Raw` && data?.event?.type === `ActionCompleted`) {
-        let actionHistoryCompleted__ListItem = document.querySelector(`main aside .card-grid .card.action-history ul li[data-action-running-id="${data.data.id}"]`)
-        actionHistoryCompleted__ListItem.setAttribute(`data-action-completed-data`, JSON.stringify(data))
-        actionHistoryCompleted__ListItem.setAttribute(`data-action-state`, `completed`)
+        if (data.data.name != `Streamer.bot Toolbox Partial - Websocket Handler`) {
+          let actionHistoryCompleted__ListItem = document.querySelector(`main aside .card-grid .card.action-history ul li[data-action-running-id="${data.data.id}"]`)
+          actionHistoryCompleted__ListItem.setAttribute(`data-action-completed-data`, JSON.stringify(data))
+          actionHistoryCompleted__ListItem.setAttribute(`data-action-state`, `completed`)
+        }
       }
       
       if (location.hash === `#Present-Viewers` && data.id === `GetActiveViewers`) {
@@ -1358,7 +1357,9 @@ async function connectws() {
         document.querySelector(`main`).innerHTML = `
         <div class="card-grid">
           <div class="card">
-            <p class="card-title">Get Global Variable</p>
+            <div class="card-header">                
+              <p class="card-title">Get Global Variable</p>
+            </div>
             <hr>
             <div class="form-group styled">
               <label for="get-global-variable--variable-name">Variable Name</label>
@@ -1374,7 +1375,9 @@ async function connectws() {
           <!--  -->
 
           <div class="card">
-            <p class="card-title">Set Global Variable</p>
+            <div class="card-header">
+              <p class="card-title">Set Global Variable</p>
+            </div>
             <hr>
             <div class="form-group styled">
               <label for="set-global-variable--variable-name">Variable Name</label>
@@ -1393,7 +1396,9 @@ async function connectws() {
           <!--  -->
 
           <div class="card">
-            <p class="card-title">Unset Global Variable</p>
+            <div class="card-header">
+              <p class="card-title">Unset Global Variable</p>
+            </div>
             <hr>
             <div class="form-group styled">
               <label for="unset-global-variable--variable-name">Variable Name</label>
@@ -1586,7 +1591,9 @@ async function connectws() {
                 <br>
                 <div class="card-grid">
                   <div class="card enabled-state">
-                    <p class="card-title">Enabled State</p>
+                    <div class="card-header">
+                      <p class="card-title">Enabled State</p>
+                    </div>
                     <hr>
                     <div class="form-group styled flex">
                       <button id="enable">Enable</button>
@@ -1598,7 +1605,9 @@ async function connectws() {
                   <!--  -->
 
                   <div class="card global-cooldown">
-                    <p class="card-title">Global Cooldown (in seconds)</p>
+                    <div class="card-header">
+                      <p class="card-title">Global Cooldown (in seconds)</p>
+                    </div>
                     <hr>
                     <div class="form-group styled flex">
                       <button id="reset">Reset</button>
@@ -1615,7 +1624,9 @@ async function connectws() {
                   <!--  -->
 
                   <div class="card user-cooldown">
-                    <p class="card-title">User Cooldown (in seconds)</p>
+                    <div class="card-header">
+                      <p class="card-title">User Cooldown (in seconds)</p>
+                    </div>
                     <hr>
                     <div class="form-group styled flex">
                       <button id="reset">Reset</button>
@@ -1931,7 +1942,6 @@ async function connectws() {
               id: `DoAction`
             })
           )
-
         } else {
           document.body.setAttribute(`obs-connection-state`, `disconnected`)
         }
@@ -1940,6 +1950,7 @@ async function connectws() {
       if (location.hash === `#OBS-Studio` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
         obsData = data.data.wsData
         obsData = JSON.parse(obsData)
+        if (data.data.requestType != undefined) console.log(`[OBS Websocket] Request ${data.data.requestType}:`, obsData)
 
         let obsConnection = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
         obsConnection = obsConnection.connection
@@ -1968,14 +1979,48 @@ async function connectws() {
             </div>
             <aside>
               <div class="card-grid">
-                <div class="card ">
-                  <p class="card-title">Settings</p>
-                  <hr>
-                  <ul class="styled"></ul>
+                <div class="card settings">
+                  <div class="card-header">
+                    <p class="card-title">Settings</p>
+                    </div>
+                    <hr>
+                    <div class="form-group" title="This switches scenes when clicking on items in the navbar.">
+                      <input type="checkbox" name="nav-switch-scenes" id="nav-switch-scenes"${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"navSwitchScenes": true}`).navSwitchScenes ? `checked` : ``}>
+                      <label for="nav-switch-scenes">Navbar Switch Scenes</label>
+                    </div>
+                    <div class="form-group styled">
+                      <button id="scene-preview">Open preview image from current Scene</button>
+                    </div>
                 </div>
               </div>
             </aside>
             `
+
+            document.querySelector(`.card-grid .card.settings .form-group #nav-switch-scenes`).onchange = () => {
+              let streamerbotToolbox__obsStudio = localStorage.getItem(`streamerbotToolbox__obsStudio`) || `{}`
+              streamerbotToolbox__obsStudio = JSON.parse(streamerbotToolbox__obsStudio) || {}
+              streamerbotToolbox__obsStudio.navSwitchScenes = document.querySelector(`.card-grid .card.settings .form-group #nav-switch-scenes`).checked
+              localStorage.setItem(`streamerbotToolbox__obsStudio`, JSON.stringify(streamerbotToolbox__obsStudio))
+            }
+
+            document.querySelector(`.card-grid .card.settings .form-group #scene-preview`).onclick = () => {
+              ws.send(
+                JSON.stringify({
+                  request: `DoAction`,
+                  action: {
+                    name: streamerbotActionPackage__name
+                  },
+                  args: {
+                    wsRequest: `ObsSendRaw`,
+                    wsDataConnection: obsConnection,
+                    wsDataRequestType: `GetCurrentProgramScene`,
+                    wsDataRequestData: JSON.stringify({})
+                  },
+                  id: `DoAction`
+                })
+              )
+            }
+
 
             document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(listItem => {
               listItem.querySelector(`button`).addEventListener(`click`, () => {
@@ -1990,7 +2035,9 @@ async function connectws() {
                 document.querySelector(`main .main`).innerHTML = `
                 <div class="card-grid">
                   <div class="card sources">
-                    <p class="card-title">Sources</p>
+                    <div class="card-header">
+                      <p class="card-title">Sources</p>
+                    </div>
                     <hr>
                     <ul class="styled"></ul>
                   </div>
@@ -2012,6 +2059,24 @@ async function connectws() {
                     id: `DoAction`
                   })
                 )
+
+                if (JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"navSwitchScenes": true}`).navSwitchScenes) {
+                  ws.send(
+                    JSON.stringify({
+                      request: `DoAction`,
+                      action: {
+                        name: streamerbotActionPackage__name
+                      },
+                      args: {
+                        wsRequest: `ObsSendRaw`,
+                        wsDataConnection: obsConnection,
+                        wsDataRequestType: `SetCurrentProgramScene`,
+                        wsDataRequestData: JSON.stringify({"sceneName": listItem.querySelector(`p.title`).innerText})
+                      },
+                      id: `DoAction`
+                    })
+                  )
+                }
               })
             });
 
@@ -2052,6 +2117,10 @@ async function connectws() {
                           class="no-pointer mdi mdi-${sourceData.sceneItemLocked ? `lock-remove` : `lock-open-check`}"
                           title="${sourceData.sceneItemLocked ? `The source is locked` : `The source is unlocked`}"
                           >${sourceData.sceneItemLocked ? `Locked` : `Unlocked`}</button>
+                          <button
+                          class="no-pointer mdi mdi-${sourceData.sceneItemEnabled ? `eye` : `eye-off`}"
+                          title="${sourceData.sceneItemEnabled ? `The source is visible` : `The source is hidden`}"
+                          >${sourceData.sceneItemEnabled ? `Visible` : `Hidden`}</button>
                       </ul>
                     </td>
                   </tr>
@@ -2059,6 +2128,30 @@ async function connectws() {
                 `, `${sourceData.sourceName}`, `Inspect Source Properties`, `small`)
               })
             });
+            break
+          case `GetSourceScreenshot`:
+            createModal(`<img src="${obsData.imageData}" alt="Preview image from current Scene">`, `Preview image from current Scene`, undefined, `medium`, {})
+            break
+          case `GetCurrentProgramScene`:
+            ws.send(
+              JSON.stringify({
+                request: `DoAction`,
+                action: {
+                  name: streamerbotActionPackage__name
+                },
+                args: {
+                  wsRequest: `ObsSendRaw`,
+                  wsDataConnection: obsConnection,
+                  wsDataRequestType: `GetSourceScreenshot`,
+                  wsDataRequestData: JSON.stringify({
+                    sourceName: obsData.currentProgramSceneName,
+                    imageFormat: `jpg`,
+                    imageCompressionQuality: 100
+                  })
+                },
+                id: `DoAction`
+              })
+            )
             break
           default:
             break
@@ -2354,17 +2447,21 @@ function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefin
     }
   
     document.body.insertAdjacentHTML(`afterbegin`, `
-    <div class="settings-modal-alt ${scale}"${attributes}>
-      <button 
-        class="close-button mdi mdi-close" 
-        onclick="
-          document.body.setAttribute('data-modal-state', 'closing'); if (document.querySelector('.settings-modal-alt').getAttribute('data-reload') === '') { location.reload; }; setTimeout(() => { document.body.setAttribute('data-modal-state', 'closed'); this.parentNode.remove(); }, 500);"></button>
-      <div class="header">
-        <h2 class="title">${modalTitle}</h2>
-        ${modalSubtitle}
-      </div>
-      <div class="main">
-        ${modalHtml}
+    <div class="settings-modal-alt-wrapper">
+      <div class="settings-modal-alt ${scale}"${attributes}>
+        <div class="header">
+          <div>
+            <h2 class="title">${modalTitle}</h2>
+            ${modalSubtitle}
+          </div>
+          <button 
+            class="close-button mdi mdi-close-thick" 
+            onclick="document.body.setAttribute('data-modal-state', 'closing'); if (document.querySelector('.settings-modal-alt-wrapper').getAttribute('data-reload') === '') { location.reload; }; setTimeout(() => { document.body.setAttribute('data-modal-state', 'closed'); document.querySelector('.settings-modal-alt-wrapper').remove(); }, 500);"
+          >Close</button>
+        </div>
+        <div class="main">
+          ${modalHtml}
+        </div>
       </div>
     </div>
     `)
@@ -2380,13 +2477,12 @@ document.addEventListener(`click`, (e) => {
   if (e.target.tagName === `BODY`) {
     if (document.body.getAttribute(`data-modal-state`) === `opened`) {
       document.body.setAttribute(`data-modal-state`, `closing`)
-      if (document.querySelector(`.settings-modal-alt`).getAttribute(`data-reload`) === ``) {
+      if (document.querySelector(`.settings-modal-alt-wrapper`).getAttribute(`data-reload`) === ``) {
         location.reload()
       }
-      console.log(`HEY`)
       setTimeout(() => {
         document.body.setAttribute(`data-modal-state`, `closed`)
-        document.querySelector(`.settings-modal-alt`).remove()
+        document.querySelector(`.settings-modal-alt-wrapper`).remove()
       }, 500);
     }
   }
