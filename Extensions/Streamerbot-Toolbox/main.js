@@ -53,6 +53,10 @@ let headerLinksMap = [
     icon: `mdi mdi-comment-alert`
   },
   {
+    name: `OBS Studio`,
+    integration: `twitchspeaker`
+  },
+  {
     name: `TwitchSpeaker`,
     integration: `twitchspeaker`
   }
@@ -240,6 +244,23 @@ async function connectws() {
               },
             }))
 
+            let obsConnection = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
+            obsConnection = obsConnection.connection
+
+            ws.send(
+              JSON.stringify({
+                request: `DoAction`,
+                action: {
+                  name: streamerbotActionPackage__name
+                },
+                args: {
+                  wsRequest: `ObsIsConnected`,
+                  wsData: obsConnection
+                },
+                id: `DoAction`
+              })
+            )
+
             document.body.setAttribute(`data-streamerbot-action-package`, `installed`)
           }
 
@@ -328,6 +349,7 @@ async function connectws() {
           <li class="nav-active"><button data-page="integrations">Integrations</button></li>
           <li><button data-page="broadcaster">Broadcaster</button></li>
           <li><button data-page="random-users">Random Users</button></li>
+          <li><button data-page="obs-studio">OBS Studio</button></li>
         </ul></nav>
         <div class="header">
           <div class="info"><p class="title"></p><p class="description"></p></div>
@@ -341,6 +363,7 @@ async function connectws() {
             if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `integrations`) reloadIntegrations()
             if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `broadcaster`) reloadBroadcaster()
             if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `random-users`) reloadRandomUsers()
+            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `obs-studio`) reloadObsStudio()
           }
 
           document.querySelectorAll(`.settings-modal nav ul li button`).forEach(navButton => {
@@ -370,7 +393,7 @@ async function connectws() {
 
             if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download & More Info</button></li>`)
             if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, You've edited something that breaks it <button id="more-info">Please re-install it again</button></li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, You have broken something <button id="more-info">Please re-install it again</button></li>`)
             if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl}</li>`)
 
             if (document.body.getAttribute(`data-streamerbot-action-package`) != `installed`) {
@@ -381,9 +404,10 @@ async function connectws() {
                   <div class="main">
                     <h2>Streamer.bot Action Package</h3>
                     <br>
-                    <p>The Streamer.bot Action Package is used for getting/setting global variables and sending chat messages to Twitch/YouTube.</p>
+                    <p>The Streamer.bot Action Package is used for getting/setting global variables, sending chat messages to Twitch/YouTube, and command features.</p>
+                    <p>When this action is imported it will show more tabs and it will even show more features on certain tabs.</p>
                     <br>
-                    <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, these features won't work anymore. Also when your Streamer.bot Action Package is outdated it also won't work anymore and thus you need to re-import it again.</p>
+                    <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, this will break. When your Streamer.bot Action Package is outdated it won't work anymore and you need to import the new version.</p>
                     <br>
                     <button onclick="window.open('./action-package.sb')">Download</button>
                   </div>
@@ -419,30 +443,28 @@ async function connectws() {
                 twitchspeakerDefaultValues = JSON.parse(twitchspeakerDefaultValues)
               }
 
-              document.body.insertAdjacentHTML(`afterbegin`, `
-                <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
-                <button class="close-button mdi mdi-close" onclick="location.reload()"></button>
-                <div class="main"><h2>TwitchSpeaker</h3><br><table><tbody>
-                  <tr>
-                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Host</label></td>
-                    <td style="text-align: left;"><input type="url" name="websocket-host" id="websocket-host" value="${twitchspeakerDefaultValues.host}" placeholder="${twitchspeakerDefaultValues.host}"></td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Port</label></td>
-                    <td style="text-align: left;"><input type="url" name="websocket-port" id="websocket-port" value="${twitchspeakerDefaultValues.port}" placeholder="${twitchspeakerDefaultValues.port}"></td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Endpoint</label></td>
-                    <td style="text-align: left;"><input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${twitchspeakerDefaultValues.endpoint}" placeholder="${twitchspeakerDefaultValues.endpoint}"></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td style="text-align: right;"><button class="connect-button">Connect!</button></td>
-                  </tr>
-                </tbody></table></div></div>
-              `)
+              createModal(`
+                <table><tbody>
+                <tr>
+                  <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Host</label></td>
+                  <td style="text-align: left;"><input type="url" name="websocket-host" id="websocket-host" value="${twitchspeakerDefaultValues.host}" placeholder="${twitchspeakerDefaultValues.host}"></td>
+                </tr>
+                <tr>
+                  <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Port</label></td>
+                  <td style="text-align: left;"><input type="url" name="websocket-port" id="websocket-port" value="${twitchspeakerDefaultValues.port}" placeholder="${twitchspeakerDefaultValues.port}"></td>
+                </tr>
+                <tr>
+                  <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Endpoint</label></td>
+                  <td style="text-align: left;"><input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${twitchspeakerDefaultValues.endpoint}" placeholder="${twitchspeakerDefaultValues.endpoint}"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td style="text-align: right;"><button class="connect-button">Connect!</button></td>
+                </tr>
+              </tbody></table>
+              `, `TwitchSpeaker Settings`, undefined, `small`, {reload: true})
                     
-                document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
+                document.querySelector(`.settings-modal-alt .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
                   let table = document.querySelector(`.settings-modal-alt[data-settings-modal-alt=twitchspeaker-connection] .main table`)
                   localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify({
                       host: table.querySelector(`tbody tr td input#websocket-host`).value,
@@ -474,7 +496,12 @@ async function connectws() {
               options = options.Disabled + options.Twitch + options.YouTube
             }
             
-            document.querySelector(`.settings-modal .main`).innerHTML = `<p>Choose Between YouTube or Twitch</p><small>When the service is disconnected no broadcaster variables will be emitted</small><p><select>${options}</select></p>`
+            document.querySelector(`.settings-modal .main`).innerHTML = `
+            <p>Choose Between YouTube or Twitch</p>
+              <small>When the service is disconnected no broadcaster variables will be emitted</small>
+            <div class="form-group styled">
+              <select>${options}</select>
+            </div>`
 
             localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.settings-modal .main select`).value)
             document.querySelector(`.settings-modal .main select`).addEventListener(`click`, function () {
@@ -490,8 +517,12 @@ async function connectws() {
             if (prevRandomUsers <= 0) prevRandomUsers = `0`
             if (isNaN(prevRandomUsers)) prevRandomUsers = `0`
 
-            document.querySelector(`.settings-modal .main`).innerHTML = `<div class="form-group"><label>Random Users:</label> <input type="number" value="${prevRandomUsers}"></div>`           
-            
+            document.querySelector(`.settings-modal .main`).innerHTML = `
+            <div class="form-group styled">
+              <label>Random Users</label>
+              <input type="number" value="${prevRandomUsers}">
+            </div>
+            `            
             localStorage.setItem(`streamerbotToolbox__randomUsers`, document.querySelector(`.settings-modal .main input`).value)
 
             document.querySelector(`.settings-modal .main input`).addEventListener(`keydown`, function () {
@@ -500,6 +531,36 @@ async function connectws() {
                 if (randomUsers <= 0) randomUsers = 0
                 if (isNaN(randomUsers)) randomUsers = 0
                 localStorage.setItem(`streamerbotToolbox__randomUsers`, randomUsers)
+              }, 50);
+            })
+          }
+
+          function reloadObsStudio() {
+            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Settings • OBS Studio`
+            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Settings for OBS Studio`
+            
+            let streamerbotToolbox__obsStudio = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: `0`}
+            if (streamerbotToolbox__obsStudio <= 0) streamerbotToolbox__obsStudio.connection = 0
+            if (isNaN(streamerbotToolbox__obsStudio)) streamerbotToolbox__obsStudio.connection = 0
+
+            document.querySelector(`.settings-modal .main`).innerHTML = `
+            <div class="form-group styled">
+              <p>OBS Studio is fully managed with Streamer.bot in combination with the Streamer.bot Action Package</p>
+              <br>
+              <label>Connection</label>
+              <input type="number" value="${streamerbotToolbox__obsStudio.connection}">
+            </div>
+            `
+            
+            localStorage.setItem(`streamerbotToolbox__obsStudio`, JSON.stringify(streamerbotToolbox__obsStudio))
+
+            document.querySelector(`.settings-modal .main input`).addEventListener(`keydown`, function () {
+              setTimeout(() => {
+                let streamerbotToolbox__obsStudio = {}
+                streamerbotToolbox__obsStudio.connection = document.querySelector(`.settings-modal .main input`).value
+                if (streamerbotToolbox__obsStudio.connection <= 0) streamerbotToolbox__obsStudio.connection = 0
+                if (isNaN(streamerbotToolbox__obsStudio.connection)) streamerbotToolbox__obsStudio.connection = 0
+                localStorage.setItem(`streamerbotToolbox__obsStudio`, JSON.stringify(streamerbotToolbox__obsStudio))
               }, 50);
             })
           }
@@ -585,6 +646,14 @@ async function connectws() {
             <p>• Streamer.bot</p>
             <p>• Streamer.bot Action Package (contains global variables, chat features, and more!)</p>
             <p>• TwitchSpeaker</p>
+            <br>
+            <p>Features:</p>
+            <p>• Action Management with Custom Arguments, Event Emulatation and Action History</p>
+            <p>• Present Viewers List</p>
+            <p>• View all websocket events</p>
+            <p>• Add/Update/Remove Global Arguments</p>
+            <p>• Change command settings</p>
+            <p>• TwitchSpeaker Settings Management</p>
             <br>
             <p><b>Open the settings in bottom right to enable these integrations or for more info</b></p>
           </div>
@@ -1840,6 +1909,161 @@ async function connectws() {
           }
         }
       }
+
+      if (location.hash === `#OBS-Studio` && data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsRequest === `ObsIsConnected`) {
+        if (data.data.wsData === true) {
+          let obsConnection = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
+          obsConnection = obsConnection.connection
+          document.body.setAttribute(`obs-connection-state`, `connected`)
+          
+          ws.send(
+            JSON.stringify({
+              request: `DoAction`,
+              action: {
+                name: streamerbotActionPackage__name
+              },
+              args: {
+                wsRequest: `ObsSendRaw`,
+                wsDataConnection: obsConnection,
+                wsDataRequestType: `GetSceneList`,
+                wsDataRequestData: JSON.stringify({})
+              },
+              id: `DoAction`
+            })
+          )
+
+        } else {
+          document.body.setAttribute(`obs-connection-state`, `disconnected`)
+        }
+      }
+      
+      if (location.hash === `#OBS-Studio` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
+        obsData = data.data.wsData
+        obsData = JSON.parse(obsData)
+
+        let obsConnection = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
+        obsConnection = obsConnection.connection
+
+        switch (data?.data?.requestType) {
+          case `GetSceneList`:
+            let scenes = []
+            for (let sceneCount = obsData.scenes.length - 1; 0 <= sceneCount; sceneCount = sceneCount - 1) {
+              scenes.push(obsData.scenes[sceneCount].sceneName)
+            }
+
+            scenes.forEach(scene => {
+              document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `
+              <li class="navbar-list-item">
+                <button>
+                  <p class="title">${scene}</p>
+                </button>
+              </li>
+              `)  
+            });
+
+            document.querySelector(`main`).classList.add(`col-2`)
+            document.querySelector(`main`).innerHTML = `
+            <div class="main">
+            
+            </div>
+            <aside>
+              <div class="card-grid">
+                <div class="card ">
+                  <p class="card-title">Settings</p>
+                  <hr>
+                  <ul class="styled"></ul>
+                </div>
+              </div>
+            </aside>
+            `
+
+            document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(listItem => {
+              listItem.querySelector(`button`).addEventListener(`click`, () => {
+                listItem.classList.add(`nav-active`)
+                
+                document.querySelectorAll(`.nav-active`).forEach(navActiveListItem => {
+                  navActiveListItem.classList.remove(`nav-active`)
+                });
+
+                listItem.classList.add(`nav-active`)
+
+                document.querySelector(`main .main`).innerHTML = `
+                <div class="card-grid">
+                  <div class="card sources">
+                    <p class="card-title">Sources</p>
+                    <hr>
+                    <ul class="styled"></ul>
+                  </div>
+                </div>
+                `
+
+                ws.send(
+                  JSON.stringify({
+                    request: `DoAction`,
+                    action: {
+                      name: streamerbotActionPackage__name
+                    },
+                    args: {
+                      wsRequest: `ObsSendRaw`,
+                      wsDataConnection: obsConnection,
+                      wsDataRequestType: `GetSceneItemList`,
+                      wsDataRequestData: JSON.stringify({"sceneName": listItem.querySelector(`p.title`).innerText})
+                    },
+                    id: `DoAction`
+                  })
+                )
+              })
+            });
+
+            break
+          case `GetSceneItemList`:
+            obsData.sceneItems.forEach(sceneItem => {
+              document.querySelector(`main .main .card-grid .card.sources ul`).insertAdjacentHTML(`beforeend`, `
+              <li data-source-information="${JSON.stringify(sceneItem).replaceAll(`"`, `'`)}"><button>${sceneItem.sourceName}</button></li>
+              `)
+            });
+
+            document.querySelectorAll(`main .main .card-grid .card.sources ul li`).forEach(listItem => {
+              listItem.querySelector(`button`).addEventListener(`click`, () => {
+                let sourceData = JSON.parse(listItem.getAttribute(`data-source-information`).replaceAll(`'`, `"`))
+                createModal(`
+                <table class="styled">
+                  <tr>
+                    <td>Input Kind</td>
+                    <td>${sourceData.isGroup === true ? `group` : sourceData.inputKind === null ? `unknown` : sourceData.inputKind}</td>
+                  </tr>
+                  <tr>
+                    <td>Source Type</td>
+                    <td>${sourceData.sourceType}</td>
+                  </tr>
+                  <tr>
+                    <td>Blend Mode</td>
+                    <td>${sourceData.sceneItemBlendMode}</td>
+                  </tr>
+                  <tr>
+                    <td>Scene Item Id</td>
+                    <td>${sourceData.sceneItemId}</td>
+                  </tr>
+                  <tr>
+                    <td>Additional Information</td>
+                    <td>
+                      <ul class="buttons-row">
+                        <button
+                          class="no-pointer mdi mdi-${sourceData.sceneItemLocked ? `lock-remove` : `lock-open-check`}"
+                          title="${sourceData.sceneItemLocked ? `The source is locked` : `The source is unlocked`}"
+                          >${sourceData.sceneItemLocked ? `Locked` : `Unlocked`}</button>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+                `, `${sourceData.sourceName}`, `Inspect Source Properties`, `small`)
+              })
+            });
+            break
+          default:
+            break
+        }
+      }
     })
   }
 }
@@ -2114,3 +2338,56 @@ function formatStreamerbotTimestamp(timestamp) {
 
   return timestamp
 }
+
+function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefined, scale = `small`, settings = {}) {
+  if (document.body.getAttribute(`modal-state`) != `opened` && document.body.getAttribute(`modal-state`) != `opening`) {
+    if (modalSubtitle != undefined || modalSubtitle != null) {
+      modalSubtitle = `<p class="subtitle">${modalSubtitle}</p>`
+    } else {
+      modalSubtitle = ``
+    }
+
+    let attributes = ``
+
+    if (settings.reload === true) {
+      attributes = `data-reload `
+    }
+  
+    document.body.insertAdjacentHTML(`afterbegin`, `
+    <div class="settings-modal-alt ${scale}"${attributes}>
+      <button 
+        class="close-button mdi mdi-close" 
+        onclick="
+          document.body.setAttribute('data-modal-state', 'closing'); if (document.querySelector('.settings-modal-alt').getAttribute('data-reload') === '') { location.reload; }; setTimeout(() => { document.body.setAttribute('data-modal-state', 'closed'); this.parentNode.remove(); }, 500);"></button>
+      <div class="header">
+        <h2 class="title">${modalTitle}</h2>
+        ${modalSubtitle}
+      </div>
+      <div class="main">
+        ${modalHtml}
+      </div>
+    </div>
+    `)
+
+    document.body.setAttribute(`data-modal-state`, `opening`)
+    setTimeout(() => {
+      document.body.setAttribute(`data-modal-state`, `opened`)
+    }, 500);
+  }
+}
+
+document.addEventListener(`click`, (e) => {
+  if (e.target.tagName === `BODY`) {
+    if (document.body.getAttribute(`data-modal-state`) === `opened`) {
+      document.body.setAttribute(`data-modal-state`, `closing`)
+      if (document.querySelector(`.settings-modal-alt`).getAttribute(`data-reload`) === ``) {
+        location.reload()
+      }
+      console.log(`HEY`)
+      setTimeout(() => {
+        document.body.setAttribute(`data-modal-state`, `closed`)
+        document.querySelector(`.settings-modal-alt`).remove()
+      }, 500);
+    }
+  }
+})

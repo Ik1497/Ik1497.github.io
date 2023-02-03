@@ -543,8 +543,10 @@ main.col-2 aside .card {
 }
 
 .settings-modal-alt .main {
-  overflow: auto;
-  max-height: 90%;
+  width: 100%;
+  height: calc(100% - 6rem);
+  overflow-y: auto;
+  padding-top: 1rem;
 }
 
 .settings-modal-alt.small {
@@ -569,8 +571,13 @@ body:has(> .settings-modal-alt) > .settings-modal {
   display: none;
 }
 
+body[data-modal-state] *:not(.settings-modal-alt) {
+  transition: opacity .5s ease;
+}
+
 body:has(> .settings-modal):not(:has(.settings-modal-alt)) > *:not(.settings-modal),
-body:has(> .settings-modal-alt) > *:not(.settings-modal-alt) {
+body[data-modal-state="opening"] > *:not(.settings-modal-alt),
+body[data-modal-state="opened"] > *:not(.settings-modal-alt) {
   opacity: .57;
   pointer-events: none;
 }
@@ -696,7 +703,7 @@ body:has(> .settings-modal) .open-settings-modal {
   width: 80%;
   margin-left: auto;
   padding-inline: 3em;
-  padding-block: 1rem;
+  padding-bottom: 2rem;
 }
 
 .settings-modal .main table {
@@ -767,6 +774,38 @@ body:has(> .settings-modal) .open-settings-modal {
   z-index: 100;
 }
 
+/* Animations */
+
+body[data-modal-state="opening"] .settings-modal-alt {
+  animation: modalAltOpening forwards .5s;
+}
+
+body[data-modal-state="closing"] .settings-modal-alt {
+  animation: modalAltClosing forwards .5s;
+}
+
+@keyframes modalAltOpening {
+  0% {
+    scale: 0;
+    opacity: 0;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes modalAltClosing {
+  0% {
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    scale: 0;
+    opacity: 0;
+  }
+}
+
 /* ----------- */
 /* blockquotes */
 /* ----------- */
@@ -791,6 +830,12 @@ blockquote::before {
   font-size: 1.3rem;
   padding-right: .35rem;
   color: inherit;
+}
+
+blockquote.success {
+  --icon: "\F02FC";
+  background: #232f23;
+  color: #4caf50;
 }
 
 blockquote.info {
@@ -966,5 +1011,11 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
 
 .grid.auto-col {
   --col-width: 600px;
+  --gap-size: .5rem;
+  gap: var(--gap-size);
   grid-template-columns: repeat(auto-fit, minmax(var(--col-width), 1fr));
+}
+
+i.mdi {
+  font-style: normal;
 }
