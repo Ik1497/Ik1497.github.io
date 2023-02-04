@@ -21,10 +21,15 @@ html {
   overflow: hidden;
 
   display: flex;
+  color-scheme: dark;
 }
 
 img {
   max-width: 100%;
+}
+
+button {
+  cursor: pointer;
 }
 
 body.disconnected>*:not(header),
@@ -171,7 +176,8 @@ header aside button {
 }
 
 .buttons-row a,
-.buttons-row button {
+.buttons-row button,
+.buttons-row.list-items li {
   border: none;
   outline: none;
   text-decoration: none;
@@ -321,6 +327,7 @@ ul.styled {
   height: calc(100vh - 8.5em);
   overflow-y: auto;
   padding-block: .5em;
+  padding-inline: .5em;
 }
 
 ul.styled {
@@ -334,7 +341,7 @@ ul.styled li {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-inline: .5em;
+  position: relative;
 }
 
 .navbar .navbar-list .navbar-list-item .title {
@@ -368,6 +375,19 @@ ul.styled li button {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+ul.styled li button.prepend {
+  position: absolute;
+  right: 0;
+  bottom: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: fit-content;
+  height: fit-content;
+  padding-inline: .9rem;
+  background: none;
+  border-radius: 100vmax;
 }
 
 .navbar .navbar-list .navbar-list-item button:active,
@@ -914,7 +934,7 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
 
 .send-message {
   position: absolute;
-  bottom: 0;
+  bottom: -2.25rem;
   left: 0;
   right: 0;
 }
@@ -942,19 +962,10 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
   margin-block: .5rem;
 }
 
-.form-group.styled input:not([type=checkbox]),
-.form-group.styled select {
-  width: 100%;
-}
-
-.form-group.styled input:not([type=checkbox]).fit-content,
-.form-group.styled select.fit-content {
-  width: fit-content;
-}
-
-.form-group.styled button {
-  padding-block: .5rem;
-  cursor: pointer;
+.form-group.styled input:not([type=checkbox]):disabled,
+.form-group.styled button:disabled,
+.form-group.styled select:disabled {
+  filter: brightness(.5);
 }
 
 .form-group.styled input:focus-visible:not([type=checkbox]),
@@ -964,7 +975,29 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
   border-color: var(--background-lighten);
 }
 
+.form-group.styled input:not([type=checkbox]),
+.form-group.styled select {
+  width: 100%;
+}
+
+.form-group.styled button {
+  padding-block: .5rem;
+  cursor: pointer;
+}
+
 /* Style Classes */
+
+.form-group.styled input:not([type=checkbox]).fit-content,
+.form-group.styled select.fit-content,
+.form-group.styled button.fit-content {
+  width: fit-content;
+}
+
+.form-group.styled input:not([type=checkbox]).full,
+.form-group.styled select.full,
+.form-group.styled button.full {
+  width: 100%;
+}
 
 .form-group.styled button.outlined {
   background: none;
@@ -1002,7 +1035,28 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
   margin-block: 0;
 }
 
-/* ------ */
+/* -------- */
+/* Dropdown */
+/* -------- */
+
+.dropdown-section {
+  position: relative;
+}
+
+.dropdown-section .dropdown-list {
+  display: none;
+  position: absolute;
+  right: 0;
+  bottom: -100%;
+  z-index: 10;
+  box-shadow: 0 0 10px var(--text-background-900);
+}
+
+.dropdown-section:focus-within .dropdown-list {
+  display: block;
+}
+
+/* ----- */
 /* Cards */
 /* ----- */
 
@@ -1088,4 +1142,19 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
 
 i.mdi {
   font-style: normal;
+}
+
+.no-style {
+  border: none;
+  border-radius: none;
+  outline: none;
+  color: var(--text-900);
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+select.no-style {
+  --background: var(--background-soft);
+  background: var(--background);
 }
