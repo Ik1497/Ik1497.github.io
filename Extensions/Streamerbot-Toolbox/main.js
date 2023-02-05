@@ -3,6 +3,10 @@ let title = `Streamer.bot Toolbox v${version}`
 let documentTitle = `${title} | Streamer.bot Actions`
 document.title = documentTitle
 
+let streamerbotActionPackage__version = version
+let streamerbotActionPackage__name  = `Streamer.bot Toolbox Partial - Websocket Handler`
+let streamerbotActionPackage__group = `Streamer.bot Toolbox Partials (v${streamerbotActionPackage__version})`
+
 let streamerbotToolbox__connection = localStorage.getItem(`streamerbotToolbox__connection`)
 if (streamerbotToolbox__connection === undefined || streamerbotToolbox__connection === null || streamerbotToolbox__connection === ``) {
   streamerbotToolbox__connection = {
@@ -164,10 +168,6 @@ document.querySelector(`nav.navbar > input[type=search]`).addEventListener(`keyd
 window.addEventListener('hashchange', () => {
   location.reload()
 });
-
-let streamerbotActionPackage__name  = `Streamer.bot Toolbox Partial - Websocket Handler`
-let streamerbotActionPackage__version = `1.0.0`
-let streamerbotActionPackage__group = `Streamer.bot Toolbox Partials (v${streamerbotActionPackage__version})`
 
 connectws()
 
