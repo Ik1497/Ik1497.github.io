@@ -1291,6 +1291,10 @@ select.no-style {
     z-index: 1001;
   }
 
+  body:not(:has(nav.navbar)) .navbar-toggler {
+    display: none;
+  }
+
   main.col-2 {
     display: grid;
     grid-template-columns: auto;
