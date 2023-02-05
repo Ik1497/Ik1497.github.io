@@ -610,9 +610,7 @@ main.col-2 aside .card {
 
 .settings-modal-alt.medium {
   width: 60rem;
-  max-height: 60rem;
   height: 35rem;
-  max-height: 35rem;
 }
 
 .settings-modal-alt {
@@ -1255,9 +1253,18 @@ select.no-style {
   
   main:not(.nested) {
     margin-top: 9rem;
+  }
+
+  nav.navbar .navbar-list {
+    height: calc(100vh - 10.5rem);
+  }
+}
+
+@media (max-width: 75rem) {  
+  main:not(.nested) {
     margin-left: 0;
   }
-  
+
   nav.navbar {
     left: -20rem;
     z-index: 1000;
