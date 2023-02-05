@@ -63,7 +63,7 @@ let headerLinksMap = [
 ]
 
 
-if (location.hash === ``) location.href = `#Dashboard`
+if (location.hash === ``) location.href = `#${urlSafe(`Dashboard`)}`
 
 let headerAside = `
 <div class="form-area"><label>Url</label><input type="url" value="${streamerbotToolbox__connection.host}" class="url"></div>
@@ -82,6 +82,18 @@ ${headerHtml}
 </main>
 `)
 
+let navbarTogglerButton = document.createElement(`button`)
+navbarTogglerButton.className = `navbar-toggler footer-icon mdi mdi-menu`
+navbarTogglerButton.addEventListener(`click`, () => {
+  if (document.querySelector(`nav.navbar`).getAttribute(`data-visible`) === "") {
+    document.querySelector(`nav.navbar`).removeAttribute(`data-visible`)
+  } else {
+    document.querySelector(`nav.navbar`).setAttribute(`data-visible`, ``)
+  }
+})
+
+document.body.append(navbarTogglerButton)
+
 document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `
 <ul class="header-links buttons-row"></ul>
 `)
@@ -90,9 +102,7 @@ headerLinksMap.forEach(headerLink => {
   let hidden = ``
   let headerLinkActive = ``
 
-  let headerLinkHash = headerLink.name
-    .replaceAll(` `, `-`)
-    .replaceAll(`.`, ``)
+  let headerLinkHash = urlSafe(headerLink.name)
   
   let href =` href="#${headerLinkHash}"`
   if (location.hash === `#${headerLinkHash}`) {
@@ -114,9 +124,7 @@ headerLinksMap.forEach(headerLink => {
 let state__404 = true
 
 headerLinksMap.forEach(headerLink => {
-  let headerLinkHash = headerLink.name
-    .replaceAll(` `, `-`)
-    .replaceAll(`.`, ``)
+  let headerLinkHash = urlSafe(headerLink.name)
   
   if (headerLinkHash === location.hash.replace(`#`, ``)) {
       state__404 = false
@@ -262,7 +270,7 @@ async function connectws() {
             document.body.setAttribute(`data-streamerbot-action-package`, `absent`)
           }
         });
-      } else if (location.hash === `#Dashboard` && data.id === `GetInfo`) {
+      } else if (location.hash === `#${urlSafe(`Dashboard`)}` && data.id === `GetInfo`) {
         ws.send(
           JSON.stringify({
             request: "GetBroadcaster",
@@ -279,7 +287,7 @@ async function connectws() {
             id: `Chat`,
           })
         )
-      } else if (location.hash === `#Actions` && data.id === `GetInfo`) {
+      } else if (location.hash === `#${urlSafe(`Actions`)}` && data.id === `GetInfo`) {
         ws.send(
           JSON.stringify({
             request: "GetActions",
@@ -307,14 +315,14 @@ async function connectws() {
             id: `ActionHistory`,
           })
         )
-      } else if (location.hash === `#Present-Viewers` && data.id === `GetInfo`) {
+      } else if (location.hash === `#${urlSafe(`Present Viewers`)}` && data.id === `GetInfo`) {
         ws.send(
           JSON.stringify({
             request: `GetActiveViewers`,
             id: `GetActiveViewers`,
           })
         )
-      } else if (location.hash === `#Websocket-Events` && data.id === `GetInfo`) {
+      } else if (location.hash === `#${urlSafe(`Websocket Events`)}` && data.id === `GetInfo`) {
         ws.send(
           JSON.stringify({
             request: `GetEvents`,
@@ -330,7 +338,9 @@ async function connectws() {
         ///////////////////
         // Setting Modal //
         ///////////////////
-        document.body.insertAdjacentHTML(`afterbegin`, `<div title="Open Settings" class="open-settings-modal mdi mdi-cog"></div>`)
+        document.body.insertAdjacentHTML(`afterbegin`, `
+        <button title="Open Settings" class="open-settings-modal footer-icon mdi mdi-cog"></button>
+        `)
 
         let globalArgsHtml = `<div class="settings-modal" data-active-page="integrations">
         <nav><ul>
@@ -386,22 +396,23 @@ async function connectws() {
 
             if (document.body.getAttribute(`data-streamerbot-action-package`) != `installed`) {
               document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
-                document.body.insertAdjacentHTML(`afterbegin`, `
-                <div class="settings-modal-alt small" data-settings-modal-alt="twitchspeaker-connection">
-                  <button class="close-button mdi mdi-close" onclick="this.parentNode.remove()"></button>
-                  <div class="main">
-                    <h2>Streamer.bot Action Package</h3>
-                    <br>
-                    <p>The Streamer.bot Action Package is used for getting/setting global variables, sending chat messages to Twitch/YouTube, and command features.</p>
-                    <p>When this action is imported it will show more tabs and it will even show more features on certain tabs.</p>
-                    <br>
-                    <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, this will break. When your Streamer.bot Action Package is outdated it won't work anymore and you need to import the new version.</p>
-                    <br>
-                    <button onclick="window.open('./action-package.sb')">Download</button>
-                  </div>
-                </div>
-              `)
+                createModal(`
+                <p>The Streamer.bot Action Package is used for getting/setting global variables, sending chat messages to Twitch/YouTube, and command features.</p>
+                <p>When this action is imported it will show more tabs and it will even show more features on certain tabs.</p>
+                <br>
+                <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, this will break. When your Streamer.bot Action Package is outdated it won't work anymore and you need to import the new version.</p>
+                <br>
+                <button onclick="window.open('./action-package.sb')">Download</button>
+                `, `Streamer.bot Action Package`, undefined, `small`)
               })
+            }
+
+            // OBS Studio
+
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) {
+              document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="obs-studio"> OBS Studio (connected) • connection: ${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}</li>`)
+            } else {
+              document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (disconnected)</li>`)
             }
 
             // TwitchSpeaker
@@ -464,63 +475,6 @@ async function connectws() {
                 location.reload()
               })
             })
-
-            // HTTPS Connection
-
-            // let integrationsList__httpsConnection = `<li class="mdi mdi-plus" data-integration="https-connection"> HTTPS Connection <button>Connect!</button></li>`
-
-            // if (document.body.getAttribute(`https-connection-state`) === null) {
-            // } else if (document.body.getAttribute(`https-connection-state`) === `connected`) {
-            //   let integrationsList__httpsConnection_wsUrl = localStorage.getItem(`streamerbotToolbox__httpsConnection`)
-            //   integrationsList__httpsConnection_wsUrl = JSON.parse(integrationsList__httpsConnection_wsUrl)
-            //   integrationsList__httpsConnection_wsUrl = `ws://${integrationsList__httpsConnection_wsUrl.host}:${integrationsList__httpsConnection_wsUrl.port}`
-            //   integrationsList__httpsConnection = `<li class="mdi mdi-check" data-integration="https-connection"> HTTPS Connection (Connected) • ${integrationsList__httpsConnection_wsUrl} <button class="mdi mdi-cog"></button></p>`
-            // } else if (document.body.getAttribute(`httpsConnection-state`) === `disconnected`) {
-            //   integrationsList__httpsConnection = `<li class="mdi mdi-reload" data-integration="https-connection"> HTTPS Connection <button>Reconnect!</button></p>`
-            // }
-
-            // document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__httpsConnection)
-            
-            // document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="https-connection"] button`).addEventListener(`click`, function () {
-            //   let httpsConnectionDefaultValues = localStorage.getItem(`streamerbotToolbox__httpsConnection`)
-            //   if (httpsConnectionDefaultValues === null) {
-            //     httpsConnectionDefaultValues = {}
-            //     httpsConnectionDefaultValues.host     = `localhost`
-            //     httpsConnectionDefaultValues.port     = `7474`
-            //   } else {
-            //     httpsConnectionDefaultValues = JSON.parse(httpsConnectionDefaultValues)
-            //   }
-
-            //   createModal(`
-            //     <blockquote class="success">
-            //     Coming soon!
-            //     </blockquote>
-            //     <table><tbody>
-            //     <tr>
-            //       <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Host</label></td>
-            //       <td style="text-align: left;"><input type="url" name="websocket-host" id="websocket-host" value="${httpsConnectionDefaultValues.host}" placeholder="${httpsConnectionDefaultValues.host}"></td>
-            //     </tr>
-            //     <tr>
-            //       <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Port</label></td>
-            //       <td style="text-align: left;"><input type="url" name="websocket-port" id="websocket-port" value="${httpsConnectionDefaultValues.port}" placeholder="${httpsConnectionDefaultValues.port}"></td>
-            //     </tr>
-            //     <tr>
-            //       <td></td>
-            //       <td style="text-align: right;"><button class="connect-button">Connect!</button></td>
-            //     </tr>
-            //   </tbody></table>
-            //   `, `HTTPS Connection Settings`, undefined, `small`, {})
-                    
-            //   document.querySelector(`.settings-modal-alt .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
-            //     let table = document.querySelector(`.settings-modal-alt .main table`)
-            //     localStorage.setItem(`streamerbotToolbox__httpsConnection`, JSON.stringify({
-            //         host: table.querySelector(`tbody tr td input#websocket-host`).value,
-            //         port: table.querySelector(`tbody tr td input#websocket-port`).value
-            //       })
-            //     )
-            //     location.reload()
-            //   })
-            // })
           }
         
           function reloadBroadcaster() {
@@ -607,7 +561,7 @@ async function connectws() {
         })
       }
 
-      if (location.hash === `#Dashboard` && data.id === `GetBroadcaster`) {
+      if (location.hash === `#${urlSafe(`Dashboard`)}` && data.id === `GetBroadcaster`) {
 
         document.body.querySelector(`main`).innerHTML = `
         <div class="card" style="height: calc(100% - 8rem); max-height: calc(100vh - 8rem);" data-view="all">
@@ -733,7 +687,7 @@ async function connectws() {
           selectPlaceholderMap = {
             none: `Send message to chat`,
             action: `Send message with /me to chat`,
-            shoutout: `Fill in the user that you want to shoutout (Required)`,
+            shoutout: `Fill in the user's login name that you want to shoutout (Required)`,
             mod: `Fill in the user that you want to mod (Requirer)`,
             unmod: `Fill in the user that you want to unmod (required)`,
             vip: `Fill in the user that you want to vip (Requirer)`,
@@ -790,17 +744,23 @@ async function connectws() {
             } else if (package__chatService === `YouTube`) {
               SB__StreamerbotActionPackageRequest(`YouTubeSendMessage`, package__chatMessage)
             }
+
           } else if (package__chatModifier === `action`) {
             if (package__chatService === `Twitch`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAction`, package__chatMessage)
             } else if (package__chatService === `TwitchBot`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotAction`, package__chatMessage)
             }
+
+          } else if (package__chatModifier === `shoutout`) {
+            SB__StreamerbotActionPackageRequest(`TwitchSendShoutout`, package__chatMessage)
+            SendChatNotification(`Attempting to shoutout ${package__chatMessage}`)
+
           } else if (package__chatModifier === `clear`) {
             SB__StreamerbotActionPackageRequest(`TwitchClearChatMessages`)
-
             document.querySelector(`main .card ul.chat-messages`).innerHTML = ``
             SendChatNotification(`Chat cleared`)
+
           }
         }
         
@@ -846,7 +806,7 @@ async function connectws() {
         }
       }
 
-      if (location.hash === `#Actions` && data.id === `GetActions`) {
+      if (location.hash === `#${urlSafe(`Actions`)}` && data.id === `GetActions`) {
 
         document.querySelector(`main`).classList.add(`col-2`)
 
@@ -866,6 +826,7 @@ async function connectws() {
 
         
         document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `
+        <div class="card-grid"></div>
         <aside>
           <div class="card-grid">
             <div class="card events">
@@ -1019,14 +980,17 @@ async function connectws() {
               actionCount++
             }
           })
-          let action = `${actionCount} Actions`
+          let action = `${actionCount} ${actionCount === 1 ? `Action` : `Actions`}`
           if (actionCount === 1) action = `${actionCount} Action`
           document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item"><button><p class="title">${group}</p><p class="description">${action}</p></button></li>`)
         })
 
         // Button Logic
+        document.querySelector(`main ul.main-list`).remove()
+
         document.querySelectorAll(`ul.navbar-list button`).forEach(buttonHtml => {
           buttonHtml.addEventListener(`click`, function () {
+            document.querySelector(`main > .card-grid`).remove()
 
             // Button Logic || Remove old active classes
             document.querySelectorAll(`nav.navbar ul.navbar-list .nav-active`).forEach(oldNavActiveHtml => {
@@ -1042,126 +1006,204 @@ async function connectws() {
 
             // Add Main Contents
 
-            document.querySelector(`main ul.main-list`).innerHTML = ``
+            document.querySelector
             buttonHtmlText = buttonHtml.querySelector(`p.title`).innerText
             if (buttonHtmlText === "") buttonHtmlText = `None`
             let actionCount = 0
+            document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
+            <div class="card-grid">
+              <div class="card">
+                <div class="card-header">
+                  <p class="card-title">${buttonHtmlText}, Actions</p>
+                </div>
+                <hr>
+                <ul class="styled"></ul>
+              </div>
+            </div>
+            `)
             data.actions.forEach(action => {
               if (action.group === buttonHtmlText || buttonHtmlText === `All`) {
                 actionCount++
-                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`, `<li><p class="action-name">${action.name}</p><div class="button-group"><button title="Execute Action">Execute</button></div></li>`)
+                  
+                  
+                let listItem = document.createElement(`li`)
+
+                let listItemHtml__button = document.createElement(`button`)
+
+                let listItemHtml__button__title = document.createElement(`p`)
+                listItemHtml__button__title.innerText = action.name
+                listItemHtml__button__title.className = `title`
+
+                listItemHtml__button.append(listItemHtml__button__title)
+                listItem.append(listItemHtml__button)
+
+                listItemHtml__prependDiv = document.createElement(`div`)
+                listItemHtml__prependDiv.classList.add(`prepend`)
+                listItemHtml__prependDiv.classList.add(`form-group`)
+                listItemHtml__prependDiv.classList.add(`styled`)
+                listItemHtml__prependDiv.classList.add(`no-margin`)
+
+                let listItemHtml__prependDiv__button = document.createElement(`button`)
+                listItemHtml__prependDiv__button.classList.add(`prepend`)
+                listItemHtml__prependDiv__button.classList.add(`primary`)
+                listItemHtml__prependDiv__button.classList.add(`dense`)
+                listItemHtml__prependDiv__button.title = `Execute Action`
+                listItemHtml__prependDiv__button.innerText = `Execute`
+
+                listItemHtml__prependDiv.append(listItemHtml__prependDiv__button)
+                listItem.append(listItemHtml__prependDiv)
+
+                document.querySelector(`main > .card-grid .card ul.styled`).append(listItem)
+
+                listItem.querySelector(`.prepend button`).addEventListener(`click`, RunActionFromActionsPage)
+
+                listItem.querySelector(`button`).addEventListener(`click`, function () {
+                  createModal(`
+                  <table class="styled">
+                    <tr>
+                      <td style="text-align: right;">Name</td>
+                      <td style="text-align: left;">${action.name}</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right;">Id</td>
+                      <td style="text-align: left;">${action.id}</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right;">Group</td>
+                      <td style="text-align: left;">${action.group}</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right;">State</td>
+                      <td style="text-align: left;">${action.enabled ? `Enabled` : `Disabled`}</td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: right;">Stats</td>
+                      <td style="text-align: left;">${action.subaction_count} ${action.subaction_count === 1 ? `Sub-Action` : `Sub-Actions`}</td>
+                    </tr>
+                  </table>
+                  <div class="form-group styled execute">
+                    <button id="execute">Execute</button>
+                  </div>
+                  `, action.name, `Inspect Sub-Action`, `small`, {})
+                  document.querySelector(`.settings-modal-alt .main .form-group.execute button#execute`).addEventListener(`click`, () => {
+                    RunActionFromActionsPage()
+                  })
+                })
+                
+                function RunActionFromActionsPage() {
+                  let broadcasterObj = {}
+
+                  if (broadcaster?.connected.includes(`twitch`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `Twitch`) {
+                    broadcasterObj.user = broadcaster?.platforms?.twitch?.broadcastUser ?? `ik1497`
+                    broadcasterObj.userName = broadcaster?.platforms?.twitch?.broadcastUserName ?? `ik1497`
+                    broadcasterObj.userId = broadcaster?.platforms?.twitch?.broadcastUserId ?? `695682330`
+                    broadcasterObj.isAffiliate = broadcaster?.platforms?.twitch?.broadcasterIsAffiliate ?? `false`
+                    broadcasterObj.isPartner = broadcaster?.platforms?.twitch?.broadcasterIsPartner ?? `false`
+                  }
+
+                  if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
+                    broadcasterObj.userName = broadcaster?.platforms?.youtube?.broadcastUserName ?? `Ik1497 Tutorials`
+                    broadcasterObj.userId = broadcaster?.platforms?.youtube?.broadcastUserId ?? `UCl3oatIf9tYopHaZHvnH3xw`
+                    broadcasterObj.profileImage = broadcaster?.platforms?.youtube?.broadcastUserProfileImage ?? `https://yt3.ggpht.com/VpC8_9WcDEKcPSvnD6p1iGT_S2_XxdeZtL6tTL2axexj0SpG-c4Wx8i5lYNbJtvmzwCnzm9Bsg=s88-c-k-c0x00ffffff-no-rj`
+                  }
+
+                  let arguments = []
+
+                  if (broadcaster?.connected.includes(`twitch`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `Twitch`) {
+                    arguments.push([`broadcastUser`, broadcasterObj.user])
+                    arguments.push([`broadcastUserName`, broadcasterObj.userName])
+                    arguments.push([`broadcastUserId`, broadcasterObj.userId])
+                    arguments.push([`broadcastIsAffiliate`, broadcasterObj.isAffiliate])
+                    arguments.push([`broadcastIsPartner`, broadcasterObj.isPartner])
+                  }
+                  
+                  if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
+                    arguments.push([`broadcastUserName`, broadcasterObj.userName])
+                    arguments.push([`broadcastUserId`, broadcasterObj.userId])
+                    arguments.push([`broadcastUserProfileImage`, broadcasterObj.profileImage])
+                  }
+
+                  let randomUserCount = localStorage.getItem(`streamerbotToolbox__randomUsers`)
+                  if (randomUserCount <= 0) randomUserCount = 0
+                  if (isNaN(randomUserCount)) randomUserCount = 0
+                  if (randomUserCount > 0 && presentViewers.viewers.length > 0) {
+                    for (let presentViewerRunTime = 0; presentViewerRunTime < randomUserCount; presentViewerRunTime++) {                    
+                      let randomUser = presentViewers.viewers[Math.floor(Math.random()*presentViewers.viewers.length)];
+                      arguments.push([`randomUser${presentViewerRunTime}`, randomUser.display])
+                      arguments.push([`randomUserName${presentViewerRunTime}`, randomUser.login])
+                      arguments.push([`randomUserId${presentViewerRunTime}`, randomUser.id])  
+                    }
+                  }
+
+                  arguments.push([`source`, `StreamerbotToolbox`])
+
+                  let selectedEventArgs = document.querySelector(`main aside .card.events select`).value
+                  eventArgsEntries.forEach(eventArgsEntry => {
+                    if (eventArgsEntry[0] === selectedEventArgs) {
+                      let randomEventArgs__user = randomEventArgs.user[Math.floor(Math.random()*randomEventArgs.user.length)]
+
+                      Object.entries(eventArgsEntry[1].arguments).forEach(arg => {
+                        let randomEventArgs__message = randomEventArgs.message[Math.floor(Math.random()*randomEventArgs.message.length)]
+
+                        if (arg[0] === `userId`)              arg[1] = randomEventArgs__user.userId
+                        if (arg[0] === `userName`)            arg[1] = randomEventArgs__user.userName
+                        if (arg[0] === `user`)                arg[1] = randomEventArgs__user.user
+                        if (arg[0] === `userType`)            arg[1] = randomEventArgs__user.userType
+                        if (arg[0] === `isSubscribed`)        arg[1] = randomEventArgs__user.isSubscribed
+                        if (arg[0] === `isVip`)               arg[1] = randomEventArgs__user.isVip
+                        if (arg[0] === `isModerator`)         arg[1] = randomEventArgs__user.isModerator
+                        if (arg[0] === `userPreviousActive`)  arg[1] = randomEventArgs__user.userPreviousActive
+
+                        if (arg[0] === `rawInput`)           arg[1] = randomEventArgs__message
+                        if (arg[0] === `rawInputEscaped`)    arg[1] = encodeURI(randomEventArgs__message)
+                        if (arg[0] === `rawInputUrlEncoded`) arg[1] = encodeURI(randomEventArgs__message)
+                        if (arg[0] === `message`)            arg[1] = randomEventArgs__message
+                        if (arg[0] === `messageStripped`)    arg[1] = randomEventArgs__message
+                        if (arg[0] === `rawInput`) randomEventArgs__message.split(` `).forEach((input, index) => {
+                          arguments.push([`input${index}`,           input])
+                          arguments.push([`inputEscaped${index}`,    encodeURI(input)])
+                          arguments.push([`inputUrlEncoded${index}`, encodeURI(input)])
+                        });
+
+                        if (arg[0] === `tagCount`) {
+                          let randomEventArgs__tagCount = Math.floor(Math.random() * 5) + 1
+                          let randomEventArgs__tagsDelimited = []
+                          arg[1] = `${randomEventArgs__tagCount}`
+                          arguments.push([`tags`, 'System.Collections.Generic.List`1[System.String]'])
+
+                          for (let randomEventArgs__tagRunTime = 0; randomEventArgs__tagRunTime < randomEventArgs__tagCount; randomEventArgs__tagRunTime++) {
+                            let randomEventArgs__tags = randomEventArgs.tags[Math.floor(Math.random()*randomEventArgs.tags.length)]
+                            arguments.push([`tag${randomEventArgs__tagRunTime}`, randomEventArgs__tags])
+                            randomEventArgs__tagsDelimited.push(randomEventArgs__tags)
+                          }
+
+                          arguments.push([`tagsDelimited`, randomEventArgs__tagsDelimited.join(`,`)])
+                        }
+                        
+                        arguments.push(arg)
+                      });
+                    }
+                  });
+
+                  let argumentsLocalStorage = Object.entries(JSON.parse(localStorage.getItem(`streamerbotToolbox__arguments`) || `{}`) ?? {}) ?? []
+                  argumentsLocalStorage.forEach(argument => {
+                    arguments.push([argument[0], argument[1]])
+                  });
+                  
+                  arguments = Object.fromEntries(arguments)
+                  
+                  SB__RunActionById(action.id, arguments)
+                }
               }
             })
-            if (buttonHtmlText === "") buttonHtmlText = "None"
-            document.querySelector(`main ul.main-list`).insertAdjacentHTML(`afterbegin`, `<li class="list-title">${buttonHtmlText}, ${actionCount} Actions</li>`)
-            if (buttonHtmlText === "None") buttonHtmlText = ""
-            
-            document.querySelectorAll(`main ul.main-list button`).forEach(buttonHtml => {
-              buttonHtml.addEventListener(`click`, function () { 
-                let broadcasterObj = {}
 
-                if (broadcaster?.connected.includes(`twitch`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `Twitch`) {
-                  broadcasterObj.user = broadcaster?.platforms?.twitch?.broadcastUser ?? `ik1497`
-                  broadcasterObj.userName = broadcaster?.platforms?.twitch?.broadcastUserName ?? `ik1497`
-                  broadcasterObj.userId = broadcaster?.platforms?.twitch?.broadcastUserId ?? `695682330`
-                  broadcasterObj.isAffiliate = broadcaster?.platforms?.twitch?.broadcasterIsAffiliate ?? `false`
-                  broadcasterObj.isPartner = broadcaster?.platforms?.twitch?.broadcasterIsPartner ?? `false`
-                }
+          document.querySelector(`main > .card-grid .card .card-header .card-title`).innerText = `${buttonHtmlText}, ${actionCount} ${actionCount === 1 ? `Action` : `Actions`}`
 
-                if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
-                  broadcasterObj.userName = broadcaster?.platforms?.youtube?.broadcastUserName ?? `Ik1497 Tutorials`
-                  broadcasterObj.userId = broadcaster?.platforms?.youtube?.broadcastUserId ?? `UCl3oatIf9tYopHaZHvnH3xw`
-                  broadcasterObj.profileImage = broadcaster?.platforms?.youtube?.broadcastUserProfileImage ?? `https://yt3.ggpht.com/VpC8_9WcDEKcPSvnD6p1iGT_S2_XxdeZtL6tTL2axexj0SpG-c4Wx8i5lYNbJtvmzwCnzm9Bsg=s88-c-k-c0x00ffffff-no-rj`
-                }
-
-                let arguments = Object.entries(JSON.parse(localStorage.getItem(`streamerbotToolbox__arguments`) || `{}`) ?? {}) ?? []
-
-                if (broadcaster?.connected.includes(`twitch`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `Twitch`) {
-                  arguments.push([`broadcastUser`, broadcasterObj.user])
-                  arguments.push([`broadcastUserName`, broadcasterObj.userName])
-                  arguments.push([`broadcastUserId`, broadcasterObj.userId])
-                  arguments.push([`broadcastIsAffiliate`, broadcasterObj.isAffiliate])
-                  arguments.push([`broadcastIsPartner`, broadcasterObj.isPartner])
-                }
-                
-                if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
-                  arguments.push([`broadcastUserName`, broadcasterObj.userName])
-                  arguments.push([`broadcastUserId`, broadcasterObj.userId])
-                  arguments.push([`broadcastUserProfileImage`, broadcasterObj.profileImage])
-                }
-
-                let randomUserCount = localStorage.getItem(`streamerbotToolbox__randomUsers`)
-                if (randomUserCount <= 0) randomUserCount = 0
-                if (isNaN(randomUserCount)) randomUserCount = 0
-                if (randomUserCount > 0 && presentViewers.viewers.length > 0) {
-                  for (let presentViewerRunTime = 0; presentViewerRunTime < randomUserCount; presentViewerRunTime++) {                    
-                    let randomUser = presentViewers.viewers[Math.floor(Math.random()*presentViewers.viewers.length)];
-                    arguments.push([`randomUser${presentViewerRunTime}`, randomUser.display])
-                    arguments.push([`randomUserName${presentViewerRunTime}`, randomUser.login])
-                    arguments.push([`randomUserId${presentViewerRunTime}`, randomUser.id])  
-                  }
-                }
-
-                arguments.push([`source`, `StreamerbotToolbox`])
-
-                let selectedEventArgs = document.querySelector(`main aside .card.events select`).value
-                eventArgsEntries.forEach(eventArgsEntry => {
-                  if (eventArgsEntry[0] === selectedEventArgs) {
-                    let randomEventArgs__user = randomEventArgs.user[Math.floor(Math.random()*randomEventArgs.user.length)]
-
-                    Object.entries(eventArgsEntry[1].arguments).forEach(arg => {
-                      let randomEventArgs__message = randomEventArgs.message[Math.floor(Math.random()*randomEventArgs.message.length)]
-
-                      if (arg[0] === `userId`)              arg[1] = randomEventArgs__user.userId
-                      if (arg[0] === `userName`)            arg[1] = randomEventArgs__user.userName
-                      if (arg[0] === `user`)                arg[1] = randomEventArgs__user.user
-                      if (arg[0] === `userType`)            arg[1] = randomEventArgs__user.userType
-                      if (arg[0] === `isSubscribed`)        arg[1] = randomEventArgs__user.isSubscribed
-                      if (arg[0] === `isVip`)               arg[1] = randomEventArgs__user.isVip
-                      if (arg[0] === `isModerator`)         arg[1] = randomEventArgs__user.isModerator
-                      if (arg[0] === `userPreviousActive`)  arg[1] = randomEventArgs__user.userPreviousActive
-
-                      if (arg[0] === `rawInput`)           arg[1] = randomEventArgs__message
-                      if (arg[0] === `rawInputEscaped`)    arg[1] = encodeURI(randomEventArgs__message)
-                      if (arg[0] === `rawInputUrlEncoded`) arg[1] = encodeURI(randomEventArgs__message)
-                      if (arg[0] === `message`)            arg[1] = randomEventArgs__message
-                      if (arg[0] === `messageStripped`)    arg[1] = randomEventArgs__message
-                      if (arg[0] === `rawInput`) randomEventArgs__message.split(` `).forEach((input, index) => {
-                        arguments.push([`input${index}`,           input])
-                        arguments.push([`inputEscaped${index}`,    encodeURI(input)])
-                        arguments.push([`inputUrlEncoded${index}`, encodeURI(input)])
-                      });
-
-                      if (arg[0] === `tagCount`) {
-                        let randomEventArgs__tagCount = Math.floor(Math.random() * 5) + 1
-                        let randomEventArgs__tagsDelimited = []
-                        arg[1] = `${randomEventArgs__tagCount}`
-                        arguments.push([`tags`, 'System.Collections.Generic.List`1[System.String]'])
-
-                        for (let randomEventArgs__tagRunTime = 0; randomEventArgs__tagRunTime < randomEventArgs__tagCount; randomEventArgs__tagRunTime++) {
-                          let randomEventArgs__tags = randomEventArgs.tags[Math.floor(Math.random()*randomEventArgs.tags.length)]
-                          arguments.push([`tag${randomEventArgs__tagRunTime}`, randomEventArgs__tags])
-                          randomEventArgs__tagsDelimited.push(randomEventArgs__tags)
-                        }
-
-                        arguments.push([`tagsDelimited`, randomEventArgs__tagsDelimited.join(`,`)])
-                      }
-                      
-                      arguments.push(arg)
-                    });
-                  }
-                });
-                
-                arguments = Object.fromEntries(arguments)
-                
-                SB__RunAction(buttonHtml.parentNode.parentNode.querySelector(`p.action-name`).innerText, arguments)
-              })
-            })
           })
         })
       }
 
-      if (location.hash === `#Actions` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
+      if (location.hash === `#${urlSafe(`Actions`)}` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
         if (data.data.name != `Streamer.bot Toolbox Partial - Websocket Handler`) {
           let actionHistoryQueued__List = document.querySelector(`main aside .card.action-history ul`)
   
@@ -1243,8 +1285,143 @@ async function connectws() {
             <div class="form-group styled re-run">
               <button id="re-run">Re-run</button>
             </div>
-            `, `${data.data.name}<small>• ${formatStreamerbotTimestamp(data.data.arguments.actionQueuedAt)}</small>`, data.data.actionId, `medium`, {})
+            `, `${data.data.name}<small>${formatStreamerbotTimestamp(data.data.arguments.actionQueuedAt)}</small>`, data.data.actionId, `medium`, {})
   
+            let copyButtons__List = document.createElement(`ul`)
+            copyButtons__List.className = `buttons-row`
+
+            let copyButtons__List__copyForDiscord = document.createElement(`li`)
+            let copyButtons__List__copyAsJson = document.createElement(`li`)
+            let copyButtons__List__copyForWiki = document.createElement(`li`)
+            
+            let copyButtons__List__copyForDiscord__button = document.createElement(`button`)
+            copyButtons__List__copyForDiscord__button.innerHTML = `Copy for Discord`
+            copyButtons__List__copyForDiscord__button.className = `active-state mdi mdi-forum`
+            copyButtons__List__copyForDiscord.append(copyButtons__List__copyForDiscord__button)
+            
+            let copyButtons__List__copyAsJson__button = document.createElement(`button`)
+            copyButtons__List__copyAsJson__button.innerHTML = `Copy as JSON`
+            copyButtons__List__copyAsJson__button.className = `active-state mdi mdi-code-json`
+            copyButtons__List__copyAsJson.append(copyButtons__List__copyAsJson__button)
+
+            let copyButtons__List__copyForWiki__button = document.createElement(`button`)
+            copyButtons__List__copyForWiki__button.innerHTML = `Copy for Wiki`
+            copyButtons__List__copyForWiki__button.className = `active-state mdi mdi-wikipedia`
+            copyButtons__List__copyForWiki.append(copyButtons__List__copyForWiki__button)
+
+            copyButtons__List.append(copyButtons__List__copyForDiscord)
+            copyButtons__List.append(copyButtons__List__copyAsJson)
+            copyButtons__List.append(copyButtons__List__copyForWiki)
+            copyButtons__List.style.paddingBottom = `1rem`
+
+            copyButtons__List__copyForDiscord__button.addEventListener(`click`, () => {
+              createSnackbar(`Copying variables for Discord to clipboard`)
+              if (document.querySelector(`.settings-modal-alt .main table#completed`) != null) {
+                if (document.querySelector(`.settings-modal-alt .main table#completed`).getAttribute(`hidden`) === null) {
+                  copyArgumentsForDiscord(`completed`)
+                } else {
+                  copyArgumentsForDiscord(`queued`)
+                }
+              } else {
+                copyArgumentsForDiscord(`queued`)
+              }
+              
+              function copyArgumentsForDiscord(state) {
+                if (state === `queued`) {
+                  let discord = copyArgumentsForDiscordFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)).data.arguments)
+                  console.log(`Copying:`, discord)
+                  navigator.clipboard.writeText(discord)
+                } else if (state === `completed`) {
+                  let discord = copyArgumentsForDiscordFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)).data.arguments)
+                  console.log(`Copying:`, discord)
+                  navigator.clipboard.writeText(discord)
+                }
+              }
+
+              function copyArgumentsForDiscordFormatter(json) {
+                let formatted = "```yaml\n"
+                Object.entries(json).forEach(argument => {
+                  formatted += `${argument[0]}: ${argument[1]}\n`
+                });
+                formatted += "```"
+                return formatted
+              }
+            })
+
+            copyButtons__List__copyForWiki__button.addEventListener(`click`, () => {
+              createSnackbar(`Copying variables for wiki to clipboard`)
+              if (document.querySelector(`.settings-modal-alt .main table#completed`) != null) {
+                if (document.querySelector(`.settings-modal-alt .main table#completed`).getAttribute(`hidden`) === null) {
+                  copyArgumentsForWiki(`completed`)
+                } else {
+                  copyArgumentsForWiki(`queued`)
+                }
+              } else {
+                copyArgumentsForWiki(`queued`)
+              }
+              
+              function copyArgumentsForWiki(state) {
+                if (state === `queued`) {
+                  let table = copyArgumentsForWikiFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)).data.arguments)
+                  console.log(`Copying:`, table)
+                  navigator.clipboard.writeText(table)
+                } else if (state === `completed`) {
+                  let table = copyArgumentsForWikiFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)).data.arguments)
+                  console.log(`Copying:`, table)
+                  navigator.clipboard.writeText(table)
+                }
+              }
+
+              function copyArgumentsForWikiFormatter(json) {
+                let formatted = `Name | Description\n----:|:------------\n`
+                Object.entries(json).forEach(argument => {
+                  formatted += `\`${argument[0]}\` | ${argument[1]}\n`
+                });
+                return formatted
+              }
+            })
+
+            copyButtons__List__copyAsJson__button.addEventListener(`click`, () => {
+              createSnackbar(`Copying variables as JSON to clipboard`)
+              if (document.querySelector(`.settings-modal-alt .main table#completed`) != null) {
+                if (document.querySelector(`.settings-modal-alt .main table#completed`).getAttribute(`hidden`) === null) {
+                  copyArgumentsForJson(`completed`)
+                } else {
+                  copyArgumentsForJson(`queued`)
+                }
+              } else {
+                copyArgumentsForJson(`queued`)
+              }
+              
+              function copyArgumentsForJson(state) {
+                if (state === `queued`) {
+                  let json = copyArgumentsForJsonFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)).data.arguments)
+                  console.log(`Copying:`, json)
+                  navigator.clipboard.writeText(json)
+                } else if (state === `completed`) {
+                  let json = copyArgumentsForJsonFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)).data.arguments)
+                  console.log(`Copying:`, json)
+                  navigator.clipboard.writeText(json)
+                }
+              }
+
+              function copyArgumentsForJsonFormatter(json) {
+                let formattedJson = `{\n`
+                json = Object.entries(json)
+                json.forEach((argument, argumentIndex) => {
+                  formattedJson += `  "${argument[0]}": "${argument[1]}"`
+                  if (json.length - 1 != argumentIndex) {
+                    formattedJson += `,`
+                  }
+                  formattedJson += `\n`
+                });
+                formattedJson += `}`
+                return formattedJson
+              }
+            })
+
+            document.querySelector(`.settings-modal-alt .main`).prepend(copyButtons__List)
+
             if (actionHistoryQueued__ListItem.getAttribute(`data-action-state`) === `completed`) {
               let actionHistoryCompletedDialog__List = document.createElement(`ul`)
               actionHistoryCompletedDialog__List.className = `buttons-row`
@@ -1284,7 +1461,7 @@ async function connectws() {
                 actionHistoryCompletedDialog__QueuedListItem.classList.remove(`button-active`)
                 reloadButtonStates()
               })
-  
+
               reloadButtonStates()
   
               function reloadButtonStates() {
@@ -1330,7 +1507,7 @@ async function connectws() {
         }
       }
 
-      if (location.hash === `#Actions` && data?.event?.source === `Raw` && data?.event?.type === `ActionCompleted`) {
+      if (location.hash === `#${urlSafe(`Actions`)}` && data?.event?.source === `Raw` && data?.event?.type === `ActionCompleted`) {
         if (data.data.name != `Streamer.bot Toolbox Partial - Websocket Handler`) {
           let actionHistoryCompleted__ListItem = document.querySelector(`main aside .card-grid .card.action-history ul li[data-action-running-id="${data.data.id}"]`)
           actionHistoryCompleted__ListItem.setAttribute(`data-action-completed-data`, JSON.stringify(data))
@@ -1338,7 +1515,7 @@ async function connectws() {
         }
       }
       
-      if (location.hash === `#Present-Viewers` && data.id === `GetActiveViewers`) {
+      if (location.hash === `#${urlSafe(`Present Viewers`)}` && data.id === `GetActiveViewers`) {
         data.viewers.forEach(viewer => {
           document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item" id="${viewer.id}"><button><p class="title">${viewer.display}</p></button></li>`)
         });
@@ -1375,7 +1552,7 @@ async function connectws() {
         });
       }
 
-      if (location.hash === `#Websocket-Events` && data.id === `GetEvents`) {
+      if (location.hash === `#${urlSafe(`Websocket Events`)}` && data.id === `GetEvents`) {
         let wsEvents = Object.entries(data.events)
         wsEvents.sort()
         wsEvents.forEach(wsEvent => {
@@ -1406,7 +1583,7 @@ async function connectws() {
         });
       }
 
-      if (location.hash === `#Global-Variables` && data?.id === `WebsocketHandlerAction`) {
+      if (location.hash === `#${urlSafe(`Global Variables`)}` && data?.id === `WebsocketHandlerAction`) {
         document.querySelector(`nav.navbar`).remove()
         document.querySelector(`main`).classList.add(`full`)
 
@@ -1504,18 +1681,18 @@ async function connectws() {
         })
       }
 
-      if (location.hash === `#Global-Variables` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
+      if (location.hash === `#${urlSafe(`Global Variables`)}` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
         if (data.data.wsRequest === `GetGlobalVariable`) {
           if (data.data.wsData === ``) data.data.wsData = `Global Variable Doesn't Exist or it doesn't have a value`
           document.querySelector(`#get-global-variable--output .output`).innerHTML = data.data.wsData
         }
       }
 
-      if (location.hash === `#Commands` && data?.id === `WebsocketHandlerAction`) {
+      if (location.hash === `#${urlSafe(`Commands`)}` && data?.id === `WebsocketHandlerAction`) {
         SB__StreamerbotActionPackageRequest(`GetCommandsFromFile`)
       }
 
-      if (location.hash === `#Commands` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
+      if (location.hash === `#${urlSafe(`Commands`)}` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
         if (data.data.wsRequest === `GetCommandsFromFile`) {
           if (data.data.wsData != ``) {
             GetCommandsData = JSON.parse(decodeURI(data.data.wsData.replaceAll(`\n`, ``).replaceAll(`\r`, ``)))
@@ -1791,7 +1968,7 @@ async function connectws() {
         }
       }
 
-      if (location.hash === `#OBS-Studio` && data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsRequest === `ObsIsConnected`) {
+      if (location.hash === `#${urlSafe(`OBS Studio`)}` && data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsRequest === `ObsIsConnected`) {
         if (data.data.wsData === true) {
           let obsConnection = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
           obsConnection = obsConnection.connection
@@ -1804,7 +1981,7 @@ async function connectws() {
         }
       }
       
-      if (location.hash === `#OBS-Studio` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
+      if (location.hash === `#${urlSafe(`OBS Studio`)}` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
         obsData = data.data.wsData
         obsData = JSON.parse(obsData)
         if (data.data.requestType != undefined) console.log(`[OBS Websocket] Request ${data.data.requestType}:`, obsData)
@@ -1905,7 +2082,7 @@ async function connectws() {
             });
             sceneItems.forEach(sceneItem => {
               document.querySelector(`main .main .card-grid .card.sources ul`).insertAdjacentHTML(`beforeend`, `
-              <li data-source-information="${JSON.stringify(sceneItem).replaceAll(`"`, `'`)}">
+              <li data-source-information="${JSON.stringify(sceneItem).replace(/\s*\"\s*/gm, `'`)}">
                 <button>${sceneItem.sourceName}</button>
                 <div class="dropdown-section">
                   <button class="prepend mdi mdi-cog"></button>
@@ -1920,7 +2097,7 @@ async function connectws() {
 
             document.querySelectorAll(`main .main .card-grid .card.sources > ul > li`).forEach(listItem => {
               let sourceData = listItem.getAttribute(`data-source-information`)
-              sourceData = sourceData.replaceAll(`'`, `"`)
+              sourceData = sourceData.replace(/\s*\'\s*/gm, `"`)
               sourceData = JSON.parse(sourceData)
               listItem.querySelector(`button`).addEventListener(`click`, inspectSourcePropertiesModal)
               listItem.querySelector(`.dropdown-section .dropdown-list li#inspect-source-properties button`).addEventListener(`click`, inspectSourcePropertiesModal)
@@ -2230,7 +2407,7 @@ async function connectTwitchSpeakerws() {
         headerLink.parentNode.removeAttribute(`hidden`)
       });
       
-      if (location.hash === `#TwitchSpeaker`) {
+      if (location.hash === `#${urlSafe(`TwitchSpeaker`)}`) {
         document.querySelector(`nav.navbar`).remove()
         document.querySelector(`main`).classList.add(`full`)
 
@@ -2489,6 +2666,56 @@ function formatStreamerbotTimestamp(timestamp) {
   return timestamp
 }
 
+function urlSafe(url) {
+  url = 
+  url.replaceAll(`-`, ``)
+     .replaceAll(` `, `-`)
+     .replaceAll(`_`, ``)
+     .replaceAll(`.`, ``)
+     .replaceAll(`,`, ``)
+
+  return url
+}
+
+function createSnackbar(snackBarHtml = ``, theme = `default`, loadTime = 3000, transitionDuration = 500, settings = {}) {
+  if (loadTime === undefined) loadTime = 3000
+  if (loadTime === transitionDuration) transitionDuration = 500
+
+  let snackbarWrapper = document.createElement(`div`)
+  snackbarWrapper.className = `snackbar-wrapper`
+  snackbarWrapper.style.transitionDuration = `${transitionDuration}ms`
+  
+  let snackbarWrapper__snackbar = document.createElement(`div`)
+  snackbarWrapper__snackbar.className = `snackbar`
+
+  let snackbarWrapper__snackbar__snackbarContent = document.createElement(`div`)
+  snackbarWrapper__snackbar__snackbarContent.className = `snackbar-content`
+  snackbarWrapper__snackbar__snackbarContent.innerHTML = snackBarHtml
+
+  snackbarWrapper__snackbar.append(snackbarWrapper__snackbar__snackbarContent)
+  snackbarWrapper.append(snackbarWrapper__snackbar)
+
+  document.body.append(snackbarWrapper)
+
+  setTimeout(() => {
+    snackbarWrapper.setAttribute(`data-state`, `opening`)
+    
+    setTimeout(() => {
+      snackbarWrapper.setAttribute(`data-state`, `opened`)
+      
+      setTimeout(() => {
+        snackbarWrapper.setAttribute(`data-state`, `closing`)
+        
+        setTimeout(() => {
+          snackbarWrapper.setAttribute(`data-state`, `closed`)
+          snackbarWrapper.remove()
+          
+        }, transitionDuration);
+      }, loadTime);
+    }, transitionDuration);
+  }, 50);
+}
+
 function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefined, scale = `small`, settings = {}) {
   if (document.body.getAttribute(`modal-state`) != `opened` && document.body.getAttribute(`modal-state`) != `opening`) {
     if (modalSubtitle != undefined || modalSubtitle != null) {
@@ -2511,7 +2738,7 @@ function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefin
             <h2 class="title">${modalTitle}</h2>
             ${modalSubtitle}
           </div>
-          <button 
+          <button
             class="close-button mdi mdi-close-thick" 
             onclick="document.body.setAttribute('data-modal-state', 'closing'); if (document.querySelector('.settings-modal-alt-wrapper').getAttribute('data-reload') === '') { location.reload; }; setTimeout(() => { document.body.setAttribute('data-modal-state', 'closed'); document.querySelector('.settings-modal-alt-wrapper').remove(); }, 500);"
           >Close</button>
@@ -2541,6 +2768,29 @@ document.addEventListener(`mousedown`, (e) => {
         document.body.setAttribute(`data-modal-state`, `closed`)
         document.querySelector(`.settings-modal-alt-wrapper`).remove()
       }, 500);
+    }
+
+    if (document.querySelector(`nav.navbar`).getAttribute(`data-visible`) === "") {
+      document.querySelector(`nav.navbar`).removeAttribute(`data-visible`)
+    }
+  }
+})
+
+document.addEventListener(`keyup`, (e) => {
+  if (e.key === `Escape`) {
+    if (document.body.getAttribute(`data-modal-state`) === `opened`) {
+      document.body.setAttribute(`data-modal-state`, `closing`)
+      if (document.querySelector(`.settings-modal-alt-wrapper`).getAttribute(`data-reload`) === ``) {
+        location.reload()
+      }
+      setTimeout(() => {
+        document.body.setAttribute(`data-modal-state`, `closed`)
+        document.querySelector(`.settings-modal-alt-wrapper`).remove()
+      }, 500);
+    }
+
+    if (document.querySelector(`nav.navbar`).getAttribute(`data-visible`) === "") {
+      document.querySelector(`nav.navbar`).removeAttribute(`data-visible`)
     }
   }
 })
