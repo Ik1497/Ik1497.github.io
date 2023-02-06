@@ -352,13 +352,15 @@ ul.styled li {
   position: relative;
 }
 
-.navbar .navbar-list .navbar-list-item .title {
+.navbar .navbar-list .navbar-list-item p.title,
+ul.styled li p.title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.navbar .navbar-list .navbar-list-item .description {
+.navbar .navbar-list .navbar-list-item p.description,
+ul.styled li p.description {
   font-size: .9em;
   color: var(--text-400);
 

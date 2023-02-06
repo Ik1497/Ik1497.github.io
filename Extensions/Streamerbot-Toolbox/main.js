@@ -37,11 +37,6 @@ let headerLinksMap = [
     icon: `mdi mdi-lightning-bolt`
   },
   {
-    name: `Present Viewers`,
-    integration: `streamer.bot`,
-    icon: `mdi mdi-account-multiple`
-  },
-  {
     name: `Websocket Events`,
     integration: `streamer.bot`,
     icon: `mdi mdi-creation`
@@ -279,6 +274,12 @@ async function connectws() {
         )
         ws.send(
           JSON.stringify({
+            request: "GetActiveViewers",
+            id: "GetActiveViewers",
+          })
+        )
+        ws.send(
+          JSON.stringify({
             request: `Subscribe`,
             events: {
               twitch: [`ChatMessage`, `ChatMessageDeleted`],
@@ -296,6 +297,15 @@ async function connectws() {
         )
         ws.send(
           JSON.stringify({
+            request: `Subscribe`,
+            events: {
+              raw: [`Action`, `ActionCompleted`]
+            },
+            id: `ActionHistory`,
+          })
+        )
+        ws.send(
+          JSON.stringify({
             request: "GetBroadcaster",
             id: "GetBroadcaster",
           })
@@ -304,22 +314,6 @@ async function connectws() {
           JSON.stringify({
             request: "GetActiveViewers",
             id: "GetActiveViewers",
-          })
-        )
-        ws.send(
-          JSON.stringify({
-            request: `Subscribe`,
-            events: {
-              raw: [`Action`, `ActionCompleted`]
-            },
-            id: `ActionHistory`,
-          })
-        )
-      } else if (location.hash === `#${urlSafe(`Present Viewers`)}` && data.id === `GetInfo`) {
-        ws.send(
-          JSON.stringify({
-            request: `GetActiveViewers`,
-            id: `GetActiveViewers`,
           })
         )
       } else if (location.hash === `#${urlSafe(`Websocket Events`)}` && data.id === `GetInfo`) {
@@ -563,44 +557,53 @@ async function connectws() {
 
       if (location.hash === `#${urlSafe(`Dashboard`)}` && data.id === `GetBroadcaster`) {
 
-        document.body.querySelector(`main`).innerHTML = `
-        <div class="card" style="height: calc(100% - 8rem); max-height: calc(100vh - 8rem);" data-view="all">
-          <div class="card-header">
-            <p class="card-title">Chat</p>
-            <p class="card-title-end"><div class="form-group styled no-margin"><button class="outlined" id="settings">Settings</button></div></p>
+        document.querySelector(`main`).innerHTML = `
+        <div style="display: grid; grid-template-columns: auto max-content; gap: .5rem;">
+          <div class="card" style="height: calc(100% - 8rem); max-height: calc(100vh - 8rem);" data-view="all">
+            <div class="card-header">
+              <p class="card-title">Chat</p>
+            </div>
+            <hr>
+            <ul class="chat-messages" style="overflow: auto;height: calc(100vh - 20rem);max-height: calc(100vh - 20rem);width: 100%;display: flex;flex-direction: column;gap: .25rem;"></ul>
+            <div class="send-message">
+              <div class="form-group styled no-margin">
+                <select class="no-border-radius no-margin fit-content service">
+                  <option value="Twitch">Twitch</option>
+                  <option value="TwitchBot">Twitch (BOT)</option>
+                  <option value="YouTube">YouTube</option>
+                  <option value="Both">Both</option>
+                </select>
+                <select class="no-border-radius no-margin fit-content modifier">
+                  <option value="none">No modifier</option>
+                  <option value="action">/me</option>
+                  <option value="clear">/clear</option>
+                  <option value="slow">/slow</option>
+                  <option value="slowoff">/slowoff</option>
+                  <option value="emoteonly">/emoteonly</option>
+                  <option value="emoteonlyoff">/emoteonlyoff</option>
+                  <option value="followers">/followers</option>
+                  <option value="followersoff">/followersoff</option>
+                  <option value="subscribers">/subscribers</option>
+                  <option value="subscribersoff">/subscribersoff</option>
+                  <option value="vip">/vip</option>
+                  <option value="unvip">/unvip</option>
+                  <option value="mod">/mod</option>
+                  <option value="unmod">/unmod</option>
+                  <option value="shoutout">/shoutout</option>
+                </select>
+                <input type="text" placeholder="Send message to chat" class="no-margin no-border-radius">
+                <button class="submit no-border-radius no-margin">Send</button>
+              </div>
+            </div>
           </div>
-          <hr>
-          <ul class="chat-messages" style="overflow: auto;height: calc(100vh - 20rem);max-height: calc(100vh - 20rem);width: 100%;display: flex;flex-direction: column;gap: .25rem;"></ul>
-          <div class="send-message">
-          <div class="form-group styled no-margin">
-            <select class="no-border-radius no-margin fit-content service">
-              <option value="Twitch">Twitch</option>
-              <option value="TwitchBot">Twitch (BOT)</option>
-              <option value="YouTube">YouTube</option>
-              <option value="Both">Both</option>
-            </select>
-            <select class="no-border-radius no-margin fit-content modifier">
-              <option value="none">No modifier</option>
-              <option value="action">/me</option>
-              <option value="shoutout">/shoutout</option>
-              <option value="mod">/mod</option>
-              <option value="unmod">/unmod</option>
-              <option value="vip">/vip</option>
-              <option value="unvip">/unvip</option>
-              <option value="clear">/clear</option>
-              <option value="emoteonly">/emoteonly</option>
-              <option value="emoteonlyoff">/emoteonlyoff</option>
-              <option value="followers">/followers</option>
-              <option value="followersoff">/followersoff</option>
-              <option value="subscribers">/subscribers</option>
-              <option value="subscribersoff">/subscribersoff</option>
-              <option value="slow">/slow</option>
-              <option value="slowoff">/slowoff</option>
-            </select>
-            <input type="text" placeholder="Send message to chat" class="no-margin no-border-radius">
-            <button class="submit no-border-radius no-margin">Send</button>
+
+          <div class="card" style="height: fit-content; max-height: calc(100vh - 15rem); width: 15rem; max-width: 15rem;">
+            <div class="card-header">
+              <p class="card-title">Present Viewers</p>
+            </div>
+            <hr>
+            <ul class="present-viewers styled"></ul>
           </div>
-        </div>
         </div>
         `
 
@@ -647,12 +650,12 @@ async function connectws() {
             `
           }
 
-          document.body.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
+          document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
           <div class="main">
             ${errorMessage}
             <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
             <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
-            <p>this tool is currently a very work in progress, feautures may come and go over time.</p>
+            <p>this tool is currently a very work in progress, features may come and go over time.</p>
             <br>
             <p>This tool requires your <code>Server/Clients</code> --> <code>Websocket Server</code> to be enabled.</p>
             <br>
@@ -674,12 +677,6 @@ async function connectws() {
           </div>
           `)
         }
-
-        document.querySelector(`main .card .card-header button#settings`).addEventListener(`click`, function () {
-          createModal(`
-          <blockquote class="success">Coming Soon!</blockquote>
-          `,`Chat Settings`, undefined, `small`, {})
-        })
         
         document.querySelector(`.card .send-message select.modifier`).onchange = (e) => {
           document.querySelector(`.card .send-message input`).value = ``
@@ -772,6 +769,98 @@ async function connectws() {
           </div>
           </li>`)
         }
+      }
+
+      if (location.hash === `#${urlSafe(`Dashboard`)}` && data.id === `GetActiveViewers`) {
+        let viewers = []
+
+        data.viewers.forEach(viewer => {
+          if (viewer.role === `Broadcaster`) {
+            viewers.push(viewer)
+          }
+        });
+
+        data.viewers.forEach(viewer => {
+          if (viewer.role === `Moderator`) {
+            viewers.push(viewer)
+          }
+        });
+
+        data.viewers.forEach(viewer => {
+          if (viewer.role != `Broadcaster` && viewer.role != `Moderator` && viewer.role != `Viewer`) {
+            viewers.push(viewer)
+          }
+        });
+
+        data.viewers.forEach(viewer => {
+          if (viewer.role === `Viewer`) {
+            viewers.push(viewer)
+          }
+        });
+
+        viewers.forEach(viewer => {
+          let viewerListItem = document.createElement(`li`)
+
+          let viewerListItem__button = document.createElement(`button`)
+          viewerListItem.append(viewerListItem__button)
+
+          viewerListItem__button__title = document.createElement(`p`)
+          viewerListItem__button__title.className = `title`
+          viewerListItem__button__title.innerText = viewer.display
+          viewerListItem__button.append(viewerListItem__button__title)
+          
+          viewerListItem__button__description = document.createElement(`p`)
+          viewerListItem__button__description.className = `description`
+          viewerListItem__button__description.innerText = viewer.role
+          viewerListItem__button.append(viewerListItem__button__description)
+
+          document.querySelector(`main .card ul.present-viewers`).append(viewerListItem)
+
+          let groups = `<ul class="buttons-row list-items">`
+          viewer.groups.forEach(group => {
+            groups += `<li>${group}</li>`
+          });
+          groups += `</ul>`
+
+          viewerListItem__button.addEventListener(`click`, () => {
+            createModal(`
+            <ul class="buttons-row list-items">
+              ${viewer.subscribed ? `<li class="mdi mdi-account-star">Subscribed</li>` : ``}
+              <li>${viewer.role}</li>
+              ${viewer.exempt ? `<li title="Excluded from timeouts">Exempt</li>` : ``}
+            </ul>
+            <br>
+            <table class="styled">
+              <tbody>
+                <tr>
+                  <td style="text-align: right;">Display Name</td>
+                  <td style="text-align: left;">${viewer.display}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: right;">Login Name</td>
+                  <td style="text-align: left;">${viewer.login}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: right;">User Id</td>
+                  <td style="text-align: left;">${viewer.id}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: right;">Previous Active</td>
+                  <td style="text-align: left;">${SB__FormatTimestamp(viewer.previousActive, `medium`)}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: right;">Channel Points Used</td>
+                  <td style="text-align: left;">${viewer.channelPointsUsed}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: right;">Groups</td>
+                  <td style="text-align: left;">${groups}</td>
+                </tr>
+              </tbody>
+            </table>
+            `, viewer.display, `Inspect user`, `small`, {})
+          })
+        });
       }
       
       if (location.hash === `#Dashboard` && data?.event?.source === `Twitch` && data?.event?.type === `ChatMessage`) {
@@ -1513,43 +1602,6 @@ async function connectws() {
           actionHistoryCompleted__ListItem.setAttribute(`data-action-completed-data`, JSON.stringify(data))
           actionHistoryCompleted__ListItem.setAttribute(`data-action-state`, `completed`)
         }
-      }
-      
-      if (location.hash === `#${urlSafe(`Present Viewers`)}` && data.id === `GetActiveViewers`) {
-        data.viewers.forEach(viewer => {
-          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item" id="${viewer.id}"><button><p class="title">${viewer.display}</p></button></li>`)
-        });
-
-        document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(navBarListItem => {
-          navBarListItem.addEventListener(`click`, function () {
-            navBarListItem.classList.add(`nav-active`)
-          
-            document.querySelectorAll(`nav.navbar ul.navbar-list li.nav-active`).forEach(navBarActiveListItem => {
-              navBarActiveListItem.classList.remove(`nav-active`)
-            })
-
-            navBarListItem.classList.add(`nav-active`)
-
-            data.viewers.forEach(viewer => {
-              if (viewer.id === navBarListItem.id) {
-                document.querySelector(`main ul.main-list`).innerHTML = ``
-                document.querySelector(`main ul.main-list`).classList.add(`col-2`)
-                document.querySelector(`main ul.main-list`).insertAdjacentHTML(`beforeend`,`
-                <li>Display Name</li><li>${viewer.display}</li>
-                <li>Login Name</li><li>${viewer.login}</li>
-                <li>User Id</li><li>${viewer.id}</li>
-                <li>Role</li><li>${viewer.role}</li>
-                <li>Subscribed</li><li>${viewer.subscribed}</li>
-                <li>Previous Active</li><li>${formatStreamerbotTimestamp(viewer.previousActive)}</li>
-                <li>Channel Points Used</li><li>${viewer.channelPointsUsed}</li>
-                <li>Exempt</li><li>${viewer.exempt}</li>
-                <li>Groups</li><li>${viewer.groups.toString().replaceAll(`,`, `, `)}</li>
-                </tbody></table>
-                `)
-              }
-            });
-          })
-        });
       }
 
       if (location.hash === `#${urlSafe(`Websocket Events`)}` && data.id === `GetEvents`) {
@@ -2647,6 +2699,45 @@ function sendNotification(service, text) {
   console.log(`%c[${service}]%c ${text}`, `color: #8c75fa;`, `color: white;`)
 }
 
+function SB__FormatTimestamp(timestamp, textSize = `small`) {
+  let timestampObject = SB__TimestampObject(timestamp)
+
+  if (textSize === `small` || textSize === undefined) {
+    timestamp = `${timestampObject.hour}:${timestampObject.minute}:${timestampObject.second}`
+  } else if (textSize === `medium`) {
+    timestamp = `${timestampObject.hour}:${timestampObject.minute}:${timestampObject.second} (${timestampObject.timezone})`
+  } else if (textSize === `full`) {
+    timestamp = `${timestampObject.day}-${timestampObject.month}-${timestampObject.year}, ${timestampObject.hour}:${timestampObject.minute}:${timestampObject.second} (${timestampObject.timezone})`
+  }
+  return timestamp
+}
+
+function SB__TimestampObject(timestamp) {
+  timestamp = timestamp.split(`T`)
+  if (timestamp[1].includes(`+`)) {
+    timestamp.push(`+` + timestamp[1].split(`+`)[1])
+    timestamp[1] = timestamp[1].split(`+`)[0]
+  } else if (timestamp[1].includes(`-`)) {
+    timestamp.push(`-` + timestamp[1].split(`-`)[1])
+    timestamp[1] = timestamp[1].split(`-`)[0]
+  }
+
+  timestamp[1] = timestamp[1].split(`:`)
+  timestamp[1][2] = timestamp[1][2].split(`.`)[0]
+
+  timestamp[0] = timestamp[0].split(`-`)
+
+  return {
+    year: timestamp[0][0],
+    month: timestamp[0][1],
+    day: timestamp[0][2],
+    hour: timestamp[1][0],
+    minute: timestamp[1][1],
+    second: timestamp[1][2],
+    timezone: timestamp[2]
+  }
+}
+
 function formatStreamerbotTimestamp(timestamp) {
   timestamp = timestamp.split(`T`)
   if (timestamp[1].includes(`+`)) {
@@ -2770,7 +2861,7 @@ document.addEventListener(`mousedown`, (e) => {
       }, 500);
     }
 
-    if (document.querySelector(`nav.navbar`).getAttribute(`data-visible`) === "") {
+    if (document.querySelector(`nav.navbar`) != null && document.querySelector(`nav.navbar`).getAttribute(`data-visible`) === "") {
       document.querySelector(`nav.navbar`).removeAttribute(`data-visible`)
     }
   }
