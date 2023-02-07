@@ -148,13 +148,17 @@ document.querySelector(`header aside button.connect-websocket`).addEventListener
 document.querySelector(`nav.navbar > input[type=search]`).addEventListener(`keydown`, function () {
   setTimeout(() => {    
     let currentSearchTerm = document.querySelector(`nav.navbar > input[type=search]`).value.toLowerCase()
+    
     document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(listItem => {
-      if (!listItem.querySelector(`button p.title`).innerText.toLowerCase().includes(currentSearchTerm)) {
-        listItem.setAttribute(`hidden`, ``)
-        listItem.setAttribute(`aria-hidden`, `true`)
-      } else {
+      let valueTitle = listItem.querySelector(`button p.title`)?.innerText.toLowerCase() ?? ``
+      let valueDescription = listItem.querySelector(`button p.description`)?.innerText.toLowerCase() ?? ``
+
+      if (valueTitle.includes(currentSearchTerm) || valueDescription.includes(currentSearchTerm)) {
         listItem.removeAttribute(`hidden`)
         listItem.setAttribute(`aria-hidden`, `false`)
+      } else {
+        listItem.setAttribute(`hidden`, ``)
+        listItem.setAttribute(`aria-hidden`, `true`)
       }
     });
   }, 50);
@@ -1205,7 +1209,7 @@ async function connectws() {
                       <td style="text-align: left;">${action.enabled ? `Enabled` : `Disabled`}</td>
                     </tr>
                     <tr>
-                      <td style="text-align: right;">Stats</td>
+                      <td style="text-align: right;">Additional</td>
                       <td style="text-align: left;">
                         <div class="buttons-row list-items">
                           <li>${action.subaction_count} ${action.subaction_count === 1 ? `Sub-Action` : `Sub-Actions`}</li>
@@ -1481,7 +1485,7 @@ async function connectws() {
             })
 
             copyButtons__List__copyForWiki__button.addEventListener(`click`, () => {
-              createSnackbar(`Copying variables for wiki to clipboard`)
+              createSnackbar(`Copying variables for the Streamer.bot Wiki to clipboard`)
               if (document.querySelector(`.settings-modal-alt .main table#completed`) != null) {
                 if (document.querySelector(`.settings-modal-alt .main table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForWiki(`completed`)
@@ -1684,8 +1688,14 @@ async function connectws() {
           navbar__listItem.append(navbar__listItem__button)
 
           let navbar__listItem__button__title = document.createElement(`p`)
+          navbar__listItem__button__title.className = `title`
           navbar__listItem__button__title.innerText = events[0]
           navbar__listItem__button.append(navbar__listItem__button__title)
+          
+          let navbar__listItem__button__description = document.createElement(`p`)
+          navbar__listItem__button__description.className = `description`
+          navbar__listItem__button__description.innerText = `${events[1].length} ${events[1].length === 1 ? `Event` : `Events`}`
+          navbar__listItem__button.append(navbar__listItem__button__description)
 
           document.querySelector(`nav.navbar ul.navbar-list`).append(navbar__listItem)
 
