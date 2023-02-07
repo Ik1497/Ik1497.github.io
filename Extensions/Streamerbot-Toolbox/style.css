@@ -67,6 +67,10 @@ hr {
   background: var(--background-light);
 }
 
+::selection {
+  background: var(--color-link);
+}
+
 [hidden] {
   display: none !important;
 }
@@ -387,7 +391,7 @@ ul.styled li button {
   text-overflow: ellipsis;
 }
 
-ul.styled li button.prepend {
+ul.styled li button.append {
   position: absolute;
   right: 0;
   bottom: 50%;
@@ -400,16 +404,20 @@ ul.styled li button.prepend {
   border-radius: 100vmax;
 }
 
-.navbar .navbar-list .navbar-list-item button:active,
-.navbar .navbar-list .navbar-list-item button:focus-visible,
-.navbar .navbar-list .navbar-list-item button:hover {
+.navbar .navbar-list .navbar-list-item button:not(:disabled):active,
+.navbar .navbar-list .navbar-list-item button:not(:disabled):focus-visible,
+.navbar .navbar-list .navbar-list-item button:not(:disabled):hover {
   background: var(--background-soft);
 }
 
-ul.styled li button:active,
-ul.styled li button:focus-visible,
-ul.styled li button:hover {
+ul.styled li button:not(:disabled):active,
+ul.styled li button:not(:disabled):focus-visible,
+ul.styled li button:not(:disabled):hover {
   background: var(--background-mute);
+}
+
+ul.styled li button:disabled {
+  pointer-events: none;
 }
 
 ul.styled li button {
@@ -1168,11 +1176,11 @@ body:not([data-streamerbot-action-package="installed"]) .send-message * {
   align-items: center;
 }
 
-.card .card-title {
+.card .card-header .card-title {
   font-weight: bold;
 }
 
-.card .card-title-end {
+.card .card-header .card-header-append {
   margin-left: auto;
 }
 
