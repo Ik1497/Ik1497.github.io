@@ -1086,79 +1086,101 @@ async function connectws() {
 
         // End Arguments
 
-        ////////////
-        // NAVBAR //
-        ////////////
+        document.querySelector(`main ul.main-list`).remove()
 
         let uniqueGroups = []
         
-        // Unique Groups Array
         data.actions.forEach(action => {
-          if (action.group === "") {
-          } else if (!uniqueGroups.includes(action.group)) {
+          if (!uniqueGroups.includes(action.group) && action.group != "") {
             uniqueGroups.push(action.group)
           }
         })
+
         uniqueGroups = uniqueGroups.sort()
         uniqueGroups.unshift("None")
-        uniqueGroups.unshift("All")
+        uniqueGroups.unshift("View All")
         
-        // Groups Navbar
         uniqueGroups.forEach(group => {
           let actionCount = 0
           data.actions.forEach(action => {
             if (action.group === ``) action.group = `None`
-            if (group === action.group || group === `All`) {
+            if (group === action.group || group === `View All`) {
               actionCount++
             }
           })
-          let action = `${actionCount} ${actionCount === 1 ? `Action` : `Actions`}`
-          if (actionCount === 1) action = `${actionCount} Action`
-          document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `<li class="navbar-list-item"><button><p class="title">${group}</p><p class="description">${action}</p></button></li>`)
-        })
 
-        // Button Logic
-        document.querySelector(`main ul.main-list`).remove()
-
-        document.querySelectorAll(`ul.navbar-list button`).forEach(buttonHtml => {
-          buttonHtml.addEventListener(`click`, function () {
+          let navbar__listItem = document.createElement(`li`)
+          navbar__listItem.className = `navbar-list-item`
+          document.querySelector(`nav.navbar ul.navbar-list`).append(navbar__listItem)
+          
+          let navbar__listItem__button = document.createElement(`button`)
+          navbar__listItem.append(navbar__listItem__button)
+          
+          let navbar__listItem__button__title = document.createElement(`p`)
+          navbar__listItem__button__title.className = `title`
+          navbar__listItem__button__title.innerText = group
+          navbar__listItem__button.append(navbar__listItem__button__title)
+          
+          let navbar__listItem__button__description = document.createElement(`p`)
+          navbar__listItem__button__description.className = `description`
+          navbar__listItem__button__description.innerText = `${actionCount} ${actionCount === 1 ? `Action` : `Actions`}`
+          navbar__listItem__button.append(navbar__listItem__button__description)
+          
+          navbar__listItem__button.addEventListener(`click`, function () {
             document.querySelector(`main > .card-grid`).remove()
 
-            // Button Logic || Remove old active classes
-            document.querySelectorAll(`nav.navbar ul.navbar-list .nav-active`).forEach(oldNavActiveHtml => {
-              oldNavActiveHtml.classList.remove(`nav-active`)
+            navbar__listItem.classList.add(`nav-active`)
+
+            document.querySelectorAll(`nav.navbar ul.navbar-list .nav-active`).forEach(listItem => {
+              listItem.classList.remove(`nav-active`)
             })
 
-            // Button Logic || Add new active class
-            buttonHtml.parentElement.classList.add(`nav-active`)
+            navbar__listItem.classList.add(`nav-active`)
 
-            // ---- //
-            // MAIN //
-            // ---- //
-
-            // Add Main Contents
-
-            document.querySelector
-            buttonHtmlText = buttonHtml.querySelector(`p.title`).innerText
-            if (buttonHtmlText === "") buttonHtmlText = `None`
-            let actionCount = 0
+            if (group === "") group = `None`
             document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
             <div class="card-grid">
               <div class="card">
                 <div class="card-header">
-                  <p class="card-title">${buttonHtmlText}, Actions</p>
+                  <p class="card-title">${group}, ${actionCount} ${actionCount === 1 ? `Action` : `Actions`}</p>
                 </div>
                 <hr>
                 <ul class="styled"></ul>
               </div>
             </div>
             `)
-            data.actions.forEach(action => {
-              if (action.group === buttonHtmlText || buttonHtmlText === `All`) {
-                actionCount++
-                  
-                  
+
+            let usedActionGroups = []
+            if (group === `View All`) {
+              uniqueGroups.forEach(uniqueGroup => {             
+                data.actions.forEach(action => {
+                  if (!usedActionGroups.includes(action.group) && uniqueGroup === action.group && uniqueGroup != `View All`) {
+                    usedActionGroups.push(action.group)
+                    document.querySelector(`main > .card-grid .card ul.styled`).insertAdjacentHTML(`beforeend`, `
+                    <li class=title>
+                      <button disabled>
+                        <p class="title">${action.group}</p>
+                      </button>
+                    </li>
+                    `)
+
+                    data.actions.forEach(action => {
+                      if (uniqueGroup === action.group) {
+                        addActionsToUi(action)
+                      }
+                    })
+
+                  }
+                })
+              });
+            } else {
+              data.actions.forEach(addActionsToUi)
+            }
+
+            function addActionsToUi(action) {
+              if (action.group === group || group === `View All`) {
                 let listItem = document.createElement(`li`)
+                document.querySelector(`main > .card-grid .card ul.styled`).append(listItem)
 
                 let listItemHtml__button = document.createElement(`button`)
 
@@ -1174,22 +1196,19 @@ async function connectws() {
                 listItemHtml__appendDiv.classList.add(`form-group`)
                 listItemHtml__appendDiv.classList.add(`styled`)
                 listItemHtml__appendDiv.classList.add(`no-margin`)
-
+                listItem.append(listItemHtml__appendDiv)
+                
                 let listItemHtml__appendDiv__button = document.createElement(`button`)
                 listItemHtml__appendDiv__button.classList.add(`append`)
                 listItemHtml__appendDiv__button.classList.add(`primary`)
                 listItemHtml__appendDiv__button.classList.add(`dense`)
                 listItemHtml__appendDiv__button.title = `Execute Action`
                 listItemHtml__appendDiv__button.innerText = `Execute`
-
                 listItemHtml__appendDiv.append(listItemHtml__appendDiv__button)
-                listItem.append(listItemHtml__appendDiv)
 
-                document.querySelector(`main > .card-grid .card ul.styled`).append(listItem)
+                listItemHtml__appendDiv__button.addEventListener(`click`, RunActionFromActionsPage)
 
-                listItem.querySelector(`.append button`).addEventListener(`click`, RunActionFromActionsPage)
-
-                listItem.querySelector(`button`).addEventListener(`click`, function () {
+                listItemHtml__button.addEventListener(`click`, function () {
                   createModal(`
                   <table class="styled">
                     <tr>
@@ -1331,10 +1350,7 @@ async function connectws() {
                   SB__RunActionById(action.id, arguments)
                 }
               }
-            })
-
-          document.querySelector(`main > .card-grid .card .card-header .card-title`).innerText = `${buttonHtmlText}, ${actionCount} ${actionCount === 1 ? `Action` : `Actions`}`
-
+            }
           })
         })
       }
@@ -1653,7 +1669,6 @@ async function connectws() {
 
       if (location.hash === `#${urlSafe(`Websocket Events`)}` && data?.id === `GetEvents`) {
         let eventSubscriptionAll = data.events
-        eventSubscriptionAll.raw = []
         SB__Subscribe(eventSubscriptionAll, `EventSubscriptionAll`)
         document.querySelector(`main`).classList.add(`col-2`)
         document.querySelector(`main`).innerHTML = `
@@ -1676,7 +1691,7 @@ async function connectws() {
         let eventsEntriesAll = []
         eventsEntries.forEach(events => {
           events[1].forEach(event => {
-            eventsEntriesAll.push(`[${events[0]}] ${event}`)
+            eventsEntriesAll.push([events[0], event])
           });
         });
 
@@ -1723,23 +1738,52 @@ async function connectws() {
             events[1].sort()
 
             console.log(events[1])
-            
-            events[1].forEach(event => {
-              document.querySelector(`main .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
-              <li>
-                <button disabled>
-                  <p class="title">
-                    ${event}
-                  </p>
-                </button>
-              </li>
-              `)
-            });
+
+            if (navbar__listItem__button__title.innerText != `View All`) {
+              events[1].forEach(event => {
+                document.querySelector(`main .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
+                <li>
+                  <button disabled>
+                    <p class="title">
+                      ${event}
+                    </p>
+                  </button>
+                </li>
+                `)
+              });
+            } else {
+              let eventGroups = []
+
+              events[1].forEach(event => {
+                if (!eventGroups.includes(event[0])) {
+                  eventGroups.push(event[0])
+                  document.querySelector(`main .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
+                  <li class="title">
+                    <button disabled>
+                      <p class="title">
+                        ${event[0]}
+                      </p>
+                    </button>
+                  </li>
+                  `)
+                }
+
+                document.querySelector(`main .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
+                <li>
+                  <button disabled>
+                    <p class="title">
+                      ${event[1]}
+                    </p>
+                  </button>
+                </li>
+                `)
+              });
+            }
           })
         });
       }
 
-      if (location.hash === `#${urlSafe(`Websocket Events`)}` && data?.id === undefined && data?.event?.source != null && data?.event?.type != null) {
+      if (location.hash === `#${urlSafe(`Websocket Events`)}` && data?.id === undefined && data?.event?.source != null && data?.event?.type != null && data?.data?.name != `Streamer.bot Toolbox Partial - Websocket Handler`) {
         let eventHistory__listItem = document.createElement(`li`)
         document.querySelector(`.card-grid .card#event-history ul`).prepend(eventHistory__listItem)
 
@@ -1753,14 +1797,27 @@ async function connectws() {
 
         let eventHistory__listItem__button__description = document.createElement(`p`)
         eventHistory__listItem__button__description.className = `description`
-        eventHistory__listItem__button__description.innerText = data.event.source
+        eventHistory__listItem__button__description.innerText = `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`
         eventHistory__listItem__button.append(eventHistory__listItem__button__description)
 
         eventHistory__listItem__button.addEventListener(`click`, () => {
           createModal(`
-          <h2>Raw Data</h2>
+          <div class="buttons-row">
+            <li>
+              <button class="active-state mdi mdi-code-json" id="copy-as-json-button">Copy as JSON</button>
+            </li>
+          </div>
+          <br>
+          <pre class="json-parse"><code>
           ${JSON.stringify(data.data)}
+          </code></pre>
           `, data.event.type, `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`, `medium`, {})
+          reloadJsonParser()
+
+          document.getElementById(`copy-as-json-button`).addEventListener(`click`, () => {
+            createSnackbar(`Copying websocket data as JSON to clipboard`)
+            navigator.clipboard.writeText(JSON.stringify(data.data))
+          })
         })
       }
 

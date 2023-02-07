@@ -356,6 +356,12 @@ ul.styled li {
   position: relative;
 }
 
+ul.styled li.title button {
+  padding-block: 1rem;
+  font-weight: 800;
+  background: var(--background-soft);
+}
+
 .navbar .navbar-list .navbar-list-item p.title,
 ul.styled li p.title {
   overflow: hidden;
