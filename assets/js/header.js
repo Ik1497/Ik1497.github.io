@@ -1,4 +1,19 @@
-document.body.insertAdjacentHTML(`afterbegin`, `<header class="header-primary"><a href="/"><div class="main-info"><img src="/assets/images/favicon.png" alt="Header logo"><div class="info"><p class="name">Streamer.bot Actions</p><p class="description">By Ik1497</p></div></div></a><aside><button class="mdi mdi-cog settings" title="Settings" aria-label="Settings"></button></aside></header>`)
+document.body.insertAdjacentHTML(`afterbegin`, `
+<header class="header-primary">
+    <a href="/">
+        <div class="main-info">
+            <img src="/assets/images/favicon.png" alt="Header logo">
+            <div class="info">
+                <p class="name">Streamer.bot Actions</p>
+                <p class="description">By Ik1497</p>
+            </div>
+        </div>
+    </a>
+    <aside>
+        <button class="mdi mdi-cog settings" title="Settings" aria-label="Settings"></button>
+    </aside>
+</header>
+`)
 
 document.querySelector(`header.header-primary aside .settings`).addEventListener(`click`, function () {
     let checked = ``
@@ -11,7 +26,8 @@ document.querySelector(`header.header-primary aside .settings`).addEventListener
     if (localStorage.getItem(`websiteSettings__visibilityChannel`) === `beta`) {
         checked = ` checked`
     }
-    let setting__beta = `<p class="checkbox-wrapper"><input type="checkbox" id="setting__beta" onclick="settings__updateChecboxes()" data-checkbox="beta"${checked}> <label for="setting__beta">Show BETA pages, these pages may are unfinished/unusable</label></p>`
+    // let setting__beta = `<p class="checkbox-wrapper"><input type="checkbox" id="setting__beta" onclick="settings__updateChecboxes()" data-checkbox="beta"${checked}> <label for="setting__beta">Show BETA pages, these pages may are unfinished/unusable</label></p>`
+    let setting__beta = ``
     let modalContents = `${setting__scrollbar}${setting__beta}${setting__dropdown}`
     let modalBase = `<div class="website-settings-modal"><header><div class="main-info"><img src="/assets/images/favicon.png" alt="Header logo"><div class="info"><p class="name">Website Settings</p><p class="description">Streamer.bot Actions</p></div></div><aside><button class="close-button mdi mdi-close"></button></aside></header><div class="website-settings-modal-contents">${modalContents}</div></div>`
     document.body.insertAdjacentHTML(`afterbegin`, modalBase);

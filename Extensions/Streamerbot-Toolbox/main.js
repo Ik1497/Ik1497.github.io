@@ -217,7 +217,7 @@ async function connectws() {
         if (instance.os === `linux`) instanceOS = `<span class="mdi mdi-linux"> Linux</span>`
         if (instance.os === `macosx`) instanceOS = `<span class="mdi mdi-apple"> MacOS</span>`
         document.querySelector(`header aside`).innerHTML = `
-        <p class="instance-info">Streamer.bot - ${data.info.name}
+        <p class="instance-info">Streamer.bot${data.info.name != `Streamer.bot` ? ` -  ${data.info.name}` : ``}
         <small>${instance.instanceId}<br>
         ${instanceOS} • ${instance.version}</small></p>`
         document.title = `${instance.name} (${instance.version}) • ${documentTitle}`
