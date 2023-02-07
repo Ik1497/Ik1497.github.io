@@ -69,7 +69,7 @@ let headerAside = `
 <div class="form-area"><label>Port</label><input type="number" value="${streamerbotToolbox__connection.port}" max="9999" class="port"></div>
 <div class="form-area"><label>Endpoint</label><input type="text" value="${streamerbotToolbox__connection.endpoint}" class="endpoint"></div>
 <button class="connect-websocket">Connect</button>`
-let headerHtml = `<header><a href="/"><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">${title}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
+let headerHtml = `<header><a href=""><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">${title}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
 document.querySelector("body").insertAdjacentHTML(`afterbegin`,`
 ${headerHtml}
 <nav class="navbar">
@@ -1652,7 +1652,9 @@ async function connectws() {
       }
 
       if (location.hash === `#${urlSafe(`Websocket Events`)}` && data?.id === `GetEvents`) {
-        SB__Subscribe(data.events, `EventSubscriptionAll`)
+        let eventSubscriptionAll = data.events
+        eventSubscriptionAll.raw = []
+        SB__Subscribe(eventSubscriptionAll, `EventSubscriptionAll`)
         document.querySelector(`main`).classList.add(`col-2`)
         document.querySelector(`main`).innerHTML = `
         <div class="card-grid" id="events"></div>

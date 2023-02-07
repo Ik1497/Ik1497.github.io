@@ -418,6 +418,7 @@ ul.styled li button:not(:disabled):hover {
 
 ul.styled li button:disabled {
   pointer-events: none;
+  cursor: unset;
 }
 
 ul.styled li button {
