@@ -29,7 +29,8 @@ let headerLinksMap = [
   {
     name: `Dashboard`,
     integration: `streamer.bot`,
-    icon: `mdi mdi-view-dashboard-variant`
+    icon: `mdi mdi-view-dashboard-variant`,
+    navbarHidden: true
   },
   {
     name: `Actions`,
@@ -44,7 +45,8 @@ let headerLinksMap = [
   {
     name: `Global Variables`,
     integration: `streamer.bot-action-package`,
-    icon: `mdi mdi-earth`
+    icon: `mdi mdi-earth`,
+    navbarHidden: true
   },
   {
     name: `Commands`,
@@ -57,12 +59,43 @@ let headerLinksMap = [
   },
   {
     name: `TwitchSpeaker`,
-    integration: `twitchspeaker`
+    integration: `twitchspeaker`,
+    navbarHidden: true
   }
 ]
 
+document.querySelector("body").insertAdjacentHTML(`afterbegin`,`
+<nav class="navbar">
+  <input type="search" placeholder="Search...">
+</nav>
+<main>
+</main>
+`)
+
 
 if (location.hash === ``) location.href = `#${urlSafe(`Dashboard`)}`
+
+let state__404 = true
+
+headerLinksMap.forEach(headerLink => {
+  let headerLinkHash = urlSafe(headerLink.name)
+  
+  if (headerLinkHash === location.hash.replace(`#`, ``)) {
+    state__404 = false
+  }
+
+  if (!headerLink.navbarHidden) {
+    document.querySelector("nav.navbar").insertAdjacentHTML(`afterbegin`,`
+    <ul class="navbar-list" data-page="${urlSafe(headerLink.name)}"${location.hash === `#${urlSafe(headerLink.name)}` ? `` : `hidden`}></ul>
+    `)
+  }
+
+  document.querySelector("main").insertAdjacentHTML(`afterbegin`,`
+  <div class="main nested" data-page="${urlSafe(headerLink.name)}"${location.hash === `#${urlSafe(headerLink.name)}` ? `` : `hidden`}></div>
+  `)
+});
+
+if (state__404 === true) document.body.classList.add(`not_found`)
 
 let headerAside = `
 <div class="form-area"><label>Url</label><input type="url" value="${streamerbotToolbox__connection.host}" class="url"></div>
@@ -70,16 +103,43 @@ let headerAside = `
 <div class="form-area"><label>Endpoint</label><input type="text" value="${streamerbotToolbox__connection.endpoint}" class="endpoint"></div>
 <button class="connect-websocket">Connect</button>`
 let headerHtml = `<header><a href=""><div class="main"><img src="https://ik1497.github.io/assets/images/favicon.png" alt="favicon"><div class="name-description"><p class="name">${title}</p><p class="description">by Ik1497</p></div></div></a><aside>${headerAside}</aside></header>`
-document.querySelector("body").insertAdjacentHTML(`afterbegin`,`
-${headerHtml}
-<nav class="navbar">
-  <input type="search" placeholder="Search...">
-  <ul class="navbar-list"></ul>
-</nav>
-<main>
-  <ul class="main-list"></ul>
-</main>
+
+document.body.insertAdjacentHTML(`afterbegin`, headerHtml)
+
+document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `
+<ul class="header-links buttons-row"></ul>
 `)
+
+updateHeaderLinks()
+
+function updateHeaderLinks() {
+  document.querySelector(`header .header-links`).innerHTML = ``
+
+  headerLinksMap.forEach(headerLink => {
+    let hidden = ``
+    let headerLinkActive = ``
+
+    let headerLinkHash = urlSafe(headerLink.name)
+    
+    let href =` href="#${headerLinkHash}"`
+    if (location.hash === `#${headerLinkHash}`) {
+      headerLinkActive = ` class="button-active"`
+      href = ``
+    }
+
+    if (headerLink.integration != `streamer.bot`) hidden = ` hidden`
+    if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) hidden = ``
+    if (document.body.getAttribute(`twitchspeaker-state`) === `connected`) hidden = ``
+
+    document.querySelector(`header .header-links`).insertAdjacentHTML(`beforeend`, `
+    <li${headerLinkActive}${hidden}>
+      <a ${href}title="${headerLink.name}" data-integration="${headerLink.integration}" class="${headerLink.icon || `mdi mdi-chevron-right`}">
+        <p class="button-row-title">${headerLink.name}</p>
+      </a>
+    </li$>
+    `)
+  });
+}
 
 let navbarTogglerButton = document.createElement(`button`)
 navbarTogglerButton.className = `navbar-toggler footer-icon mdi mdi-menu`
@@ -92,46 +152,6 @@ navbarTogglerButton.addEventListener(`click`, () => {
 })
 
 document.body.append(navbarTogglerButton)
-
-document.querySelector(`header`).insertAdjacentHTML(`beforeend`, `
-<ul class="header-links buttons-row"></ul>
-`)
-
-headerLinksMap.forEach(headerLink => {
-  let hidden = ``
-  let headerLinkActive = ``
-
-  let headerLinkHash = urlSafe(headerLink.name)
-  
-  let href =` href="#${headerLinkHash}"`
-  if (location.hash === `#${headerLinkHash}`) {
-    headerLinkActive = ` class="button-active"`
-    href = ``
-  }
-
-  if (headerLink.integration != `streamer.bot`) hidden = ` hidden`
-
-  document.querySelector(`header .header-links`).insertAdjacentHTML(`beforeend`, `
-  <li${headerLinkActive}${hidden}>
-    <a ${href}title="${headerLink.name}" data-integration="${headerLink.integration}" class="${headerLink.icon || `mdi mdi-chevron-right`}">
-      <p class="button-row-title">${headerLink.name}</p>
-    </a>
-  </li$>
-  `)
-});
-
-let state__404 = true
-
-headerLinksMap.forEach(headerLink => {
-  let headerLinkHash = urlSafe(headerLink.name)
-  
-  if (headerLinkHash === location.hash.replace(`#`, ``)) {
-      state__404 = false
-  }
-});
-
-if (state__404 === true) document.body.classList.add(`not_found`)
-
 
 document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function (e) {
   let DOM_streamerbotToolbox__connection = {}
@@ -165,7 +185,24 @@ document.querySelector(`nav.navbar > input[type=search]`).addEventListener(`keyd
 })
 
 window.addEventListener('hashchange', () => {
-  location.reload()
+  updateHeaderLinks()
+
+  document.querySelectorAll(`nav.navbar ul.navbar-list`).forEach(navbarList => {
+    navbarList.setAttribute(`hidden`, ``)
+  });
+
+  document.querySelectorAll(`main .main`).forEach(main => {
+    main.setAttribute(`hidden`, ``)
+  });
+  
+  headerLinksMap.forEach(headerLink => {
+    if (location.hash === `#${urlSafe(headerLink.name)}`) {
+      if (!headerLink.navbarHidden) {
+        document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(headerLink.name)}"]`).removeAttribute(`hidden`)
+      }
+      document.querySelector(`main .main[data-page="${urlSafe(headerLink.name)}"]`).removeAttribute(`hidden`)
+    }
+  });
 });
 
 connectws()
@@ -254,32 +291,24 @@ async function connectws() {
             document.body.setAttribute(`data-streamerbot-action-package`, `absent`)
           }
         });
-      } else if (location.hash === `#${urlSafe(`Dashboard`)}` && data.id === `GetInfo`) {
-        SB__GetBroadcaster(`GetBroadcaster`)
-        SB__GetActiveViewers(`GetActiveViewers`)
-
-        SB__Subscribe({
-          twitch: [`ChatMessage`, `ChatMessageDeleted`],
-          youTube: [`Message`, `MessageDeleted`]
-        }, `Chat`)
-
-      } else if (location.hash === `#${urlSafe(`Actions`)}` && data.id === `GetInfo`) {
+      } else if (data.id === `GetInfo`) {
+        SB__GetEvents(`GetEvents`)
         SB__GetActions(`GetActions`)
         SB__GetBroadcaster(`GetBroadcaster`)
         SB__GetActiveViewers(`GetActiveViewers`)
+      }
 
-        SB__Subscribe({
-          raw: [`Action`, `ActionCompleted`]
-        }, `Chat`)
-
-      } else if (location.hash === `#${urlSafe(`Websocket Events`)}` && data.id === `GetInfo`) {
-        SB__GetEvents(`GetEvents`)
+      if (data?.id === `GetEvents`) {
+        let eventSubscriptionAll = data.events
+        SB__Subscribe(eventSubscriptionAll, `EventSubscriptionAll`)
       }
 
       if (data.id === `GetBroadcaster`) broadcaster = data
       if (data.id === `GetActiveViewers`) presentViewers = data
 
+
       if (data.id === `GetInfo`) {
+
         ///////////////////
         // Setting Modal //
         ///////////////////
@@ -506,16 +535,27 @@ async function connectws() {
         })
       }
 
-      if (location.hash === `#${urlSafe(`Dashboard`)}` && data.id === `GetBroadcaster`) {
+      /***
+      *****************************
+      *****************************
+      *****************************
+      ********* Dashboard *********
+      *****************************
+      *****************************
+      *****************************
+      ***/
 
-        document.querySelector(`main`).innerHTML = `
+
+      if (data.id === `GetBroadcaster`) {
+
+        document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).innerHTML = `
         <div style="display: grid; grid-template-columns: auto max-content; gap: .5rem;">
           <div class="card" style="height: calc(100% - 8rem); max-height: calc(100vh - 8rem);" data-view="all">
             <div class="card-header">
               <p class="card-title">Chat</p>
             </div>
             <hr>
-            <ul class="chat-messages" style="overflow: auto;height: calc(100vh - 20rem);max-height: calc(100vh - 20rem);width: 100%;display: flex;flex-direction: column;gap: .25rem;"></ul>
+            <ul class="chat-messages" style="overflow: auto; height: calc(100vh - 20rem); max-height: 100%; width: 100%; display: flex; flex-direction: column; gap: .25rem;"></ul>
             <div class="send-message">
               <div class="form-group styled no-margin">
                 <select class="no-border-radius no-margin fit-content service">
@@ -566,11 +606,9 @@ async function connectws() {
 
         DashboardAsyncPage()
         async function DashboardAsyncPage() {
-
-          document.body.removeChild(document.querySelector(`nav.navbar`))
-          document.querySelector(`main`).classList.add(`full`)
-          document.querySelector(`main`).classList.add(`grid`)
-          document.querySelector(`main`).classList.add(`auto-col`)
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).classList.add(`full`)
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).classList.add(`grid`)
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).classList.add(`auto-col`)
           let profileImage = ``
           if (data.connected.includes(`youtube`)) profileImage = data.platforms.youtube.broadcastUserProfileImage
           if (data.connected.includes(`twitch`)) profileImage = await fetch(`https://decapi.me/twitch/avatar/${data.platforms.twitch.broadcastUserName}`)
@@ -607,8 +645,8 @@ async function connectws() {
             `
           }
 
-          document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
-          <div class="main">
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).insertAdjacentHTML(`afterbegin`, `
+          <div class="main-contents">
             ${errorMessage}
             <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
             <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
@@ -740,7 +778,7 @@ async function connectws() {
         }
       }
 
-      if (location.hash === `#${urlSafe(`Dashboard`)}` && data.id === `GetActiveViewers`) {
+      if (data?.id === `GetActiveViewers`) {
         let viewers = []
 
         data.viewers.forEach(viewer => {
@@ -863,7 +901,7 @@ async function connectws() {
         });
       }
       
-      if (location.hash === `#${urlSafe(`Dashboard`)}` && data?.event?.source === `Twitch` && data?.event?.type === `ChatMessage`) {
+      if (data?.event?.source === `Twitch` && data?.event?.type === `ChatMessage`) {
         TwitchChatMessageEvent()
         async function TwitchChatMessageEvent() {  
           let profileImageUrl = await fetch(`https://decapi.me/twitch/avatar/${data.data.message.username}`)
@@ -890,7 +928,7 @@ async function connectws() {
         }
       }
 
-      if (location.hash === `#${urlSafe(`Dashboard`)}` && data?.event?.source === `YouTube` && data?.event?.type === `Message`) {
+      if (data?.event?.source === `YouTube` && data?.event?.type === `Message`) {
         document.querySelector(`.card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
         <li data-source="${data.event.source}" data-message-id="${data.data.eventId}">
           <div style="display: flex; align-items: center; gap: 0.25rem;">
@@ -905,9 +943,19 @@ async function connectws() {
         `)
       }
 
-      if (location.hash === `#${urlSafe(`Actions`)}` && data.id === `GetActions`) {
+      /***
+      ***************************
+      ***************************
+      ***************************
+      ********* Actions *********
+      ***************************
+      ***************************
+      ***************************
+      ***/
 
-        document.querySelector(`main`).classList.add(`col-2`)
+      if (data?.id === `GetActions`) {
+
+        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}`).classList.add(`col-2`)
 
         let eventTestDropdown = ``
         let eventArgsEntries = Object.entries(eventArgsMap)
@@ -924,7 +972,7 @@ async function connectws() {
         </div>`
 
         
-        document.querySelector(`main`).insertAdjacentHTML(`beforeend`, `
+        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}`).insertAdjacentHTML(`beforeend`, `
         <div class="card-grid"></div>
         <aside>
           <div class="card-grid">
@@ -958,7 +1006,7 @@ async function connectws() {
 
         // Emulate Events
 
-        document.querySelector(`main aside .card.events input[type="search"]`).addEventListener(`keydown`, () => {
+        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.events input[type="search"]`).addEventListener(`keydown`, () => {
           setTimeout(() => {
             let searchTerm = document.querySelector(`main aside .card.events input[type="search"]`).value.toLowerCase()
             document.querySelectorAll(`main aside .card.events select option`).forEach(option => {
@@ -980,7 +1028,7 @@ async function connectws() {
 
         reloadArgumentsTable()
 
-        document.querySelector(`main aside .card.arguments .card-header .card-header-append button`).addEventListener(`click`, () => {
+        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments .card-header .card-header-append button`).addEventListener(`click`, () => {
           createModal(`
           <div class="form-group styled" id="clear">
             <button>Yes I want to clear all my arguments</button>
@@ -1024,7 +1072,7 @@ async function connectws() {
         
         function updateArgumentsRows() {
           setTimeout(() => {
-            let argumentsTable = document.querySelector(`main aside .card.arguments table`)
+            let argumentsTable = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments table`)
             argumentsTable.querySelectorAll(`tr:not(:first-child)`).forEach(tableRow => {
               let tableCellFirst = tableRow.querySelector(`td:first-child`).innerHTML
               let tableCellLast = tableRow.querySelector(`td:last-child`).innerHTML
@@ -1055,7 +1103,7 @@ async function connectws() {
 
         function saveArgumentsTable() {
           setTimeout(() => {
-            let argumentsTable = document.querySelector(`main aside .card.arguments table`)
+            let argumentsTable = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments table`)
             let argumentsData = []
             argumentsTable.querySelectorAll(`tr`).forEach(tableRow => {
               if (
@@ -1074,7 +1122,7 @@ async function connectws() {
         }
         
         function clearArgumentsTable() {
-          let argumentsTable = document.querySelector(`main aside .card.arguments table`)
+          let argumentsTable = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments table`)
           localStorage.setItem(`streamerbotToolbox__arguments`, JSON.stringify({}))
 
           argumentsTable.innerHTML = `
@@ -1084,11 +1132,11 @@ async function connectws() {
               <td contenteditable="true"></td>
             </tr>
           </tbody>`
+
+          reloadArgumentsTable()
         }
 
         // End Arguments
-
-        document.querySelector(`main ul.main-list`).remove()
 
         let uniqueGroups = []
         
@@ -1113,7 +1161,7 @@ async function connectws() {
 
           let navbar__listItem = document.createElement(`li`)
           navbar__listItem.className = `navbar-list-item`
-          document.querySelector(`nav.navbar ul.navbar-list`).append(navbar__listItem)
+          document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Actions`)}`).append(navbar__listItem)
           
           let navbar__listItem__button = document.createElement(`button`)
           navbar__listItem.append(navbar__listItem__button)
@@ -1129,7 +1177,9 @@ async function connectws() {
           navbar__listItem__button.append(navbar__listItem__button__description)
           
           navbar__listItem__button.addEventListener(`click`, function () {
-            document.querySelector(`main > .card-grid`).remove()
+            document.querySelectorAll(`main .main[data-page="${urlSafe(`Actions`)}"] > .card-grid`).forEach(cardGrid => {
+              cardGrid.remove()
+            });
 
             navbar__listItem.classList.add(`nav-active`)
 
@@ -1140,7 +1190,7 @@ async function connectws() {
             navbar__listItem.classList.add(`nav-active`)
 
             if (group === "") group = `None`
-            document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
+            document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"]`).insertAdjacentHTML(`afterbegin`, `
             <div class="card-grid">
               <div class="card">
                 <div class="card-header">
@@ -1158,7 +1208,7 @@ async function connectws() {
                 data.actions.forEach(action => {
                   if (!usedActionGroups.includes(action.group) && uniqueGroup === action.group && uniqueGroup != `View All`) {
                     usedActionGroups.push(action.group)
-                    document.querySelector(`main > .card-grid .card ul.styled`).insertAdjacentHTML(`beforeend`, `
+                    document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] > .card-grid .card ul.styled`).insertAdjacentHTML(`beforeend`, `
                     <li class=title>
                       <button disabled>
                         <p class="title">${action.group}</p>
@@ -1182,39 +1232,45 @@ async function connectws() {
             function addActionsToUi(action) {
               if (action.group === group || group === `View All`) {
                 let listItem = document.createElement(`li`)
-                document.querySelector(`main > .card-grid .card ul.styled`).append(listItem)
+                document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] > .card-grid .card ul.styled`).append(listItem)
 
-                let listItemHtml__button = document.createElement(`button`)
+                let listItem__button = document.createElement(`button`)
 
-                let listItemHtml__button__title = document.createElement(`p`)
-                listItemHtml__button__title.innerText = action.name
-                listItemHtml__button__title.className = `title`
+                let listItem__button__title = document.createElement(`p`)
+                listItem__button__title.innerText = action.name
+                listItem__button__title.className = `title`
 
-                listItemHtml__button.append(listItemHtml__button__title)
-                listItem.append(listItemHtml__button)
+                listItem__button.append(listItem__button__title)
+                listItem.append(listItem__button)
 
-                listItemHtml__appendDiv = document.createElement(`div`)
-                listItemHtml__appendDiv.classList.add(`append`)
-                listItemHtml__appendDiv.classList.add(`form-group`)
-                listItemHtml__appendDiv.classList.add(`styled`)
-                listItemHtml__appendDiv.classList.add(`no-margin`)
-                listItem.append(listItemHtml__appendDiv)
+                listItem__appendDiv = document.createElement(`div`)
+                listItem__appendDiv.classList.add(`append`)
+                listItem__appendDiv.classList.add(`form-group`)
+                listItem__appendDiv.classList.add(`styled`)
+                listItem__appendDiv.classList.add(`no-margin`)
+                listItem.append(listItem__appendDiv)
                 
-                let listItemHtml__appendDiv__button = document.createElement(`button`)
-                listItemHtml__appendDiv__button.classList.add(`append`)
-                listItemHtml__appendDiv__button.classList.add(`primary`)
-                listItemHtml__appendDiv__button.classList.add(`dense`)
-                listItemHtml__appendDiv__button.title = `Execute Action`
-                listItemHtml__appendDiv__button.innerText = `Execute`
-                listItemHtml__appendDiv.append(listItemHtml__appendDiv__button)
+                let listItem__appendDiv__button = document.createElement(`button`)
+                listItem__appendDiv__button.classList.add(`append`)
+                listItem__appendDiv__button.classList.add(`primary`)
+                listItem__appendDiv__button.classList.add(`dense`)
+                listItem__appendDiv__button.title = `Execute Action`
+                listItem__appendDiv__button.innerText = `Execute`
+                if (!action.enabled) listItem__appendDiv__button.setAttribute(`disabled`, ``)
+                listItem__appendDiv.append(listItem__appendDiv__button)
 
-                listItemHtml__appendDiv__button.addEventListener(`click`, RunActionFromActionsPage)
+                listItem__appendDiv__button.addEventListener(`click`, RunActionFromActionsPage)
 
-                listItemHtml__button.addEventListener(`click`, function () {
+                listItem__button.addEventListener(`click`, function () {
                   createModal(`
                   <div class="buttons-row list-items">
                     <li>${action.subaction_count} ${action.subaction_count === 1 ? `Sub-Action` : `Sub-Actions`}</li>
                     <li>${action.enabled ? `Enabled` : `Disabled`}</li>
+                  </div>
+                  <br>
+                  <div class="buttons-row">
+                    <li>
+                    </li>
                   </div>
                   <br>
                   <table class="styled">
@@ -1231,8 +1287,9 @@ async function connectws() {
                       <td style="text-align: left;">${action.group}</td>
                     </tr>
                   </table>
+                  <br>
                   <div class="form-group styled execute">
-                    <button id="execute">Execute</button>
+                    <button id="execute"${action.enabled ? `` : ` disabled`}>Execute</button>
                   </div>
                   `, action.name, `Inspect Sub-Action`, `small`, {})
                   document.querySelector(`.settings-modal-alt .main .form-group.execute button#execute`).addEventListener(`click`, () => {
@@ -1287,7 +1344,7 @@ async function connectws() {
 
                   arguments.push([`source`, `StreamerbotToolbox`])
 
-                  let selectedEventArgs = document.querySelector(`main aside .card.events select`).value
+                  let selectedEventArgs = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.events select`).value
                   eventArgsEntries.forEach(eventArgsEntry => {
                     if (eventArgsEntry[0] === selectedEventArgs) {
                       let randomEventArgs__user = randomEventArgs.user[Math.floor(Math.random()*randomEventArgs.user.length)]
@@ -1350,9 +1407,9 @@ async function connectws() {
         })
       }
 
-      if (location.hash === `#${urlSafe(`Actions`)}` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
+      if (data?.event?.source === `Raw` && data?.event?.type === `Action`) {
         if (data.data.name != streamerbotActionPackage__name) {
-          let actionHistoryQueued__List = document.querySelector(`main aside .card.action-history ul`)
+          let actionHistoryQueued__List = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history ul`)
   
           let actionHistoryQueued__ListItem = document.createElement(`li`)
           actionHistoryQueued__ListItem.setAttribute(`data-action-running-id`, data.data.id)
@@ -1639,34 +1696,33 @@ async function connectws() {
                 ])
               });
               arguments = Object.fromEntries(arguments)
-              ws.send(
-                JSON.stringify({
-                  request: "DoAction",
-                  action: {
-                    id: data.data.actionId
-                  },
-                  args: arguments,
-                  id: "DoAction",
-                })
-              )
+              SB__RunActionById(data.data.actionId, arguments)
             })
           })
         }
       }
 
-      if (location.hash === `#${urlSafe(`Actions`)}` && data?.event?.source === `Raw` && data?.event?.type === `ActionCompleted`) {
+      if (data?.event?.source === `Raw` && data?.event?.type === `ActionCompleted`) {
         if (data.data.name != streamerbotActionPackage__name) {
-          let actionHistoryCompleted__ListItem = document.querySelector(`main aside .card-grid .card.action-history ul li[data-action-running-id="${data.data.id}"]`)
+          let actionHistoryCompleted__ListItem = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card-grid .card.action-history ul li[data-action-running-id="${data.data.id}"]`)
           actionHistoryCompleted__ListItem.setAttribute(`data-action-completed-data`, JSON.stringify(data))
           actionHistoryCompleted__ListItem.setAttribute(`data-action-state`, `completed`)
         }
       }
 
-      if (location.hash === `#${urlSafe(`Websocket Events`)}` && data?.id === `GetEvents`) {
-        let eventSubscriptionAll = data.events
-        SB__Subscribe(eventSubscriptionAll, `EventSubscriptionAll`)
-        document.querySelector(`main`).classList.add(`col-2`)
-        document.querySelector(`main`).innerHTML = `
+      /***
+      ************************************
+      ************************************
+      ************************************
+      ********* Websocket Events *********
+      ************************************
+      ************************************
+      ************************************
+      ***/
+
+      if (data?.id === `GetEvents`) {
+        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}`).classList.add(`col-2`)
+        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}`).innerHTML = `
         <div class="card-grid" id="events"></div>
         <aside>
           <div class="card-grid">
@@ -1709,18 +1765,18 @@ async function connectws() {
           navbar__listItem__button__description.innerText = `${events[1].length} ${events[1].length === 1 ? `Event` : `Events`}`
           navbar__listItem__button.append(navbar__listItem__button__description)
 
-          document.querySelector(`nav.navbar ul.navbar-list`).append(navbar__listItem)
+          document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Websocket Events`)}"]`).append(navbar__listItem)
 
           navbar__listItem__button.addEventListener(`click`, () => {
             navbar__listItem.classList.add(`nav-active`)
             
-            document.querySelectorAll(`nav.navbar ul.navbar-list li.nav-active`).forEach(listItem => {
+            document.querySelectorAll(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Websocket Events`)}"] li.nav-active`).forEach(listItem => {
               listItem.classList.remove(`nav-active`)
             });
 
             navbar__listItem.classList.add(`nav-active`)
 
-            document.querySelector(`main .card-grid#events`).innerHTML = `
+            document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid#events`).innerHTML = `
             <div class="card">
               <div class="card-header">
                 <p class="card-title">${events[0]}, ${events[1].length} ${events[1].length === 1 ? `Event` : `Events`}</p>
@@ -1734,7 +1790,7 @@ async function connectws() {
 
             if (navbar__listItem__button__title.innerText != `View All`) {
               events[1].forEach(event => {
-                document.querySelector(`main .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
+                document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
                 <li>
                   <button disabled>
                     <p class="title">
@@ -1750,7 +1806,7 @@ async function connectws() {
               events[1].forEach(event => {
                 if (!eventGroups.includes(event[0])) {
                   eventGroups.push(event[0])
-                  document.querySelector(`main .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
+                  document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
                   <li class="title">
                     <button disabled>
                       <p class="title">
@@ -1761,7 +1817,7 @@ async function connectws() {
                   `)
                 }
 
-                document.querySelector(`main .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
+                document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
                 <li>
                   <button disabled>
                     <p class="title">
@@ -1776,9 +1832,9 @@ async function connectws() {
         });
       }
 
-      if (location.hash === `#${urlSafe(`Websocket Events`)}` && data?.id === undefined && data?.event?.source != null && data?.event?.type != null && data?.data?.name != streamerbotActionPackage__name && data?.data?.parentName != streamerbotActionPackage__name) {
+      if (data?.id === undefined && data?.event?.source != null && data?.event?.type != null && data?.data?.name != streamerbotActionPackage__name && data?.data?.parentName != streamerbotActionPackage__name) {
         let eventHistory__listItem = document.createElement(`li`)
-        document.querySelector(`.card-grid .card#event-history ul`).prepend(eventHistory__listItem)
+        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid .card#event-history ul`).prepend(eventHistory__listItem)
 
         let eventHistory__listItem__button = document.createElement(`button`)
         eventHistory__listItem.append(eventHistory__listItem__button)
@@ -1814,11 +1870,20 @@ async function connectws() {
         })
       }
 
-      if (location.hash === `#${urlSafe(`Global Variables`)}` && data?.id === `WebsocketHandlerAction`) {
-        document.querySelector(`nav.navbar`).remove()
-        document.querySelector(`main`).classList.add(`full`)
+      /***
+      ************************************
+      ************************************
+      ************************************
+      ********* Global Variables *********
+      ************************************
+      ************************************
+      ************************************
+      ***/
 
-        document.querySelector(`main`).innerHTML = `
+      if (data?.id === `WebsocketHandlerAction`) {
+        document.querySelector(`main .main[data-page="${urlSafe(`Global Variables`)}`).classList.add(`full`)
+
+        document.querySelector(`main .main[data-page="${urlSafe(`Global Variables`)}`).innerHTML = `
         <div class="card-grid">
           <div class="card">
             <div class="card-header">                
@@ -1912,18 +1977,28 @@ async function connectws() {
         })
       }
 
-      if (location.hash === `#${urlSafe(`Global Variables`)}` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
+      if (data?.event?.source === `None` && data?.event?.type === `Custom`) {
         if (data.data.wsRequest === `GetGlobalVariable`) {
           if (data.data.wsData === ``) data.data.wsData = `Global Variable Doesn't Exist or it doesn't have a value`
           document.querySelector(`#get-global-variable--output .output`).innerHTML = data.data.wsData
         }
       }
 
-      if (location.hash === `#${urlSafe(`Commands`)}` && data?.id === `WebsocketHandlerAction`) {
+      /***
+      ****************************
+      ****************************
+      ****************************
+      ********* Commands *********
+      ****************************
+      ****************************
+      ****************************
+      ***/
+
+      if (data?.id === `WebsocketHandlerAction`) {
         SB__StreamerbotActionPackageRequest(`GetCommandsFromFile`)
       }
 
-      if (location.hash === `#${urlSafe(`Commands`)}` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
+      if (data?.event?.source === `None` && data?.event?.type === `Custom`) {
         if (data.data.wsRequest === `GetCommandsFromFile`) {
           if (data.data.wsData != ``) {
             GetCommandsData = JSON.parse(decodeURI(data.data.wsData.replaceAll(`\n`, ``).replaceAll(`\r`, ``)))
@@ -1961,7 +2036,7 @@ async function connectws() {
             commandGroups.forEach(command => {     
               let commandsText = `${command[1]} Commands`
               if (command[1] === 1) commandsText = `${command[1]} Command`    
-              document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `
+              document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Commands`)}`).insertAdjacentHTML(`beforeend`, `
               <li class="navbar-list-item" data-command-name="${command[0]}" data-command-count="${command[1]}">
                 <button>
                   <p class="title">${command[0]}</p>
@@ -1971,11 +2046,11 @@ async function connectws() {
               `)
             });
 
-            document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(listItem => {
+            document.querySelectorAll(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Commands`)}"] li`).forEach(listItem => {
               listItem.querySelector(`button`).addEventListener(`click`, function () {
                 listItem.classList.add(`nav-active`)
                 
-                document.querySelectorAll(`nav.navbar ul.navbar-list li.nav-active`).forEach(listItem => {
+                document.querySelectorAll(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Commands`)}"] li.nav-active`).forEach(listItem => {
                   listItem.classList.remove(`nav-active`)
                 });
 
@@ -1992,7 +2067,7 @@ async function connectws() {
                   }
                 });
 
-                document.querySelector(`main`).innerHTML = `
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}`).innerHTML = `
                 <div class="command-information">
                   <h2>${listItem.getAttribute(`data-command-name`)}</h2>
                   <hr>
@@ -2068,14 +2143,14 @@ async function connectws() {
                 /// Enabled State ///
                 /// ///////////// ///
 
-                document.querySelector(`main .card-grid .card.enabled-state .form-group #enable`).addEventListener(`click`, () => {
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.enabled-state .form-group #enable`).addEventListener(`click`, () => {
                   let commandId = document.querySelector(`main .command-information .form-group select`).value
 
                   SB__StreamerbotActionPackageRequest(`EnableCommandById`, commandId)
                 })
 
-                document.querySelector(`main .card-grid .card.enabled-state .form-group #disable`).addEventListener(`click`, () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.enabled-state .form-group #disable`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
 
                   SB__StreamerbotActionPackageRequest(`DisableCommandById`, commandId)
                 })
@@ -2085,21 +2160,21 @@ async function connectws() {
                 /// Global Cooldown ///
                 /// /////////////// ///
 
-                document.querySelector(`main .card-grid .card.global-cooldown .form-group #reset`).addEventListener(`click`, () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.global-cooldown .form-group #reset`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
 
                   SB__StreamerbotActionPackageRequest(`CommandResetGlobalCooldown`, commandId)
                 })
 
-                document.querySelector(`main .card-grid .card.global-cooldown .form-group #remove`).addEventListener(`click`, () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.global-cooldown .form-group #remove`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
 
                   SB__StreamerbotActionPackageRequest(`CommandRemoveGlobalCooldown`, commandId)
                 })
 
-                document.querySelector(`main .card-grid .card.global-cooldown .form-group #add`).addEventListener(`click`, () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
-                  let wsDataDuration = document.querySelector(`main .card-grid .card.global-cooldown .form-group #global-cooldown`).value
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.global-cooldown .form-group #add`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
+                  let wsDataDuration = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.global-cooldown .form-group #global-cooldown`).value
 
                   SB__StreamerbotActionPackageRequest(`CommandAddGlobalCooldown`, {
                     wsDataId: commandId,
@@ -2107,9 +2182,9 @@ async function connectws() {
                   })
                 })
                 
-                document.querySelector(`main .card-grid .card.global-cooldown .form-group #update`).addEventListener(`click`, () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
-                  let wsDataDuration = document.querySelector(`main .card-grid .card.global-cooldown .form-group #global-cooldown`).value
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.global-cooldown .form-group #update`).addEventListener(`click`, () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
+                  let wsDataDuration = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.global-cooldown .form-group #global-cooldown`).value
 
                   SB__StreamerbotActionPackageRequest(`CommandSetGlobalCooldown`, {
                     wsDataId: commandId,
@@ -2121,9 +2196,9 @@ async function connectws() {
                 /// User Cooldown ///
                 /// ///////////// ///
 
-                document.querySelector(`main .card-grid .card.user-cooldown .form-group #reset`).addEventListener(`click`, async () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
-                  let wsDataUserId = document.querySelector(`main .command-information .form-group input#user-name`).value || ``
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.user-cooldown .form-group #reset`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
+                  let wsDataUserId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group input#user-name`).value || ``
                   if (wsDataUserId === ``) wsDataUserId = `ik1497`
                   wsDataUserId = await fetch(`https://decapi.me/twitch/id/${wsDataUserId}`)
                   wsDataUserId = await wsDataUserId.text()
@@ -2134,9 +2209,9 @@ async function connectws() {
                   })
                 })
 
-                document.querySelector(`main .card-grid .card.user-cooldown .form-group #remove`).addEventListener(`click`, async () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
-                  let wsDataUserId = document.querySelector(`main .command-information .form-group input#user-name`).value || ``
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.user-cooldown .form-group #remove`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
+                  let wsDataUserId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group input#user-name`).value || ``
                   if (wsDataUserId === ``) wsDataUserId = `ik1497`
                   wsDataUserId = await fetch(`https://decapi.me/twitch/id/${wsDataUserId}`)
                   wsDataUserId = await wsDataUserId.text()
@@ -2147,22 +2222,22 @@ async function connectws() {
                   })
                 })
 
-                document.querySelector(`main .card-grid .card.user-cooldown .form-group #reset-all`).addEventListener(`click`, async () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.user-cooldown .form-group #reset-all`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
 
                   SB__StreamerbotActionPackageRequest(`CommandResetAllUserCooldowns`, commandId)
                 })
 
-                document.querySelector(`main .card-grid .card.user-cooldown .form-group #remove-all`).addEventListener(`click`, async () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.user-cooldown .form-group #remove-all`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
 
                   SB__StreamerbotActionPackageRequest(`CommandRemoveAllUserCooldowns`, commandId)
                 })
 
-                document.querySelector(`main .card-grid .card.user-cooldown .form-group #add`).addEventListener(`click`, async () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
-                  let wsDataDuration = document.querySelector(`main .card-grid .card.user-cooldown .form-group #user-cooldown`).value
-                  let wsDataUserId = document.querySelector(`main .command-information .form-group input#user-name`).value || ``
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.user-cooldown .form-group #add`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
+                  let wsDataDuration = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.user-cooldown .form-group #user-cooldown`).value
+                  let wsDataUserId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group input#user-name`).value || ``
                   if (wsDataUserId === ``) wsDataUserId = `ik1497`
                   wsDataUserId = await fetch(`https://decapi.me/twitch/id/${wsDataUserId}`)
                   wsDataUserId = await wsDataUserId.text()
@@ -2174,9 +2249,9 @@ async function connectws() {
                   })
                 })
 
-                document.querySelector(`main .card-grid .card.user-cooldown .form-group #add-to-all`).addEventListener(`click`, async () => {
-                  let commandId = document.querySelector(`main .command-information .form-group select`).value
-                  let wsDataDuration = document.querySelector(`main .card-grid .card.user-cooldown .form-group #user-cooldown`).value
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.user-cooldown .form-group #add-to-all`).addEventListener(`click`, async () => {
+                  let commandId = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .command-information .form-group select`).value
+                  let wsDataDuration = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.user-cooldown .form-group #user-cooldown`).value
 
                   SB__StreamerbotActionPackageRequest(`CommandAddAllUserCooldowns`, {
                     wsDataId: commandId,
@@ -2186,7 +2261,7 @@ async function connectws() {
 
                 document.querySelector(`main .card-grid .card.user-cooldown .form-group #update`).addEventListener(`click`, async () => {
                   let commandId = document.querySelector(`main .command-information .form-group select`).value
-                  let wsDataDuration = document.querySelector(`main .card-grid .card.user-cooldown .form-group #user-cooldown`).value
+                  let wsDataDuration = document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"] .card-grid .card.user-cooldown .form-group #user-cooldown`).value
 
                   SB__StreamerbotActionPackageRequest(`CommandSetUserCooldown`, {
                     wsDataId: commandId,
@@ -2199,20 +2274,31 @@ async function connectws() {
         }
       }
 
-      if (location.hash === `#${urlSafe(`OBS Studio`)}` && data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsRequest === `ObsIsConnected`) {
+      /***
+      ******************************
+      ******************************
+      ******************************
+      ********* OBS Studio *********
+      ******************************
+      ******************************
+      ******************************
+      ***/
+
+      if (data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsRequest === `ObsIsConnected`) {
         if (data.data.wsData === true) {
           let obsConnection = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
           obsConnection = obsConnection.connection
           document.body.setAttribute(`obs-connection-state`, `connected`)
 
           SB__StreamerbotActionPackageOBSRequest(`GetSceneList`, {}, obsConnection)
+          SB__StreamerbotActionPackageOBSRequest(`GetVersion`, {}, obsConnection)
 
         } else {
           document.body.setAttribute(`obs-connection-state`, `disconnected`)
         }
       }
       
-      if (location.hash === `#${urlSafe(`OBS Studio`)}` && data?.event?.source === `None` && data?.event?.type === `Custom`) {
+      if (data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsRequest === `ObsSendRaw`) {
         obsData = data.data.wsData
         obsData = JSON.parse(obsData)
         if (data.data.requestType != undefined) console.log(`[OBS Websocket] Request ${data.data.requestType}:`, obsData)
@@ -2239,10 +2325,11 @@ async function connectws() {
               `)  
             });
 
-            document.querySelector(`main`).classList.add(`col-2`)
-            document.querySelector(`main`).innerHTML = `
-            <div class="main">
-            
+            document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"]`).classList.add(`col-2`)
+            document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"]`).innerHTML = `
+            <div class="card-grid">
+              <div class="card sources">
+              </div>
             </div>
             <aside>
               <div class="card-grid">
@@ -2263,19 +2350,19 @@ async function connectws() {
             </aside>
             `
 
-            document.querySelector(`.card-grid .card.settings .form-group #nav-switch-scenes`).onchange = () => {
+            document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.settings .form-group #nav-switch-scenes`).onchange = () => {
               let streamerbotToolbox__obsStudio = localStorage.getItem(`streamerbotToolbox__obsStudio`) || `{}`
               streamerbotToolbox__obsStudio = JSON.parse(streamerbotToolbox__obsStudio) || {}
               streamerbotToolbox__obsStudio.navSwitchScenes = document.querySelector(`.card-grid .card.settings .form-group #nav-switch-scenes`).checked
               localStorage.setItem(`streamerbotToolbox__obsStudio`, JSON.stringify(streamerbotToolbox__obsStudio))
             }
 
-            document.querySelector(`.card-grid .card.settings .form-group #scene-preview`).onclick = () => {
+            document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.settings .form-group #scene-preview`).onclick = () => {
               SB__StreamerbotActionPackageOBSRequest(`GetCurrentProgramScene`, {}, obsConnection)
             }
 
 
-            document.querySelectorAll(`nav.navbar ul.navbar-list li`).forEach(listItem => {
+            document.querySelectorAll(`nav.navbar ul.navbar-list[data-page="${urlSafe(`OBS Studio`)}"] li`).forEach(listItem => {
               listItem.querySelector(`button`).addEventListener(`click`, () => {
                 listItem.classList.add(`nav-active`)
                 
@@ -2285,16 +2372,12 @@ async function connectws() {
 
                 listItem.classList.add(`nav-active`)
 
-                document.querySelector(`main .main`).innerHTML = `
-                <div class="card-grid">
-                  <div class="card sources">
-                    <div class="card-header">
-                      <p class="card-title">Sources</p>
-                    </div>
-                    <hr>
-                    <ul class="styled" data-scene="${listItem.querySelector(`p.title`).innerText}"></ul>
-                  </div>
+                document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.sources`).innerHTML = `
+                <div class="card-header">
+                  <p class="card-title">Sources</p>
                 </div>
+                <hr>
+                <ul class="styled" data-scene="${listItem.querySelector(`p.title`).innerText}"></ul>
                 `
 
                 SB__StreamerbotActionPackageOBSRequest(`GetSceneItemList`, {sceneName: listItem.querySelector(`p.title`).innerText}, obsConnection)
@@ -2312,7 +2395,7 @@ async function connectws() {
               sceneItems.unshift(sceneItem)
             });
             sceneItems.forEach(sceneItem => {
-              document.querySelector(`main .main .card-grid .card.sources ul`).insertAdjacentHTML(`beforeend`, `
+              document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.sources ul`).insertAdjacentHTML(`beforeend`, `
               <li data-source-information="${JSON.stringify(sceneItem).replace(/\s*\"\s*/gm, `'`)}">
                 <button>${sceneItem.sourceName}</button>
                 <div class="dropdown-section">
@@ -2326,7 +2409,7 @@ async function connectws() {
               `)
             });
 
-            document.querySelectorAll(`main .main .card-grid .card.sources > ul > li`).forEach(listItem => {
+            document.querySelectorAll(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.sources > ul > li`).forEach(listItem => {
               let sourceData = listItem.getAttribute(`data-source-information`)
               sourceData = sourceData.replace(/\s*\'\s*/gm, `"`)
               sourceData = JSON.parse(sourceData)
@@ -2503,6 +2586,22 @@ async function connectws() {
 
               })
             });
+            break
+          case `GetVersion`:
+            document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] aside .card-grid`).insertAdjacentHTML(`beforeend`, `
+            <div class="card">
+              <div class="card-header">
+                <p class="card-title">Connection</p>
+              </div>
+              <hr>
+              <div class="buttons-row list-items">
+              <li>OBS Studio v${obsData.obsVersion}</;>
+              <li>RPC v${obsData.rpcVersion}</li>
+                <li>OBS Websocket v${obsData.obsWebSocketVersion}</p>
+                <li>${obsData.platformDescription}</li>
+              </div>
+            </div>
+            `)
             break
           case `GetSourceScreenshot`:
             createModal(`<img src="${obsData.imageData}" alt="Preview image from current Scene">`, `Preview image from current Scene`, undefined, `medium`, {})
@@ -2750,209 +2849,206 @@ async function connectTwitchSpeakerws() {
         headerLink.parentNode.removeAttribute(`hidden`)
       });
       
-      if (location.hash === `#${urlSafe(`TwitchSpeaker`)}`) {
-        document.querySelector(`nav.navbar`).remove()
-        document.querySelector(`main`).classList.add(`full`)
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"]`).classList.add(`full`)
 
-        let defaultSpeakValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || undefined
-        let defaultSpeakVoiceAlias = ``
-        let defaultSpeakMessage = ``
-        if (defaultSpeakValues != undefined) {
-          defaultSpeakValues = JSON.parse(defaultSpeakValues)
-          
-          if (defaultSpeakValues.defaultSpeakVoiceAlias != null) {
-            defaultSpeakVoiceAlias = ` value="${defaultSpeakValues.defaultSpeakVoiceAlias}"`
-          }
-          
-          if (defaultSpeakValues.defaultSpeakMessage != null) {
-            defaultSpeakMessage = ` value="${defaultSpeakValues.defaultSpeakMessage}"`
-          }
-
-          if (defaultSpeakValues === undefined || defaultSpeakValues === null) defaultSpeakValues = ``
-        } else {
-          defaultSpeakVoiceAlias = ``
-          defaultSpeakMessage = `This is a test message`
+      let defaultSpeakValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || undefined
+      let defaultSpeakVoiceAlias = ``
+      let defaultSpeakMessage = ``
+      if (defaultSpeakValues != undefined) {
+        defaultSpeakValues = JSON.parse(defaultSpeakValues)
+        
+        if (defaultSpeakValues.defaultSpeakVoiceAlias != null) {
+          defaultSpeakVoiceAlias = ` value="${defaultSpeakValues.defaultSpeakVoiceAlias}"`
         }
-        document.querySelector(`main`).innerHTML = `
-        <ul class="tags">
-          <li><button title="Enable">Enable</button></li>
-          <li><button title="Disable">Disable</button></li>
-          <li><button title="Pause">Pause</button></li>
-          <li><button title="Resume">Resume</button></li>
-          <li><button title="On">On</button></li>
-          <li><button title="Off">Off</button></li>
-          <li><button title="Stop">Stop</button></li>
-          <li><button title="Clear">Clear</button></li>
-          <li><button title="Disable Events">Disable Events</button></li>
-          <li><button title="Enable Events">Enable Events</button></li>
-          <li><button title="Speaking Mode: All">Speaking Mode: All</button></li>
-          <li><button title="Speaking Mode: Command">Speaking Mode: Command</button></li>
-        </ul>
-        <div class="form-group styled">
-          <label for="voice-alias">Voice Alias</label>
-          <input type="text" name="voice-alias" id="voice-alias" placeholder="Voice Alias"${defaultSpeakVoiceAlias}>
-        </div>
-        <div class="form-group styled">
-          <label for="message">Message</label>
-          <input type="text" name="message" id="message" placeholder="Message"${defaultSpeakMessage}>
-        </div>
-        <div class="form-group styled">
-          <input type="checkbox" name="bad-words-filter" id="bad-words-filter">
-          <label for="bad-words-filter">Bad Words Filter</label>
-        </div>
-        <div class="form-group styled">
-        <button class="styled speak">Speak!</button>
-        </div>
-        `
-
-        document.querySelector(`main button.speak`).addEventListener(`click`, function () {
-          let voiceAlias = document.querySelector(`.form-group input#voice-alias`).value || ``
-          let message = document.querySelector(`.form-group input#message`).value || `This is a test message`
-          let badWordsFilter = document.querySelector(`.form-group input#bad-words-filter`).checked
-
-          let twitchspeakerData = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || `{}`
-          twitchspeakerData = JSON.parse(twitchspeakerData)
-          twitchspeakerData = Object.entries(twitchspeakerData)
-          twitchspeakerData.push([`defaultSpeakVoiceAlias`, voiceAlias])
-          twitchspeakerData.push([`defaultSpeakMessage`, message])
-          
-          twitchspeakerData = Object.fromEntries(twitchspeakerData)
-          localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(twitchspeakerData))
-
-          ws.send(JSON.stringify({
-              request: "Speak",
-              voice: voiceAlias,
-              message: message,
-              badWordFilter: badWordsFilter,
-              id: "Speak"
-            }
-          ))
-          createSnackbar(`TTS with the voice alias: "${voiceAlias}", and the text: "${message}"`)
-        })
-
-        document.querySelector(`main .tags li button[title="Enable"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "Enable",
-              id: "Enable"
-            }
-          ))
-
-          createSnackbar(`Enable`)
-        })
         
-        document.querySelector(`main .tags li button[title="Disable"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-            request: "Disable",
-            id: "Disable"
-          }
-          ))
-          
-          createSnackbar(`Disable`)
-        })
-        
-        document.querySelector(`main .tags li button[title="Pause"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "Pause",
-              id: "Pause"
-            }
-          ))
+        if (defaultSpeakValues.defaultSpeakMessage != null) {
+          defaultSpeakMessage = ` value="${defaultSpeakValues.defaultSpeakMessage}"`
+        }
 
-          createSnackbar(`Pause`)
-        })
-        
-        document.querySelector(`main .tags li button[title="Resume"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-            request: "Resume",
-            id: "Resume"
-          }
-          ))
-          
-          createSnackbar(`Resume`)
-        })
-        
-        document.querySelector(`main .tags li button[title="On"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "On",
-              id: "On"
-            }
-          ))
-
-          createSnackbar(`On`)
-        })
-        
-        document.querySelector(`main .tags li button[title="Off"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "Off",
-              id: "Off"
-            }
-          ))
-          createSnackbar(`Off`)
-        })
-
-        document.querySelector(`main .tags li button[title="Stop"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "Stop",
-              id: "Stop"
-            }
-          ))
-
-          createSnackbar(`Stop`)
-        })
-
-        document.querySelector(`main .tags li button[title="Clear"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "Clear",
-              id: "Clear"
-            }
-          ))
-
-          createSnackbar(`Clear`)
-        })
-
-        document.querySelector(`main .tags li button[title="Enable Events"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "Events",
-              state: "on",
-              id: "Enable Events"
-            }
-          ))
-
-          createSnackbar(`Enable Events`)
-        })
-
-        document.querySelector(`main .tags li button[title="Disable Events"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "Events",
-              state: "off",
-              id: "Disable Events"
-            }
-          ))
-
-          createSnackbar(`Disable Events`)
-        })
-
-        document.querySelector(`main .tags li button[title="Speaking Mode: All"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "Mode",
-              mode: "all",
-              id: "Speaking Mode: All"
-            }
-          ))
-
-          createSnackbar(`Speaking Mode: All`)
-        })
-
-        document.querySelector(`main .tags li button[title="Speaking Mode: Command"]`).addEventListener(`click`, function () {
-          ws.send(JSON.stringify({
-              request: "Mode",
-              mode: "command",
-              id: "Speaking Mode: Command"
-            }
-          ))
-
-          createSnackbar(`Speaking Mode: Command`)
-        })
+        if (defaultSpeakValues === undefined || defaultSpeakValues === null) defaultSpeakValues = ``
+      } else {
+        defaultSpeakVoiceAlias = ``
+        defaultSpeakMessage = `This is a test message`
       }
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"]`).innerHTML = `
+      <ul class="tags">
+        <li><button title="Enable">Enable</button></li>
+        <li><button title="Disable">Disable</button></li>
+        <li><button title="Pause">Pause</button></li>
+        <li><button title="Resume">Resume</button></li>
+        <li><button title="On">On</button></li>
+        <li><button title="Off">Off</button></li>
+        <li><button title="Stop">Stop</button></li>
+        <li><button title="Clear">Clear</button></li>
+        <li><button title="Disable Events">Disable Events</button></li>
+        <li><button title="Enable Events">Enable Events</button></li>
+        <li><button title="Speaking Mode: All">Speaking Mode: All</button></li>
+        <li><button title="Speaking Mode: Command">Speaking Mode: Command</button></li>
+      </ul>
+      <div class="form-group styled">
+        <label for="voice-alias">Voice Alias</label>
+        <input type="text" name="voice-alias" id="voice-alias" placeholder="Voice Alias"${defaultSpeakVoiceAlias}>
+      </div>
+      <div class="form-group styled">
+        <label for="message">Message</label>
+        <input type="text" name="message" id="message" placeholder="Message"${defaultSpeakMessage}>
+      </div>
+      <div class="form-group styled">
+        <input type="checkbox" name="bad-words-filter" id="bad-words-filter">
+        <label for="bad-words-filter">Bad Words Filter</label>
+      </div>
+      <div class="form-group styled">
+      <button class="styled speak">Speak!</button>
+      </div>
+      `
+
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] button.speak`).addEventListener(`click`, function () {
+        let voiceAlias = document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .form-group input#voice-alias`).value || ``
+        let message = document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .form-group input#message`).value || `This is a test message`
+        let badWordsFilter = document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .form-group input#bad-words-filter`).checked
+
+        let twitchspeakerData = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || `{}`
+        twitchspeakerData = JSON.parse(twitchspeakerData)
+        twitchspeakerData = Object.entries(twitchspeakerData)
+        twitchspeakerData.push([`defaultSpeakVoiceAlias`, voiceAlias])
+        twitchspeakerData.push([`defaultSpeakMessage`, message])
+        
+        twitchspeakerData = Object.fromEntries(twitchspeakerData)
+        localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(twitchspeakerData))
+
+        ws.send(JSON.stringify({
+            request: "Speak",
+            voice: voiceAlias,
+            message: message,
+            badWordFilter: badWordsFilter,
+            id: "Speak"
+          }
+        ))
+        createSnackbar(`TTS with the voice alias: "${voiceAlias}", and the text: "${message}"`)
+      })
+
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Enable"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "Enable",
+            id: "Enable"
+          }
+        ))
+
+        createSnackbar(`Enable`)
+      })
+      
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Disable"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+          request: "Disable",
+          id: "Disable"
+        }
+        ))
+        
+        createSnackbar(`Disable`)
+      })
+      
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Pause"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "Pause",
+            id: "Pause"
+          }
+        ))
+
+        createSnackbar(`Pause`)
+      })
+      
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Resume"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+          request: "Resume",
+          id: "Resume"
+        }
+        ))
+        
+        createSnackbar(`Resume`)
+      })
+      
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="On"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "On",
+            id: "On"
+          }
+        ))
+
+        createSnackbar(`On`)
+      })
+      
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Off"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "Off",
+            id: "Off"
+          }
+        ))
+        createSnackbar(`Off`)
+      })
+
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Stop"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "Stop",
+            id: "Stop"
+          }
+        ))
+
+        createSnackbar(`Stop`)
+      })
+
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Clear"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "Clear",
+            id: "Clear"
+          }
+        ))
+
+        createSnackbar(`Clear`)
+      })
+
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Enable Events"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "Events",
+            state: "on",
+            id: "Enable Events"
+          }
+        ))
+
+        createSnackbar(`Enable Events`)
+      })
+
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Disable Events"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "Events",
+            state: "off",
+            id: "Disable Events"
+          }
+        ))
+
+        createSnackbar(`Disable Events`)
+      })
+
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Speaking Mode: All"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "Mode",
+            mode: "all",
+            id: "Speaking Mode: All"
+          }
+        ))
+
+        createSnackbar(`Speaking Mode: All`)
+      })
+
+      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Speaking Mode: Command"]`).addEventListener(`click`, function () {
+        ws.send(JSON.stringify({
+            request: "Mode",
+            mode: "command",
+            id: "Speaking Mode: Command"
+          }
+        ))
+
+        createSnackbar(`Speaking Mode: Command`)
+      })
     }
 
     ws.addEventListener("message", (event) => {

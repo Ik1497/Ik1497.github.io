@@ -73,7 +73,7 @@ function reloadJsonParser() {
       returnData = `<div style="padding-left: 2ch;">${returnData}</div>`
     }
 
-    return `${!ignoreDropdown ? `<details style="display: inline;"><summary style="color: ${codeColors.property};">Array []</summary>` : ``}${returnData}${!ignoreDropdown ? `</details>` : ``}`
+    return `${!ignoreDropdown ? `<details style="display: inline;"><summary style="color: ${codeColors.property};">Array ${json.length} []</summary>` : ``}${returnData}${!ignoreDropdown ? `</details>` : ``}`
   }
   
   function DefaultsConverter(json) {

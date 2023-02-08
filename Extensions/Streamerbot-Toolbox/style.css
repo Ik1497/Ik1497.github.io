@@ -75,6 +75,10 @@ hr {
   display: none !important;
 }
 
+:disabled {
+  pointer-events: none;
+}
+
 ul {
   list-style: none;
 }
@@ -441,6 +445,10 @@ ul.styled li button {
 /* ---- */
 
 main:not(.nested) {
+  width: 100%;
+}
+
+main:not(.nested) .main {
   padding-inline: 1rem;
   margin-right: 1rem;
   margin-left: 21rem;
@@ -448,74 +456,8 @@ main:not(.nested) {
   margin-top: 7rem;
   position: relative;
 
-  width: 100%;
   max-width: 120rem;
   margin-right: auto;
-}
-
-main:not(.nested) ul.main-list {
-  display: grid;
-  gap: .5em;
-  width: 100%;
-
-  overflow-y: auto;
-  height: fit-content;
-  position: relative;
-
-  max-height: 50rem;
-  overflow-y: auto;
-  border-radius: .5rem;
-}
-
-main:not(.nested) ul.main-list li {
-  background: var(--background-soft);
-  padding-inline: .5em;
-  padding-block: .75em;
-  display: grid;
-  grid-template-columns: auto max-content;
-  position: relative;
-}
-
-main:not(.nested) ul.main-list li.list-title {
-  text-align: center;
-  font-weight: 700;
-}
-
-main:not(.nested) ul.main-list li,
-main:not(.nested) ul.main-list li p {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-main:not(.nested) ul.main-list li select {
-  background: var(--background-alt);
-  color: var(--text-900);
-  border: none;
-  border-radius: none;
-  outline: none;
-}
-
-main:not(.nested) ul.main-list li button {
-  color: #a4ceff;
-  background: #285292;
-  border: 0;
-  border-radius: 5px;
-  outline: 0;
-  width: max-content;
-  padding-inline: .5em;
-  padding-block: .25em;
-  cursor: pointer;
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-main:not(.nested) ul.main-list li button:active,
-main:not(.nested) .main-list li button:focus-visible,
-main:not(.nested) .main-list li button:hover {
-  background: var(--color-link-hover);
 }
 
 main:not(.nested) .main-list.col-2 {
@@ -544,35 +486,35 @@ main:not(.nested) li div.profile-image.mdi.mdi-youtube::before {
   font-size: .6rem;
 }
 
-main.full {
+main .main.full {
   margin-inline: auto;
 }
 
-main.col-2 {
+main .main.col-2 {
   display: grid;
   grid-template-columns: auto min-content;
   gap: .5rem;
 }
 
-main.col-2 > .card-grid {
+main .main.col-2 > .card-grid {
   max-height: 50rem;
   overflow-y: auto;
   border-radius: .5rem;
 }
 
-main.col-2 > .card-grid .card {
+main .main.col-2 > .card-grid .card {
   height: fit-content;
 }
 
-main.col-2 aside {
+main .main.col-2 aside {
   width: 20rem;
   max-height: 50rem;
   overflow-y: auto;
   border-radius: .5rem;
 }
 
-main.col-2 aside .card-grid,
-main.col-2 aside .card {
+main .main.col-2 aside .card-grid,
+main .main.col-2 aside .card {
   width: 100%;
   grid-template-columns: 1fr;
 }
@@ -995,7 +937,8 @@ blockquote.error {
 /* Disabled Styles */
 /* --------------- */
 
-body:not([data-streamerbot-action-package="installed"]) .send-message * {
+body:not([data-streamerbot-action-package="installed"]) .send-message *,
+body:not([data-streamerbot-action-package="installed"]) .streamerbot-action-package * {
   filter: blur(5px)!important;
   pointer-events: none!important;
 }
@@ -1319,16 +1262,16 @@ select.no-style {
     display: none;
   }
 
-  main.col-2 {
+  main .main.col-2 {
     display: grid;
     grid-template-columns: auto;
   }
 
-  main.col-2 > .card-grid {
+  main .main.col-2 > .card-grid {
     grid-row: 2;
   }
   
-  main.col-2 aside {
+  main .main.col-2 aside {
     width: auto;
     grid-row: 1;
   }
