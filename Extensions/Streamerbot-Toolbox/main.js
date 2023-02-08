@@ -548,18 +548,20 @@ async function connectws() {
             </div>
           </div>
 
-          <div class="card" style="height: fit-content; max-height: calc(100vh - 15rem); width: 15rem; max-width: 15rem;">
-            <div class="card-header">
-              <p class="card-title">Present Viewers</p>
-            </div>
-            <hr>
-            <ul class="present-viewers styled">
-              <div class="form-group styled no-margin">
-                <input type="search" placeholder="Search...">
+          <aside>
+            <div class="card" style="height: fit-content; max-height: calc(100vh - 15rem); width: 15rem; max-width: 15rem;">
+              <div class="card-header">
+                <p class="card-title">Present Viewers</p>
               </div>
-            </ul>
-          </div>
-        </div>
+              <hr>
+                <ul class="present-viewers styled">
+                  <div class="form-group styled no-margin">
+                    <input type="search" placeholder="Search...">
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </aside>
         `
 
         DashboardAsyncPage()
@@ -1210,6 +1212,11 @@ async function connectws() {
 
                 listItemHtml__button.addEventListener(`click`, function () {
                   createModal(`
+                  <div class="buttons-row list-items">
+                    <li>${action.subaction_count} ${action.subaction_count === 1 ? `Sub-Action` : `Sub-Actions`}</li>
+                    <li>${action.enabled ? `Enabled` : `Disabled`}</li>
+                  </div>
+                  <br>
                   <table class="styled">
                     <tr>
                       <td style="text-align: right;">Name</td>
@@ -1222,18 +1229,6 @@ async function connectws() {
                     <tr>
                       <td style="text-align: right;">Group</td>
                       <td style="text-align: left;">${action.group}</td>
-                    </tr>
-                    <tr>
-                      <td style="text-align: right;">State</td>
-                      <td style="text-align: left;">${action.enabled ? `Enabled` : `Disabled`}</td>
-                    </tr>
-                    <tr>
-                      <td style="text-align: right;">Additional</td>
-                      <td style="text-align: left;">
-                        <div class="buttons-row list-items">
-                          <li>${action.subaction_count} ${action.subaction_count === 1 ? `Sub-Action` : `Sub-Actions`}</li>
-                        </div>
-                      </td>
                     </tr>
                   </table>
                   <div class="form-group styled execute">
@@ -1356,7 +1351,7 @@ async function connectws() {
       }
 
       if (location.hash === `#${urlSafe(`Actions`)}` && data?.event?.source === `Raw` && data?.event?.type === `Action`) {
-        if (data.data.name != `Streamer.bot Toolbox Partial - Websocket Handler`) {
+        if (data.data.name != streamerbotActionPackage__name) {
           let actionHistoryQueued__List = document.querySelector(`main aside .card.action-history ul`)
   
           let actionHistoryQueued__ListItem = document.createElement(`li`)
@@ -1660,7 +1655,7 @@ async function connectws() {
       }
 
       if (location.hash === `#${urlSafe(`Actions`)}` && data?.event?.source === `Raw` && data?.event?.type === `ActionCompleted`) {
-        if (data.data.name != `Streamer.bot Toolbox Partial - Websocket Handler`) {
+        if (data.data.name != streamerbotActionPackage__name) {
           let actionHistoryCompleted__ListItem = document.querySelector(`main aside .card-grid .card.action-history ul li[data-action-running-id="${data.data.id}"]`)
           actionHistoryCompleted__ListItem.setAttribute(`data-action-completed-data`, JSON.stringify(data))
           actionHistoryCompleted__ListItem.setAttribute(`data-action-state`, `completed`)
@@ -1737,8 +1732,6 @@ async function connectws() {
 
             events[1].sort()
 
-            console.log(events[1])
-
             if (navbar__listItem__button__title.innerText != `View All`) {
               events[1].forEach(event => {
                 document.querySelector(`main .card-grid#events .card ul`).insertAdjacentHTML(`beforeend`, `
@@ -1783,7 +1776,7 @@ async function connectws() {
         });
       }
 
-      if (location.hash === `#${urlSafe(`Websocket Events`)}` && data?.id === undefined && data?.event?.source != null && data?.event?.type != null && data?.data?.name != `Streamer.bot Toolbox Partial - Websocket Handler`) {
+      if (location.hash === `#${urlSafe(`Websocket Events`)}` && data?.id === undefined && data?.event?.source != null && data?.event?.type != null && data?.data?.name != streamerbotActionPackage__name && data?.data?.parentName != streamerbotActionPackage__name) {
         let eventHistory__listItem = document.createElement(`li`)
         document.querySelector(`.card-grid .card#event-history ul`).prepend(eventHistory__listItem)
 
