@@ -540,7 +540,7 @@ main .main.col-2 aside .card {
   overflow-y: auto;
 }
 
-.settings-modal-alt-wrapper {
+.modal-wrapper {
   position: fixed;
   left: 50%;
   top: 50%;
@@ -550,7 +550,7 @@ main .main.col-2 aside .card {
   border-radius: .5rem;
 }
 
-.settings-modal-alt {
+.modal {
   background: var(--background-alt);
   width: 85vw;
   max-width: 85rem;
@@ -558,25 +558,35 @@ main .main.col-2 aside .card {
   max-height: 50rem;
   overflow-x: hidden;
   overflow-y: auto;
+  max-width: 95vw;
+  max-height: 95vh;
 }
 
-.settings-modal-alt.small {
+.modal.prompt {
+  width: 25rem;
+  height: 15rem;
+}
+
+.modal.small {
   width: 35rem;
-  max-height: 35rem;
   height: 25rem;
-  max-height: 25rem;
 }
 
-.settings-modal-alt.medium {
+.modal.medium {
   width: 60rem;
   height: 35rem;
 }
 
-.settings-modal-alt {
+.modal.big {
+  width: 80rem;
+  height: 55rem;
+}
+
+.modal {
   padding: 2rem;
 }
 
-.settings-modal-alt {
+.modal {
   position: relative;
   display: flex;
   justify-content: center;
@@ -585,7 +595,7 @@ main .main.col-2 aside .card {
   height: 100%;
 }
 
-.settings-modal-alt .header {
+.modal .header {
   background: var(--color-link-hover);
   position: fixed;
   top: 0;
@@ -598,7 +608,7 @@ main .main.col-2 aside .card {
   overflow: hidden;
 }
 
-.settings-modal-alt .close-button {
+.modal .close-button {
   padding: .25rem;
   border-radius: none;
   outline: none;
@@ -613,33 +623,33 @@ main .main.col-2 aside .card {
   margin-left: auto;
 }
 
-.settings-modal-alt .header h1,
-.settings-modal-alt .header h2,
-.settings-modal-alt .header h3,
-.settings-modal-alt .header h4,
-.settings-modal-alt .header h5,
-.settings-modal-alt .header h6 {
+.modal .header h1,
+.modal .header h2,
+.modal .header h3,
+.modal .header h4,
+.modal .header h5,
+.modal .header h6 {
   display: flex;
   align-items: center;
 }
 
-.settings-modal-alt .header h1 small,
-.settings-modal-alt .header h2 small,
-.settings-modal-alt .header h3 small,
-.settings-modal-alt .header h4 small,
-.settings-modal-alt .header h5 small,
-.settings-modal-alt .header h6 small {
+.modal .header h1 small,
+.modal .header h2 small,
+.modal .header h3 small,
+.modal .header h4 small,
+.modal .header h5 small,
+.modal .header h6 small {
   font-size: .75rem;
   padding-left: .5ch;
   color: var(--text-700);
 }
 
-.settings-modal-alt .header .subtitle {
+.modal .header .subtitle {
   font-size: .75rem;
   color: var(--text-800);
 }
 
-.settings-modal-alt .main {
+.modal .main {
   width: 100%;
   height: 100%;
   padding-top: 3rem;
@@ -801,17 +811,17 @@ body:has(> .settings-modal) .open-settings-modal {
   display: none;
 }
 
-body:has(> .settings-modal-alt-wrapper) > .settings-modal {
+body:has(> .modal-wrapper) > .settings-modal {
   display: none;
 }
 
-body[data-modal-state=closing] > *:not(.settings-modal-alt-wrapper) {
+body[data-modal-state=closing] > *:not(.modal-wrapper) {
   transition: opacity .5s ease;
 }
 
-body:has(> .settings-modal):not(:has(.settings-modal-alt)) > *:not(.settings-modal),
-body[data-modal-state="opening"] > *:not(.settings-modal-alt-wrapper),
-body[data-modal-state="opened"] > *:not(.settings-modal-alt-wrapper) {
+body:has(> .settings-modal):not(:has(.modal)) > *:not(.settings-modal),
+body[data-modal-state="opening"] > *:not(.modal-wrapper),
+body[data-modal-state="opened"] > *:not(.modal-wrapper) {
   transition: opacity .5s ease;
   opacity: .47;
   pointer-events: none;
@@ -819,11 +829,11 @@ body[data-modal-state="opened"] > *:not(.settings-modal-alt-wrapper) {
 
 /* Animations */
 
-body[data-modal-state="opening"] .settings-modal-alt {
+body[data-modal-state="opening"] .modal {
   animation: modalAltOpening forwards .5s;
 }
 
-body[data-modal-state="closing"] .settings-modal-alt {
+body[data-modal-state="closing"] .modal {
   animation: modalAltClosing forwards .5s;
 }
 

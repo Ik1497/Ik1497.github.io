@@ -437,8 +437,8 @@ async function connectws() {
               </tbody></table>
               `, `TwitchSpeaker Settings`, undefined, `small`, {})
                     
-              document.querySelector(`.settings-modal-alt .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
-                let table = document.querySelector(`.settings-modal-alt .main table`)
+              document.querySelector(`.modal .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
+                let table = document.querySelector(`.modal .main table`)
                 localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify({
                     host: table.querySelector(`tbody tr td input#websocket-host`).value,
                     port: table.querySelector(`tbody tr td input#websocket-port`).value,
@@ -692,18 +692,18 @@ async function connectws() {
             none: `Send message to chat`,
             action: `Send message with /me to chat`,
             shoutout: `Fill in the user's login name that you want to shoutout (Required)`,
-            mod: `Fill in the user that you want to mod (Requirer)`,
-            unmod: `Fill in the user that you want to unmod (required)`,
-            vip: `Fill in the user that you want to vip (Requirer)`,
-            unvip: `Fill in the user that you want to unvip (required)`,
+            mod: `Fill in the user that you want to mod (Required)`,
+            unmod: `Fill in the user that you want to unmod (Required)`,
+            vip: `Fill in the user that you want to vip (Required)`,
+            unvip: `Fill in the user that you want to unvip (Required)`,
             clear: null,
             emoteonly: null,
             emoteonlyoff: null,
-            followers: `Fill in the duration of the followers only (optional)`,
+            followers: `Fill in the duration of the followers only (Optional)`,
             followersoff: null,
             subscribers: null,
             subscribersoff: null,
-            slow: `Fill in the duration of the slow mode (optional)`,
+            slow: `Fill in the duration of the slow mode between messages (Optional)`,
             slowoff: null
           }
 
@@ -731,11 +731,12 @@ async function connectws() {
           let package__chatMessage = document.querySelector(`.card .send-message input`).value
           let package__chatService = document.querySelector(`.card .send-message select.service`).value
           let package__chatModifier = document.querySelector(`.card .send-message select.modifier`).value
+
           document.querySelector(`.card .send-message input`).value = ``
           document.querySelector(`.card .send-message input`).focus()
           document.querySelector(`.card .send-message input`).select()
   
-          console.log(`[${package__chatService}] ${package__chatMessage}`)
+          console.log(`[${package__chatService} - ${package__chatModifier}] ${package__chatMessage}`)
   
           if (package__chatModifier === `none`) {
             if (package__chatService === `Both`) {
@@ -756,26 +757,84 @@ async function connectws() {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotAction`, package__chatMessage)
             }
 
-          } else if (package__chatModifier === `shoutout`) {
-            SB__StreamerbotActionPackageRequest(`TwitchSendShoutout`, package__chatMessage)
-            SendChatNotification(`Attempting to shoutout ${package__chatMessage}`)
-
           } else if (package__chatModifier === `clear`) {
             SB__StreamerbotActionPackageRequest(`TwitchClearChatMessages`)
             document.querySelector(`main .card ul.chat-messages`).innerHTML = ``
             SendChatNotification(`Chat cleared`)
 
+          } else if (package__chatModifier === `slow`) {
+            SB__StreamerbotActionPackageRequest(`TwitchSlowMode`, {wsDataEnabled: true, wsDataDuration: package__chatMessage || 30})
+            SendChatNotification(`Enabling slow mode for ${ package__chatMessage || 30}s`)
+
+          } else if (package__chatModifier === `slowoff`) {
+            SB__StreamerbotActionPackageRequest(`TwitchSlowMode`, {wsDataEnabled: false, wsDataDuration: 0})
+            SendChatNotification(`Disabling slow mode`)
+
+          } else if (package__chatModifier === `emoteonly`) {
+            SB__StreamerbotActionPackageRequest(`TwitchEmoteOnly`, true)
+            SendChatNotification(`Enabling emote only mode`)
+
+          } else if (package__chatModifier === `emoteonlyoff`) {
+            SB__StreamerbotActionPackageRequest(`TwitchEmoteOnly`, false)
+            SendChatNotification(`Disabling emote only mode`)
+
+          } else if (package__chatModifier === `followers`) {
+            SB__StreamerbotActionPackageRequest(`TwitchFollowMode`, {wsDataEnabled: true, wsDataDuration: package__chatMessage || 0})
+            SendChatNotification(`Enabling followers only mode${package__chatMessage ? ` for ${package__chatMessage} minutes` : ``}`)
+
+          } else if (package__chatModifier === `followersoff`) {
+            SB__StreamerbotActionPackageRequest(`TwitchFollowMode`, {wsDataEnabled: false, wsDataDuration: 0})
+            SendChatNotification(`Disabling followers only mode`)
+
+          } else if (package__chatModifier === `subscribers`) {
+            SB__StreamerbotActionPackageRequest(`TwitchSubscriberOnly`, true)
+            SendChatNotification(`Enabling subscribers only mode`)
+
+          } else if (package__chatModifier === `subscribersoff`) {
+            SB__StreamerbotActionPackageRequest(`TwitchSubscriberOnly`, false)
+            SendChatNotification(`Disabling subscribers only mode`)
+
+          } 
+          
+          else if (package__chatModifier === `shoutout`) {
+            SB__StreamerbotActionPackageRequest(`TwitchSendShoutout`, package__chatMessage)
+            SendChatNotification(`Attempting to shoutout ${package__chatMessage}`)
+
+          } else if (package__chatModifier === `vip`) {
+            SB__StreamerbotActionPackageRequest(`TwitchAddVip`, package__chatMessage)
+
+          } else if (package__chatModifier === `unvip`) {
+            SB__StreamerbotActionPackageRequest(`TwitchRemoveVip`, package__chatMessage)
+
+          } else if (package__chatModifier === `mod`) {
+            SB__StreamerbotActionPackageRequest(`TwitchAddModerator`, package__chatMessage)
+
+          } else if (package__chatModifier === `unmod`) {
+            SB__StreamerbotActionPackageRequest(`TwitchRemoveModerator`, package__chatMessage)
+
           }
         }
         
-        function SendChatNotification(message) {
-          document.querySelector(`.card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
-          <li data-source="twitch">
-          <div style="display: flex; align-items: center; gap: 0.25rem;">
-            <p style="color: var(--color-link);">${message}</p>
-          </div>
-          </li>`)
+      }
+      
+      if (data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsSource === `StreamerbotTool`) {
+        if (data.data.wsRequest === `TwitchAddVip`) {
+          if (data.data.wsData.result === true) SendChatNotification(`Added vip ${data.data.wsData.user}`)
+          if (data.data.wsData.result === false) SendChatNotification(`Failed to add vip ${data.data.wsData.user}`)
+        } else if (data.data.wsRequest === `TwitchRemoveVip`) {
+          SendChatNotification(`Removed vip`)
+        } else if (data.data.wsRequest === `TwitchAddModerator`) {
+          SendChatNotification(`Added vip`)
         }
+      }
+
+      function SendChatNotification(message) {
+        document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
+        <li data-source="twitch">
+        <div style="display: flex; align-items: center; gap: 0.25rem;">
+          <p style="color: var(--color-link);">${message}</p>
+        </div>
+        </li>`)
       }
 
       if (data?.id === `GetActiveViewers`) {
@@ -828,12 +887,12 @@ async function connectws() {
           viewerListItem__button__description.innerText = ` ${viewer.role}`
           viewerListItem__button.append(viewerListItem__button__description)
 
-          document.querySelector(`main .card ul.present-viewers`).append(viewerListItem)
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.present-viewers`).append(viewerListItem)
 
-          document.querySelector(`main .card ul.present-viewers input[type="search"]`).addEventListener(`keydown`, () => {
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.present-viewers input[type="search"]`).addEventListener(`keydown`, () => {
             setTimeout(() => {
-              let value = document.querySelector(`main .card ul.present-viewers input[type="search"]`).value.toLowerCase()
-              document.querySelectorAll(`ul.present-viewers li`).forEach(listItem => {
+              let value = document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.present-viewers input[type="search"]`).value.toLowerCase()
+              document.querySelectorAll(`main .main[data-page="${urlSafe(`Dashboard`)}"] ul.present-viewers li`).forEach(listItem => {
                 if (listItem.querySelector(`button p.title`).innerText.toLowerCase().includes(value) || listItem.querySelector(`button p.description`).innerText.toLowerCase().includes(value)) {
                   listItem.setAttribute(`hidden`, ``)
                   listItem.removeAttribute(`hidden`)
@@ -910,7 +969,7 @@ async function connectws() {
           let italics = ``
           if (data.data.message.isMe === true) italics = `font-style: italic`
   
-          document.querySelector(`.card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
           <li data-source="${data.event.source}" data-message-id="${data.data.message.msgId}">
             <div style="display: flex; align-items: center; gap: 0.25rem;">
               <div>
@@ -929,7 +988,7 @@ async function connectws() {
       }
 
       if (data?.event?.source === `YouTube` && data?.event?.type === `Message`) {
-        document.querySelector(`.card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
+        document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
         <li data-source="${data.event.source}" data-message-id="${data.data.eventId}">
           <div style="display: flex; align-items: center; gap: 0.25rem;">
             <p style="min-width: 4.5rem; text-align: center; color: var(--text-500);">${SB__FormatTimestamp(data.data.publishedAt, `small`)}</p>
@@ -1030,12 +1089,12 @@ async function connectws() {
 
         document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments .card-header .card-header-append button`).addEventListener(`click`, () => {
           createModal(`
-          <div class="form-group styled" id="clear">
-            <button>Yes I want to clear all my arguments</button>
+          <div class="form-group styled" id="clear" style="display: grid; place-items: center; height: 100%;">
+            <button style="font-size: 2rem;">Yes</button>
           </div>
-          `, `Are you sure?`, `Remove arguments`, `small`, {})
+          `, `Are you sure?`, `Remove arguments`, `prompt`, {})
 
-          document.querySelector(`.settings-modal-alt .main .form-group#clear button`).addEventListener(`click`, () => {
+          document.querySelector(`.modal .main .form-group#clear button`).addEventListener(`click`, () => {
             clearArgumentsTable()
             closeModal()
           })
@@ -1292,7 +1351,7 @@ async function connectws() {
                     <button id="execute"${action.enabled ? `` : ` disabled`}>Execute</button>
                   </div>
                   `, action.name, `Inspect Sub-Action`, `small`, {})
-                  document.querySelector(`.settings-modal-alt .main .form-group.execute button#execute`).addEventListener(`click`, () => {
+                  document.querySelector(`.modal .main .form-group.execute button#execute`).addEventListener(`click`, () => {
                     RunActionFromActionsPage()
                   })
                 })
@@ -1520,8 +1579,8 @@ async function connectws() {
 
             copyButtons__List__copyForDiscord__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables for Discord to clipboard`)
-              if (document.querySelector(`.settings-modal-alt .main table#completed`) != null) {
-                if (document.querySelector(`.settings-modal-alt .main table#completed`).getAttribute(`hidden`) === null) {
+              if (document.querySelector(`.modal .main table#completed`) != null) {
+                if (document.querySelector(`.modal .main table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForDiscord(`completed`)
                 } else {
                   copyArgumentsForDiscord(`queued`)
@@ -1554,8 +1613,8 @@ async function connectws() {
 
             copyButtons__List__copyForWiki__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables for the Streamer.bot Wiki to clipboard`)
-              if (document.querySelector(`.settings-modal-alt .main table#completed`) != null) {
-                if (document.querySelector(`.settings-modal-alt .main table#completed`).getAttribute(`hidden`) === null) {
+              if (document.querySelector(`.modal .main table#completed`) != null) {
+                if (document.querySelector(`.modal .main table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForWiki(`completed`)
                 } else {
                   copyArgumentsForWiki(`queued`)
@@ -1587,8 +1646,8 @@ async function connectws() {
 
             copyButtons__List__copyAsJson__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables as JSON to clipboard`)
-              if (document.querySelector(`.settings-modal-alt .main table#completed`) != null) {
-                if (document.querySelector(`.settings-modal-alt .main table#completed`).getAttribute(`hidden`) === null) {
+              if (document.querySelector(`.modal .main table#completed`) != null) {
+                if (document.querySelector(`.modal .main table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForJson(`completed`)
                 } else {
                   copyArgumentsForJson(`queued`)
@@ -1624,7 +1683,7 @@ async function connectws() {
               }
             })
 
-            document.querySelector(`.settings-modal-alt .main`).prepend(copyButtons__List)
+            document.querySelector(`.modal .main`).prepend(copyButtons__List)
 
             if (actionHistoryQueued__ListItem.getAttribute(`data-action-state`) === `completed`) {
               let actionHistoryCompletedDialog__List = document.createElement(`ul`)
@@ -1670,26 +1729,26 @@ async function connectws() {
   
               function reloadButtonStates() {
                 if (actionHistoryCompletedDialog__CompletedListItem.classList.contains(`button-active`)) {
-                  document.querySelector(`.settings-modal-alt .main table#completed`).setAttribute(`hidden`, ``)
-                  document.querySelector(`.settings-modal-alt .main table#completed`).removeAttribute(`hidden`)
+                  document.querySelector(`.modal .main table#completed`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.modal .main table#completed`).removeAttribute(`hidden`)
                   
-                  document.querySelector(`.settings-modal-alt .main table#queued`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.modal .main table#queued`).setAttribute(`hidden`, ``)
   
                 } else if (actionHistoryCompletedDialog__QueuedListItem.classList.contains(`button-active`)) {
-                  document.querySelector(`.settings-modal-alt .main table#queued`).setAttribute(`hidden`, ``)
-                  document.querySelector(`.settings-modal-alt .main table#queued`).removeAttribute(`hidden`)
+                  document.querySelector(`.modal .main table#queued`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.modal .main table#queued`).removeAttribute(`hidden`)
                   
-                  document.querySelector(`.settings-modal-alt .main table#completed`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.modal .main table#completed`).setAttribute(`hidden`, ``)
   
                 }
               }
   
-              document.querySelector(`.settings-modal-alt .main`).prepend(actionHistoryCompletedDialog__List)
+              document.querySelector(`.modal .main`).prepend(actionHistoryCompletedDialog__List)
             }
   
-            document.querySelector(`.settings-modal-alt .main .form-group.re-run button#re-run`).addEventListener(`click`, () => {
+            document.querySelector(`.modal .main .form-group.re-run button#re-run`).addEventListener(`click`, () => {
               let arguments = []
-              document.querySelectorAll(`.settings-modal-alt .main table:not([hidden]) tbody tr`).forEach(tableRow => {
+              document.querySelectorAll(`.modal .main table:not([hidden]) tbody tr`).forEach(tableRow => {
                 arguments.push([
                   tableRow.querySelector(`td:first-child`).innerHTML,
                   tableRow.querySelector(`td:last-child`).innerHTML
@@ -1977,7 +2036,7 @@ async function connectws() {
         })
       }
 
-      if (data?.event?.source === `None` && data?.event?.type === `Custom`) {
+      if (data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsSource === `StreamerbotTool`) {
         if (data.data.wsRequest === `GetGlobalVariable`) {
           if (data.data.wsData === ``) data.data.wsData = `Global Variable Doesn't Exist or it doesn't have a value`
           document.querySelector(`#get-global-variable--output .output`).innerHTML = data.data.wsData
@@ -2557,29 +2616,29 @@ async function connectws() {
                   </table>
                 `, `${sourceData.sourceName}`, `Edit Transform Settings`, `medium`, {})
 
-                document.querySelector(`.settings-modal-alt .main .form-group button#update`).addEventListener(`click`, () => {
+                document.querySelector(`.modal .main .form-group button#update`).addEventListener(`click`, () => {
                   SB__StreamerbotActionPackageOBSRequest(`SetSceneItemTransform`, {
                     sceneName: document.querySelector(`main .main .card-grid .card.sources > ul`).getAttribute(`data-scene`),
                     sceneItemId: sourceData.sceneItemId,
                     sceneItemTransform: {
-                      alignment: +document.querySelector(`.settings-modal-alt .main table #alignment`).value || 5,
-                      boundsAlignment: +document.querySelector(`.settings-modal-alt .main table #bounds-alignment`).value || 0,
-                      boundsWidth: +document.querySelector(`.settings-modal-alt .main table #bounds-width`).value || 1,
-                      boundsHeight: +document.querySelector(`.settings-modal-alt .main table #bounds-height`).value || 1,
-                      boundsType: document.querySelector(`.settings-modal-alt .main table #bounds-type`).value || "OBS_BOUNDS_NONE",
-                      cropTop: +document.querySelector(`.settings-modal-alt .main table #crop-top`).value || 0,
-                      cropRight: +document.querySelector(`.settings-modal-alt .main table #crop-right`).value || 0,
-                      cropBottom: +document.querySelector(`.settings-modal-alt .main table #crop-bottom`).value || 0,
-                      cropLeft: +document.querySelector(`.settings-modal-alt .main table #crop-left`).value || 0,
-                      width: +document.querySelector(`.settings-modal-alt .main table #width`).value || null,
-                      height: +document.querySelector(`.settings-modal-alt .main table #height`).value || null,
-                      positionX: +document.querySelector(`.settings-modal-alt .main table #position-x`).value || 0,
-                      positionY: +document.querySelector(`.settings-modal-alt .main table #position-y`).value || 0,
-                      rotation: +document.querySelector(`.settings-modal-alt .main table #rotation`).value || 0,
-                      scaleX: +document.querySelector(`.settings-modal-alt .main table #scale-x`).value || null,
-                      scaleY: +document.querySelector(`.settings-modal-alt .main table #scale-y`).value || null,
-                      sourceHeight: +document.querySelector(`.settings-modal-alt .main table #source-height`).value || 0,
-                      sourceWidth: +document.querySelector(`.settings-modal-alt .main table #source-width`).value || 0
+                      alignment: +document.querySelector(`.modal .main table #alignment`).value || 5,
+                      boundsAlignment: +document.querySelector(`.modal .main table #bounds-alignment`).value || 0,
+                      boundsWidth: +document.querySelector(`. .main table #bounds-width`).value || 1,
+                      boundsHeight: +document.querySelector(`.modal .main table #bounds-height`).value || 1,
+                      boundsType: document.querySelector(`.modal .main table #bounds-type`).value || "OBS_BOUNDS_NONE",
+                      cropTop: +document.querySelector(`.modal .main table #crop-top`).value || 0,
+                      cropRight: +document.querySelector(`.modal .main table #crop-right`).value || 0,
+                      cropBottom: +document.querySelector(`.modal .main table #crop-bottom`).value || 0,
+                      cropLeft: +document.querySelector(`.modal .main table #crop-left`).value || 0,
+                      width: +document.querySelector(`.modal .main table #width`).value || null,
+                      height: +document.querySelector(`.modal .main table #height`).value || null,
+                      positionX: +document.querySelector(`.modal .main table #position-x`).value || 0,
+                      positionY: +document.querySelector(`.modal .main table #position-y`).value || 0,
+                      rotation: +document.querySelector(`.modal .main table #rotation`).value || 0,
+                      scaleX: +document.querySelector(`.modal .main table #scale-x`).value || null,
+                      scaleY: +document.querySelector(`.modal .main table #scale-y`).value || null,
+                      sourceHeight: +document.querySelector(`.modal .main table #source-height`).value || 0,
+                      sourceWidth: +document.querySelector(`.modal .main table #source-width`).value || 0
                     }
                   }, obsConnection)
                 })
@@ -3151,7 +3210,7 @@ function createSnackbar(snackBarHtml = ``, theme = `default`, loadTime = 3000, t
 }
 
 function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefined, scale = `small`, settings = {}) {
-  document.querySelectorAll(`.settings-modal-alt-wrapper`).forEach(settingsModalAlt => {
+  document.querySelectorAll(`.modal-wrapper`).forEach(settingsModalAlt => {
     settingsModalAlt.remove()
   });
   if (document.body.getAttribute(`modal-state`) != `opened` && document.body.getAttribute(`modal-state`) != `opening`) {
@@ -3168,8 +3227,8 @@ function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefin
     }
   
     document.body.insertAdjacentHTML(`afterbegin`, `
-    <div class="settings-modal-alt-wrapper">
-      <div class="settings-modal-alt ${scale}"${attributes}>
+    <div class="modal-wrapper">
+      <div class="modal ${scale}"${attributes}>
         <div class="header">
           <div>
             <h2 class="title">${modalTitle}</h2>
@@ -3197,12 +3256,12 @@ function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefin
 function closeModal() {
   if (document.body.getAttribute(`data-modal-state`) === `opened`) {
     document.body.setAttribute(`data-modal-state`, `closing`)
-    if (document.querySelector(`.settings-modal-alt-wrapper`).getAttribute(`data-reload`) === ``) {
+    if (document.querySelector(`.modal-wrapper`).getAttribute(`data-reload`) === ``) {
       location.reload()
     }
     setTimeout(() => {
       document.body.setAttribute(`data-modal-state`, `closed`)
-      document.querySelectorAll(`.settings-modal-alt-wrapper`).forEach(settingsModalAlt => {
+      document.querySelectorAll(`.modal-wrapper`).forEach(settingsModalAlt => {
         settingsModalAlt.remove()
       });
     }, 500);
