@@ -287,7 +287,9 @@ async function connectws() {
             document.body.setAttribute(`data-streamerbot-action-package-outdated`, action.group.replace(`Streamer.bot Toolbox Partials (v`, ``).replace(`)`, ``).replaceAll(`.`, ``))
           } else if (dataStreamerbotActionPackage != `installed` && dataStreamerbotActionPackage != `outdated` && action.name === streamerbotActionPackage__name && action.group != streamerbotActionPackage__group) {
             document.body.setAttribute(`data-streamerbot-action-package`, `renamed`)
-          } else if (dataStreamerbotActionPackage != `installed` && dataStreamerbotActionPackage != `outdated` && dataStreamerbotActionPackage != `renamed` && action.name != streamerbotActionPackage__name) {
+          } else if (dataStreamerbotActionPackage != `installed` && dataStreamerbotActionPackage != `outdated` && dataStreamerbotActionPackage != `renamed` && action.name === streamerbotActionPackage__name && action.enabled === false) {
+            document.body.setAttribute(`data-streamerbot-action-package`, `disabled`)
+          }  else if (dataStreamerbotActionPackage != `installed` && dataStreamerbotActionPackage != `outdated` && dataStreamerbotActionPackage != `renamed` && dataStreamerbotActionPackage != `disabled` && action.name != streamerbotActionPackage__name) {
             document.body.setAttribute(`data-streamerbot-action-package`, `absent`)
           }
         });
@@ -365,10 +367,11 @@ async function connectws() {
 
             if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download & More Info</button></li>`)
             if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, You have broken something <button id="more-info">Please re-install it again</button></li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you have broken something <button id="more-info">Please re-install it again</button></li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `disabled`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, the action is currently disabled enable the action again</li>`)
             if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl}</li>`)
 
-            if (document.body.getAttribute(`data-streamerbot-action-package`) != `installed`) {
+            if (document.body.getAttribute(`data-streamerbot-action-package`) != `installed` && document.body.getAttribute(`data-streamerbot-action-package`) != `disabled`) {
               document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
                 createModal(`
                 <p>The Streamer.bot Action Package is used for getting/setting global variables, sending chat messages to Twitch/YouTube, and command features.</p>
@@ -637,6 +640,12 @@ async function connectws() {
               <p class="blockquote-text">You've edited something with your Streamer.bot Action Package, please go to the settings and re-install it again.</p>
             </blockquote>
             `
+          } else if (dataStreamerbotActionPackage === `disabled`) {
+            errorMessage = `
+            <blockquote class="error">
+              <p class="blockquote-text">Your Streamer.bot Action Package action is currently disabled, enable the action again so you can use all the features again.</p>
+            </blockquote>
+            `
           } else if (dataStreamerbotActionPackage === `absent`) {
             errorMessage = `
             <blockquote class="info">
@@ -668,7 +677,7 @@ async function connectws() {
             <p>• Change command settings</p>
             <p>• TwitchSpeaker Settings Management</p>
             <br>
-            <p><b>Open the settings in bottom right to enable these integrations or for more info</b></p>
+            <p><b>Open the settings in bottom right to enable these integrations and for more info</b></p>
           </div>
           `)
         }
@@ -2008,6 +2017,7 @@ async function connectws() {
           localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
           
           SB__StreamerbotActionPackageRequest(`GetGlobalVariable`, wsDataGlobalVariableName)
+          SB__StreamerbotActionPackageRequest(`GetLogFiles`)
         })
 
         document.getElementById(`set-global-variable--submit`).addEventListener(`click`, () => {

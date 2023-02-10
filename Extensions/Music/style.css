@@ -1,0 +1,100 @@
+@import url(/assets/fonts/font.css);
+
+body[data-theme="minimal"] {
+  --image-size-minus: -8em;
+  --border-radius-album-cover: 1em;
+  --border-radius-texts-background: 1.25em;
+
+  --color-primary: hsl(0, 0%, 100%);
+  --color-accent: hsla(0, 0%, 100%, 0.7);
+
+  --background: hsl(0, 0%, 0%, 0.7);
+  --alt-background: hsl(240, 5%, 11%); /* Used for when album covers are transparent */
+
+  --font-family: Uni Sans CAPS;
+  --font-style: normal;
+  --font-size: 1em;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body[data-theme="minimal"] {
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+  font-style: var(--font-style);
+}
+
+body[data-theme="minimal"] .container {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  overflow: hidden;
+  left: 0;
+  bottom: 0;
+}
+
+body[data-theme="minimal"] .container .album-cover {
+  height: var(--image-size);
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--alt-background);
+  border-radius: var(--border-radius-album-cover);
+  transition: all 0.5s ease 0s;
+}
+
+body[data-theme="minimal"] .container .bottom-container {
+  z-index: -1;
+  transition: all 0.5s ease 0.5s;
+  height: fit-content;
+  width: fit-content;
+  transform: translateX(calc(var(--image-size-minus) / 1));
+  display: grid;
+  grid-template-columns: calc(var(--image-size) / 2) 1fr;
+  grid-template-areas: ". texts";
+}
+
+body[data-theme="minimal"] .container .bottom-container .texts {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-inline: calc(0.5em + var(--image-size) / 2) 1em;
+  padding-block: 0.3em;
+  grid-area: texts;
+  background: var(--background);
+  border-radius: 30px var(--border-radius-texts-background) var(--border-radius-texts-background) 30px;
+  overflow: hidden;
+}
+
+body[data-theme="minimal"] .container .bottom-container .texts .songName {
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 3em;
+}
+
+body[data-theme="minimal"] .container .bottom-container .texts .artistName {
+  font-weight: 300;
+  color: var(--color-accent);
+  font-size: 2em;
+}
+
+body[data-theme="minimal"] .container .bottom-container,
+body[data-theme="minimal"] .container .bottom-container .texts,
+body[data-theme="minimal"] .container .album-cover {
+  transition: all 0.5s ease;
+}
+
+body[data-theme="minimal"] .container[data-state="closing-1"] .bottom-container .texts,
+body[data-theme="minimal"] .container[data-state="closing-2"] .bottom-container .texts,
+body[data-theme="minimal"] .container[data-state="closed"] .bottom-container .texts,
+body[data-theme="minimal"] .container:not([data-state="opened"]):not([data-state="opening-2"]) .bottom-container .texts {
+  transform: translateX(calc(-100% - var(--image-size)));
+}
+
+body[data-theme="minimal"] .container[data-state="closing-2"] .album-cover,
+body[data-theme="minimal"] .container[data-state="closed"] .album-cover,
+body[data-theme="minimal"] .container:not([data-state="opened"]):not([data-state="opening-1"]):not([data-state="opening-2"]):not([data-state="closing-1"]) .album-cover {
+  transform: translateY(100%);
+}

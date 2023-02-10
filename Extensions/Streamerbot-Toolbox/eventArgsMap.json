@@ -1,75 +1,109 @@
 {
-    "TwitchStreamOnline": {
-        "category": "twitch",
-        "display": "Stream Online",
-        "arguments": {
-            "startedAt": "1/28/2023 6:49:20 PM",
-            "game": "Just Chatting",
-            "gameId": "509658",
-            "tagCount": ""
-        }
-    },
-    "TwitchStreamOffline": {
-        "category": "twitch",
-        "display": "Stream Offline",
-        "arguments": {
-            "endedAt": "1/15/2023 3:12:15 PM"
-        }
-    },
-    "TwitchChatMessage": {
-        "category": "twitch",
-        "display": "Chat Message",
-        "arguments": {
-            "msgId": "226ddd35-4d27-4e7d-b506-0d69b4b405d7",
-            "role": "3",
-            "color": "#1E90FF",
-            "colorR": "30",
-            "colorG": "144",
-            "colorB": "255",
-            "emoteCount": "0",
-            "emotes": "System.Collections.Generic.List`1[Twitch.Common.Models.Emote]",
-            "badgeCount": "1",
-            "badges": "System.Collections.Generic.List`1[Twitch.Common.Models.Badge]",
-            "bits": "0",
-            "isAction": "False",
-            "isReply": "False",
-            "firstMessage": "False",
-            "isTest": "False",
-            "isHighlight": "False",
-            "eventSource": "twitch",
-            "rawInput": "",
-            "rawInputEscaped": "",
-            "rawInputUrlEncoded": "",
-            "message": "",
-            "messageStripped": "",
-            "user": "",
-            "userName": "",
-            "userId": "",
-            "userType": "",
-            "isModerator": "",
-            "isVip": "",
-            "isSubscribed": "",
-            "userPreviousActive": ""
-        }
-    },
-    "ObsDisconnected": {
-        "category": "obs",
-        "display": "Disconnected",
-        "arguments": {
-            "obs.id": "8aa94fb4-9e69-45ab-ae7e-c993a536db3c",
-            "obs.name": "OBS",
-            "obs.host": "127.0.0.1"
-        }
-    },
-    "ObsConnected": {
-        "category": "obs",
-        "display": "Connected",
-        "arguments": {
-            "obs.id": "8aa94fb4-9e69-45ab-ae7e-c993a536db3c",
-            "obs.name": "OBS",
-            "obs.host": "127.0.0.1",
-            "obs.studioVersion": "29.0.0",
-            "obs.websocketVersion": "5.1.0"
-        }
+  "TwitchStreamOnline": {
+    "category": "twitch",
+    "display": "Stream Online",
+    "arguments": {
+      "startedAt": "1/28/2023 6:49:20 PM",
+      "game": "Just Chatting",
+      "gameId": "509658",
+      "tagCount": ""
     }
+  },
+  "TwitchStreamOffline": {
+    "category": "twitch",
+    "display": "Stream Offline",
+    "arguments": {
+      "endedAt": "1/15/2023 3:12:15 PM"
+    }
+  },
+  "TwitchChatMessage": {
+    "category": "twitch",
+    "display": "Chat Message",
+    "arguments": {
+      "msgId": "226ddd35-4d27-4e7d-b506-0d69b4b405d7",
+      "role": "3",
+      "color": "#1E90FF",
+      "colorR": "30",
+      "colorG": "144",
+      "colorB": "255",
+      "emoteCount": "0",
+      "emotes": "System.Collections.Generic.List`1[Twitch.Common.Models.Emote]",
+      "badgeCount": "1",
+      "badges": "System.Collections.Generic.List`1[Twitch.Common.Models.Badge]",
+      "bits": "0",
+      "isAction": "False",
+      "isReply": "False",
+      "firstMessage": "False",
+      "isTest": "False",
+      "isHighlight": "False",
+      "eventSource": "twitch",
+      "rawInput": "",
+      "rawInputEscaped": "",
+      "rawInputUrlEncoded": "",
+      "message": "",
+      "messageStripped": "",
+      "user": "",
+      "userName": "",
+      "userId": "",
+      "userType": "",
+      "isModerator": "",
+      "isVip": "",
+      "isSubscribed": "",
+      "userPreviousActive": ""
+    }
+  },
+  "PresentViewers": {
+    "category": "twitch",
+    "display": "Present Viewers",
+    "arguments": {
+      "isTest": false,
+      "users": [
+        {
+          "id": "750146097",
+          "userName": "ik1497bot",
+          "display": "Ik1497Bot",
+          "role": 3,
+          "isSubscribed": false
+        },
+        {
+          "id": "695682330",
+          "userName": "ik1497",
+          "display": "ik1497",
+          "role": 4,
+          "isSubscribed": true
+        }
+      ],
+      "isLive": false,
+      "actionId": "673dbf96-b118-4601-85f5-78045910db51",
+      "actionName": "a",
+      "eventSource": "twitch",
+      "broadcastUser": "ik1497",
+      "broadcastUserName": "ik1497",
+      "broadcastUserId": "695682330",
+      "broadcasterIsAffiliate": false,
+      "broadcasterIsPartner": false,
+      "runningActionId": "15d7bf4b-c27e-4faa-b938-233f4d2a4225",
+      "actionQueuedAt": "2023-02-10T06:07:50.6049355+01:00"
+    }
+  },
+  "ObsDisconnected": {
+    "category": "obs",
+    "display": "Disconnected",
+    "arguments": {
+      "obs.id": "8aa94fb4-9e69-45ab-ae7e-c993a536db3c",
+      "obs.name": "OBS",
+      "obs.host": "127.0.0.1"
+    }
+  },
+  "ObsConnected": {
+    "category": "obs",
+    "display": "Connected",
+    "arguments": {
+      "obs.id": "8aa94fb4-9e69-45ab-ae7e-c993a536db3c",
+      "obs.name": "OBS",
+      "obs.host": "127.0.0.1",
+      "obs.studioVersion": "29.0.0",
+      "obs.websocketVersion": "5.1.0"
+    }
+  }
 }
