@@ -982,10 +982,10 @@ async function connectws() {
             let userSettingsHtml = ``
             if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) {
             } else {
-              userSettingsHtml = `
-              <blockquote class="error">
-              The Streamer.bot Action Package must be properly installed to use these features below
-              </blockquote>`
+              // userSettingsHtml = `
+              // <blockquote class="error">
+              // The Streamer.bot Action Package must be properly installed to use the features below
+              // </blockquote>`
             }
             createModal(`
             <ul class="buttons-row list-items">
