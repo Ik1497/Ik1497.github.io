@@ -55,11 +55,19 @@ let headerLinksMap = [
   },
   {
     name: `OBS Studio`,
-    integration: `streamer.bot-action-package`
+    integration: `streamer.bot-action-package`,
+    icon: `mdi mdi-antenna`
+  },
+  {
+    name: `Log Viewer`,
+    integration: `streamer.bot-action-package`,
+    icon: `mdi mdi-file-document`,
+    navbarHidden: true
   },
   {
     name: `TwitchSpeaker`,
     integration: `twitchspeaker`,
+    icon: `mdi mdi-microphone`,
     navbarHidden: true
   }
 ]
@@ -208,11 +216,20 @@ window.addEventListener('hashchange', () => {
 connectws()
 
 async function connectws() {
+  document.querySelectorAll(`main .main`).forEach(main => {
+    main.innerHTML = ``
+  });
+
+  document.querySelectorAll(`nav.navbar nav.navbar-list`).forEach(navbar => {
+    navbar.innerHTML = ``
+  });
+
   let eventArgsMap = await fetch(`./eventArgsMap.json`)
   eventArgsMap = await eventArgsMap.json()
 
   let randomEventArgs = await fetch(`./random.json`)
   randomEventArgs = await randomEventArgs.json()
+
 
   if ("WebSocket" in window) {
     const ws = new WebSocket(wsServerUrl)
@@ -420,32 +437,31 @@ async function connectws() {
               }
 
               createModal(`
-                <table><tbody>
-                <tr>
-                  <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Host</label></td>
-                  <td style="text-align: left;"><input type="url" name="websocket-host" id="websocket-host" value="${twitchspeakerDefaultValues.host}" placeholder="${twitchspeakerDefaultValues.host}"></td>
-                </tr>
-                <tr>
-                  <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Port</label></td>
-                  <td style="text-align: left;"><input type="url" name="websocket-port" id="websocket-port" value="${twitchspeakerDefaultValues.port}" placeholder="${twitchspeakerDefaultValues.port}"></td>
-                </tr>
-                <tr>
-                  <td style="text-align: right; padding-right: .25rem;"><label for="websocket-url">Endpoint</label></td>
-                  <td style="text-align: left;"><input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${twitchspeakerDefaultValues.endpoint}" placeholder="${twitchspeakerDefaultValues.endpoint}"></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td style="text-align: right;"><button class="connect-button">Connect!</button></td>
-                </tr>
-              </tbody></table>
+              <div class="form-group styled">
+                <label for="websocket-url">Host</label>
+                <input type="url" name="websocket-host" id="websocket-host" value="${twitchspeakerDefaultValues.host}" placeholder="${twitchspeakerDefaultValues.host}" class="no-margin">
+              </div>
+
+              <div class="form-group styled">
+                <label for="websocket-url">Port</label>
+                <input type="url" name="websocket-port" id="websocket-port" value="${twitchspeakerDefaultValues.port}" placeholder="${twitchspeakerDefaultValues.port}" class="no-margin">
+              </div>
+
+              <div class="form-group styled">
+                <label for="websocket-url">Endpoint</label>
+                <input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${twitchspeakerDefaultValues.endpoint}" placeholder="${twitchspeakerDefaultValues.endpoint}" class="no-margin">
+              </div>
+
+              <div class="form-group styled">
+                <button class="connect-button">Connect!</button>
+              </div>
               `, `TwitchSpeaker Settings`, undefined, `small`, {})
-                    
-              document.querySelector(`.modal .main table tbody tr td button.connect-button`).addEventListener(`click`, function () {
-                let table = document.querySelector(`.modal .main table`)
+
+              document.querySelector(`.modal .main .form-group button.connect-button`).addEventListener(`click`, function () {
                 localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify({
-                    host: table.querySelector(`tbody tr td input#websocket-host`).value,
-                    port: table.querySelector(`tbody tr td input#websocket-port`).value,
-                    endpoint: table.querySelector(`tbody tr td input#websocket-endpoint`).value
+                    host: document.querySelector(`.modal .main .form-group input#websocket-host`).value,
+                    port: document.querySelector(`.modal .main .form-group input#websocket-port`).value,
+                    endpoint: document.querySelector(`.modal .main .form-group input#websocket-endpoint`).value
                   })
                 )
 
@@ -583,7 +599,11 @@ async function connectws() {
                   <option value="unvip">/unvip</option>
                   <option value="mod">/mod</option>
                   <option value="unmod">/unmod</option>
-                  <option value="shoutout">/shoutout</option>
+                  <option value="announce">/announce</option>
+                  <option value="announceblue">/announceblue</option>
+                  <option value="announcegreen">/announcegreen</option>
+                  <option value="announceorange">/announceorange</option>
+                  <option value="announcepurple">/announcepurple</option>
                 </select>
                 <input type="text" placeholder="Send message to chat" class="no-margin no-border-radius">
                 <button class="submit no-border-radius no-margin">Send</button>
@@ -713,7 +733,12 @@ async function connectws() {
             subscribers: null,
             subscribersoff: null,
             slow: `Fill in the duration of the slow mode between messages (Optional)`,
-            slowoff: null
+            slowoff: null,
+            announce: `Send an announcement to chat`,
+            announceblue: `Send a blue announcement to chat`,
+            announcegreen: `Send a green announcement to chat`,
+            announceorange: `Send a orange announcement to chat`,
+            announcepurple: `Send a purple announcement to chat`
           }
 
           selectPlaceholderMap = Object.entries(selectPlaceholderMap)
@@ -764,6 +789,41 @@ async function connectws() {
               SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAction`, package__chatMessage)
             } else if (package__chatService === `TwitchBot`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotAction`, package__chatMessage)
+            }
+
+          } else if (package__chatModifier === `announce`) {
+            if (package__chatService === `Twitch`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage})
+            } else if (package__chatService === `TwitchBot`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage})
+            }
+
+          } else if (package__chatModifier === `announceblue`) {
+            if (package__chatService === `Twitch`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `blue`})
+            } else if (package__chatService === `TwitchBot`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `blue`})
+            }
+
+          } else if (package__chatModifier === `announcegreen`) {
+            if (package__chatService === `Twitch`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `green`})
+            } else if (package__chatService === `TwitchBot`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `green`})
+            }
+
+          } else if (package__chatModifier === `announceorange`) {
+            if (package__chatService === `Twitch`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `orange`})
+            } else if (package__chatService === `TwitchBot`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `orange`})
+            }
+
+          } else if (package__chatModifier === `announcepurple`) {
+            if (package__chatService === `Twitch`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `purple`})
+            } else if (package__chatService === `TwitchBot`) {
+              SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `purple`})
             }
 
           } else if (package__chatModifier === `clear`) {
@@ -981,9 +1041,6 @@ async function connectws() {
           document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
           <li data-source="${data.event.source}" data-message-id="${data.data.message.msgId}">
             <div style="display: flex; align-items: center; gap: 0.25rem;">
-              <div>
-                <button class="delete-message mdi mdi-trash-can"></button>
-              </div>
               <p style="min-width: 4.5rem; text-align: center; color: var(--text-500);">${SB__FormatTimestamp(data.timeStamp, `small`)}</p>
               <div class="profile-image mdi mdi-twitch" style="display: flex; align-items: center;">
                 <img src="${profileImageUrl}" alt="" style="width: 1rem; height: 1rem; border-radius: 100vmax;">
@@ -994,6 +1051,48 @@ async function connectws() {
           </li>
           `)
         }
+      }
+
+      if (data?.event?.source === `Twitch` && data?.event?.type === `Announcement`) {
+        TwitchChatMessageEvent()
+        async function TwitchChatMessageEvent() {  
+          let profileImageUrl = await fetch(`https://decapi.me/twitch/avatar/${data.data.userName}`)
+          profileImageUrl = await profileImageUrl.text()
+
+          let announcementColorBottom = `#416b81`
+          let announcementColorTop = `#9bc6dd`
+          if (data.data.announcementColor === `PRIMARY`) announcementColorBottom = `#416b81`
+          if (data.data.announcementColor === `PRIMARY`) announcementColorTop = `#9bc6dd`
+          if (data.data.announcementColor === `BLUE`) announcementColorBottom = `#327581`
+          if (data.data.announcementColor === `BLUE`) announcementColorTop = `#00dbff`
+          if (data.data.announcementColor === `GREEN`) announcementColorBottom = `#27765c`
+          if (data.data.announcementColor === `GREEN`) announcementColorTop = `#3ff1b6`
+          if (data.data.announcementColor === `ORANGE`) announcementColorBottom = `#ffd600`
+          if (data.data.announcementColor === `ORANGE`) announcementColorTop = `#d3c683`
+          if (data.data.announcementColor === `PURPLE`) announcementColorBottom = `#5cbbf3`
+          if (data.data.announcementColor === `PURPLE`) announcementColorTop = `#dc90ff`
+  
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
+          <li data-source="${data.event.source}" data-message-id="${data.data.message.msgId}" style="background: var(--background-mute); padding-inline: 5px; padding-block: .6rem; border-left: 5px solid; border-right: 5px solid; border-image: linear-gradient(0deg, ${announcementColorBottom}, ${announcementColorTop}) 1 round;">
+            <div style="display: flex; align-items: center; gap: 0.25rem;">
+              <p class="mdi mdi-bullhorn-outline">Announcement</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.25rem;">
+              <p style="min-width: 4.5rem; text-align: center; color: var(--text-500);">${SB__FormatTimestamp(data.timeStamp, `small`)}</p>
+              <div class="profile-image mdi mdi-twitch" style="display: flex; align-items: center;">
+                <img src="${profileImageUrl}" alt="" style="width: 1rem; height: 1rem; border-radius: 100vmax;">
+              </div>
+              <p style="color: ${data.data.color};">${data.data.displayName}</p>
+              <p>${data.data.message}</p>
+            </div>
+          </li>
+          `)
+        }
+      }
+
+      if (data?.event?.source === `Twitch` && data?.event?.type === `ChatCleared`) {
+        document.querySelector(`main .card ul.chat-messages`).innerHTML = ``
+        SendChatNotification(`Chat cleared`)
       }
 
       if (data?.event?.source === `YouTube` && data?.event?.type === `Message`) {
@@ -1503,7 +1602,7 @@ async function connectws() {
   
             Object.entries(actionHistoryQueued__arguments).forEach(argument => {
               actionHistoryQueued__table += `
-              <tr>
+              <tr> 
                 <td style="text-align: right;">${argument[0]}</td>
                 <td style="text-align: left;">${argument[1]}</td>
               </tr>
@@ -1949,9 +2048,9 @@ async function connectws() {
       ***/
 
       if (data?.id === `WebsocketHandlerAction`) {
-        document.querySelector(`main .main[data-page="${urlSafe(`Global Variables`)}`).classList.add(`full`)
+        document.querySelector(`main .main[data-page="${urlSafe(`Global Variables`)}"]`).classList.add(`full`)
 
-        document.querySelector(`main .main[data-page="${urlSafe(`Global Variables`)}`).innerHTML = `
+        document.querySelector(`main .main[data-page="${urlSafe(`Global Variables`)}"]`).innerHTML = `
         <div class="card-grid">
           <div class="card">
             <div class="card-header">                
@@ -2686,6 +2785,51 @@ async function connectws() {
             break
         }
       }
+
+      /***
+      ******************************
+      ******************************
+      ******************************
+      ********* Log Viewer *********
+      ******************************
+      ******************************
+      ******************************
+      ***/
+
+      if (data?.id === `WebsocketHandlerAction`) {
+        document.querySelector(`main .main[data-page="${urlSafe(`Log Viewer`)}"]`).classList.add(`full`)
+        document.querySelector(`main .main[data-page="${urlSafe(`Log Viewer`)}"]`).innerHTML = `
+        <blockquote class="warning">
+        Note: Work in progress
+        </blockqoute>
+        `
+
+        let formGroup = document.createElement(`div`)
+        formGroup.className = `form-group styled`
+
+        let formGroup__button = document.createElement(`button`)
+        formGroup__button.innerText = `Open Latest Log File`
+        formGroup.append(formGroup__button)
+
+        document.querySelector(`main .main[data-page="${urlSafe(`Log Viewer`)}"]`).append(formGroup)
+
+        formGroup__button.onclick = () => {
+          let year = `${new Date().getFullYear()}`
+          let month = `${new Date().getMonth() + 1}`
+          let day = `${new Date().getDate()}`
+
+          if (month < 10) month = `0${month}`
+          if (day < 10) day = `0${day}`
+
+          SB__StreamerbotActionPackageRequest(`StartProcess`, `logs/log_${year}${month}${day}.log`)
+        }
+      }
+
+      if (data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsRequest === `ReadFile`) {
+        console.log(`SUCCESS`)
+      }
+
+
 
       function SB__RunAction(name, args = {}, id = "DoAction") {
         let jsonBody = {

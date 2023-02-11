@@ -94,31 +94,9 @@ function connectws() {
             }, 750);
           }, 750);
         }, 50);
-      }
-
-      // refreshAlbumCover();
+      }      
     });
   }
-}
-
-////////////////////////////
-/// Image Refresh Issues ///
-////////////////////////////
-
-function refresh(node) {
-  var times = 3000; // gap in Milli Seconds;
-
-  (function startRefresh() {
-    var address;
-    if (node.src.indexOf(`?`) > -1) address = node.src.split(`?`)[0];
-    else address = node.src;
-    node.src = address + `?time=` + new Date().getTime();
-  })();
-}
-
-function refreshAlbumCover() {
-  var node = document.querySelector(`.album-cover`);
-  refresh(node);
 }
 
 //////////////////////

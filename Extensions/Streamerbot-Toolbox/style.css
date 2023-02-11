@@ -100,6 +100,8 @@ header {
 
 header > a {
   text-decoration: none;
+  height: fit-content;
+  width: fit-content;
 }
 
 header .main {
@@ -1222,7 +1224,7 @@ select.no-style {
   }
   
   main:not(.nested) {
-    margin-top: 9rem;
+    margin-top: 2rem;
   }
 
   nav.navbar .navbar-list {
@@ -1231,8 +1233,9 @@ select.no-style {
 }
 
 @media (max-width: 75rem) {  
-  main:not(.nested) {
+  main:not(.nested) .main {
     margin-left: 0;
+    margin-top: 7rem;
   }
 
   nav.navbar {
@@ -1273,16 +1276,18 @@ select.no-style {
   }
 
   main .main.col-2 {
-    display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 1fr;
+    height: 100%;
+    width: 100%;
   }
 
   main .main.col-2 > .card-grid {
     grid-row: 2;
+    width: 100%;
   }
   
   main .main.col-2 aside {
-    width: auto;
+    width: 100%;
     grid-row: 1;
   }
 }

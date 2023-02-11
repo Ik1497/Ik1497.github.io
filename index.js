@@ -109,7 +109,7 @@ for (let itemsLength = 0; itemsLength < page.items.length; itemsLength++) {
 
     let hrefSuffix = ``
 
-    if (location.hostname === `127.0.0.1` || location.hostname === `localhost`) {
+    if (location.hostname != `ik1497.github.io`) {
         if (index.href.slice(-1) != `/`) {
             hrefSuffix = `.html`
         }

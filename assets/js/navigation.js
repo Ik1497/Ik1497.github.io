@@ -46,7 +46,7 @@ async function app() {
 
               // If page is unpublished and user has no access
               if (published === `beta` && localStorage.getItem(`websiteSettings__visibilityChannel`) != `beta`) { 
-                if (location.hostname === `127.0.0.1` || location.hostname === `localhost`) {
+                if (location.hostname != `ik1497.github.io`) {
                   window.location = `/403.html`
                 } else {
                   window.location = `/403`
@@ -56,7 +56,7 @@ async function app() {
             }
           }
 
-          if (location.hostname === `127.0.0.1` || location.hostname === `localhost`) {
+          if (location.hostname != `ik1497.github.io`) {
             if (navItem.href.slice(-1) != `/`) {
               navItem.href += `.html`
             }
