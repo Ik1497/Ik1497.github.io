@@ -689,14 +689,14 @@ async function connectws() {
             <p>• TwitchSpeaker</p>
             <br>
             <p>Features:</p>
-            <p>• Action Management with Custom Arguments, Event Emulatation and Action History</p>
             <p>• Present Viewers List</p>
-            <p>• View chat and send messages to chat</p>
-            <p>• View all websocket events</p>
+            <p>• View chat and send messages to chat with modifiers like /me and /announce</p>
+            <p>• View all websocket events with a websocket event history</p>
             <p>• Add/Update/Remove Global Arguments</p>
             <p>• Change command settings</p>
-            <p>• TwitchSpeaker Settings Management</p>
-            <br>
+            <p>• OBS Studio Management</p>
+            <p>• Log viewer (WIP)</p>
+            <p>• TwitchSpeaker Management</p>
             <p><b>Open the settings in bottom right to enable these integrations and for more info</b></p>
           </div>
           `)
@@ -3441,3 +3441,13 @@ document.addEventListener(`keyup`, (e) => {
     }
   }
 })
+
+document.addEventListener('wheel', function(e) {
+  if (e.target.tagName === `SELECT`) {
+    if (e.deltaY < 0) {
+      e.target.selectedIndex = Math.max(e.target.selectedIndex - 1, 0);
+    } else if (e.deltaY > 0) {
+        e.target.selectedIndex = Math.min(e.target.selectedIndex + 1, e.target.length - 1);
+    }
+  }
+});
