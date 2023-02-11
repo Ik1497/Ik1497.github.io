@@ -568,63 +568,65 @@ async function connectws() {
       if (data.id === `GetBroadcaster`) {
 
         document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).innerHTML = `
-        <div style="display: grid; grid-template-columns: auto max-content; gap: .5rem;">
-          <div class="card" style="height: calc(100% - 8rem); max-height: calc(100vh - 8rem);" data-view="all">
-            <div class="card-header">
-              <p class="card-title">Chat</p>
-            </div>
-            <hr>
-            <ul class="chat-messages" style="overflow: auto; height: calc(100vh - 20rem); max-height: 100%; width: 100%; display: flex; flex-direction: column; gap: .25rem;"></ul>
-            <div class="send-message">
-              <div class="form-group styled no-margin">
-                <select class="no-border-radius no-margin fit-content service">
-                  <option value="Twitch">Twitch</option>
-                  <option value="TwitchBot">Twitch (BOT)</option>
-                  <option value="YouTube">YouTube</option>
-                  <option value="Both">Both</option>
-                </select>
-                <select class="no-border-radius no-margin fit-content modifier">
-                  <option value="none">No modifier</option>
-                  <option value="action">/me</option>
-                  <option value="clear">/clear</option>
-                  <option value="slow">/slow</option>
-                  <option value="slowoff">/slowoff</option>
-                  <option value="emoteonly">/emoteonly</option>
-                  <option value="emoteonlyoff">/emoteonlyoff</option>
-                  <option value="followers">/followers</option>
-                  <option value="followersoff">/followersoff</option>
-                  <option value="subscribers">/subscribers</option>
-                  <option value="subscribersoff">/subscribersoff</option>
-                  <option value="vip">/vip</option>
-                  <option value="unvip">/unvip</option>
-                  <option value="mod">/mod</option>
-                  <option value="unmod">/unmod</option>
-                  <option value="announce">/announce</option>
-                  <option value="announceblue">/announceblue</option>
-                  <option value="announcegreen">/announcegreen</option>
-                  <option value="announceorange">/announceorange</option>
-                  <option value="announcepurple">/announcepurple</option>
-                </select>
-                <input type="text" placeholder="Send message to chat" class="no-margin no-border-radius">
-                <button class="submit no-border-radius no-margin">Send</button>
+        <aside>
+          <div class="card-grid" style="grid-template-columns: auto max-content;">
+
+            <div class="card" style="height: calc(100% - 8rem); max-height: calc(100vh - 8rem);" data-view="all">
+              <div class="card-header">
+                <p class="card-title">Chat</p>
+              </div>
+              <hr>
+              <ul class="chat-messages" style="overflow: auto; height: calc(100vh - 20rem); max-height: 100%; width: 100%; display: flex; flex-direction: column; gap: .25rem;"></ul>
+              <div class="send-message">
+                <div class="form-group styled no-margin">
+                  <select class="no-border-radius no-margin fit-content service">
+                    <option value="Twitch">Twitch</option>
+                    <option value="TwitchBot">Twitch (BOT)</option>
+                    <option value="YouTube">YouTube</option>
+                    <option value="Both">Both</option>
+                  </select>
+                  <select class="no-border-radius no-margin fit-content modifier">
+                    <option value="none">No modifier</option>
+                    <option value="action">/me</option>
+                    <option value="clear">/clear</option>
+                    <option value="slow">/slow</option>
+                    <option value="slowoff">/slowoff</option>
+                    <option value="emoteonly">/emoteonly</option>
+                    <option value="emoteonlyoff">/emoteonlyoff</option>
+                    <option value="followers">/followers</option>
+                    <option value="followersoff">/followersoff</option>
+                    <option value="subscribers">/subscribers</option>
+                    <option value="subscribersoff">/subscribersoff</option>
+                    <option value="vip">/vip</option>
+                    <option value="unvip">/unvip</option>
+                    <option value="mod">/mod</option>
+                    <option value="unmod">/unmod</option>
+                    <option value="announce">/announce</option>
+                    <option value="announceblue">/announceblue</option>
+                    <option value="announcegreen">/announcegreen</option>
+                    <option value="announceorange">/announceorange</option>
+                    <option value="announcepurple">/announcepurple</option>
+                  </select>
+                  <input type="text" placeholder="Send message to chat" class="no-margin no-border-radius">
+                  <button class="submit no-border-radius no-margin">Send</button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <aside>
             <div class="card" style="height: fit-content; max-height: calc(100vh - 15rem); width: 15rem; max-width: 15rem;">
               <div class="card-header">
                 <p class="card-title">Present Viewers</p>
               </div>
               <hr>
-                <ul class="present-viewers styled">
-                  <div class="form-group styled no-margin">
-                    <input type="search" placeholder="Search...">
-                  </div>
-                </ul>
-              </div>
+              <ul class="present-viewers styled">
+                <div class="form-group styled no-margin">
+                  <input type="search" placeholder="Search...">
+                </div>
+              </ul>
             </div>
-          </aside>
+
+          </div>
+        </aside>
         `
 
         DashboardAsyncPage()

@@ -1275,18 +1275,23 @@ select.no-style {
     display: none;
   }
 
-  main .main.col-2 {
+  main .main.col-2,
+  main .main.grid.auto-col {
     grid-template-columns: 1fr;
     height: 100%;
     width: 100%;
   }
 
-  main .main.col-2 > .card-grid {
+  main .main.col-2 > .card-grid,
+  main .main.grid.auto-col > .card-grid,
+  main .main.col-2 > .main-contents,
+  main .main.grid.auto-col > .main-contents {
     grid-row: 2;
     width: 100%;
   }
   
-  main .main.col-2 aside {
+  main .main.col-2 aside,
+  main .main.grid.auto-col aside {
     width: 100%;
     grid-row: 1;
   }
