@@ -250,13 +250,13 @@ async function connectws() {
     }
     
     ws.onopen = function () {
-        SB__GetInfo(`GetInfo`)
-        SB__GetActions(`VerifyActions`)
-        console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot")
-        document.querySelector(`header aside button.connect-websocket`).innerText = `Connected`
-        document.querySelector(`header aside`).setAttribute(`data-connection`, `connected`)
-        document.documentElement.style.cursor = ``
-        document.body.classList.remove(`disconnected`)
+      SB__GetInfo(`GetInfo`)
+      SB__GetActions(`VerifyActions`)
+      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot")
+      document.querySelector(`header aside button.connect-websocket`).innerText = `Connected`
+      document.querySelector(`header aside`).setAttribute(`data-connection`, `connected`)
+      document.documentElement.style.cursor = ``
+      document.body.classList.remove(`disconnected`)
     }
     
     ws.addEventListener("message", (event) => {
@@ -583,7 +583,7 @@ async function connectws() {
                     <option value="Twitch">Twitch</option>
                     <option value="TwitchBot">Twitch (BOT)</option>
                     <option value="YouTube">YouTube</option>
-                    <option value="Both">Both</option>
+                    <option value="Both">YouTube & Twitch</option>
                   </select>
                   <select class="no-border-radius no-margin fit-content modifier">
                     <option value="none">No modifier</option>
@@ -773,12 +773,13 @@ async function connectws() {
           document.querySelector(`.card .send-message input`).select()
   
           console.log(`[${package__chatService} - ${package__chatModifier}] ${package__chatMessage}`)
-  
+
+          if (package__chatService === `Both`) {
+            SB__StreamerbotActionPackageRequest(`YouTubeSendMessage`, package__chatMessage)
+          }
+          
           if (package__chatModifier === `none`) {
-            if (package__chatService === `Both`) {
-              SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterMessage`, package__chatMessage)
-              SB__StreamerbotActionPackageRequest(`YouTubeSendMessage`, package__chatMessage)
-            } else if (package__chatService === `Twitch`) {
+            if (package__chatService === `Twitch` || package__chatService === `Both`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterMessage`, package__chatMessage)
             } else if (package__chatService === `TwitchBot`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotMessage`, package__chatMessage)
@@ -787,42 +788,42 @@ async function connectws() {
             }
 
           } else if (package__chatModifier === `action`) {
-            if (package__chatService === `Twitch`) {
+            if (package__chatService === `Twitch` || package__chatService === `Both`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAction`, package__chatMessage)
             } else if (package__chatService === `TwitchBot`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotAction`, package__chatMessage)
             }
 
           } else if (package__chatModifier === `announce`) {
-            if (package__chatService === `Twitch`) {
+            if (package__chatService === `Twitch` || package__chatService === `Both`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage})
             } else if (package__chatService === `TwitchBot`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage})
             }
 
           } else if (package__chatModifier === `announceblue`) {
-            if (package__chatService === `Twitch`) {
+            if (package__chatService === `Twitch` || package__chatService === `Both`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `blue`})
             } else if (package__chatService === `TwitchBot`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `blue`})
             }
 
           } else if (package__chatModifier === `announcegreen`) {
-            if (package__chatService === `Twitch`) {
+            if (package__chatService === `Twitch` || package__chatService === `Both`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `green`})
             } else if (package__chatService === `TwitchBot`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `green`})
             }
 
           } else if (package__chatModifier === `announceorange`) {
-            if (package__chatService === `Twitch`) {
+            if (package__chatService === `Twitch` || package__chatService === `Both`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `orange`})
             } else if (package__chatService === `TwitchBot`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `orange`})
             }
 
           } else if (package__chatModifier === `announcepurple`) {
-            if (package__chatService === `Twitch`) {
+            if (package__chatService === `Twitch` || package__chatService === `Both`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBroadcasterAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `purple`})
             } else if (package__chatService === `TwitchBot`) {
               SB__StreamerbotActionPackageRequest(`TwitchSendBotAnnouncement`, {wsDataMessage: package__chatMessage, wsDataColor: `purple`})
@@ -2480,13 +2481,15 @@ async function connectws() {
 
         switch (data?.data?.requestType) {
           case `GetSceneList`:
+            document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`OBS Studio`)}"]`).innerHTML = ``
+
             let scenes = []
             obsData.scenes.forEach(scene => {
               scenes.unshift(scene.sceneName)
             });
-
+            
             scenes.forEach(scene => {
-              document.querySelector(`nav.navbar ul.navbar-list`).insertAdjacentHTML(`beforeend`, `
+              document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`OBS Studio`)}"]`).insertAdjacentHTML(`beforeend`, `
               <li class="navbar-list-item">
                 <button>
                   <p class="title">${scene}</p>
@@ -3445,7 +3448,7 @@ document.addEventListener(`keyup`, (e) => {
 })
 
 document.addEventListener('wheel', function(e) {
-  if (e.target.tagName === `SELECT`) {
+  if (e.target.tagName === `SELECT` && e.target.getAttribute(`disabled`) === null && e.target.getAttribute(`readonly`) === null) {
     if (e.deltaY < 0) {
       e.target.selectedIndex = Math.max(e.target.selectedIndex - 1, 0);
     } else if (e.deltaY > 0) {
