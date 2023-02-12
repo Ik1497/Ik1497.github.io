@@ -1,10 +1,3 @@
-<script>
-  var date = "17/11/2022";
-  var time = "15:12";
-  var next = null;
-  var previous = null;
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -77,6 +70,8 @@
           </li>
         </a>
       </ul>
+      <h4>Misc</h4>
+      <table data-table="misc"></table>
       <h4>Font</h4>
       <table data-table="fonts"></table>
       <h4>Gap</h4>
@@ -101,6 +96,15 @@
     </main>
     <script>
       let tableData = [
+        {
+          id: `misc`,
+          contents: [
+            {
+              Name: `ws`,
+              Description: `The websocket server connection, <code>default: ws://localhost:8080/</code>.`
+            }
+          ]
+        },
         {
           id: `fonts`,
           contents: [

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="og:site_name" content="Streamer.bot Actions">
+    <meta property="og:image" content="https://ik1497.github.io/assets/images/favicon.png">
+    <meta name="theme-color" content="#B80086">
+    
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="/assets/js/head.js"></script>
+    <script src="/assets/js/main.js" defer></script>
+    
+    <meta property="og:title" content="Mute Indicator">
+    <meta property="og:description" content="Mute Indicator so you can see if and what sources are muted.">
+  </head>
+  <body>
+    <main>
+      <h2>Import File</h2>
+      <ul class="button-grid">
+        <a href="./import.sb">
+          <li>
+            <i class="mdi mdi-file-download"></i>
+            <strong>
+              Import File
+              <em>Click to Download</em>
+            </strong>
+          </li>
+        </a>
+      </ul>
+      <h2>Installation</h2>
+      <p>
+        In Streamer.bot select <code>Import</code> in the top left.<br>
+        Drag and Drop the <code>Import File</code> into the
+        <code>Import String</code>.<br>
+      </p>
+      <img class="img-400 margin-top" src="./installation.png" alt="installation.png">
+      <h2>Configuration</h2>
+      <h3>Streamer.bot</h3>
+      <p>
+        1. Make sure you've imported the import code <a href="#installation">above</a>.<br>
+        2. Trigger the actions to start, stop, pause, unpause or toggle pause
+      </p>
+      <h3>OBS Studio</h3>
+      <p>
+        1. Make a browser source in OBS Studio with the settings:
+        <code>Width = 1920</code>, <code>Height = 1080</code>.<br>
+        2. Put the URL of the widget in the Browser Source, find URL
+        <a href="#widget">here</a>.<br>
+      </p>
+      <h2>Widget</h2>
+      <p>
+        Put this URL into OBS: <a href="https://ik1497.github.io/Extensions/Timer/">https://ik1497.github.io/Extensions/Timer/</a>
+      </p>
+      <img class="img-400" src="./overview.gif" alt="overview.gif">
+
+      <h3>URL Parameters</h3>
+      <ul class="button-grid">
+        <a href="/Extensions/Basics/URL-Parameters">
+          <li>
+            <i class="mdi mdi-google-chrome"></i>
+            <strong>
+              URL Parameters
+              <em>An explanation, on how to use these parameters in your browsersource</em>
+            </strong>
+          </li>
+        </a>
+      </ul>
+      <h4>Misc</h4>
+      <table data-table="misc"></table>
+      <h4>Font</h4>
+      <table data-table="fonts"></table>
+      <h4>Timer</h4>
+      <table data-table="timer"></table>
+      <h4>Animation</h4>
+      <table data-table="animation"></table>
+      <br>
+      <p>
+        Make it your own with URL Parameters! This example image below uses:<br>
+        <code>https://ik1497.github.io/Extensions/Timer?timer-background=linear-gradient(90deg, red, blue)&timer-border-radius=0.2em&timer-padding=0 .5em</code>
+      </p>
+      <img class="img-400 margin-top" src="./overview-url-parameters.png" alt="overview-url-parameters.png">
+      <p>
+        For any suggestions about this widget or any theme feel free to send me
+        a DM on discord or open an <a href="/Links/Issues">issue</a>.
+      </p>
+    </main>
+    <script>
+      let tableData = [
+        {
+          id: `misc`,
+          contents: [
+            {
+              Name: `ws`,
+              Description: `The websocket server connection <code>default: ws://localhost:8080/</code>.`
+            }
+          ]
+        },
+        {
+          id: `fonts`,
+          contents: [
+            {
+              Name: `font-family`,
+              Description: `The font family <code>default: Uni Sans CAPS</code>.`
+            },
+            {
+              Name: `font-weight`,
+              Description: `The font weight <code>default: 900</code>.`
+            },
+            {
+              Name: `font-style`,
+              Description: `The font style <code>default: normal</code>.`
+            },
+            {
+              Name: `font-size`,
+              Description: `The font size <code>default: 10em</code>.`
+            },
+            {
+              Name: `font-color`,
+              Description: `The font color <code>default: #ffffff</code>.`
+            }
+          ]
+        },
+        {
+          id: `timer`,
+          contents: [
+            {
+              Name: `timer-background`,
+              Description: `The background of the timer <code>default: #181818</code>.`
+            },
+            {
+              Name: `timer-border-radius`,
+              Description: `The border radius of the timer <code>default: 100vmax</code>.`
+            },
+            {
+              Name: `timer-spacing`,
+              Description: `The spacing between the timer and the edges off the screen <code>default: .25em</code>.`
+            },
+            {
+              Name: `timer-padding`,
+              Description: `The padding on the timer <code>default: 0 .75em</code>.`
+            },
+            {
+              Name: `timer-minimum-width`,
+              Description: `The minimum width of the timer <code>default: 2.5em</code>.`
+            }
+          ]
+        },
+        {
+          id: `animation`,
+          contents: [
+            {
+              Name: `animation-duration`,
+              Description: `The animation duration in milliseconds <code>default: 2000</code>.`
+            },
+            {
+              Name: `animation-scaled-size`,
+              Description: `The size animation size when in it's scaled state <code>default: 2.5</code>.`
+            }
+          ]
+        }
+      ]
+    </script>
+  </body>
+</html>

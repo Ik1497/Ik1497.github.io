@@ -5,7 +5,13 @@
   --font-size: 10em;
   --font-color: #fff;
 
-  --spacing: .25em;
+  --timer-background: #181818;
+  --timer-border-radius: 100vmax;
+  --timer-spacing: .25em;
+  --timer-padding: 0 .75em;
+  --timer-minimum-width: 2.5em;
+
+  --animation-scaled-size: 2.5;
 }
 
 * {
@@ -25,24 +31,25 @@ body {
 
 .container {
   position: absolute;
-  bottom: var(--spacing);
-  left: var(--spacing);
+  bottom: var(--timer-spacing);
+  left: var(--timer-spacing);
   height: fit-content;
   transition: all 1s ease;
   overflow: hidden;
+  transform: scale(1);
 
   animation: container-on var(--animation-duration) ease forwards;
 }
 
 .timer-wrapper {
-  background: #181818;
+  background: var(--timer-background);
   display: flex;
   align-items: center;
   justify-content: center;
   width: fit-content;
-  min-width: 2.5em;
-  padding-inline: .75em;
-  border-radius: 100vmax;
+  min-width: var(--timer-minimum-width);
+  padding: var(--timer-padding);
+  border-radius: var(--timer-border-radius);
 }
 
 .container.center {
@@ -65,19 +72,22 @@ body {
   0% {
     top: unset;
     opacity: 1;
+    transform: scale(1);
   }
   25% {
     bottom: -150px;
     opacity: 0;
+    transform: scale(1);
   }
   75% {
     bottom: -150px;
     opacity: 0;
+    transform: scale(1);
   }
   100% {
     top: unset;
     opacity: 1;
-    transform: scale(2.5);
+    transform: scale(var(--animation-scaled-size));
   }  
 }
 
@@ -85,14 +95,17 @@ body {
   0% {
     top: unset;
     opacity: 1;
+    transform: scale(var(--animation-scaled-size));
   }
   25% {
     bottom: -150px;
     opacity: 0;
+    transform: scale(var(--animation-scaled-size));
   }
   100% {
     bottom: -150px;
     opacity: 0;
+    transform: scale(var(--animation-scaled-size));
   }
 }
 

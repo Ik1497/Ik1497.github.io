@@ -6,15 +6,13 @@ connectws();
 
 function connectws() {
   if ("WebSocket" in window) {
-    let wsServerUrl =
-      new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
+    let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
     const ws = new WebSocket(wsServerUrl);
     console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...");
 
     ws.onclose = function () {
       setTimeout(connectws, 10000);
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to Streamer.bot, reconnecting every 10s...");
-
     };
 
     ws.onopen = function () {
@@ -33,70 +31,19 @@ function connectws() {
     ws.addEventListener("message", (event) => {
       if (!event.data) return;
       const data = JSON.parse(event.data);
-      if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the Events/Requests"); return; };
       console.log(data);
 
-      let widget = data.data.widget;
-      if (widget != "timer") return;
+      if (data?.data?.widget != "timer") return;
 
-      let eventType = data.data.eventType;
-      let duration = data.data.duration;
+      let eventType = data?.data?.eventType;
+      let duration = data?.data?.duration;
+
+      let timeSeconds = duration
 
       if (eventType === "start") {
-        create();
-        start(duration);
-      };
-
-      if (eventType === "pause") {
-        pause();
-      };
-
-      if (eventType === "stop") {
-        stop();
-      };
-
-      function DoAction(action) {
-        ws.send(
-          JSON.stringify({
-            request: "DoAction",
-            action: {
-              name: action
-            },
-            id: "123",
-          })
-        );
-      }
-
-      
-      
-      function stop() {
-        console.log("Stopping Timer...");
-        DoAction("Timer Finished | Timer Widget");
-
-        setTimeout(function () {
-          document.querySelector('.container').classList.toggle('center-animation'); 
-          setTimeout(function () {
-            document.querySelector(".container").classList.add("center");
-          }, animationDuration / 2);
-
-          setTimeout(function () {
-            document.querySelector(".container").classList.add("off-animation");
-          }, animationDuration * 5);
-
-          setTimeout(function () {
-            document.querySelector(".container").parentNode.removeChild(document.querySelector(".container"));
-          }, animationDuration * 6);
-        }, 1000);
-
-      };      
-
-      function create() {
-        console.log("Creating Timer...");
+        if (document.querySelector(`.container`) != null) return
         document.body.insertAdjacentHTML(`afterbegin`, `<div class="container"><div class="timer-wrapper"><p class="timer-text">0:00</p></div></div>`);
-      }
-      
-      function start(timeSeconds) {
-        console.log("Starting Timer...");
+
         let normalTimeMinutes = Math.floor(timeSeconds / 60);
         let normalTimeSeconds = Math.round(timeSeconds - (normalTimeMinutes * 60));
       
@@ -116,28 +63,67 @@ function connectws() {
         
         let intervalTime;
         let timerInterval = setInterval(() => {
-
-          timeSecondsInterval = timeSecondsInterval - 1;
+          if (document.querySelector(`.container`) != null && document.querySelector(`.timer-wrapper`).getAttribute(`data-paused`) === null && document.querySelector(`.timer-wrapper`).getAttribute(`data-stopped`) === null) {
+            timeSecondsInterval = timeSecondsInterval - 1;
+            
+            let intervalTimeMinutes = Math.floor(timeSecondsInterval / 60);
+            let intervalTimeSeconds = Math.round(timeSecondsInterval - (intervalTimeMinutes * 60));
           
-          let intervalTimeMinutes = Math.floor(timeSecondsInterval / 60);
-          let intervalTimeSeconds = Math.round(timeSecondsInterval - (intervalTimeMinutes * 60));
+            if (intervalTimeSeconds < 10) {intervalTimeSeconds = "0" + intervalTimeSeconds;}
+            intervalTime = `${intervalTimeMinutes}:${intervalTimeSeconds}`;
+            
+            
+            document.querySelector(".timer-text").innerHTML = intervalTime;
         
-          if (intervalTimeSeconds < 10) {intervalTimeSeconds = "0" + intervalTimeSeconds;}
-          intervalTime    = `${intervalTimeMinutes}:${intervalTimeSeconds}`;
-          
-          document.querySelector(".timer-text").innerHTML = intervalTime;
-      
-          if (timeSecondsInterval < 1) {
-            document.querySelector(".timer-text").innerHTML = "0:00";
-            clearInterval(timerInterval);
-            stop();
+            if (timeSecondsInterval < 1) {
+              document.querySelector(".timer-text").innerHTML = "0:00";
+              clearInterval(timerInterval);
+              stop();
+            }
           }
         }, 1000);
-      }
+        if (document.querySelector(`.container`) === null) clearInterval(timerInterval)
+      };
+
+      if (document.querySelector(`.container`) === null) return
+
+      if (eventType === "pause") {
+        document.querySelector(`.timer-wrapper`).setAttribute(`data-paused`, ``)
+      };
       
-      function pause() {
-        console.log("Pausing Timer...");
-        clearInterval(timerInterval);
+      if (eventType === "unpause") {
+        document.querySelector(`.timer-wrapper`).setAttribute(`data-paused`, ``)
+        document.querySelector(`.timer-wrapper`).removeAttribute(`data-paused`)
+      };
+
+      if (eventType === "togglepause") {
+        document.querySelector(`.timer-wrapper`).toggleAttribute(`data-paused`)
+      };
+
+      if (eventType === "stop") {
+        stop()
+      };
+
+      function stop() {
+        document.querySelector(`.timer-wrapper`).setAttribute(`data-stopped`, ``)
+        setTimeout(function () {
+          document.querySelector('.container').classList.add('center-animation'); 
+
+          setTimeout(function () {
+            document.querySelector(".container").classList.add("center");
+
+            setTimeout(function () {
+              document.querySelector(".container").classList.add("off-animation");
+
+              setTimeout(function () {
+                document.querySelector(".container").remove()
+                location.reload()
+
+              }, animationDuration);
+            }, animationDuration * 3);
+          }, animationDuration / 2);
+  
+        }, 1000);   
       }
     });
   }
@@ -168,6 +154,25 @@ root.style.setProperty("--font-size", fontSize);
 let fontColor = params.get("font-color");
 root.style.setProperty("--font-color", fontColor);
 
+// timer
+let timerBackground = params.get("timer-background");
+root.style.setProperty("--timer-background", timerBackground);
+
+let timerBorderRadius = params.get("timer-border-radius");
+root.style.setProperty("--timer-border-radius", timerBorderRadius);
+
+let timerSpacing = params.get("timer-spacing");
+root.style.setProperty("--timer-spacing", timerSpacing);
+
+let timerPadding = params.get("timer-padding");
+root.style.setProperty("--timer-padding", timerPadding);
+
+let timerMinimumWidth = params.get("timer-minimum-width");
+root.style.setProperty("--timer-minimum-width", timerMinimumWidth);
+
 // Animation
 let animationDuration = params.get("animation-duration") || 2000;
 root.style.setProperty("--animation-duration", animationDuration + "ms");
+
+let animationScaledSize = params.get("animation-scaled-size");
+root.style.setProperty("--animation-scaled-size", animationScaledSize);

@@ -41,6 +41,18 @@
     "type": "group",
     "groupItems": [
       {
+        "name": "Timer",
+        "description": "Start, pause and stop a timer with Streamer.bot",
+        "icon": "mdi mdi-timer-outline",
+        "href": "/Extensions/Timer/Docs",
+        "type": "link",
+        "channel": "beta",
+        "lastEdited": {
+          "date": "12/02/2023",
+          "time": "17:41"
+        }
+      },
+      {
         "name": "Weather Widget V2",
         "description": "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
         "icon": "mdi mdi-weather-lightning",
@@ -75,7 +87,7 @@
         "name": "Streamer.bot Toolbox",
         "description": "Manage your Streamer.bot instance with ease!",
         "icon": "mdi mdi-toolbox",
-        "href": "/Extensions/Streamerbot-Toolbox/",
+        "href": "/Streamerbot-Toolbox/",
         "type": "link",
         "channel": "beta",
         "lastEdited": {
