@@ -717,6 +717,15 @@ async function connectws() {
         }
         
         document.querySelector(`.card .send-message select.modifier`).onchange = (e) => {
+          selectModifierUpdate(e)
+        }
+        document.querySelector(`.card .send-message select.modifier`).onwheel = (e) => {
+          setTimeout(() => {
+            selectModifierUpdate(e)
+          }, 50);
+        }
+
+        function selectModifierUpdate(e) {
           document.querySelector(`.card .send-message input`).value = ``
 
           selectPlaceholderMap = {
@@ -1056,6 +1065,13 @@ async function connectws() {
         }
       }
 
+      if (data?.event?.source === `Twitch` && data?.event?.type === `ChatMessageDeleted`) {
+        let messageDOM = document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.chat-messages li[data-message-id="${data.data.targetMessageId}"]`)
+        if (messageDOM != null) {
+          messageDOM.remove()
+        }
+      }
+
       if (data?.event?.source === `Twitch` && data?.event?.type === `Announcement`) {
         TwitchChatMessageEvent()
         async function TwitchChatMessageEvent() {  
@@ -1076,7 +1092,7 @@ async function connectws() {
           if (data.data.announcementColor === `PURPLE`) announcementColorTop = `#dc90ff`
   
           document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
-          <li data-source="${data.event.source}" data-message-id="${data.data.message.msgId}" style="background: var(--background-mute); padding-inline: 5px; padding-block: .6rem; border-left: 5px solid; border-right: 5px solid; border-image: linear-gradient(0deg, ${announcementColorBottom}, ${announcementColorTop}) 1 round;">
+          <li data-source="${data.event.source}" data-message-id="${data.data.msgId}" style="background: var(--background-mute); padding-inline: 5px; padding-block: .6rem; border-left: 5px solid; border-right: 5px solid; border-image: linear-gradient(0deg, ${announcementColorBottom}, ${announcementColorTop}) 1 round;">
             <div style="display: flex; align-items: center; gap: 0.25rem;">
               <p class="mdi mdi-bullhorn-outline">Announcement</p>
             </div>
