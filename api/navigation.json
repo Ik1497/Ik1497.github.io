@@ -41,7 +41,7 @@
     "type": "group",
     "groupItems": [
       {
-        "name": "Timer",
+        "name": "Timer Widget",
         "description": "Start, pause and stop a timer with Streamer.bot",
         "icon": "mdi mdi-timer-outline",
         "href": "/Extensions/Timer/Docs",
