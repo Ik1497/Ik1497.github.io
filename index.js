@@ -21,13 +21,6 @@ let page = {
     ],
     items: [
         {
-            name: "Timer Widget",
-            description: "Start, pause and stop a timer with Streamer.bot",
-            icon: "mdi mdi-timer-outline",
-            href: "/Extensions/Timer/Docs",
-            enabled: true
-        },
-        {
             name: "Weather Widget",
             description: "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
             icon: "mdi mdi-weather-lightning",
@@ -47,6 +40,13 @@ let page = {
             icon: "mdi mdi-script-text-play",
             href: "/Extensions/Local-Script-Action-Handler/Docs",
             enabled: true
+        },
+        {
+            name: "Timer Widget",
+            description: "Start, pause and stop a timer with Streamer.bot",
+            icon: "mdi mdi-timer-outline",
+            href: "/Extensions/Timer/Docs",
+            enabled: false
         },
         {
             name: "Music Widget",

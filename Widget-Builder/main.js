@@ -49,6 +49,14 @@ async function app() {
         </a>
       </li$>
       `)
+
+      let main = document.querySelector(`main .main[data-page="${navItem.name}"]`)
+
+
+      
+      if (location.hash.startsWith(`#${pageUrl(navItem.name)}`)) {
+
+      }
     });
   
     document.querySelectorAll(`header ul.header-links li`).forEach(listItem => {
@@ -59,8 +67,6 @@ async function app() {
       })
     });
   }
-  
-
 }
 
 function urlSafe(url) {
