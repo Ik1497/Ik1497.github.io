@@ -867,12 +867,12 @@ body[data-modal-state="closing"] .modal {
 
 div.snackbar-wrapper {
   position: fixed;
-  bottom: 1rem;
+  bottom: 0rem;
   width: 100%;
   display: flex;
   justify-content: center;
-  transition-property: opacity;
-  transition-timing-function: ease;
+  transition-property: bottom, opacity;
+  transition-timing-function: ease-out;
   opacity: 0;
 }
 
@@ -883,7 +883,7 @@ div.snackbar-wrapper[data-state="opened"] {
 }
 
 div.snackbar-wrapper div.snackbar {
-  background: var(--background-light);
+  background: #151515;
   display: flex;
   padding-block: 1rem;
   padding-inline: 2rem;
@@ -891,12 +891,11 @@ div.snackbar-wrapper div.snackbar {
 }
 
 div.snackbar-wrapper div.snackbar div.snackbar-content {
-  background: var(--background-light);
   display: flex;
 }
 
 /* ----------- */
-/* Clockquotes */
+/* Blockquotes */
 /* ----------- */
 
 blockquote {

@@ -372,7 +372,7 @@ samp {
 
 kbd {
   font-size: 0.9em;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--background-keyboard);
   color: var(--text-primary);
   padding: 2px 6px;
   font-family: montserrat;
@@ -383,7 +383,7 @@ kbd {
 }
 
 pre {
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--background-keyboard);
   color: #fff;
   padding-left: 1em;
   padding-block: .5em;
