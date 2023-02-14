@@ -1034,6 +1034,10 @@ body:not([data-streamerbot-action-package="installed"]) .streamerbot-action-pack
   padding-block: .2rem;
 }
 
+.form-group.styled button.outlined.dense {
+  padding-block: 0;
+}
+
 .form-group.styled button.outlined:active {
   color: var(--text-500);
 }

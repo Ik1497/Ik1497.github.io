@@ -569,11 +569,14 @@ async function connectws() {
 
         document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).innerHTML = `
         <aside>
-          <div class="card-grid" style="grid-template-columns: auto max-content;">
+          <div class="card-grid" style="grid-template-columns: auto max-content;${new URLSearchParams(window.location.search).get("popout") != null ? ` height: 100%;` : ``}">
 
-            <div class="card" style="height: calc(100% - 8rem); max-height: calc(100vh - 8rem);" data-view="all">
+            <div class="card" style="height: calc(100% - ${new URLSearchParams(window.location.search).get("popout") != null ? `3` : `8`}rem); max-height: calc(100vh - ${new URLSearchParams(window.location.search).get("popout") != null ? `3` : `8`}rem);" data-view="all">
               <div class="card-header">
                 <p class="card-title">Chat</p>
+                <div class="form-group styled no-margin no-padding dense card-header-append">
+                  <button class="outlined no-margin no-padding dense" id="open-popout-chat-window">Popout</button>
+                </div>
               </div>
               <hr>
               <ul class="chat-messages" style="overflow: auto; height: calc(100vh - 20rem); max-height: 100%; width: 100%; display: flex; flex-direction: column; gap: .25rem;"></ul>
@@ -613,7 +616,7 @@ async function connectws() {
               </div>
             </div>
 
-            <div class="card" style="height: fit-content; max-height: calc(100vh - 15rem); width: 15rem; max-width: 15rem;">
+            <div class="card" style="height: fit-content; max-height: calc(100vh - 15rem); width: 15rem; max-width: 15rem;${new URLSearchParams(window.location.search).get("popout") != null ? ` display: none;` : ``}">
               <div class="card-header">
                 <p class="card-title">Present Viewers</p>
               </div>
@@ -676,35 +679,66 @@ async function connectws() {
             `
           }
 
-          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).insertAdjacentHTML(`afterbegin`, `
-          <div class="main-contents">
-            ${errorMessage}
-            <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
-            <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
-            <p>this tool is currently a very work in progress, features may come and go over time.</p>
-            <br>
-            <p>This tool requires your <code>Server/Clients</code> --> <code>Websocket Server</code> to be enabled.</p>
-            <br>
-            <p>Integrations:</p>
-            <p>• Streamer.bot</p>
-            <p>• Streamer.bot Action Package (contains global variables, chat features, and more!)</p>
-            <p>• TwitchSpeaker</p>
-            <br>
-            <p>Features:</p>
-            <p>• Present Viewers List</p>
-            <p>• View chat and send messages to chat with modifiers like /me and /announce</p>
-            <p>• View all websocket events with a websocket event history</p>
-            <p>• Add/Update/Remove Global Arguments</p>
-            <p>• Change command settings</p>
-            <p>• OBS Studio Management</p>
-            <p>• Log viewer (WIP)</p>
-            <p>• TwitchSpeaker Management</p>
-            <p><b>Open the settings in bottom right to enable these integrations and for more info</b></p>
-          </div>
-          `)
+          if (new URLSearchParams(window.location.search).get("popout") === null) {
+            document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).insertAdjacentHTML(`afterbegin`, `
+            <div class="main-contents">
+              ${errorMessage}
+              <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
+              <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
+              <p>this tool is currently a very work in progress, features may come and go over time.</p>
+              <br>
+              <p>This tool requires your <code>Server/Clients</code> --> <code>Websocket Server</code> to be enabled.</p>
+              <br>
+              <p>Integrations:</p>
+              <p>• Streamer.bot</p>
+              <p>• Streamer.bot Action Package (contains global variables, chat features, and more!)</p>
+              <p>• TwitchSpeaker</p>
+              <br>
+              <p>Features:</p>
+              <p>• Present Viewers List</p>
+              <p>• View chat and send messages to chat with modifiers like /me and /announce</p>
+              <p>• View all websocket events with a websocket event history</p>
+              <p>• Add/Update/Remove Global Arguments</p>
+              <p>• Change command settings</p>
+              <p>• OBS Studio Management</p>
+              <p>• Log viewer (WIP)</p>
+              <p>• TwitchSpeaker Management</p>
+              <br>
+              <p><b>Open the settings in bottom right to enable these integrations and for more info</b></p>
+            </div>
+            `)
+          }
+        }
+
+        if (new URLSearchParams(window.location.search).get("popout") != null) {
+          document.querySelector(`header`).style.display = `none`
+          document.querySelector(`nav.navbar`).style.display = `none`
+          document.querySelectorAll(`main .main:not([data-page="${urlSafe(`Dashboard`)}"]), .footer-icon`).forEach(main => {
+            main.style.display = `none`
+          });
+          document.querySelector(`main`).style.margin = `0`
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).style.margin = `0`
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).style.padding = `0`
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] aside`).style.minHeight = `100vh`
+          document.getElementById(`open-popout-chat-window`).parentNode.style.display = `none`
+          document.title = `Popout Chat | ${document.title}`
+        }
+
+        document.getElementById(`open-popout-chat-window`).onclick = () => {
+          window.open(`?popout#Dashboard`, undefined, `toolbar=yes,titlebar=yes,status=yes`)
+        }
+
+        document.querySelector(`.card .send-message select.service`).onwheel = (e) => {
+          setTimeout(() => {
+            selectChatServiceUpdate(e)
+          }, 50);
         }
 
         document.querySelector(`.card .send-message select.service`).onchange = (e) => {
+          selectChatServiceUpdate(e)
+        }
+
+        function selectChatServiceUpdate() {
           if (document.querySelector(`.card .send-message select.service`).value === `YouTube`) {
             document.querySelector(`.card .send-message select.modifier`).disabled = true
             document.querySelector(`.card .send-message select.modifier`).value = `none`
