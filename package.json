@@ -5,7 +5,8 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "sass": "sass --watch assets/scss:assets/css"
+    "sass": "sass --watch assets/scss:assets/css",
+    "idiots-build": "node Extensions/IDIOTS/build.cjs"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "Ik1497.github.io",
   "devDependencies": {
+    "image-size": "^1.0.2",
     "sass": "^1.56.1"
   },
   "dependencies": {

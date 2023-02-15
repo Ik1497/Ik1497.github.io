@@ -403,9 +403,14 @@ async function connectws() {
                 <label for="password">Password</label>
                 <input type="text" name="password" id="password" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{"password": ""}`).password || ``}" placeholder="Password">
               </div>
+              <br>
+              <hr>
+              <br>
               <p>The Streamer.bot Action Package is used for getting/setting global variables, sending chat messages to Twitch/YouTube, and command features.</p>
+              <br>
               <p>When this action is imported it will show more tabs and it will even show more features on certain tabs.</p>
-              <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, this will break. When your Streamer.bot Action Package is outdated it won't work anymore and you need to import the new version.</p>
+              <br>
+              <p>To use this you simply need to import the code in Streamer.bot, make a password and sync it in the password field above.</p>
               <br>
               <button onclick="window.open('./action-package.sb')">Download</button>
               `, `Streamer.bot Action Package`, undefined, `small`)
@@ -694,7 +699,7 @@ async function connectws() {
               <br>
               <p>Integrations:</p>
               <p>• Streamer.bot</p>
-              <p>• Streamer.bot Action Package (contains global variables, chat features, and more!)</p>
+              <p>• Streamer.bot Action Package</p>
               <p>• TwitchSpeaker</p>
               <br>
               <p>Features:</p>
@@ -2088,7 +2093,7 @@ async function connectws() {
 
           document.getElementById(`copy-as-json-button`).addEventListener(`click`, () => {
             createSnackbar(`Copying websocket data as JSON to clipboard`)
-            navigator.clipboard.writeText(JSON.stringify(data.data))
+            navigator.clipboard.writeText(JSON.stringify(data.data, null, 2))
           })
         })
       }

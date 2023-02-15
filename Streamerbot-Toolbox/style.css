@@ -181,8 +181,9 @@ header aside button {
 
 .buttons-row {
   display: flex;
-  gap: .25rem;
   flex-wrap: wrap;
+  align-items: center;
+  gap: .25rem;
 }
 
 .buttons-row a,
@@ -198,17 +199,16 @@ header aside button {
   border-radius: .5rem;
   width: fit-content;
   height: fit-content;
-  transition-property: background, padding-inline;
-  transition: .25s ease;
+  transition: all .25s ease;
   display: flex;
   align-items: center;
   gap: .25rem;
 }
 
-.buttons-row li:hover a,
-.buttons-row li:hover button {
+.buttons-row li:not(.button-active):hover a,
+.buttons-row li:not(.button-active):hover button {
   background: var(--background-lighten);
-  padding-inline: 2rem;
+  border-radius: 1rem;
 }
 
 .buttons-row li.button-active a,

@@ -1,14 +1,17 @@
 [
     {
         "user": "harry-plotter",
-        "images": 5
+        "display": "Harry Plotter",
+        "images": 6
     },
     {
         "user": "rondhi",
-        "images": 0
+        "display": "rondhi",
+        "images": 1
     },
     {
         "user": "terrierdarts",
-        "images": 1
+        "display": "TerrierDarts",
+        "images": 2
     }
 ]
