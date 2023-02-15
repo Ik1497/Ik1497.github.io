@@ -1203,6 +1203,20 @@ select.no-style {
   background: var(--background);
 }
 
+body:not([data-streamerbot-action-package="absent"]) .streamerbot-action-package--absent,
+body:not([data-streamerbot-action-package="outdated"]) .streamerbot-action-package--outdated,
+body:not([data-streamerbot-action-package="renamed"]) .streamerbot-action-package--renamed,
+body:not([data-streamerbot-action-package="unauthorized"]) .streamerbot-action-package--unauthorized,
+body:not([data-streamerbot-action-package="disabled"]) .streamerbot-action-package--disabled {
+  display: none;
+}
+
+body[data-streamerbot-action-package="absent"] .streamerbot-action-package--absent {display: x;}
+body[data-streamerbot-action-package="outdated"] .streamerbot-action-package--outdated {display: x;}
+body[data-streamerbot-action-package="renamed"] .streamerbot-action-package--renamed {display: x;}
+body[data-streamerbot-action-package="unauthorized"] .streamerbot-action-package--unauthorized {display: x;}
+body[data-streamerbot-action-package="disabled"] .streamerbot-action-package--disabled {display: x;}
+
 /* ------------- */
 /* Media Queries */
 /* ------------- */

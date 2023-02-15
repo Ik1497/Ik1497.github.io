@@ -325,6 +325,14 @@ async function connectws() {
       if (data.id === `GetBroadcaster`) broadcaster = data
       if (data.id === `GetActiveViewers`) presentViewers = data
 
+      if (data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsSource === `StreamerbotTool`) {
+        if (data?.data?.wsError === `403`) {
+          createSnackbar(`Unauthorized: please fill in the correct password to use the Streamer.bot Action Package`)
+          document.body.setAttribute(`data-streamerbot-action-package`, `unauthorized`)
+        } else if (data?.data?.wsError === `404`) {
+          createSnackbar(`Request Not Found`)
+        }
+      }
 
       if (data.id === `GetInfo`) {
 
@@ -382,24 +390,34 @@ async function connectws() {
 
             // Streamer.bot Action Package
 
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download & More Info</button></li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download, More Info, and Authentication</button></li>`)
             if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
             if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you have broken something <button id="more-info">Please re-install it again</button></li>`)
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `disabled`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, the action is currently disabled enable the action again</li>`)
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl}</li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `unauthorized`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you're unauthorized please provide a working password <button id="more-info">Authorize</button></li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `disabled`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, the action is currently disabled enable the action again <button id="more-info" class="mdi mdi-cog"></button></li>`)
+            if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl} <button id="more-info" class="mdi mdi-cog"></button></li>`)
 
-            if (document.body.getAttribute(`data-streamerbot-action-package`) != `installed` && document.body.getAttribute(`data-streamerbot-action-package`) != `disabled`) {
-              document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
-                createModal(`
-                <p>The Streamer.bot Action Package is used for getting/setting global variables, sending chat messages to Twitch/YouTube, and command features.</p>
-                <p>When this action is imported it will show more tabs and it will even show more features on certain tabs.</p>
-                <br>
-                <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, this will break. When your Streamer.bot Action Package is outdated it won't work anymore and you need to import the new version.</p>
-                <br>
-                <button onclick="window.open('./action-package.sb')">Download</button>
-                `, `Streamer.bot Action Package`, undefined, `small`)
+            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
+              createModal(`
+              <div class="form-group styled">
+                <label for="password">Password</label>
+                <input type="text" name="password" id="password" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{"password": ""}`).password || ``}" placeholder="Password">
+              </div>
+              <p>The Streamer.bot Action Package is used for getting/setting global variables, sending chat messages to Twitch/YouTube, and command features.</p>
+              <p>When this action is imported it will show more tabs and it will even show more features on certain tabs.</p>
+              <p>To use this you simply need to import the code in Streamer.bot, and that's it. Note: when changing the action name or the group name, this will break. When your Streamer.bot Action Package is outdated it won't work anymore and you need to import the new version.</p>
+              <br>
+              <button onclick="window.open('./action-package.sb')">Download</button>
+              `, `Streamer.bot Action Package`, undefined, `small`)
+
+              document.querySelector(`.modal .main .form-group input#password`).addEventListener(`keydown`, () => {
+                setTimeout(() => {
+                  let streamerbotToolbox__StreamerbotActionPackage = JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{}`) ?? {}
+                  streamerbotToolbox__StreamerbotActionPackage.password = document.querySelector(`.modal .main .form-group input#password`).value
+                  localStorage.setItem(`streamerbotToolbox__StreamerbotActionPackage`, JSON.stringify(streamerbotToolbox__StreamerbotActionPackage))
+                }, 50);
               })
-            }
+            })
 
             // OBS Studio
 
@@ -537,7 +555,7 @@ async function connectws() {
               <p>OBS Studio is fully managed with Streamer.bot in combination with the Streamer.bot Action Package</p>
               <br>
               <label>Connection</label>
-              <input type="number" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"navSwitchScenes": true}`).connection || 0}">
+              <input type="number" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}">
             </div>
             `
             
@@ -650,39 +668,24 @@ async function connectws() {
           if (data.connected.includes(`twitch`)) welcomeUser = data.platforms.twitch.broadcastUser
           if (data.connected.includes(`twitch`) || data.connected.includes(`youtube`)) welcomeMessage = `Welcome, <span style="display: flex; align-items: center;">${profileImage}${welcomeUser}!</span>`
 
-          let dataStreamerbotActionPackage = document.body.getAttribute(`data-streamerbot-action-package`)
-          let errorMessage = ``
-
-          if (dataStreamerbotActionPackage === `outdated`) {
-            errorMessage = `
-            <blockquote class="error">
-              <p class="blockquote-text">Your Streamer.bot Action Package is outdated, please go to the settings and re-install the new version to properly use it again.</p>
-            </blockquote>
-            `
-          } else if (dataStreamerbotActionPackage === `renamed`) {
-            errorMessage = `
-            <blockquote class="warning">
-              <p class="blockquote-text">You've edited something with your Streamer.bot Action Package, please go to the settings and re-install it again.</p>
-            </blockquote>
-            `
-          } else if (dataStreamerbotActionPackage === `disabled`) {
-            errorMessage = `
-            <blockquote class="error">
-              <p class="blockquote-text">Your Streamer.bot Action Package action is currently disabled, enable the action again so you can use all the features again.</p>
-            </blockquote>
-            `
-          } else if (dataStreamerbotActionPackage === `absent`) {
-            errorMessage = `
-            <blockquote class="info">
-              <p class="blockquote-text">You don't have the Streamer.bot Action Package installed, thus you don't have access to all the features of this website. Go to settings and install the Streamer.bot Action package.</p>
-            </blockquote>
-            `
-          }
-
           if (new URLSearchParams(window.location.search).get("popout") === null) {
             document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).insertAdjacentHTML(`afterbegin`, `
             <div class="main-contents">
-              ${errorMessage}
+              <blockquote class="error streamerbot-action-package--outdated">
+                <p class="blockquote-text">Your Streamer.bot Action Package is outdated, please go to the settings and re-install the new version to properly use it again.</p>
+              </blockquote>
+              <blockquote class="error streamerbot-action-package--disabled">
+                <p class="blockquote-text">Your Streamer.bot Action Package action is currently disabled, enable the action again so you can use all the features again.</p>
+              </blockquote>
+              <blockquote class="error streamerbot-action-package--unauthorized">
+                <p class="blockquote-text">You're unauthorized, please fill in the correct password to continue using the Streamer.bot Action Package.</p>
+              </blockquote>
+              <blockquote class="warning streamerbot-action-package--renamed">
+                <p class="blockquote-text">You've edited something with your Streamer.bot Action Package, please go to the settings and re-install it again.</p>
+              </blockquote>
+              <blockquote class="info streamerbot-action-package--absent">
+                <p class="blockquote-text">You don't have the Streamer.bot Action Package installed, thus you don't have access to all the features of this website. Go to settings and install the Streamer.bot Action package.</p>
+              </blockquote>
               <h1 style="padding-bottom: 3rem;">${welcomeMessage}</h1>
               <p>Streamer.bot Toolbox (v${version}) is made for making developing Streamer.bot actions easier;</p>
               <p>this tool is currently a very work in progress, features may come and go over time.</p>
@@ -1619,7 +1622,7 @@ async function connectws() {
                   
                   arguments = Object.fromEntries(arguments)
                   
-                  SB__RunActionById(action.id, arguments)
+                  SB__RunActionById(action.id, arguments, `{"request":"DoAction","id":"DoAction","action":${JSON.stringify(action)}}`)
                 }
               }
             }
@@ -2884,6 +2887,42 @@ async function connectws() {
         console.log(`SUCCESS`)
       }
 
+      /***
+      *********************************
+      *********************************
+      *********************************
+      ********* ERROR LOGGING *********
+      *********************************
+      *********************************
+      *********************************
+      ***/
+
+      if (data?.id != null) {
+        let id = decodeURI(data.id)
+        if (ValidateJson(id)) {
+          id = JSON.parse(id)
+          if (id.request === `DoAction`) {
+            if (data.status === `ok`) {
+              createSnackbar(`Succesfully ran action: "${id.action.name}"`)
+            } else if (data.status === `error`) {
+              createSnackbar(data.error)
+            }
+          }
+        }
+      }
+
+
+
+      /***
+      ***************************************
+      ***************************************
+      ***************************************
+      ********* SB Helper Functions *********
+      ***************************************
+      ***************************************
+      ***************************************
+      ***/
+
 
 
       function SB__RunAction(name, args = {}, id = "DoAction") {
@@ -2921,7 +2960,8 @@ async function connectws() {
 
     function SB__StreamerbotActionPackageRequest(wsRequest, wsData = undefined, id = "StreamerbotActionPackage") {
       let args = {
-        wsRequest: wsRequest
+        wsRequest: wsRequest,
+        wsAuthentication: JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{"password": ""}`).password || ``
       }
 
       if (typeof wsData === `object`) {
@@ -2960,6 +3000,7 @@ async function connectws() {
         },
         args: {
           wsRequest: `ObsSendRaw`,
+          wsAuthentication: JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{"password": ""}`).password || ``,
           wsDataConnection: obsConnection,
           wsDataRequestType: obsRequest,
           wsDataRequestData: JSON.stringify(obsRequestData)
@@ -3326,6 +3367,16 @@ async function connectTwitchSpeakerws() {
     })
   }
 }
+
+function ValidateJson(json) {
+  try {
+    JSON.parse(json);
+  } catch (err) {
+      return false;
+  }
+  return true;
+}
+
 
 function SB__FormatTimestamp(timestamp, textSize = `small`) {
   let timestampObject = SB__TimestampObject(timestamp)
