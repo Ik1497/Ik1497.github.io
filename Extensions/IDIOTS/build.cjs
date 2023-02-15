@@ -15,12 +15,15 @@ let idiots = {
 }
 
 data.forEach(idiot => {
-  let idiotMessages = []
+  let idiotMessages = {
+    count: idiot.images,
+    messages: []
+  }
 
   for (let imagesRunTime = 0; imagesRunTime < idiot.images; imagesRunTime++) {
     let idiotMessage = sizeOf(path + `images/messages/${idiot.user}-${imagesRunTime}.png`)
     idiotMessage.image = url + `Extensions/IDIOTS/images/messages/${idiot.user}-${imagesRunTime}.png`
-    idiotMessages.push(idiotMessage)
+    idiotMessages.messages.push(idiotMessage)
   }
 
   let logo = sizeOf(path + `images/logos/${idiot.user}.png`)
@@ -32,7 +35,6 @@ data.forEach(idiot => {
     logo: logo,
     messages: idiotMessages
   })
-
 });
 
 let fileContents = JSON.stringify(idiots, null, 2)
