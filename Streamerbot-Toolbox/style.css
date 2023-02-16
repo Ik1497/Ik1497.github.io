@@ -208,7 +208,7 @@ header aside button {
 .buttons-row li:not(.button-active):hover a,
 .buttons-row li:not(.button-active):hover button {
   background: var(--background-lighten);
-  border-radius: 1rem;
+  padding-inline: 1.5rem;
 }
 
 .buttons-row li.button-active a,
