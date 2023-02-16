@@ -44,8 +44,7 @@ function connectws() {
 
       let songName = data?.data?.songName
       let artistName = data?.data?.artistName
-      let albumArt = data?.data?.albumArt
-      // if (albumArt.includes(`/9j/`)) albumArt = `data:image/jpg;base64,${albumArt}`
+      let albumArt = `${data?.data?.albumArt}?t=${new Date().getTime()}`
 
       if (songName === undefined || artistName === undefined || albumArt === undefined) return
       if (songName === null || artistName === null || albumArt === null) return
