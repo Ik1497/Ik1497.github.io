@@ -489,7 +489,7 @@ main:not(.nested) li div.profile-image.mdi.mdi-youtube::before {
 }
 
 main .main.full {
-  margin-inline: auto;
+  padding-left: 1rem;
 }
 
 main .main.col-2 {
