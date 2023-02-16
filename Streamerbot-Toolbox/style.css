@@ -452,14 +452,14 @@ main:not(.nested) {
 
 main:not(.nested) .main {
   padding-inline: 1rem;
-  margin-right: 1rem;
-  margin-left: 21rem;
+  padding-right: 1rem;
+  padding-left: 21rem;
   overflow-y: auto;
   margin-top: 7rem;
   position: relative;
-
   max-width: 120rem;
   margin-right: auto;
+  margin-inline: auto;
 }
 
 main:not(.nested) .main-list.col-2 {
@@ -1251,7 +1251,7 @@ body[data-streamerbot-action-package="disabled"] .streamerbot-action-package--di
 
 @media (max-width: 75rem) {  
   main:not(.nested) .main {
-    margin-left: 0;
+    padding-left: 1rem;
     margin-top: 7rem;
   }
 

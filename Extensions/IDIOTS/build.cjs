@@ -22,11 +22,18 @@ data.forEach(idiot => {
 
   for (let imagesRunTime = 0; imagesRunTime < idiot.images; imagesRunTime++) {
     let idiotMessage = sizeOf(path + `images/messages/${idiot.user}-${imagesRunTime}.png`)
+    let messageStats = fs.statSync(path + `images/messages/${idiot.user}-${imagesRunTime}.png`);
+    
+    idiotMessage.size = messageStats.size
     idiotMessage.image = url + `Extensions/IDIOTS/images/messages/${idiot.user}-${imagesRunTime}.png`
+    
     idiotMessages.messages.push(idiotMessage)
   }
 
+  let logoStats = fs.statSync(path + `images/logos/${idiot.user}.png`);
   let logo = sizeOf(path + `images/logos/${idiot.user}.png`)
+
+  logo.size = logoStats.size
   logo.image = url + `Extensions/IDIOTS/images/logos/${idiot.user}.png`
 
   idiots.idiots.push({

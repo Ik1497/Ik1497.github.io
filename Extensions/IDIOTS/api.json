@@ -11,6 +11,7 @@
         "height": 343,
         "width": 343,
         "type": "png",
+        "size": 166832,
         "image": "https://ik1497.github.io/Extensions/IDIOTS/images/logos/harry-plotter.png"
       },
       "messages": {
@@ -20,36 +21,42 @@
             "height": 119,
             "width": 327,
             "type": "png",
+            "size": 12971,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/harry-plotter-0.png"
           },
           {
             "height": 60,
             "width": 334,
             "type": "png",
+            "size": 8565,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/harry-plotter-1.png"
           },
           {
             "height": 97,
             "width": 552,
             "type": "png",
+            "size": 13521,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/harry-plotter-2.png"
           },
           {
             "height": 91,
             "width": 389,
             "type": "png",
+            "size": 11554,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/harry-plotter-3.png"
           },
           {
             "height": 78,
             "width": 327,
             "type": "png",
+            "size": 8434,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/harry-plotter-4.png"
           },
           {
             "height": 119,
             "width": 593,
             "type": "png",
+            "size": 46875,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/harry-plotter-5.png"
           }
         ]
@@ -62,6 +69,7 @@
         "height": 300,
         "width": 300,
         "type": "png",
+        "size": 47466,
         "image": "https://ik1497.github.io/Extensions/IDIOTS/images/logos/rondhi.png"
       },
       "messages": {
@@ -71,6 +79,7 @@
             "height": 134,
             "width": 1048,
             "type": "png",
+            "size": 23775,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/rondhi-0.png"
           }
         ]
@@ -83,6 +92,7 @@
         "height": 682,
         "width": 682,
         "type": "png",
+        "size": 43905,
         "image": "https://ik1497.github.io/Extensions/IDIOTS/images/logos/terrierdarts.png"
       },
       "messages": {
@@ -92,12 +102,14 @@
             "height": 61,
             "width": 409,
             "type": "png",
+            "size": 9125,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/terrierdarts-0.png"
           },
           {
             "height": 73,
             "width": 386,
             "type": "png",
+            "size": 8479,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/terrierdarts-1.png"
           }
         ]
