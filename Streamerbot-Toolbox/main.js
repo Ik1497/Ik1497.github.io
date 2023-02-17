@@ -401,19 +401,24 @@ async function connectws() {
               createModal(`
               <div class="form-group styled">
                 <label for="password">Password</label>
-                <input type="text" name="password" id="password" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{"password": ""}`).password || ``}" placeholder="Password">
+                <div class="flex">
+                  <input type="password" name="password" id="password" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{"password": ""}`).password || ``}" placeholder="Password">
+                  <button class="mdi mdi-eye" id="show-password"></button>
+                </div>
               </div>
               <br>
               <hr>
               <br>
-              <p>The Streamer.bot Action Package is used for getting/setting global variables, sending chat messages to Twitch/YouTube, and command features.</p>
+              <p>The Streamer.bot Action Package is used for getting/setting/unsetting global variables, managing Twitch/YouTube chat, command features and more.</p>
               <br>
               <p>When this action is imported it will show more tabs and it will even show more features on certain tabs.</p>
               <br>
               <p>To use this you simply need to import the code in Streamer.bot, make a password and sync it in the password field above.</p>
               <br>
-              <button onclick="window.open('./action-package.sb')">Download</button>
-              `, `Streamer.bot Action Package`, undefined, `small`)
+              <div class="form-group styled">
+                <button onclick="window.open('./action-package.sb')">Download</button>
+              </div>
+              `, `Streamer.bot Action Package`, undefined, `medium`, {})
 
               document.querySelector(`.modal .main .form-group input#password`).addEventListener(`keydown`, () => {
                 setTimeout(() => {
@@ -421,6 +426,14 @@ async function connectws() {
                   streamerbotToolbox__StreamerbotActionPackage.password = document.querySelector(`.modal .main .form-group input#password`).value
                   localStorage.setItem(`streamerbotToolbox__StreamerbotActionPackage`, JSON.stringify(streamerbotToolbox__StreamerbotActionPackage))
                 }, 50);
+              })
+
+              document.getElementById(`show-password`).addEventListener(`click`, () => {
+                if (document.getElementById(`password`).type === `password`) {
+                  document.getElementById(`password`).type = `text`
+                } else {
+                  document.getElementById(`password`).type = `password`
+                }
               })
             })
 
@@ -1022,7 +1035,7 @@ async function connectws() {
                 } else {
                   listItem.setAttribute(`hidden`, ``)
                 }
-              });
+              });4
             }, 50);
           })
 

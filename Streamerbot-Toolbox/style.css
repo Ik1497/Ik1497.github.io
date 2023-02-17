@@ -208,7 +208,6 @@ header aside button {
 .buttons-row li:not(.button-active):hover a,
 .buttons-row li:not(.button-active):hover button {
   background: var(--background-lighten);
-  padding-inline: 1.5rem;
 }
 
 .buttons-row li.button-active a,
@@ -580,8 +579,8 @@ main .main.col-2 aside .card {
   height: 35rem;
 }
 
-.modal.big {
-  width: 80rem;
+.modal.large {
+  width: 100rem;
   height: 55rem;
 }
 
