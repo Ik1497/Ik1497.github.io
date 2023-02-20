@@ -340,7 +340,7 @@ async function connectws() {
         // Setting Modal //
         ///////////////////
         document.body.insertAdjacentHTML(`afterbegin`, `
-        <button title="Open Settings" class="open-settings-modal footer-icon mdi mdi-cog"></button>
+        <button title="[CTRL + i] Open Settings" class="open-settings-modal footer-icon mdi mdi-cog"></button>
         `)
 
         document.querySelector(`.open-settings-modal`).addEventListener(`click`, () => {
@@ -3570,14 +3570,20 @@ document.addEventListener(`mousedown`, (e) => {
 })
 
 document.addEventListener(`keyup`, (e) => {
-  if (e.key === `Escape`) {
+  console.log(e)
+  if (e.key === `F1`) {
+    e.preventDefault()
+    location.hash = `#Dashboard`
+  } else if (e.key === `Escape`) {
     if (document.querySelector(`nav.navbar`).getAttribute(`data-visible`) === "") {
       document.querySelector(`nav.navbar`).removeAttribute(`data-visible`)
     }
+  } else if (e.key === `i` && e.ctrlKey === true) {
+    document.querySelector(`.open-settings-modal`).click()
   }
 })
 
-document.addEventListener('wheel', function(e) {
+document.addEventListener('wheel', function(e) {x
   if (e.target.tagName === `SELECT` && e.target.getAttribute(`disabled`) === null && e.target.getAttribute(`readonly`) === null) {
     if (e.deltaY < 0) {
       e.target.selectedIndex = Math.max(e.target.selectedIndex - 1, 0);

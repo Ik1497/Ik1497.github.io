@@ -20,7 +20,7 @@
   padding-inline: 1.25rem;
   width: fit-content;
   border-radius: .25rem;
-  border-right: 4px solid;
+  border-left: 4px solid;
 }
 
 .alert-wrapper ul li::before {

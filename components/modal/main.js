@@ -30,6 +30,7 @@ function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefin
           </div>
           <button
             class="close-button mdi mdi-close-thick" 
+            title="[ESC] Close"
             onclick="closeModal()"
           >Close</button>
         </div>
