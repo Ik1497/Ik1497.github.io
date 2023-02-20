@@ -1,4 +1,4 @@
-function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefined, scale = `small`, settings = {}) {
+function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefined, scale = `small`, settings = {}) {
   document.querySelectorAll(`.modal-wrapper`).forEach(settingsModalAlt => {
     settingsModalAlt.remove()
   });
