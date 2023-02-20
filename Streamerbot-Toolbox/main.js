@@ -343,18 +343,6 @@ async function connectws() {
         <button title="Open Settings" class="open-settings-modal footer-icon mdi mdi-cog"></button>
         `)
 
-        let globalArgsHtml = `<div class="settings-modal" data-active-page="integrations">
-        <nav><ul>
-          <li class="nav-active"><button data-page="integrations">Integrations</button></li>
-          <li><button data-page="broadcaster">Broadcaster</button></li>
-          <li><button data-page="random-users">Random Users</button></li>
-          <li><button data-page="obs-studio">OBS Studio</button></li>
-        </ul></nav>
-        <div class="header">
-          <div class="info"><p class="title"></p><p class="description"></p></div>
-          <button class="close-button" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)">&times</button></div><div class="main">
-        </div></div>`
-
         document.querySelector(`.open-settings-modal`).addEventListener(`click`, () => {
           createModal(`
           <div class="tabset full alt-background">
@@ -455,9 +443,9 @@ async function connectws() {
           // OBS Studio
 
           if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) {
-            document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="obs-studio"> OBS Studio (connected) • connection: ${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}</li>`)
+            document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="obs-studio"> OBS Studio (Connected) • Connection: ${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}</li>`)
           } else {
-            document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (disconnected)</li>`)
+            document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (Disconnected)</li>`)
           }
 
           // TwitchSpeaker
