@@ -521,272 +521,6 @@ main .main.col-2 aside .card {
   grid-template-columns: 1fr;
 }
 
-/* -------------- */
-/* Settings Modal */
-/* -------------- */
-
-.settings-modal {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--background-alt);
-  width: 85vw;
-  max-width: 85rem;
-  height: 70vh;
-  max-height: 50rem;
-  border: 2px solid var(--background-light);
-  border-radius: 1rem;
-  z-index: 999;
-  overflow: hidden;
-  overflow-y: auto;
-}
-
-.modal-wrapper {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-  overflow: hidden;
-  border-radius: .5rem;
-}
-
-.modal {
-  background: var(--background-alt);
-  width: 85vw;
-  max-width: 85rem;
-  height: 70vh;
-  max-height: 50rem;
-  overflow-x: hidden;
-  overflow-y: auto;
-  max-width: 95vw;
-  max-height: 95vh;
-}
-
-.modal.prompt {
-  width: 25rem;
-  height: 15 rem;
-}
-
-.modal.small {
-  width: 35rem;
-  height: 25rem;
-}
-
-.modal.medium {
-  width: 60rem;
-  height: 35rem;
-}
-
-.modal.large {
-  width: 100rem;
-  height: 55rem;
-}
-
-.modal {
-  padding: 2rem;
-}
-
-.modal {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-.modal .header {
-  background: var(--color-link-hover);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  height: 3.5rem;
-  padding-inline: 1rem;
-  overflow: hidden;
-}
-
-.modal .close-button {
-  padding: .25rem;
-  border-radius: none;
-  outline: none;
-  border: none;
-  background: none;
-  cursor: pointer;
-  
-  font-weight: 900;
-  color: var(--text-900);
-  border: 2px solid currentColor;
-  border-radius: .25rem;
-  margin-left: auto;
-}
-
-.modal .header h1,
-.modal .header h2,
-.modal .header h3,
-.modal .header h4,
-.modal .header h5,
-.modal .header h6 {
-  display: flex;
-  align-items: center;
-}
-
-.modal .header h1 small,
-.modal .header h2 small,
-.modal .header h3 small,
-.modal .header h4 small,
-.modal .header h5 small,
-.modal .header h6 small {
-  font-size: .75rem;
-  padding-left: .5ch;
-  color: var(--text-700);
-}
-
-.modal .header .subtitle {
-  font-size: .75rem;
-  color: var(--text-800);
-}
-
-.modal .main {
-  width: 100%;
-  height: 100%;
-  padding-top: 3rem;
-}
-
-.settings-modal .header {
-  background: var(--color-link-hover);
-  width: 100%;
-  height: 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: .5rem;
-}
-
-.settings-modal .header .close-button {
-  border: 0;
-  outline: 0;
-  border-radius: 0;
-  width: 3rem;
-  height: 3rem;
-  background: var(--color-link);
-  color: white;
-  font-size: 2em;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.settings-modal .header .info .title {
-  font-weight: bold;
-  font-size: 1.25em;
-}
-
-.settings-modal .header .info .description {
-  font-size: .8em;
-}
-
-.settings-modal nav {
-  position: fixed;
-  top: 4rem;
-  left: 1rem;
-  width: 20%;
-}
-
-.settings-modal nav ul {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  row-gap: .5rem;
-}
-
-.settings-modal nav ul li button {
-  width: 100%;
-  text-align: left;
-  color: var(--text-900);
-  background: transparent;
-  outline: 0;
-  border: 0;
-  background: var(--background-primary);
-  padding-inline: .5rem;
-  padding-block: .75rem;
-  border-right: 8px solid transparent;
-  cursor: pointer;
-}
-
-.settings-modal nav ul li.nav-active button {
-  border-color: var(--color-link);
-  cursor: default;
-}
-
-.settings-modal nav ul li:hover:not(.nav-active) button {
-  background: var(--background-soft);
-  border-color: var(--background-light);
-}
-
-.settings-modal .main {
-  width: 80%;
-  margin-left: auto;
-  padding-inline: 3em;
-  padding-bottom: 2rem;
-}
-
-.settings-modal .main table {
-  width: 100%;
-}
-
-.settings-modal .main table thead th {
-  background: var(--background-light);
-  font-weight: 700;
-}
-
-.settings-modal .main table tbody td.text {
-  background: var(--background-light);
-}
-
-.settings-modal .main table input {
-  width: 100%;
-  background: var(--background-light);
-  color: white;
-  outline: 0;
-  border: 0;
-  border-radius: 0;
-  padding: .25em;
-  font-size: 1rem;
-}
-
-.settings-modal .main table input:focus-visible,
-.settings-modal .main table td .remove-row:focus-visible,
-.settings-modal .main table td .add-row:focus-visible,
-.settings-modal .save-button button:focus-visible,
-.settings-modal .main table td .remove-row:hover,
-.settings-modal .main table td .add-row:hover,
-.settings-modal .save-button button:hover {
-  background: var(--background-lighten);
-}
-
-
-.settings-modal .main table td .remove-row,
-.settings-modal .main table td .add-row,
-.settings-modal .save-button button {
-  background: var(--background-light);
-  color: white;
-  outline: 0;
-  border: 0;
-  border-radius: 0;
-  padding-inline: .25em;
-  padding-block: .25em;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.settings-modal .main table input:disabled {
-  color: var(--text-500);
-}
-
 .open-settings-modal {
   position: fixed;
   bottom: 1em;
@@ -805,60 +539,6 @@ main .main.col-2 aside .card {
   z-index: 100;
   border: none;
   outline: none;
-}
-
-/* Opacity Styles */
-
-body:has(> .settings-modal) .open-settings-modal {
-  display: none;
-}
-
-body:has(> .modal-wrapper) > .settings-modal {
-  display: none;
-}
-
-body[data-modal-state=closing] > *:not(.modal-wrapper) {
-  transition: opacity .5s ease;
-}
-
-body:has(> .settings-modal):not(:has(.modal)) > *:not(.settings-modal),
-body[data-modal-state="opening"] > *:not(.modal-wrapper),
-body[data-modal-state="opened"] > *:not(.modal-wrapper) {
-  transition: opacity .5s ease;
-  opacity: .47;
-  pointer-events: none;
-}
-
-/* Animations */
-
-body[data-modal-state="opening"] .modal {
-  animation: modalAltOpening forwards .5s;
-}
-
-body[data-modal-state="closing"] .modal {
-  animation: modalAltClosing forwards .5s;
-}
-
-@keyframes modalAltOpening {
-  0% {
-    scale: 0;
-    opacity: 0;
-  }
-  100% {
-    scale: 1;
-    opacity: 1;
-  }
-}
-
-@keyframes modalAltClosing {
-  0% {
-    scale: 1;
-    opacity: 1;
-  }
-  100% {
-    scale: 0;
-    opacity: 0;
-  }
 }
 
 /* -------- */
@@ -969,6 +649,14 @@ body:not([data-streamerbot-action-package="installed"]) .streamerbot-action-pack
   display: flex;
 }
 
+/* --------------------- */
+/* Action History Styles */
+/* --------------------- */
+
+main .main aside .card.action-history ul.styled[data-exclusion="true"] li[data-exclusion="true"] {
+  display: none;
+}
+
 /* ----------- */
 /* Form Groups */
 /* ----------- */
@@ -992,6 +680,12 @@ body:not([data-streamerbot-action-package="installed"]) .streamerbot-action-pack
 .form-group.styled button:disabled,
 .form-group.styled select:disabled {
   filter: brightness(.5);
+}
+
+.form-group.styled button:hover,
+.form-group.styled button:focus-visible {
+  background: var(--background-mute);
+  border-color: var(--background-light);
 }
 
 .form-group.styled input:focus-visible:not([type=checkbox]),
@@ -1055,7 +749,8 @@ body:not([data-streamerbot-action-package="installed"]) .streamerbot-action-pack
   margin-inline: .25rem;
 }
 
-.form-group.styled button.overline:hover {
+.form-group.styled button.overline:hover,
+.form-group.styled button.overline:focus-visible {
   background: var(--background-lighten);
 }
 
@@ -1066,6 +761,16 @@ body:not([data-streamerbot-action-package="installed"]) .streamerbot-action-pack
 .form-group.styled button.primary {
   color: #a4ceff!important;
   background: #285292!important;
+}
+
+.form-group.styled button.primary[data-button-state="online"] {
+  color: #a4ffbe!important;
+  background: #2d9228!important;
+}
+
+.form-group.styled button.primary[data-button-state="offline"] {
+  color: #ffa4a4!important;
+  background: #922828!important;
 }
 
 .form-group.styled button.dense {
@@ -1143,6 +848,7 @@ body:not([data-streamerbot-action-package="installed"]) .streamerbot-action-pack
 
 .card .card-header .card-title {
   font-weight: bold;
+  font-size: 1.05rem;
 }
 
 .card .card-header .card-header-append {

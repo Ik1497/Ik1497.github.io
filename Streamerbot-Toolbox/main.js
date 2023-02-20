@@ -354,239 +354,262 @@ async function connectws() {
           <div class="info"><p class="title"></p><p class="description"></p></div>
           <button class="close-button" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)">&times</button></div><div class="main">
         </div></div>`
-        document.querySelector(`.open-settings-modal`).addEventListener(`click`, function () {
-          document.querySelector(`.open-settings-modal`).insertAdjacentHTML(`afterend`, globalArgsHtml)
-          
-          reloadPages()
-          function reloadPages() {
-            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `integrations`) reloadIntegrations()
-            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `broadcaster`) reloadBroadcaster()
-            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `random-users`) reloadRandomUsers()
-            if (document.querySelector(`.settings-modal`).getAttribute(`data-active-page`) === `obs-studio`) reloadObsStudio()
-          }
 
-          document.querySelectorAll(`.settings-modal nav ul li button`).forEach(navButton => {
-            navButton.addEventListener(`click`, function () {
-              navButtonPage = navButton.getAttribute(`data-page`)
-              document.querySelector(`.settings-modal`).setAttribute(`data-active-page`, navButtonPage)
-              navButton.parentNode.classList.add(`nav-active`)
-              document.querySelectorAll(`.settings-modal nav ul li.nav-active`).forEach(navActiveButton => {
-                navActiveButton.classList.remove(`nav-active`)
-              });
-              navButton.parentNode.classList.add(`nav-active`)
-              reloadPages()
-            })
-          });
-
-          function reloadIntegrations() {
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Settings • Integrations`
-            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `All integrations that can be connected`
-            
-            document.querySelector(`.settings-modal .main`).innerHTML = `
-            <ul class="integrations-list">
-              <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
-            </ul>
-            `
-
-            // Streamer.bot Action Package
-
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download, More Info, and Authentication</button></li>`)
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you have broken something <button id="more-info">Please re-install it again</button></li>`)
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `unauthorized`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you're unauthorized please provide a working password <button id="more-info">Authorize</button></li>`)
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `disabled`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, the action is currently disabled enable the action again <button id="more-info" class="mdi mdi-cog"></button></li>`)
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl} <button id="more-info" class="mdi mdi-cog"></button></li>`)
-
-            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
-              createModal(`
-              <div class="form-group styled">
-                <label for="password">Password</label>
-                <div class="flex">
-                  <input type="password" name="password" id="password" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{"password": ""}`).password || ``}" placeholder="Password">
-                  <button class="mdi mdi-eye" id="show-password"></button>
-                </div>
-              </div>
-              <br>
-              <hr>
-              <br>
-              <p>The Streamer.bot Action Package is used for getting/setting/unsetting global variables, managing Twitch/YouTube chat, command features and more.</p>
-              <br>
-              <p>When this action is imported it will show more tabs and it will even show more features on certain tabs.</p>
-              <br>
-              <p>To use this you simply need to import the code in Streamer.bot, make a password and sync it in the password field above.</p>
-              <br>
-              <div class="form-group styled">
-                <button onclick="window.open('./action-package.sb')">Download</button>
-              </div>
-              `, `Streamer.bot Action Package`, undefined, `medium`, {})
-
-              document.querySelector(`.modal .main .form-group input#password`).addEventListener(`keydown`, () => {
-                setTimeout(() => {
-                  let streamerbotToolbox__StreamerbotActionPackage = JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{}`) ?? {}
-                  streamerbotToolbox__StreamerbotActionPackage.password = document.querySelector(`.modal .main .form-group input#password`).value
-                  localStorage.setItem(`streamerbotToolbox__StreamerbotActionPackage`, JSON.stringify(streamerbotToolbox__StreamerbotActionPackage))
-                }, 50);
-              })
-
-              document.getElementById(`show-password`).addEventListener(`click`, () => {
-                if (document.getElementById(`password`).type === `password`) {
-                  document.getElementById(`password`).type = `text`
-                } else {
-                  document.getElementById(`password`).type = `password`
-                }
-              })
-            })
-
-            // OBS Studio
-
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) {
-              document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="obs-studio"> OBS Studio (connected) • connection: ${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}</li>`)
-            } else {
-              document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (disconnected)</li>`)
-            }
-
-            // TwitchSpeaker
-            
-            let integrationsList__twitchspeaker = `<li class="mdi mdi-plus" data-integration="twitchspeaker"> TwitchSpeaker <button>Connect!</button></li>`
-
-            if (document.body.getAttribute(`twitchspeaker-state`) === null) {
-            } else if (document.body.getAttribute(`twitchspeaker-state`) === `connected`) {
-              let integrationsList__twitchspeaker_wsUrl = localStorage.getItem(`streamerbotToolbox__twitchspeaker`)
-              integrationsList__twitchspeaker_wsUrl = JSON.parse(integrationsList__twitchspeaker_wsUrl)
-              integrationsList__twitchspeaker_wsUrl = `ws://${integrationsList__twitchspeaker_wsUrl.host}:${integrationsList__twitchspeaker_wsUrl.port}${integrationsList__twitchspeaker_wsUrl.endpoint}`
-              integrationsList__twitchspeaker = `<li class="mdi mdi-check" data-integration="twitchspeaker"> TwitchSpeaker (Connected) • ${integrationsList__twitchspeaker_wsUrl} <button class="mdi mdi-cog"></button></p>`
-            } else if (document.body.getAttribute(`twitchspeaker-state`) === `disconnected`) {
-              integrationsList__twitchspeaker = `<li class="mdi mdi-reload" data-integration="twitchspeaker"> TwitchSpeaker <button>Reconnect!</button></p>`
-            }
-
-            document.querySelector(`.settings-modal .main ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__twitchspeaker)
-            
-            document.querySelector(`.settings-modal .main ul.integrations-list li[data-integration="twitchspeaker"] button`).addEventListener(`click`, function () {
-              let twitchspeakerDefaultValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`)
-              if (twitchspeakerDefaultValues === null) {
-                twitchspeakerDefaultValues = {}
-                twitchspeakerDefaultValues.host     = `localhost`
-                twitchspeakerDefaultValues.port     = `7580`
-                twitchspeakerDefaultValues.endpoint = `/`
-              } else {
-                twitchspeakerDefaultValues = JSON.parse(twitchspeakerDefaultValues)
-              }
-
-              createModal(`
-              <div class="form-group styled">
-                <label for="websocket-url">Host</label>
-                <input type="url" name="websocket-host" id="websocket-host" value="${twitchspeakerDefaultValues.host}" placeholder="${twitchspeakerDefaultValues.host}" class="no-margin">
-              </div>
-
-              <div class="form-group styled">
-                <label for="websocket-url">Port</label>
-                <input type="url" name="websocket-port" id="websocket-port" value="${twitchspeakerDefaultValues.port}" placeholder="${twitchspeakerDefaultValues.port}" class="no-margin">
-              </div>
-
-              <div class="form-group styled">
-                <label for="websocket-url">Endpoint</label>
-                <input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${twitchspeakerDefaultValues.endpoint}" placeholder="${twitchspeakerDefaultValues.endpoint}" class="no-margin">
-              </div>
-
-              <div class="form-group styled">
-                <button class="connect-button">Connect!</button>
-              </div>
-              `, `TwitchSpeaker Settings`, undefined, `small`, {})
-
-              document.querySelector(`.modal .main .form-group button.connect-button`).addEventListener(`click`, function () {
-                localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify({
-                    host: document.querySelector(`.modal .main .form-group input#websocket-host`).value,
-                    port: document.querySelector(`.modal .main .form-group input#websocket-port`).value,
-                    endpoint: document.querySelector(`.modal .main .form-group input#websocket-endpoint`).value
-                  })
-                )
-
-                location.reload()
-              })
-            })
-          }
-        
-          function reloadBroadcaster() {
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Settings • Broadcaster `
-            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Setting of argument for the Broadcast User`
-
-            let options = {
-              Disabled: `<option>Disabled</option>`,
-              Twitch: `<option>Twitch</option>`,
-              YouTube: `<option>YouTube</option>`
-            }
-            let broadcastService = localStorage.getItem(`streamerbotToolbox__broadcastService`) || `Disabled`
-
-            if (broadcastService === `Twitch`) {
-              options = options.Twitch + options.Twitch + options.Disabled
-            } else if (broadcastService === `YouTube`) {
-              options = options.YouTube + options.Twitch + options.Disabled
-            } else if (broadcastService === `Disabled`) {
-              options = options.Disabled + options.Twitch + options.YouTube
-            }
-            
-            document.querySelector(`.settings-modal .main`).innerHTML = `
-            <p>Choose Between YouTube or Twitch</p>
-              <small>When the service is disconnected no broadcaster variables will be emitted</small>
-            <div class="form-group styled">
-              <select>${options}</select>
-            </div>`
-
-            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.settings-modal .main select`).value)
-            document.querySelector(`.settings-modal .main select`).addEventListener(`click`, function () {
-              localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.settings-modal .main select`).value)
-            })
-          }
-
-          function reloadRandomUsers() {
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Settings • Random Users`
-            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Random user variables`
-            
-            let prevRandomUsers = localStorage.getItem(`streamerbotToolbox__randomUsers`) || 0
-            if (prevRandomUsers <= 0) prevRandomUsers = `0`
-            if (isNaN(prevRandomUsers)) prevRandomUsers = `0`
-
-            document.querySelector(`.settings-modal .main`).innerHTML = `
-            <div class="form-group styled">
-              <label>Random Users</label>
-              <input type="number" value="${prevRandomUsers}">
+        document.querySelector(`.open-settings-modal`).addEventListener(`click`, () => {
+          createModal(`
+          <div class="tabset full alt-background">
+            <div data-tab="Integrations">
+              <ul class="integrations-list">
+                <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
+              </ul>
             </div>
-            `            
-            localStorage.setItem(`streamerbotToolbox__randomUsers`, document.querySelector(`.settings-modal .main input`).value)
 
-            document.querySelector(`.settings-modal .main input`).addEventListener(`keydown`, function () {
-              setTimeout(() => {
-                let randomUsers = document.querySelector(`.settings-modal .main input`).value
-                if (randomUsers <= 0) randomUsers = 0
-                if (isNaN(randomUsers)) randomUsers = 0
-                localStorage.setItem(`streamerbotToolbox__randomUsers`, randomUsers)
-              }, 50);
-            })
-          }
 
-          function reloadObsStudio() {
-            document.querySelector(`.settings-modal .header .info .title`).innerHTML = `Settings • OBS Studio`
-            document.querySelector(`.settings-modal .header .info .description`).innerHTML = `Settings for OBS Studio`
+            <div data-tab="Broadcaster">
+              <p>Choose Between YouTube or Twitch</p>
+              <small>When the service is disconnected no broadcaster variables will be emitted</small>
+              <div class="form-group styled">
+                <select>
+                  <option>Disabled</option>
+                  <option>Twitch</option>
+                  <option>YouTube</option>
+                </select>
+              </div>
+            </div>
 
-            document.querySelector(`.settings-modal .main`).innerHTML = `
-            <div class="form-group styled">
+
+            <div data-tab="Random Users">
+              <div class="form-group styled">
+                <label>Random Users</label>
+                <input type="number" value="${localStorage.getItem(`streamerbotToolbox__randomUsers`) || 0}">
+              </div>
+            </div>
+
+
+            <div data-tab="OBS Studio">
               <p>OBS Studio is fully managed with Streamer.bot in combination with the Streamer.bot Action Package</p>
               <br>
-              <label>Connection</label>
-              <input type="number" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}">
+              <div class="form-group styled">
+                <label>Connection</label>
+                <input type="number" value="0">
+              </div>
             </div>
-            `
-            
-            document.querySelector(`.settings-modal .main input`).addEventListener(`keydown`, function () {
+          </div>
+          `, `Settings`, undefined, `fullscreen`)
+
+          reloadTabSets()
+
+          /* ------------ */
+          /* Integrations */
+          /* ------------ */
+
+          // Streamer.bot Action Package
+
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download, More Info, and Authentication</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you have broken something <button id="more-info">Please re-install it again</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `unauthorized`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you're unauthorized please provide a working password <button id="more-info">Authorize</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `disabled`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, the action is currently disabled enable the action again <button id="more-info" class="mdi mdi-cog"></button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl} <button id="more-info" class="mdi mdi-cog"></button></li>`)
+
+          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
+            createModal(`
+            <div class="form-group styled">
+              <label for="password">Password</label>
+              <div class="flex">
+                <input type="password" name="password" id="password" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{"password": ""}`).password || ``}" placeholder="Password">
+                <button class="mdi mdi-eye" id="show-password"></button>
+              </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <p>The Streamer.bot Action Package is used for getting/setting/unsetting global variables, managing Twitch/YouTube chat, command features and more.</p>
+            <br>
+            <p>When this action is imported it will show more tabs and it will even show more features on certain tabs.</p>
+            <br>
+            <p>To use this you simply need to import the code in Streamer.bot, make a password and sync it in the password field above.</p>
+            <br>
+            <div class="form-group styled">
+              <button onclick="window.open('./action-package.sb')">Download</button>
+            </div>
+            `, `Streamer.bot Action Package`, undefined, `medium`, {})
+
+            document.querySelector(`.modal .main .form-group input#password`).addEventListener(`keydown`, () => {
               setTimeout(() => {
-                let streamerbotToolbox__obsStudio = localStorage.getItem(`streamerbotToolbox__obsStudio`) || `{}`
-                streamerbotToolbox__obsStudio = JSON.parse(streamerbotToolbox__obsStudio) || {}
-                streamerbotToolbox__obsStudio.connection = document.querySelector(`.settings-modal .main input`).value
-                if (streamerbotToolbox__obsStudio.connection <= 0) streamerbotToolbox__obsStudio.connection = 0
-                localStorage.setItem(`streamerbotToolbox__obsStudio`, JSON.stringify(streamerbotToolbox__obsStudio))
+                let streamerbotToolbox__StreamerbotActionPackage = JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{}`) ?? {}
+                streamerbotToolbox__StreamerbotActionPackage.password = document.querySelector(`.modal .main .form-group input#password`).value
+                localStorage.setItem(`streamerbotToolbox__StreamerbotActionPackage`, JSON.stringify(streamerbotToolbox__StreamerbotActionPackage))
               }, 50);
             })
+
+            document.getElementById(`show-password`).addEventListener(`click`, () => {
+              if (document.getElementById(`password`).type === `password`) {
+                document.getElementById(`password`).type = `text`
+              } else {
+                document.getElementById(`password`).type = `password`
+              }
+            })
+          })
+
+          // OBS Studio
+
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) {
+            document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="obs-studio"> OBS Studio (connected) • connection: ${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}</li>`)
+          } else {
+            document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (disconnected)</li>`)
           }
+
+          // TwitchSpeaker
+          
+          let integrationsList__twitchspeaker = `<li class="mdi mdi-plus" data-integration="twitchspeaker"> TwitchSpeaker <button>Connect!</button></li>`
+
+          if (document.body.getAttribute(`twitchspeaker-state`) === null) {
+          } else if (document.body.getAttribute(`twitchspeaker-state`) === `connected`) {
+            let integrationsList__twitchspeaker_wsUrl = localStorage.getItem(`streamerbotToolbox__twitchspeaker`)
+            integrationsList__twitchspeaker_wsUrl = JSON.parse(integrationsList__twitchspeaker_wsUrl)
+            integrationsList__twitchspeaker_wsUrl = `ws://${integrationsList__twitchspeaker_wsUrl.host}:${integrationsList__twitchspeaker_wsUrl.port}${integrationsList__twitchspeaker_wsUrl.endpoint}`
+            integrationsList__twitchspeaker = `<li class="mdi mdi-check" data-integration="twitchspeaker"> TwitchSpeaker (Connected) • ${integrationsList__twitchspeaker_wsUrl} <button class="mdi mdi-cog"></button></p>`
+          } else if (document.body.getAttribute(`twitchspeaker-state`) === `disconnected`) {
+            integrationsList__twitchspeaker = `<li class="mdi mdi-reload" data-integration="twitchspeaker"> TwitchSpeaker <button>Reconnect!</button></p>`
+          }
+
+          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__twitchspeaker)
+          
+          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="twitchspeaker"] button`).addEventListener(`click`, function () {
+            let twitchspeakerDefaultValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`)
+            if (twitchspeakerDefaultValues === null) {
+              twitchspeakerDefaultValues = {}
+              twitchspeakerDefaultValues.host     = `localhost`
+              twitchspeakerDefaultValues.port     = `7580`
+              twitchspeakerDefaultValues.endpoint = `/`
+            } else {
+              twitchspeakerDefaultValues = JSON.parse(twitchspeakerDefaultValues)
+            }
+
+            createModal(`
+            <div class="form-group styled">
+              <label for="websocket-url">Host</label>
+              <input type="url" name="websocket-host" id="websocket-host" value="${twitchspeakerDefaultValues.host}" placeholder="${twitchspeakerDefaultValues.host}" class="no-margin">
+            </div>
+
+            <div class="form-group styled">
+              <label for="websocket-url">Port</label>
+              <input type="url" name="websocket-port" id="websocket-port" value="${twitchspeakerDefaultValues.port}" placeholder="${twitchspeakerDefaultValues.port}" class="no-margin">
+            </div>
+
+            <div class="form-group styled">
+              <label for="websocket-url">Endpoint</label>
+              <input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${twitchspeakerDefaultValues.endpoint}" placeholder="${twitchspeakerDefaultValues.endpoint}" class="no-margin">
+            </div>
+
+            <div class="form-group styled">
+              <button class="connect-button">Connect!</button>
+            </div>
+            `, `TwitchSpeaker Settings`, undefined, `small`, {})
+
+            document.querySelector(`.modal .main .form-group button.connect-button`).addEventListener(`click`, function () {
+              localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify({
+                  host: document.querySelector(`.modal .main .form-group input#websocket-host`).value,
+                  port: document.querySelector(`.modal .main .form-group input#websocket-port`).value,
+                  endpoint: document.querySelector(`.modal .main .form-group input#websocket-endpoint`).value
+                })
+              )
+
+              location.reload()
+            })
+          })
+
+
+          /* ----------- */
+          /* Broadcaster */
+          /* ----------- */
+
+
+          let broadcasterOptions = {
+            Disabled: `<option>Disabled</option>`,
+            Twitch: `<option>Twitch</option>`,
+            YouTube: `<option>YouTube</option>`
+          }
+          let broadcastService = localStorage.getItem(`streamerbotToolbox__broadcastService`) || `Disabled`
+
+          if (broadcastService === `Twitch`) {
+            broadcasterOptions = broadcasterOptions.Twitch + broadcasterOptions.Twitch + broadcasterOptions.Disabled
+          } else if (broadcastService === `YouTube`) {
+            broadcasterOptions = broadcasterOptions.YouTube + broadcasterOptions.Twitch + broadcasterOptions.Disabled
+          } else if (broadcastService === `Disabled`) {
+            broadcasterOptions = broadcasterOptions.Disabled + broadcasterOptions.Twitch + broadcasterOptions.YouTube
+          }
+          
+          document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"]`).innerHTML = `
+          <p>Choose Between YouTube or Twitch</p>
+            <small>When the service is disconnected no broadcaster variables will be emitted</small>
+          <div class="form-group styled">
+            <select>${broadcasterOptions}</select>
+          </div>`
+
+          localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).value)
+
+          document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).addEventListener(`click`, function () {
+            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).value)
+          })
+
+          document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).addEventListener(`wheel`, function () {
+            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).value)
+          })
+
+
+          /* ------------ */
+          /* Random Users */
+          /* ------------ */
+
+          document.querySelector(`.modal .main .tabset div[data-tab="Random Users"] input`).addEventListener(`keydown`, function () {
+            let randomUsersCount = document.querySelector(`.modal .main .tabset div[data-tab="Random Users"] input`).value
+
+            if (randomUsersCount < 1) {
+              randomUsersCount = 0
+            }
+
+            setTimeout(() => {
+              localStorage.setItem(`streamerbotToolbox__randomUsers`, randomUsersCount)
+            })
+          })
+
+          document.querySelector(`.modal .main .tabset div[data-tab="Random Users"] input`).addEventListener(`wheel`, function () {
+            let randomUsersCount = document.querySelector(`.modal .main .tabset div[data-tab="Random Users"] input`).value
+
+            if (randomUsersCount < 1) {
+              randomUsersCount = 0
+            }
+
+            setTimeout(() => {
+              localStorage.setItem(`streamerbotToolbox__randomUsers`, randomUsersCount)
+            })
+          })
+
+
+          /* ---------- */
+          /* OBS Studio */
+          /* ---------- */
+
+          document.querySelector(`.modal .main .tabset div[data-tab="OBS Studio"] input`).addEventListener(`keydown`, updateObsStudioSettings)
+          document.querySelector(`.modal .main .tabset div[data-tab="OBS Studio"] input`).addEventListener(`wheel`, updateObsStudioSettings)
+
+          function updateObsStudioSettings() {
+            let obsStudioSettings = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
+            let obsStudioConnection = document.querySelector(`.modal .main .tabset div[data-tab="OBS Studio"] input`).value
+
+            if (obsStudioConnection < 1) {
+              obsStudioConnection = 0
+            }
+
+            obsStudioSettings.connection = obsStudioConnection
+
+            setTimeout(() => {
+              localStorage.setItem(`streamerbotToolbox__obsStudio`, JSON.stringify(obsStudioSettings))
+            })
+          }
+
         })
       }
 
@@ -1107,12 +1130,12 @@ async function connectws() {
   
           document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"] .card ul.chat-messages`).insertAdjacentHTML(`afterbegin`, `
           <li data-source="${data.event.source}" data-message-id="${data.data.message.msgId}">
-            <div style="display: flex; align-items: center; gap: 0.25rem;">
+            <div style="display: flex; align-items: center; gap: 0.25rem; max-width: 600px;">
               <p style="min-width: 4.5rem; text-align: center; color: var(--text-500);">${SB__FormatTimestamp(data.timeStamp, `small`)}</p>
               <div class="profile-image mdi mdi-twitch" style="display: flex; align-items: center;">
                 <img src="${profileImageUrl}" alt="" style="width: 1rem; height: 1rem; border-radius: 100vmax;">
               </div>
-              <p style="color: ${data.data.message.color};">${data.data.message.displayName}</p>
+              <p style="color: ${data.data.message.color}; margin-left: 0.25rem;">${data.data.message.displayName}</p>
               <p style="${italics}">${data.data.message.message}</p>
             </div>
           </li>
@@ -1227,7 +1250,7 @@ async function connectws() {
             <div class="card arguments">
               <div class="card-header">
                 <p class="card-title">Arguments</p>
-                <div class="form-group styled no-margin card-header-append">
+                <div class="form-group styled no-margin card-header-append" id="clear-arguments">
                   <button class="primary dense mdi mdi-trash-can-outline">Clear</button>
                 </div>
               </div>
@@ -1237,13 +1260,35 @@ async function connectws() {
             <div class="card action-history">
               <div class="card-header">
                 <p class="card-title">Action History</p>
+                <div class="form-group styled no-margin card-header-append" id="toggle-exclusion" title="This excludes actions that you've set to exclude from action history inside of Streamer.bot">
+                  <button class="primary dense" data-button-state="${localStorage.getItem(`streamerbotToolbox__actionHistory`) === `false` ? `offline` : `online`}">Exclude</button>
+                </div>
               </div>
               <hr>
-              <ul class="styled"></ul>
+              <ul class="styled" data-exclusion="${localStorage.getItem(`streamerbotToolbox__actionHistory`) || `false`}"></ul>
             </div>
           </div>
         </aside>
         `)
+
+        // Action History
+        
+        let toggleActionHistoryExclusionButton = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history .card-header .card-header-append button`)
+        let toggleActionHistoryExclusionUlStyled = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history ul.styled`)
+
+        toggleActionHistoryExclusionButton.addEventListener(`click`, () => {
+          if (toggleActionHistoryExclusionButton.getAttribute(`data-button-state`) === `offline`) {
+            toggleActionHistoryExclusionButton.setAttribute(`data-button-state`, `online`)
+            localStorage.setItem(`streamerbotToolbox__actionHistory`, `true`)
+            toggleActionHistoryExclusionUlStyled.setAttribute(`data-exclusion`, `true`)
+          } else {
+            toggleActionHistoryExclusionButton.setAttribute(`data-button-state`, `offline`)
+            localStorage.setItem(`streamerbotToolbox__actionHistory`, `false`)
+            toggleActionHistoryExclusionUlStyled.setAttribute(`data-exclusion`, `false`)
+          }
+        })
+        
+        // End Action History
 
         // Emulate Events
 
@@ -1948,6 +1993,7 @@ async function connectws() {
           let actionHistoryCompleted__ListItem = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card-grid .card.action-history ul li[data-action-running-id="${data.data.id}"]`)
           actionHistoryCompleted__ListItem.setAttribute(`data-action-completed-data`, JSON.stringify(data))
           actionHistoryCompleted__ListItem.setAttribute(`data-action-state`, `completed`)
+          actionHistoryCompleted__ListItem.setAttribute(`data-exclusion`, data.data.excludeFromHistory)
         }
       }
 
@@ -2133,12 +2179,8 @@ async function connectws() {
             <hr>
             <div class="form-group styled">
               <label for="get-global-variable--variable-name">Variable Name</label>
-              <input type="text" name="voice-alias" id="get-global-variable--variable-name" placeholder="Variable Name" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"getvariable": ""}`).getvariable ?? ``}">
+              <input type="text" name="voice-alias" id="get-global-variable--variable-name" placeholder="Variable Name" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"variable": ""}`).variable ?? ``}">
             </div>
-            <div class="form-group styled">
-              <button class="styled" id="get-global-variable--submit">Run</button>
-            </div>
-            <pre class="styled" id="get-global-variable--output">Output: <span class="output"></span></pre>
           </div>
 
           <!--  -->
@@ -2151,11 +2193,11 @@ async function connectws() {
             <hr>
             <div class="form-group styled">
               <label for="set-global-variable--variable-name">Variable Name</label>
-              <input type="text" id="set-global-variable--variable-name" placeholder="Variable Name" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"setvariable": ""}`).setvariable ?? ``}">
+              <input type="text" id="set-global-variable--variable-name" placeholder="Variable Name" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"variable": ""}`).variable ?? ``}">
             </div>
             <div class="form-group styled">
               <label for="set-global-variable--value">Value</label>
-              <input type="text" id="set-global-variable--value" placeholder="Value" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"setvalue": ""}`).setvalue ?? ``}">
+              <input type="text" id="set-global-variable--value" placeholder="Value" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"value": ""}`).value ?? ``}">
             </div>
             <div class="form-group styled">
               <button class="styled" id="set-global-variable--submit">Run</button>
@@ -2172,57 +2214,101 @@ async function connectws() {
             <hr>
             <div class="form-group styled">
               <label for="unset-global-variable--variable-name">Variable Name</label>
-              <input type="text" id="unset-global-variable--variable-name" placeholder="Variable Name" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"unsetvariable": ""}`).unsetvariable ?? ``}">
+              <input type="text" id="unset-global-variable--variable-name" placeholder="Variable Name" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{"variable": ""}`).variable ?? ``}">
             </div>
             <div class="form-group styled">
               <button class="styled" id="unset-global-variable--submit">Run</button>
             </div>
           </div>
         </div>
+
+        <br>
+
+        <div class="card-grid">
+          <div class="card">
+            <p id="global-variable--output"><b>Output:</b> <span class="output"></span></p>
+          </div>
+        </div>
         `
 
-        document.getElementById(`get-global-variable--submit`).addEventListener(`click`, () => {
-          let wsDataGlobalVariableName = document.getElementById(`get-global-variable--variable-name`).value
+        SB__StreamerbotActionPackageRequest(`GetGlobalVariable`, document.getElementById(`set-global-variable--variable-name`).value)
+
+        document.getElementById(`get-global-variable--variable-name`).addEventListener(`keydown`, () => {
+          setTimeout(() => {
+            let wsDataGlobalVariableName = document.getElementById(`get-global-variable--variable-name`).value
+            document.getElementById(`set-global-variable--variable-name`).value = wsDataGlobalVariableName
+            document.getElementById(`unset-global-variable--variable-name`).value = wsDataGlobalVariableName
+            SB__StreamerbotActionPackageRequest(`GetGlobalVariable`, wsDataGlobalVariableName)
+            updateVariableGlobalVariablesStorage()
+          });
+        })
+
+        document.getElementById(`set-global-variable--variable-name`).addEventListener(`keydown`, () => {
+          setTimeout(() => {
+            let wsDataGlobalVariableName = document.getElementById(`set-global-variable--variable-name`).value
+            document.getElementById(`get-global-variable--variable-name`).value = wsDataGlobalVariableName
+            document.getElementById(`unset-global-variable--variable-name`).value = wsDataGlobalVariableName
+            SB__StreamerbotActionPackageRequest(`GetGlobalVariable`, wsDataGlobalVariableName)
+            updateVariableGlobalVariablesStorage()
+          });
+        })
+
+        document.getElementById(`unset-global-variable--variable-name`).addEventListener(`keydown`, () => {
+          setTimeout(() => {
+            let wsDataGlobalVariableName = document.getElementById(`unset-global-variable--variable-name`).value
+            document.getElementById(`set-global-variable--variable-name`).value = wsDataGlobalVariableName
+            document.getElementById(`get-global-variable--variable-name`).value = wsDataGlobalVariableName
+            SB__StreamerbotActionPackageRequest(`GetGlobalVariable`, wsDataGlobalVariableName)
+            updateVariableGlobalVariablesStorage()
+          });
+        })
+
+        document.getElementById(`set-global-variable--value`).addEventListener(`keydown`, () => {
+          setTimeout(() => {
+            updateValueGlobalVariablesStorage()
+          });
+        })
+
+
+        function updateVariableGlobalVariablesStorage() {
+          let wsDataGlobalVariableName = document.getElementById(`set-global-variable--variable-name`).value
 
           let streamerbotToolbox__globalVariables = JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{}`)
-          console.log(streamerbotToolbox__globalVariables)
-          streamerbotToolbox__globalVariables.getvariable = wsDataGlobalVariableName
+          streamerbotToolbox__globalVariables.variable = wsDataGlobalVariableName
           localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
-          
-          SB__StreamerbotActionPackageRequest(`GetGlobalVariable`, wsDataGlobalVariableName)
-          SB__StreamerbotActionPackageRequest(`GetLogFiles`)
-        })
+        }
+
+        function updateValueGlobalVariablesStorage() {
+          let wsDataGlobalVariableValue = document.getElementById(`set-global-variable--value`).value
+
+          let streamerbotToolbox__globalVariables = JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{}`)
+          streamerbotToolbox__globalVariables.value = wsDataGlobalVariableValue
+          localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
+        }
 
         document.getElementById(`set-global-variable--submit`).addEventListener(`click`, () => {
           let wsDataGlobalVariableName = document.getElementById(`set-global-variable--variable-name`).value
           let wsDataGlobalVariableValue = document.getElementById(`set-global-variable--value`).value
 
-          let streamerbotToolbox__globalVariables = JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{}`)
-          streamerbotToolbox__globalVariables.setvariable = wsDataGlobalVariableName
-          streamerbotToolbox__globalVariables.setvalue = wsDataGlobalVariableValue
-          localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
-
           SB__StreamerbotActionPackageRequest(`SetGlobalVariable`, {
             wsDataName: wsDataGlobalVariableName,
             wsDataValue: wsDataGlobalVariableValue
           })
+          SB__StreamerbotActionPackageRequest(`GetGlobalVariable`, wsDataGlobalVariableName)
         })
 
         document.getElementById(`unset-global-variable--submit`).addEventListener(`click`, () => {
           let wsDataGlobalVariableName = document.getElementById(`unset-global-variable--variable-name`).value
 
-          let streamerbotToolbox__globalVariables = JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{}`)
-          streamerbotToolbox__globalVariables.unsetvariable = wsDataGlobalVariableName
-          localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
-
           SB__StreamerbotActionPackageRequest(`UnsetGlobalVariable`, wsDataGlobalVariableName)
+          SB__StreamerbotActionPackageRequest(`GetGlobalVariable`, wsDataGlobalVariableName)
         })
       }
 
       if (data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsSource === `StreamerbotTool`) {
         if (data.data.wsRequest === `GetGlobalVariable`) {
           if (data.data.wsData === ``) data.data.wsData = `Global Variable Doesn't Exist or it doesn't have a value`
-          document.querySelector(`#get-global-variable--output .output`).innerHTML = data.data.wsData
+          document.querySelector(`#global-variable--output .output`).innerHTML = data.data.wsData
         }
       }
 
@@ -2877,7 +2963,7 @@ async function connectws() {
         document.querySelector(`main .main[data-page="${urlSafe(`Log Viewer`)}"]`).innerHTML = `
         <blockquote class="warning">
         Note: Work in progress
-        </blockqoute>
+        </blockquote>
         `
 
         let formGroup = document.createElement(`div`)
@@ -2921,9 +3007,9 @@ async function connectws() {
           id = JSON.parse(id)
           if (id.request === `DoAction`) {
             if (data.status === `ok`) {
-              createSnackbar(`Succesfully ran action: "${id.action.name}"`)
+              createAlert(`Succesfully ran action: "${id.action.name}"`, `success`)
             } else if (data.status === `error`) {
-              createSnackbar(data.error)
+              createAlert(data.error, `error`)
             }
           }
         }
@@ -3487,69 +3573,8 @@ function createSnackbar(snackBarHtml = ``, theme = `default`, loadTime = 3000, t
   }, 50);
 }
 
-function createModal(modalHtml = ``, modalTitle = title, modalSubtitle = undefined, scale = `small`, settings = {}) {
-  document.querySelectorAll(`.modal-wrapper`).forEach(settingsModalAlt => {
-    settingsModalAlt.remove()
-  });
-  if (document.body.getAttribute(`modal-state`) != `opened` && document.body.getAttribute(`modal-state`) != `opening`) {
-    if (modalSubtitle != undefined || modalSubtitle != null) {
-      modalSubtitle = `<p class="subtitle">${modalSubtitle}</p>`
-    } else {
-      modalSubtitle = ``
-    }
-
-    let attributes = ``
-
-    if (settings.reload === true) {
-      attributes = `data-reload `
-    }
-  
-    document.body.insertAdjacentHTML(`afterbegin`, `
-    <div class="modal-wrapper">
-      <div class="modal ${scale}"${attributes}>
-        <div class="header">
-          <div>
-            <h2 class="title">${modalTitle}</h2>
-            ${modalSubtitle}
-          </div>
-          <button
-            class="close-button mdi mdi-close-thick" 
-            onclick="closeModal()"
-          >Close</button>
-        </div>
-        <div class="main">
-          ${modalHtml}
-        </div>
-      </div>
-    </div>
-    `)
-
-    document.body.setAttribute(`data-modal-state`, `opening`)
-    setTimeout(() => {
-      document.body.setAttribute(`data-modal-state`, `opened`)
-    }, 500);
-  }
-}
-
-function closeModal() {
-  if (document.body.getAttribute(`data-modal-state`) === `opened`) {
-    document.body.setAttribute(`data-modal-state`, `closing`)
-    if (document.querySelector(`.modal-wrapper`).getAttribute(`data-reload`) === ``) {
-      location.reload()
-    }
-    setTimeout(() => {
-      document.body.setAttribute(`data-modal-state`, `closed`)
-      document.querySelectorAll(`.modal-wrapper`).forEach(settingsModalAlt => {
-        settingsModalAlt.remove()
-      });
-    }, 500);
-  }
-}
-
 document.addEventListener(`mousedown`, (e) => {
   if (e.target.tagName === `BODY`) {
-    closeModal()
-
     if (document.querySelector(`nav.navbar`) != null && document.querySelector(`nav.navbar`).getAttribute(`data-visible`) === "") {
       document.querySelector(`nav.navbar`).removeAttribute(`data-visible`)
     }
@@ -3558,8 +3583,6 @@ document.addEventListener(`mousedown`, (e) => {
 
 document.addEventListener(`keyup`, (e) => {
   if (e.key === `Escape`) {
-    closeModal()
-
     if (document.querySelector(`nav.navbar`).getAttribute(`data-visible`) === "") {
       document.querySelector(`nav.navbar`).removeAttribute(`data-visible`)
     }

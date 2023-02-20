@@ -1,0 +1,66 @@
+.tabset {
+  background: var(--background-alt);
+  width: 50rem;
+  border-radius: .5rem;
+  overflow: hidden;
+}
+
+.tabset nav {
+  margin-bottom: 1rem;
+}
+
+.tabset nav ul {
+  display: grid;
+  gap: .25rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.tabset nav ul li {
+  width: 100%;
+}
+
+.tabset nav ul li button {
+  all: unset;
+  background: var(--background-soft);
+  padding-block: .75rem;
+  border-bottom: 2px solid var(--background-lighten);
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tabset nav ul li.active button {
+  background: var(--background-primary);
+  border-color: var(--link-primary);
+  cursor: default;
+}
+
+.tabset nav ul li:not(.active):hover button,
+.tabset nav ul li:not(.active):focus-visible button {
+  background: var(--background-light);
+}
+
+.tabset div[data-tab] {
+  padding-inline: .5rem;
+  padding-block: 1rem;
+}
+
+/* -------------- */
+/* Helper Classes */
+/* -------------- */
+
+.tabset.full {
+  width: 100%;
+}
+
+.tabset.full-height {
+  height: 100%;
+}
+
+.tabset.not-rounded {
+  border-radius: 0;
+}
+
+.tabset.alt-background {
+  background: var(--background-primary);
+}

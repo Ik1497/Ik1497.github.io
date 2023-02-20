@@ -1,0 +1,72 @@
+.alert-wrapper {
+  z-index: 998;
+  position: fixed;
+  right: 0;
+  top: .5rem;
+}
+
+.alert-wrapper ul {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  align-items: flex-end;
+}
+
+.alert-wrapper ul li {
+  display: flex;
+  align-items: center;
+  background: var(--background-alt);
+  padding-block: .75rem;
+  padding-inline: 1.25rem;
+  width: fit-content;
+  border-radius: .25rem;
+  border-right: 4px solid;
+}
+
+.alert-wrapper ul li::before {
+  padding-right: .3rem;
+}
+
+/* ---------- */
+/* Animations */
+/* ---------- */
+
+.alert-wrapper ul li {
+  transform: translateX(100%);
+}
+
+.alert-wrapper ul li[data-state="opening"],
+.alert-wrapper ul li[data-state="opened"] {
+  transform: translateX(0%);
+  transition: transform .5s ease-out;
+}
+
+.alert-wrapper ul li[data-state="closing"],
+.alert-wrapper ul li[data-state="closed"] {
+  transform: translateX(100%);
+  transition: transform .5s ease-in;
+}
+
+/* ------------- */
+/* Helper Styles */
+/* ------------- */
+
+.alert-wrapper ul li.default {
+  border-color: #4a6e80;
+}
+
+.alert-wrapper ul li.success {
+  border-color: #4caf50;
+}
+
+.alert-wrapper ul li.info {
+  border-color: #2196f3;
+}
+
+.alert-wrapper ul li.warning {
+  border-color: #fb8c00;
+}
+
+.alert-wrapper ul li.error {
+  border-color: #ff5252;
+}
