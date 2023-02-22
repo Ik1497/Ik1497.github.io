@@ -224,11 +224,11 @@ async function connectws() {
     navbar.innerHTML = ``
   });
 
-  let eventArgsMap = await fetch(`./eventArgsMap.json`)
-  eventArgsMap = await eventArgsMap.json()
+  // let eventArgsMap = await fetch(`./eventArgsMap.json`)
+  // eventArgsMap = await eventArgsMap.json()
 
-  let randomEventArgs = await fetch(`./random.json`)
-  randomEventArgs = await randomEventArgs.json()
+  // let randomEventArgs = await fetch(`./random.json`)
+  // randomEventArgs = await randomEventArgs.json()
 
 
   if ("WebSocket" in window) {
@@ -1209,32 +1209,32 @@ async function connectws() {
 
         document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}`).classList.add(`col-2`)
 
-        let eventTestDropdown = ``
-        let eventArgsEntries = Object.entries(eventArgsMap)
-        eventArgsEntries.forEach(eventArgEntry => {
-          eventTestDropdown += `<option value="${eventArgEntry[0]}">[${eventArgEntry[1].category.toUpperCase()}] ${eventArgEntry[1].display}</option>`
-        });
-        eventTestDropdown = `
-        <div class="form-group styled flex align-center">
-          <label for="event-search">Search Event</label>
-          <input id="event-search" type="search" placeholder="search...">
-        </div>        
-        <div class="form-group styled">
-          <select><option value="None">None</option>${eventTestDropdown}</select>
-        </div>`
+        // let eventTestDropdown = ``
+        // let eventArgsEntries = Object.entries(eventArgsMap)
+        // eventArgsEntries.forEach(eventArgEntry => {
+        //   eventTestDropdown += `<option value="${eventArgEntry[0]}">[${eventArgEntry[1].category.toUpperCase()}] ${eventArgEntry[1].display}</option>`
+        // });
+        // eventTestDropdown = `
+        // <div class="form-group styled flex align-center">
+        //   <label for="event-search">Search Event</label>
+        //   <input id="event-search" type="search" placeholder="search...">
+        // </div>        
+        // <div class="form-group styled">
+        //   <select><option value="None">None</option>${eventTestDropdown}</select>
+        // </div>`
 
         
+        // <div class="card events">
+        //   <div class="card-header">
+        //     <p class="card-title">Emulate Events</p>
+        //   </div>
+        //   <hr>
+        //   ${eventTestDropdown}
+        // </div>
         document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}`).insertAdjacentHTML(`beforeend`, `
         <div class="card-grid"></div>
         <aside>
-          <div class="card-grid">
-            <div class="card events">
-              <div class="card-header">
-                <p class="card-title">Emulate Events</p>
-              </div>
-              <hr>
-              ${eventTestDropdown}
-            </div>
+        <div class="card-grid">
             <div class="card arguments">
               <div class="card-header">
                 <p class="card-title">Arguments</p>
@@ -1249,7 +1249,7 @@ async function connectws() {
               <div class="card-header">
                 <p class="card-title">Action History</p>
                 <div class="form-group styled no-margin card-header-append" id="toggle-exclusion" title="This excludes actions that you've set to exclude from action history inside of Streamer.bot">
-                  <button class="primary dense" data-button-state="${localStorage.getItem(`streamerbotToolbox__actionHistory`) === `false` ? `offline` : `online`}">Exclude</button>
+                  <button class="primary dense" data-button-state="${localStorage.getItem(`streamerbotToolbox__actionHistory`) === `false` ? `offline` : `online`}">${localStorage.getItem(`streamerbotToolbox__actionHistory`) === `false` ? `Exclude` : `Excluding`}</button>
                 </div>
               </div>
               <hr>
@@ -1267,10 +1267,12 @@ async function connectws() {
         toggleActionHistoryExclusionButton.addEventListener(`click`, () => {
           if (toggleActionHistoryExclusionButton.getAttribute(`data-button-state`) === `offline`) {
             toggleActionHistoryExclusionButton.setAttribute(`data-button-state`, `online`)
+            toggleActionHistoryExclusionButton.innerHTML = `Excluding`
             localStorage.setItem(`streamerbotToolbox__actionHistory`, `true`)
             toggleActionHistoryExclusionUlStyled.setAttribute(`data-exclusion`, `true`)
           } else {
             toggleActionHistoryExclusionButton.setAttribute(`data-button-state`, `offline`)
+            toggleActionHistoryExclusionButton.innerHTML = `Exclude`
             localStorage.setItem(`streamerbotToolbox__actionHistory`, `false`)
             toggleActionHistoryExclusionUlStyled.setAttribute(`data-exclusion`, `false`)
           }
@@ -1280,23 +1282,23 @@ async function connectws() {
 
         // Emulate Events
 
-        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.events input[type="search"]`).addEventListener(`keydown`, () => {
-          setTimeout(() => {
-            let searchTerm = document.querySelector(`main aside .card.events input[type="search"]`).value.toLowerCase()
-            document.querySelectorAll(`main aside .card.events select option`).forEach(option => {
-              if (option.innerHTML.toLowerCase().includes(searchTerm) || option.value.toLowerCase().includes(searchTerm) || searchTerm === ``) {
-                if (option.value != `None`) {
-                  option.setAttribute(`hidden`, ``)
-                  option.removeAttribute(`hidden`)
-                }
-              } else {
-                if (option.value != `None`) {
-                  option.setAttribute(`hidden`, ``)
-                }
-              }
-            });
-          }, 50);
-        })
+        // document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.events input[type="search"]`).addEventListener(`keydown`, () => {
+        //   setTimeout(() => {
+        //     let searchTerm = document.querySelector(`main aside .card.events input[type="search"]`).value.toLowerCase()
+        //     document.querySelectorAll(`main aside .card.events select option`).forEach(option => {
+        //       if (option.innerHTML.toLowerCase().includes(searchTerm) || option.value.toLowerCase().includes(searchTerm) || searchTerm === ``) {
+        //         if (option.value != `None`) {
+        //           option.setAttribute(`hidden`, ``)
+        //           option.removeAttribute(`hidden`)
+        //         }
+        //       } else {
+        //         if (option.value != `None`) {
+        //           option.setAttribute(`hidden`, ``)
+        //         }
+        //       }
+        //     });
+        //   }, 50);
+        // })
             
         // Arguments
 
@@ -1531,6 +1533,7 @@ async function connectws() {
                 listItem__appendDiv__button.title = `Execute Action`
                 listItem__appendDiv__button.innerText = `Execute`
                 if (!action.enabled) listItem__appendDiv__button.setAttribute(`disabled`, ``)
+                if (!action.enabled) listItem__appendDiv__button.title = `Disabled Action`
                 listItem__appendDiv.append(listItem__appendDiv__button)
 
                 listItem__appendDiv__button.addEventListener(`click`, RunActionFromActionsPage)
@@ -1563,7 +1566,7 @@ async function connectws() {
                   </table>
                   <br>
                   <div class="form-group styled execute">
-                    <button id="execute"${action.enabled ? `` : ` disabled`}>Execute</button>
+                    <button id="execute" title="${action.enabled ? `Execute Action` : `Disabled Action`}"${action.enabled ? `` : ` disabled`}>Execute</button>
                   </div>
                   `, action.name, `Inspect Sub-Action`, `small`, {})
                   document.querySelector(`.modal .main .form-group.execute button#execute`).addEventListener(`click`, () => {
@@ -1618,53 +1621,53 @@ async function connectws() {
 
                   arguments.push([`source`, `StreamerbotToolbox`])
 
-                  let selectedEventArgs = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.events select`).value
-                  eventArgsEntries.forEach(eventArgsEntry => {
-                    if (eventArgsEntry[0] === selectedEventArgs) {
-                      let randomEventArgs__user = randomEventArgs.user[Math.floor(Math.random()*randomEventArgs.user.length)]
+                  // let selectedEventArgs = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.events select`).value
+                  // eventArgsEntries.forEach(eventArgsEntry => {
+                  //   if (eventArgsEntry[0] === selectedEventArgs) {
+                  //     let randomEventArgs__user = randomEventArgs.user[Math.floor(Math.random()*randomEventArgs.user.length)]
 
-                      Object.entries(eventArgsEntry[1].arguments).forEach(arg => {
-                        let randomEventArgs__message = randomEventArgs.message[Math.floor(Math.random()*randomEventArgs.message.length)]
+                  //     Object.entries(eventArgsEntry[1].arguments).forEach(arg => {
+                  //       let randomEventArgs__message = randomEventArgs.message[Math.floor(Math.random()*randomEventArgs.message.length)]
 
-                        if (arg[0] === `userId`)              arg[1] = randomEventArgs__user.userId
-                        if (arg[0] === `userName`)            arg[1] = randomEventArgs__user.userName
-                        if (arg[0] === `user`)                arg[1] = randomEventArgs__user.user
-                        if (arg[0] === `userType`)            arg[1] = randomEventArgs__user.userType
-                        if (arg[0] === `isSubscribed`)        arg[1] = randomEventArgs__user.isSubscribed
-                        if (arg[0] === `isVip`)               arg[1] = randomEventArgs__user.isVip
-                        if (arg[0] === `isModerator`)         arg[1] = randomEventArgs__user.isModerator
-                        if (arg[0] === `userPreviousActive`)  arg[1] = randomEventArgs__user.userPreviousActive
+                  //       if (arg[0] === `userId`)              arg[1] = randomEventArgs__user.userId
+                  //       if (arg[0] === `userName`)            arg[1] = randomEventArgs__user.userName
+                  //       if (arg[0] === `user`)                arg[1] = randomEventArgs__user.user
+                  //       if (arg[0] === `userType`)            arg[1] = randomEventArgs__user.userType
+                  //       if (arg[0] === `isSubscribed`)        arg[1] = randomEventArgs__user.isSubscribed
+                  //       if (arg[0] === `isVip`)               arg[1] = randomEventArgs__user.isVip
+                  //       if (arg[0] === `isModerator`)         arg[1] = randomEventArgs__user.isModerator
+                  //       if (arg[0] === `userPreviousActive`)  arg[1] = randomEventArgs__user.userPreviousActive
 
-                        if (arg[0] === `rawInput`)           arg[1] = randomEventArgs__message
-                        if (arg[0] === `rawInputEscaped`)    arg[1] = encodeURI(randomEventArgs__message)
-                        if (arg[0] === `rawInputUrlEncoded`) arg[1] = encodeURI(randomEventArgs__message)
-                        if (arg[0] === `message`)            arg[1] = randomEventArgs__message
-                        if (arg[0] === `messageStripped`)    arg[1] = randomEventArgs__message
-                        if (arg[0] === `rawInput`) randomEventArgs__message.split(` `).forEach((input, index) => {
-                          arguments.push([`input${index}`,           input])
-                          arguments.push([`inputEscaped${index}`,    encodeURI(input)])
-                          arguments.push([`inputUrlEncoded${index}`, encodeURI(input)])
-                        });
+                  //       if (arg[0] === `rawInput`)           arg[1] = randomEventArgs__message
+                  //       if (arg[0] === `rawInputEscaped`)    arg[1] = encodeURI(randomEventArgs__message)
+                  //       if (arg[0] === `rawInputUrlEncoded`) arg[1] = encodeURI(randomEventArgs__message)
+                  //       if (arg[0] === `message`)            arg[1] = randomEventArgs__message
+                  //       if (arg[0] === `messageStripped`)    arg[1] = randomEventArgs__message
+                  //       if (arg[0] === `rawInput`) randomEventArgs__message.split(` `).forEach((input, index) => {
+                  //         arguments.push([`input${index}`,           input])
+                  //         arguments.push([`inputEscaped${index}`,    encodeURI(input)])
+                  //         arguments.push([`inputUrlEncoded${index}`, encodeURI(input)])
+                  //       });
 
-                        if (arg[0] === `tagCount`) {
-                          let randomEventArgs__tagCount = Math.floor(Math.random() * 5) + 1
-                          let randomEventArgs__tagsDelimited = []
-                          arg[1] = `${randomEventArgs__tagCount}`
-                          arguments.push([`tags`, 'System.Collections.Generic.List`1[System.String]'])
+                  //       if (arg[0] === `tagCount`) {
+                  //         let randomEventArgs__tagCount = Math.floor(Math.random() * 5) + 1
+                  //         let randomEventArgs__tagsDelimited = []
+                  //         arg[1] = `${randomEventArgs__tagCount}`
+                  //         arguments.push([`tags`, 'System.Collections.Generic.List`1[System.String]'])
 
-                          for (let randomEventArgs__tagRunTime = 0; randomEventArgs__tagRunTime < randomEventArgs__tagCount; randomEventArgs__tagRunTime++) {
-                            let randomEventArgs__tags = randomEventArgs.tags[Math.floor(Math.random()*randomEventArgs.tags.length)]
-                            arguments.push([`tag${randomEventArgs__tagRunTime}`, randomEventArgs__tags])
-                            randomEventArgs__tagsDelimited.push(randomEventArgs__tags)
-                          }
+                  //         for (let randomEventArgs__tagRunTime = 0; randomEventArgs__tagRunTime < randomEventArgs__tagCount; randomEventArgs__tagRunTime++) {
+                  //           let randomEventArgs__tags = randomEventArgs.tags[Math.floor(Math.random()*randomEventArgs.tags.length)]
+                  //           arguments.push([`tag${randomEventArgs__tagRunTime}`, randomEventArgs__tags])
+                  //           randomEventArgs__tagsDelimited.push(randomEventArgs__tags)
+                  //         }
 
-                          arguments.push([`tagsDelimited`, randomEventArgs__tagsDelimited.join(`,`)])
-                        }
+                  //         arguments.push([`tagsDelimited`, randomEventArgs__tagsDelimited.join(`,`)])
+                  //       }
                         
-                        arguments.push(arg)
-                      });
-                    }
-                  });
+                  //       arguments.push(arg)
+                  //     });
+                  //   }
+                  // });
 
                   let argumentsLocalStorage = Object.entries(JSON.parse(localStorage.getItem(`streamerbotToolbox__arguments`) || `{}`) ?? {}) ?? []
                   argumentsLocalStorage.forEach(argument => {

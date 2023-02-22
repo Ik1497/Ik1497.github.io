@@ -368,6 +368,7 @@ ul.styled li.title button {
   background: var(--background-soft);
 }
 
+
 .navbar .navbar-list .navbar-list-item p.title,
 ul.styled li p.title {
   overflow: hidden;
@@ -377,8 +378,8 @@ ul.styled li p.title {
 
 .navbar .navbar-list .navbar-list-item p.description,
 ul.styled li p.description {
-  font-size: .9em;
-  color: var(--text-400);
+  font-size: .7rem;
+  color: var(--text-300);
 
   overflow: hidden;
   white-space: nowrap;
@@ -730,9 +731,9 @@ main .main aside .card.action-history ul.styled[data-exclusion="true"] li[data-e
   background: #285292!important;
 }
 
-.form-group.styled button.primary[data-button-state="online"] {
-  color: #a4ffbe!important;
-  background: #2d9228!important;
+.form-group.styled button.primary[data-button-state="online"]:not(.online-primary) {
+  color: #ccffda!important;
+  background: #247b1d!important;
 }
 
 .form-group.styled button.primary[data-button-state="offline"] {
