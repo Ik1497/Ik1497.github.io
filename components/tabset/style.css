@@ -41,8 +41,8 @@
 }
 
 .tabset div[data-tab] {
-  padding-inline: .5rem;
-  padding-block: 1rem;
+  padding-inline: 1rem;
+  padding-block: .5rem 1rem;
 }
 
 /* -------------- */

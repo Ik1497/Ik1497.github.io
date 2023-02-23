@@ -2135,11 +2135,8 @@ async function connectws() {
             </li>
           </div>
           <br>
-          <pre class="json-parse"><code>
-          ${JSON.stringify(data.data)}
-          </code></pre>
+          <pre><code>${formatJson(data.data).html}</code></pre>
           `, data.event.type, `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`, `medium`, {})
-          reloadJsonParser()
 
           document.getElementById(`copy-as-json-button`).addEventListener(`click`, () => {
             createSnackbar(`Copying websocket data as JSON to clipboard`)

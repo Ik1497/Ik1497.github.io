@@ -31,6 +31,8 @@ document.write(`
 <script src="/components/snackbar/main.js" defer></script>
 <link rel="stylesheet" href="/components/snackbar/style.css">
 
+<script src="/components/json-formatter/main.js" defer></script>
+
 <!-- End Components -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.0.96/css/materialdesignicons.min.css">

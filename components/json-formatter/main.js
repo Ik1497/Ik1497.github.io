@@ -5,22 +5,15 @@ let codeColors = {
   default: `#ffffff`
 }
 
-reloadJsonParser()
+function formatJson(json) {
+  if (ValidateJson(json)) {
+    json = JSON.parse(json)
+  }
 
-function reloadJsonParser() {
-  document.querySelectorAll(`pre.json-parse code`).forEach(preElement => {
-    if (preElement.getAttribute(`data-formatted`) === null) {
-      let json = preElement.innerText.trim()
-      if (ValidateJson(json)) {
-        json = JSON.parse(json)
-      }
-  
-      let html = handleParseDataType(findParseDataType(json), json, true)
-  
-      preElement.innerHTML = html
-      preElement.setAttribute(`data-formatted`, ``)
-    }
-  });
+  return {
+    html: handleParseDataType(findParseDataType(json), json, true),
+    json: JSON.stringify(json, null, 2)
+  }
 
   function findParseDataType(json) {
     let returnData = typeof json
