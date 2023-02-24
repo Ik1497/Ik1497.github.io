@@ -2,16 +2,17 @@
   background: var(--background-alt);
   width: 50rem;
   border-radius: .5rem;
+  position: relative;
   overflow: hidden;
 }
 
 .tabset nav {
   margin-bottom: 1rem;
+  position: relative;
 }
 
 .tabset nav ul {
   display: grid;
-  gap: .25rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
@@ -23,15 +24,14 @@
   all: unset;
   background: var(--background-soft);
   padding-block: .75rem;
-  border-bottom: 2px solid var(--background-lighten);
   width: 100%;
   text-align: center;
   cursor: pointer;
+  border-radius: .5rem;
 }
 
 .tabset nav ul li.active button {
-  background: var(--background-primary);
-  border-color: var(--link-primary);
+  /* color: var(--link-primary); */
   cursor: default;
 }
 
@@ -40,9 +40,41 @@
   background: var(--background-light);
 }
 
+.tabset nav ul li:hover button,
+.tabset nav ul li:focus-visible button {
+  transition: background .3s ease;
+}
+
+.tabset nav .tabset-active-indicator {
+  background: var(--link-primary);
+  height: 5px;
+  border-radius: 100vmax;
+  position: absolute;
+  left: 0%;
+  transition: left .5s ease;
+}
+
 .tabset div[data-tab] {
   padding-inline: 1rem;
   padding-block: .5rem 1rem;
+}
+
+/* ---------------- */
+/* Animation States */
+/* ---------------- */
+
+.tabset div[data-tab][data-state="becoming-inactive"] {
+  display: none;
+}
+
+.tabset div[data-tab][data-state="inactive"] {
+  display: none;
+}
+
+.tabset div[data-tab][data-state="becoming-active"] {
+}
+
+.tabset div[data-tab][data-state="active"] {
 }
 
 /* -------------- */
