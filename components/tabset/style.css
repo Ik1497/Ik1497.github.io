@@ -13,6 +13,7 @@
 
 .tabset nav ul {
   display: flex;
+  list-style: none;
 }
 
 .tabset nav ul li {
