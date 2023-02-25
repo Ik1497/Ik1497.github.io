@@ -30,7 +30,6 @@
 }
 
 .tabset nav ul li.active button {
-  /* color: var(--link-primary); */
   cursor: default;
 }
 
