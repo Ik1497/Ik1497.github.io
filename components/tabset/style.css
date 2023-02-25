@@ -20,6 +20,10 @@
   width: 100%;
 }
 
+.tabset nav ul li::before {
+  content: unset;
+}
+
 .tabset nav ul li button {
   all: unset;
   background: var(--background-soft);
