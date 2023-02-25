@@ -1748,7 +1748,7 @@ async function connectws() {
                 actionHistoryQueued__table += `
                 <tr>
                   <td style="text-align: right;">${argument[0]}</td>
-                  <td style="text-align: left;">${argument[1]}</td>
+                  <td style="text-align: left;">${typeof argument[1] != `object` ? argument[1] : JSON.stringify(argument[1])}</td>
                 </tr>
                 `
               });
@@ -1876,28 +1876,12 @@ async function connectws() {
               
               function copyArgumentsForJson(state) {
                 if (state === `queued`) {
-                  let json = copyArgumentsForJsonFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)).data.arguments)
-                  console.log(`Copying:`, json)
-                  navigator.clipboard.writeText(json)
+                  console.log(`Copying:`, formatJson(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)).data.arguments).json)
+                  navigator.clipboard.writeText(formatJson(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)).data.arguments).json)
                 } else if (state === `completed`) {
-                  let json = copyArgumentsForJsonFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)).data.arguments)
-                  console.log(`Copying:`, json)
-                  navigator.clipboard.writeText(json)
+                  console.log(`Copying:`, formatJson(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)).data.arguments).json)
+                  navigator.clipboard.writeText(formatJson(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)).data.arguments).json)
                 }
-              }
-
-              function copyArgumentsForJsonFormatter(json) {
-                let formattedJson = `{\n`
-                json = Object.entries(json)
-                json.forEach((argument, argumentIndex) => {
-                  formattedJson += `  "${argument[0]}": "${argument[1]}"`
-                  if (json.length - 1 != argumentIndex) {
-                    formattedJson += `,`
-                  }
-                  formattedJson += `\n`
-                });
-                formattedJson += `}`
-                return formattedJson
               }
             })
 

@@ -500,7 +500,7 @@ main .main.col-2 {
 }
 
 main .main.col-2 > .card-grid {
-  max-height: 50rem;
+  max-height: 85vh;
   overflow-y: auto;
   border-radius: .5rem;
 }
@@ -511,7 +511,7 @@ main .main.col-2 > .card-grid .card {
 
 main .main.col-2 aside {
   width: 20rem;
-  max-height: 50rem;
+  max-height: 85vh;
   overflow-y: auto;
   border-radius: .5rem;
 }
@@ -529,8 +529,9 @@ main .main.col-2 aside .card {
 }
 
 .footer-icon {
-  width: 2em;
-  height: 2em;
+  width: 2.5em;
+  height: 2.5em;
+  font-size: 1.05rem;
   background: var(--color-link);
   display: flex;
   align-items: center;

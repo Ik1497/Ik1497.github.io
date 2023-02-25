@@ -1,5 +1,5 @@
 {
-  "count": 3,
+  "count": 4,
   "backgroundImages": [
     "https://ik1497.github.io/Extensions/IDIOTS/images/background/0.jpg"
   ],
@@ -111,6 +111,36 @@
             "type": "png",
             "size": 8479,
             "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/terrierdarts-1.png"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dens92",
+      "display": "DENS92",
+      "logo": {
+        "height": 1024,
+        "width": 1024,
+        "type": "png",
+        "size": 412464,
+        "image": "https://ik1497.github.io/Extensions/IDIOTS/images/logos/dens92.png"
+      },
+      "messages": {
+        "count": 2,
+        "messages": [
+          {
+            "height": 113,
+            "width": 336,
+            "type": "png",
+            "size": 9459,
+            "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/dens92-0.png"
+          },
+          {
+            "height": 84,
+            "width": 919,
+            "type": "png",
+            "size": 14160,
+            "image": "https://ik1497.github.io/Extensions/IDIOTS/images/messages/dens92-1.png"
           }
         ]
       }
