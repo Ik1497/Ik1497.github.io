@@ -61,7 +61,7 @@ function formatJson(json) {
 
       returnData += `<div style="display: flex;">${arrayIndex}: ${arrayValue}</div>`
     });
-    returnData += `<div style="display: flex; color: ${codeColors.property};">Length: ${json.length}</div>`
+    returnData += `<div style="display: flex;"><span style="color: ${codeColors.property};">Length</span>: <span style="color: ${codeColors.value};">${json.length}</span></div>`
 
     if (!ignoreDropdown) {
       returnData = `<div style="padding-left: 2ch;">${returnData}</div>`

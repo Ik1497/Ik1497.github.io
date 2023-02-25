@@ -65,8 +65,8 @@ let headerLinksMap = [
     navbarHidden: true
   },
   {
-    name: `TwitchSpeaker`,
-    integration: `twitchspeaker`,
+    name: `Speaker.bot`,
+    integration: `speakerbot`,
     icon: `mdi mdi-microphone`,
     navbarHidden: true
   }
@@ -137,7 +137,7 @@ function updateHeaderLinks() {
 
     if (headerLink.integration != `streamer.bot`) hidden = ` hidden`
     if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) hidden = ``
-    if (document.body.getAttribute(`twitchspeaker-state`) === `connected`) hidden = ``
+    if (document.body.getAttribute(`speakerbot-state`) === `connected`) hidden = ``
 
     document.querySelector(`header .header-links`).insertAdjacentHTML(`beforeend`, `
     <li${headerLinkActive}${hidden}>
@@ -448,56 +448,56 @@ async function connectws() {
             document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (Disconnected)</li>`)
           }
 
-          // TwitchSpeaker
+          // Speaker.bot
           
-          let integrationsList__twitchspeaker = `<li class="mdi mdi-plus" data-integration="twitchspeaker"> TwitchSpeaker <button>Connect!</button></li>`
+          let integrationsList__speakerbot = `<li class="mdi mdi-plus" data-integration="speakerbot"> Speaker.bot <button>Connect!</button></li>`
 
-          if (document.body.getAttribute(`twitchspeaker-state`) === null) {
-          } else if (document.body.getAttribute(`twitchspeaker-state`) === `connected`) {
-            let integrationsList__twitchspeaker_wsUrl = localStorage.getItem(`streamerbotToolbox__twitchspeaker`)
-            integrationsList__twitchspeaker_wsUrl = JSON.parse(integrationsList__twitchspeaker_wsUrl)
-            integrationsList__twitchspeaker_wsUrl = `ws://${integrationsList__twitchspeaker_wsUrl.host}:${integrationsList__twitchspeaker_wsUrl.port}${integrationsList__twitchspeaker_wsUrl.endpoint}`
-            integrationsList__twitchspeaker = `<li class="mdi mdi-check" data-integration="twitchspeaker"> TwitchSpeaker (Connected) • ${integrationsList__twitchspeaker_wsUrl} <button class="mdi mdi-cog"></button></p>`
-          } else if (document.body.getAttribute(`twitchspeaker-state`) === `disconnected`) {
-            integrationsList__twitchspeaker = `<li class="mdi mdi-reload" data-integration="twitchspeaker"> TwitchSpeaker <button>Reconnect!</button></p>`
+          if (document.body.getAttribute(`speakerbot-state`) === null) {
+          } else if (document.body.getAttribute(`speakerbot-state`) === `connected`) {
+            let integrationsList__speakerbot_wsUrl = localStorage.getItem(`streamerbotToolbox__speakerbot`)
+            integrationsList__speakerbot_wsUrl = JSON.parse(integrationsList__speakerbot_wsUrl)
+            integrationsList__speakerbot_wsUrl = `ws://${integrationsList__speakerbot_wsUrl.host}:${integrationsList__speakerbot_wsUrl.port}${integrationsList__speakerbot_wsUrl.endpoint}`
+            integrationsList__speakerbot = `<li class="mdi mdi-check" data-integration="speakerbot"> Speaker.bot (Connected) • ${integrationsList__speakerbot_wsUrl} <button class="mdi mdi-cog"></button></p>`
+          } else if (document.body.getAttribute(`speakerbot-state`) === `disconnected`) {
+            integrationsList__speakerbot = `<li class="mdi mdi-reload" data-integration="speakerbot"> Speaker.bot <button>Reconnect!</button></p>`
           }
 
-          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__twitchspeaker)
+          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__speakerbot)
           
-          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="twitchspeaker"] button`).addEventListener(`click`, function () {
-            let twitchspeakerDefaultValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`)
-            if (twitchspeakerDefaultValues === null) {
-              twitchspeakerDefaultValues = {}
-              twitchspeakerDefaultValues.host     = `localhost`
-              twitchspeakerDefaultValues.port     = `7580`
-              twitchspeakerDefaultValues.endpoint = `/`
+          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="speakerbot"] button`).addEventListener(`click`, function () {
+            let speakerbotDefaultValues = localStorage.getItem(`streamerbotToolbox__speakerbot`)
+            if (speakerbotDefaultValues === null) {
+              speakerbotDefaultValues = {}
+              speakerbotDefaultValues.host     = `localhost`
+              speakerbotDefaultValues.port     = `7580`
+              speakerbotDefaultValues.endpoint = `/`
             } else {
-              twitchspeakerDefaultValues = JSON.parse(twitchspeakerDefaultValues)
+              speakerbotDefaultValues = JSON.parse(speakerbotDefaultValues)
             }
 
             createModal(`
             <div class="form-group styled">
               <label for="websocket-url">Host</label>
-              <input type="url" name="websocket-host" id="websocket-host" value="${twitchspeakerDefaultValues.host}" placeholder="${twitchspeakerDefaultValues.host}" class="no-margin">
+              <input type="url" name="websocket-host" id="websocket-host" value="${speakerbotDefaultValues.host}" placeholder="${speakerbotDefaultValues.host}" class="no-margin">
             </div>
 
             <div class="form-group styled">
               <label for="websocket-url">Port</label>
-              <input type="url" name="websocket-port" id="websocket-port" value="${twitchspeakerDefaultValues.port}" placeholder="${twitchspeakerDefaultValues.port}" class="no-margin">
+              <input type="url" name="websocket-port" id="websocket-port" value="${speakerbotDefaultValues.port}" placeholder="${speakerbotDefaultValues.port}" class="no-margin">
             </div>
 
             <div class="form-group styled">
               <label for="websocket-url">Endpoint</label>
-              <input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${twitchspeakerDefaultValues.endpoint}" placeholder="${twitchspeakerDefaultValues.endpoint}" class="no-margin">
+              <input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${speakerbotDefaultValues.endpoint}" placeholder="${speakerbotDefaultValues.endpoint}" class="no-margin">
             </div>
 
             <div class="form-group styled">
               <button class="connect-button">Connect!</button>
             </div>
-            `, `TwitchSpeaker Settings`, undefined, `small`, {})
+            `, `Speaker.bot Settings`, undefined, `small`, {})
 
             document.querySelector(`.modal .main .form-group button.connect-button`).addEventListener(`click`, function () {
-              localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify({
+              localStorage.setItem(`streamerbotToolbox__speakerbot`, JSON.stringify({
                   host: document.querySelector(`.modal .main .form-group input#websocket-host`).value,
                   port: document.querySelector(`.modal .main .form-group input#websocket-port`).value,
                   endpoint: document.querySelector(`.modal .main .form-group input#websocket-endpoint`).value
@@ -724,7 +724,7 @@ async function connectws() {
               <p>Integrations:</p>
               <p>• Streamer.bot</p>
               <p>• Streamer.bot Action Package</p>
-              <p>• TwitchSpeaker</p>
+              <p>• Speaker.bot</p>
               <br>
               <p>Features:</p>
               <p>• Present Viewers List</p>
@@ -734,7 +734,7 @@ async function connectws() {
               <p>• Change command settings</p>
               <p>• OBS Studio Management</p>
               <p>• Log viewer (WIP)</p>
-              <p>• TwitchSpeaker Management</p>
+              <p>• Speaker.bot Management</p>
               <br>
               <p><b>Open the settings in bottom right to enable these integrations and for more info</b></p>
             </div>
@@ -2628,16 +2628,13 @@ async function connectws() {
           case `GetSceneList`:
             document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`OBS Studio`)}"]`).innerHTML = ``
 
-            let scenes = []
-            obsData.scenes.forEach(scene => {
-              scenes.unshift(scene.sceneName)
-            });
+            obsData.scenes = obsData.scenes.reverse()
             
-            scenes.forEach(scene => {
+            obsData.scenes.forEach(scene => {
               document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`OBS Studio`)}"]`).insertAdjacentHTML(`beforeend`, `
               <li class="navbar-list-item">
                 <button>
-                  <p class="title">${scene}</p>
+                  <p class="title">${scene.sceneName}</p>
                 </button>
               </li>
               `)  
@@ -2708,11 +2705,9 @@ async function connectws() {
 
             break
           case `GetSceneItemList`:
-            let sceneItems = []
+            obsData.sceneItems = obsData.sceneItems.reverse()
+
             obsData.sceneItems.forEach(sceneItem => {
-              sceneItems.unshift(sceneItem)
-            });
-            sceneItems.forEach(sceneItem => {
               document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.sources ul`).insertAdjacentHTML(`beforeend`, `
               <li data-source-information="${JSON.stringify(sceneItem).replace(/\s*\"\s*/gm, `'`)}">
                 <button>${sceneItem.sourceName}</button>
@@ -3219,40 +3214,40 @@ async function connectws() {
   }
 }
 
-let twitchspeakerConnectionData = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || undefined
+let speakerbotConnectionData = localStorage.getItem(`streamerbotToolbox__speakerbot`) || undefined
 
-if (twitchspeakerConnectionData != undefined) {
-  twitchspeakerConnectionData = JSON.parse(twitchspeakerConnectionData)
-  document.body.setAttribute(`twitchspeaker-state`, `enabled`)
-  connectTwitchSpeakerws()
+if (speakerbotConnectionData != undefined) {
+  speakerbotConnectionData = JSON.parse(speakerbotConnectionData)
+  document.body.setAttribute(`speakerbot-state`, `enabled`)
+  connectSpeakerbotws()
 }
 
-async function connectTwitchSpeakerws() {
+async function connectSpeakerbotws() {
   if ("WebSocket" in window) {
-    let wsServerUrl = `ws://${twitchspeakerConnectionData.host}:${twitchspeakerConnectionData.port}${twitchspeakerConnectionData.endpoint}`
+    let wsServerUrl = `ws://${speakerbotConnectionData.host}:${speakerbotConnectionData.port}${speakerbotConnectionData.endpoint}`
     const ws = new WebSocket(wsServerUrl)
-    console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to TwitchSpeaker...")
+    console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Speaker.bot...")
 
     ws.onclose = function () {
-      setTimeout(connectTwitchSpeakerws, 10000)
-      document.body.setAttribute(`twitchspeaker-state`, `disconnected`)
-      document.querySelectorAll(`header .header-links a[data-integration=twitchspeaker]`).forEach(headerLink => {
+      setTimeout(connectSpeakerbotws, 10000)
+      document.body.setAttribute(`speakerbot-state`, `disconnected`)
+      document.querySelectorAll(`header .header-links a[data-integration=speakerbot]`).forEach(headerLink => {
         headerLink.parentNode.setAttribute(`hidden` , ``)
       });
-      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to TwitchSpeaker, reconnecting every 10s...")
+      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to Speaker.bot, reconnecting every 10s...")
     }
 
     ws.onopen = function () {
-      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to TwitchSpeaker")
-      document.body.setAttribute(`twitchspeaker-state`, `connected`)
-      document.querySelectorAll(`header .header-links a[data-integration=twitchspeaker]`).forEach(headerLink => {
+      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Speaker.bot")
+      document.body.setAttribute(`speakerbot-state`, `connected`)
+      document.querySelectorAll(`header .header-links a[data-integration=speakerbot]`).forEach(headerLink => {
         headerLink.parentNode.setAttribute(`hidden` , ``)
         headerLink.parentNode.removeAttribute(`hidden`)
       });
       
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"]`).classList.add(`full`)
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"]`).classList.add(`full`)
 
-      let defaultSpeakValues = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || undefined
+      let defaultSpeakValues = localStorage.getItem(`streamerbotToolbox__speakerbot`) || undefined
       let defaultSpeakVoiceAlias = ``
       let defaultSpeakMessage = ``
       if (defaultSpeakValues != undefined) {
@@ -3271,7 +3266,7 @@ async function connectTwitchSpeakerws() {
         defaultSpeakVoiceAlias = ``
         defaultSpeakMessage = `This is a test message`
       }
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"]`).innerHTML = `
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"]`).innerHTML = `
       <ul class="tags">
         <li><button title="Enable">Enable</button></li>
         <li><button title="Disable">Disable</button></li>
@@ -3303,19 +3298,19 @@ async function connectTwitchSpeakerws() {
       </div>
       `
 
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] button.speak`).addEventListener(`click`, function () {
-        let voiceAlias = document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .form-group input#voice-alias`).value || ``
-        let message = document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .form-group input#message`).value || `This is a test message`
-        let badWordsFilter = document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .form-group input#bad-words-filter`).checked
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] button.speak`).addEventListener(`click`, function () {
+        let voiceAlias = document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .form-group input#voice-alias`).value || ``
+        let message = document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .form-group input#message`).value || `This is a test message`
+        let badWordsFilter = document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .form-group input#bad-words-filter`).checked
 
-        let twitchspeakerData = localStorage.getItem(`streamerbotToolbox__twitchspeaker`) || `{}`
-        twitchspeakerData = JSON.parse(twitchspeakerData)
-        twitchspeakerData = Object.entries(twitchspeakerData)
-        twitchspeakerData.push([`defaultSpeakVoiceAlias`, voiceAlias])
-        twitchspeakerData.push([`defaultSpeakMessage`, message])
+        let speakerbotData = localStorage.getItem(`streamerbotToolbox__speakerbot`) || `{}`
+        speakerbotData = JSON.parse(speakerbotData)
+        speakerbotData = Object.entries(speakerbotData)
+        speakerbotData.push([`defaultSpeakVoiceAlias`, voiceAlias])
+        speakerbotData.push([`defaultSpeakMessage`, message])
         
-        twitchspeakerData = Object.fromEntries(twitchspeakerData)
-        localStorage.setItem(`streamerbotToolbox__twitchspeaker`, JSON.stringify(twitchspeakerData))
+        speakerbotData = Object.fromEntries(speakerbotData)
+        localStorage.setItem(`streamerbotToolbox__speakerbot`, JSON.stringify(speakerbotData))
 
         ws.send(JSON.stringify({
             request: "Speak",
@@ -3328,7 +3323,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`TTS with the voice alias: "${voiceAlias}", and the text: "${message}"`)
       })
 
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Enable"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Enable"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "Enable",
             id: "Enable"
@@ -3338,7 +3333,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Enable`)
       })
       
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Disable"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Disable"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
           request: "Disable",
           id: "Disable"
@@ -3348,7 +3343,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Disable`)
       })
       
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Pause"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Pause"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "Pause",
             id: "Pause"
@@ -3358,7 +3353,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Pause`)
       })
       
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Resume"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Resume"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
           request: "Resume",
           id: "Resume"
@@ -3368,7 +3363,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Resume`)
       })
       
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="On"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="On"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "On",
             id: "On"
@@ -3378,7 +3373,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`On`)
       })
       
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Off"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Off"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "Off",
             id: "Off"
@@ -3387,7 +3382,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Off`)
       })
 
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Stop"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Stop"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "Stop",
             id: "Stop"
@@ -3397,7 +3392,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Stop`)
       })
 
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Clear"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Clear"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "Clear",
             id: "Clear"
@@ -3407,7 +3402,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Clear`)
       })
 
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Enable Events"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Enable Events"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "Events",
             state: "on",
@@ -3418,7 +3413,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Enable Events`)
       })
 
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Disable Events"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Disable Events"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "Events",
             state: "off",
@@ -3429,7 +3424,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Disable Events`)
       })
 
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Speaking Mode: All"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Speaking Mode: All"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "Mode",
             mode: "all",
@@ -3440,7 +3435,7 @@ async function connectTwitchSpeakerws() {
         createSnackbar(`Speaking Mode: All`)
       })
 
-      document.querySelector(`main .main[data-page="${urlSafe(`TwitchSpeaker`)}"] .tags li button[title="Speaking Mode: Command"]`).addEventListener(`click`, function () {
+      document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Speaking Mode: Command"]`).addEventListener(`click`, function () {
         ws.send(JSON.stringify({
             request: "Mode",
             mode: "command",
