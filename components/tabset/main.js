@@ -1,3 +1,5 @@
+reloadTabSets()
+
 function reloadTabSets() {
   document.querySelectorAll(`div.tabset:not([data-loaded])`).forEach(tabset => {
     let tabsetTabCount = tabset.querySelectorAll(`div[data-tab]`).length
