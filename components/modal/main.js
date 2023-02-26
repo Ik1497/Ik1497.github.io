@@ -63,7 +63,7 @@ function closeModal() {
   }
 }
 
-document.addEventListener(`mousedown`, (e) => {
+document.addEventListener(`mouseup`, (e) => {
   if (e.target.tagName === `BODY`) {
     closeModal()
   }

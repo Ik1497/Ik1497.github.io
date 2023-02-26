@@ -499,7 +499,7 @@ main .main.col-2 {
   gap: .5rem;
 }
 
-main .main.col-2 > .card-grid {
+main .main > .card-grid {
   max-height: 85vh;
   overflow-y: auto;
   border-radius: .5rem;

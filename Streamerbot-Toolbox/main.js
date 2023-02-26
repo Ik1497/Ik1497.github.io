@@ -136,8 +136,8 @@ function updateHeaderLinks() {
     }
 
     if (headerLink.integration != `streamer.bot`) hidden = ` hidden`
-    if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) hidden = ``
-    if (document.body.getAttribute(`speakerbot-state`) === `connected`) hidden = ``
+    if (headerLink.integration === `streamer.bot-action-package` && document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) hidden = ``
+    if (headerLink.integration === `speakerbot` && document.body.getAttribute(`speakerbot-state`) === `connected`) hidden = ``
 
     document.querySelector(`header .header-links`).insertAdjacentHTML(`beforeend`, `
     <li${headerLinkActive}${hidden}>
