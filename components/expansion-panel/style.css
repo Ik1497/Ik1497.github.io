@@ -1,0 +1,51 @@
+i-expansion-panel-list {
+  --expansion-panel-color: var(--text-900);
+  --expansion-panel-background: var(--background-mute);
+  --expansion-panel-hr: linear-gradient(90deg, var(--background-mute), var(--background-light), var(--background-mute));
+  --expansion-panel-animation-time: .5s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+i-expansion-panel-list i-expansion-panel-list-item {
+  color: var(--expansion-panel-color);
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+i-expansion-panel-list i-expansion-panel-list-item i-expansion-panel-list-item-header {
+  background: var(--expansion-panel-background);
+  padding-block: 0.75rem;
+  padding-inline: 0.5rem;
+  position: relative;
+  cursor: pointer;
+}
+i-expansion-panel-list i-expansion-panel-list-item i-expansion-panel-list-item-header::after {
+  content: "+";
+  position: absolute;
+  right: 0.5rem;
+}
+i-expansion-panel-list i-expansion-panel-list-item i-expansion-panel-list-item-body {
+  background: var(--expansion-panel-background);
+  transition: max-height var(--expansion-panel-animation-time) ease;
+  padding-inline: 0.5rem;
+}
+i-expansion-panel-list i-expansion-panel-list-item i-expansion-panel-list-item-hr {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--expansion-panel-hr);
+  margin-bottom: 0.75rem;
+}
+i-expansion-panel-list i-expansion-panel-list-item i-expansion-panel-list-item-spacer {
+  display: block;
+  width: 100%;
+  height: 0.75rem;
+}
+
+i-expansion-panel-list-item[data-expansion-state=expanded] i-expansion-panel-list-item-header::after {
+  content: "-";
+}
+
+/*# sourceMappingURL=style.css.map */

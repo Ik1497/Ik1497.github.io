@@ -1708,7 +1708,8 @@ async function connectws() {
           actionHistoryQueued__Button.addEventListener(`click`, () => {
             let actionHistoryQueued__table = ``
             let actionHistoryQueued__arguments = actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)
-            actionHistoryQueued__arguments = JSON.parse(actionHistoryQueued__arguments).data.arguments ?? {}
+            actionHistoryQueued__arguments = JSON.parse(actionHistoryQueued__arguments) ?? {}
+            actionHistoryQueued__arguments = actionHistoryQueued__arguments?.data?.arguments ?? {}
   
             Object.entries(actionHistoryQueued__arguments).forEach(argument => {
               actionHistoryQueued__table += `
@@ -1748,7 +1749,7 @@ async function connectws() {
                 actionHistoryQueued__table += `
                 <tr>
                   <td style="text-align: right;">${argument[0]}</td>
-                  <td style="text-align: left;">${typeof argument[1] != `object` ? argument[1] : JSON.stringify(argument[1])}</td>
+                  <td style="text-align: left;${typeof argument[1] === `object` ? ` font-family: monospace;` : ``}">${typeof argument[1] != `object` ? argument[1] : formatJson(argument[1]).html}</td>
                 </tr>
                 `
               });

@@ -8,6 +8,7 @@
   padding: 0;
   box-sizing: border-box;
   list-style: none;
+  font-family: inherit;
 }
 
 body,
@@ -26,6 +27,10 @@ html {
 
 img {
   max-width: 100%;
+}
+
+pre {
+  font-family: monospace;
 }
 
 button {

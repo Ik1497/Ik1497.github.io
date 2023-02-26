@@ -89,7 +89,7 @@
 /* ----- */
 
 .i-modal-wrapper {
-  &:has(.modal.fullscreen) {
+  &:has(.i-modal.fullscreen) {
     border-radius: 0;
   }
 
@@ -128,12 +128,12 @@
 /* Opacity Styles */
 /* -------------- */
 
-body[data-modal-state="closing"] > *:not(.i-modal-wrapper):not(.alert-wrapper):not(.snackbar-wrapper) {
+body[data-modal-state="closing"] > *:not(.i-modal-wrapper):not(.i-alert-wrapper):not(.i-snackbar-wrapper) {
   transition: opacity .5s ease;
 }
 
-body[data-modal-state="opening"] > *:not(.i-modal-wrapper):not(.alert-wrapper):not(.snackbar-wrapper),
-body[data-modal-state="opened"] > *:not(.i-modal-wrapper):not(.alert-wrapper):not(.snackbar-wrapper) {
+body[data-modal-state="opening"] > *:not(.i-modal-wrapper):not(.i-alert-wrapper):not(.i-snackbar-wrapper),
+body[data-modal-state="opened"] > *:not(.i-modal-wrapper):not(.i-alert-wrapper):not(.i-snackbar-wrapper) {
   transition: opacity .5s ease;
   opacity: .47;
   pointer-events: none;

@@ -18,7 +18,6 @@ if (headings.length != 0 || document.body.getAttribute(`data-layout-hidden`) ===
 function tocUrlSafe(text) {
   let result = text
     .toLowerCase()
-    .replaceAll(` `, `-`)
     .replaceAll(`#`, ``)
     .replaceAll(`?`, ``)
     .replaceAll(`!`, ``)
@@ -36,6 +35,8 @@ function tocUrlSafe(text) {
     .replaceAll(`:`, ``)
     .replaceAll(`;`, ``)
     .replaceAll(`+`, ``)
+    .replaceAll(`-`, ``)
+    .replaceAll(` `, `-`)
 
   if (usedTocItems.includes(text)) {
     let tocItemCount = 0
