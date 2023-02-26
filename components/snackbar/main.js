@@ -3,14 +3,14 @@ function createSnackbar(snackBarHtml = ``, theme = `default`, loadTime = 3000, t
   if (loadTime === transitionDuration) transitionDuration = 500
 
   let snackbarWrapper = document.createElement(`div`)
-  snackbarWrapper.className = `snackbar-wrapper`
+  snackbarWrapper.className = `i-snackbar-wrapper`
   snackbarWrapper.style.transitionDuration = `${transitionDuration}ms`
   
   let snackbarWrapper__snackbar = document.createElement(`div`)
-  snackbarWrapper__snackbar.className = `snackbar`
+  snackbarWrapper__snackbar.className = `i-snackbar`
 
   let snackbarWrapper__snackbar__snackbarContent = document.createElement(`div`)
-  snackbarWrapper__snackbar__snackbarContent.className = `snackbar-content`
+  snackbarWrapper__snackbar__snackbarContent.className = `i-snackbar-content`
   snackbarWrapper__snackbar__snackbarContent.innerHTML = snackBarHtml
 
   snackbarWrapper__snackbar.append(snackbarWrapper__snackbar__snackbarContent)

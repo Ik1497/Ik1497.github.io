@@ -345,7 +345,7 @@ async function connectws() {
 
         document.querySelector(`.open-settings-modal`).addEventListener(`click`, () => {
           createModal(`
-          <div class="tabset full alt-background">
+          <div class="i-tabset full alt-background">
             <div data-tab="Integrations">
               <ul class="integrations-list">
                 <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
@@ -393,14 +393,14 @@ async function connectws() {
 
           // Streamer.bot Action Package
 
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download, More Info, and Authentication</button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you have broken something <button id="more-info">Please re-install it again</button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `unauthorized`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you're unauthorized please provide a working password <button id="more-info">Authorize</button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `disabled`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, the action is currently disabled enable the action again <button id="more-info" class="mdi mdi-cog"></button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl} <button id="more-info" class="mdi mdi-cog"></button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download, More Info, and Authentication</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you have broken something <button id="more-info">Please re-install it again</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `unauthorized`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you're unauthorized please provide a working password <button id="more-info">Authorize</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `disabled`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, the action is currently disabled enable the action again <button id="more-info" class="mdi mdi-cog"></button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl} <button id="more-info" class="mdi mdi-cog"></button></li>`)
 
-          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
             createModal(`
             <div class="form-group styled">
               <label for="password">Password</label>
@@ -423,10 +423,10 @@ async function connectws() {
             </div>
             `, `Streamer.bot Action Package`, undefined, `medium`, {})
 
-            document.querySelector(`.modal .main .form-group input#password`).addEventListener(`keydown`, () => {
+            document.querySelector(`.i-modal .main .form-group input#password`).addEventListener(`keydown`, () => {
               setTimeout(() => {
                 let streamerbotToolbox__StreamerbotActionPackage = JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{}`) ?? {}
-                streamerbotToolbox__StreamerbotActionPackage.password = document.querySelector(`.modal .main .form-group input#password`).value
+                streamerbotToolbox__StreamerbotActionPackage.password = document.querySelector(`.i-modal .main .form-group input#password`).value
                 localStorage.setItem(`streamerbotToolbox__StreamerbotActionPackage`, JSON.stringify(streamerbotToolbox__StreamerbotActionPackage))
               }, 50);
             })
@@ -443,9 +443,9 @@ async function connectws() {
           // OBS Studio
 
           if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) {
-            document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="obs-studio"> OBS Studio (Connected) • Connection: ${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}</li>`)
+            document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="obs-studio"> OBS Studio (Connected) • Connection: ${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}</li>`)
           } else {
-            document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (Disconnected)</li>`)
+            document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (Disconnected)</li>`)
           }
 
           // Speaker.bot
@@ -462,9 +462,9 @@ async function connectws() {
             integrationsList__speakerbot = `<li class="mdi mdi-reload" data-integration="speakerbot"> Speaker.bot <button>Reconnect!</button></p>`
           }
 
-          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__speakerbot)
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__speakerbot)
           
-          document.querySelector(`.modal .main .tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="speakerbot"] button`).addEventListener(`click`, function () {
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="speakerbot"] button`).addEventListener(`click`, function () {
             let speakerbotDefaultValues = localStorage.getItem(`streamerbotToolbox__speakerbot`)
             if (speakerbotDefaultValues === null) {
               speakerbotDefaultValues = {}
@@ -496,11 +496,11 @@ async function connectws() {
             </div>
             `, `Speaker.bot Settings`, undefined, `small`, {})
 
-            document.querySelector(`.modal .main .form-group button.connect-button`).addEventListener(`click`, function () {
+            document.querySelector(`.i-modal .main .form-group button.connect-button`).addEventListener(`click`, function () {
               localStorage.setItem(`streamerbotToolbox__speakerbot`, JSON.stringify({
-                  host: document.querySelector(`.modal .main .form-group input#websocket-host`).value,
-                  port: document.querySelector(`.modal .main .form-group input#websocket-port`).value,
-                  endpoint: document.querySelector(`.modal .main .form-group input#websocket-endpoint`).value
+                  host: document.querySelector(`.i-modal .main .form-group input#websocket-host`).value,
+                  port: document.querySelector(`.i-modal .main .form-group input#websocket-port`).value,
+                  endpoint: document.querySelector(`.i-modal .main .form-group input#websocket-endpoint`).value
                 })
               )
 
@@ -529,21 +529,21 @@ async function connectws() {
             broadcasterOptions = broadcasterOptions.Disabled + broadcasterOptions.Twitch + broadcasterOptions.YouTube
           }
           
-          document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"]`).innerHTML = `
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"]`).innerHTML = `
           <p>Choose Between YouTube or Twitch</p>
             <small>When the service is disconnected no broadcaster variables will be emitted</small>
           <div class="form-group styled">
             <select>${broadcasterOptions}</select>
           </div>`
 
-          localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).value)
+          localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).value)
 
-          document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).addEventListener(`click`, function () {
-            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).value)
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).addEventListener(`click`, function () {
+            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).value)
           })
 
-          document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).addEventListener(`wheel`, function () {
-            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.modal .main .tabset div[data-tab="Broadcaster"] select`).value)
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).addEventListener(`wheel`, function () {
+            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).value)
           })
 
 
@@ -551,8 +551,8 @@ async function connectws() {
           /* Random Users */
           /* ------------ */
 
-          document.querySelector(`.modal .main .tabset div[data-tab="Random Users"] input`).addEventListener(`keydown`, function () {
-            let randomUsersCount = document.querySelector(`.modal .main .tabset div[data-tab="Random Users"] input`).value
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Random Users"] input`).addEventListener(`keydown`, function () {
+            let randomUsersCount = document.querySelector(`.i-modal .main .i-tabset div[data-tab="Random Users"] input`).value
 
             if (randomUsersCount < 1) {
               randomUsersCount = 0
@@ -563,8 +563,8 @@ async function connectws() {
             })
           })
 
-          document.querySelector(`.modal .main .tabset div[data-tab="Random Users"] input`).addEventListener(`wheel`, function () {
-            let randomUsersCount = document.querySelector(`.modal .main .tabset div[data-tab="Random Users"] input`).value
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Random Users"] input`).addEventListener(`wheel`, function () {
+            let randomUsersCount = document.querySelector(`.i-modal .main .i-tabset div[data-tab="Random Users"] input`).value
 
             if (randomUsersCount < 1) {
               randomUsersCount = 0
@@ -580,12 +580,12 @@ async function connectws() {
           /* OBS Studio */
           /* ---------- */
 
-          document.querySelector(`.modal .main .tabset div[data-tab="OBS Studio"] input`).addEventListener(`keydown`, updateObsStudioSettings)
-          document.querySelector(`.modal .main .tabset div[data-tab="OBS Studio"] input`).addEventListener(`wheel`, updateObsStudioSettings)
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="OBS Studio"] input`).addEventListener(`keydown`, updateObsStudioSettings)
+          document.querySelector(`.i-modal .main .i-tabset div[data-tab="OBS Studio"] input`).addEventListener(`wheel`, updateObsStudioSettings)
 
           function updateObsStudioSettings() {
             let obsStudioSettings = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
-            let obsStudioConnection = document.querySelector(`.modal .main .tabset div[data-tab="OBS Studio"] input`).value
+            let obsStudioConnection = document.querySelector(`.i-modal .main .i-tabset div[data-tab="OBS Studio"] input`).value
 
             if (obsStudioConnection < 1) {
               obsStudioConnection = 0
@@ -1311,7 +1311,7 @@ async function connectws() {
           </div>
           `, `Are you sure?`, `Remove arguments`, `prompt`, {})
 
-          document.querySelector(`.modal .main .form-group#clear button`).addEventListener(`click`, () => {
+          document.querySelector(`.i-modal .main .form-group#clear button`).addEventListener(`click`, () => {
             clearArgumentsTable()
             closeModal()
           })
@@ -1569,7 +1569,7 @@ async function connectws() {
                     <button id="execute" title="${action.enabled ? `Execute Action` : `Disabled Action`}"${action.enabled ? `` : ` disabled`}>Execute</button>
                   </div>
                   `, action.name, `Inspect Sub-Action`, `small`, {})
-                  document.querySelector(`.modal .main .form-group.execute button#execute`).addEventListener(`click`, () => {
+                  document.querySelector(`.i-modal .main .form-group.execute button#execute`).addEventListener(`click`, () => {
                     RunActionFromActionsPage()
                   })
                 })
@@ -1797,8 +1797,8 @@ async function connectws() {
 
             copyButtons__List__copyForDiscord__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables for Discord to clipboard`)
-              if (document.querySelector(`.modal .main table#completed`) != null) {
-                if (document.querySelector(`.modal .main table#completed`).getAttribute(`hidden`) === null) {
+              if (document.querySelector(`.i-modal .main table#completed`) != null) {
+                if (document.querySelector(`.i-modal .main table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForDiscord(`completed`)
                 } else {
                   copyArgumentsForDiscord(`queued`)
@@ -1831,8 +1831,8 @@ async function connectws() {
 
             copyButtons__List__copyForWiki__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables for the Streamer.bot Wiki to clipboard`)
-              if (document.querySelector(`.modal .main table#completed`) != null) {
-                if (document.querySelector(`.modal .main table#completed`).getAttribute(`hidden`) === null) {
+              if (document.querySelector(`.i-modal .main table#completed`) != null) {
+                if (document.querySelector(`.i-modal .main table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForWiki(`completed`)
                 } else {
                   copyArgumentsForWiki(`queued`)
@@ -1864,8 +1864,8 @@ async function connectws() {
 
             copyButtons__List__copyAsJson__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables as JSON to clipboard`)
-              if (document.querySelector(`.modal .main table#completed`) != null) {
-                if (document.querySelector(`.modal .main table#completed`).getAttribute(`hidden`) === null) {
+              if (document.querySelector(`.i-modal .main table#completed`) != null) {
+                if (document.querySelector(`.i-modal .main table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForJson(`completed`)
                 } else {
                   copyArgumentsForJson(`queued`)
@@ -1885,7 +1885,7 @@ async function connectws() {
               }
             })
 
-            document.querySelector(`.modal .main`).prepend(copyButtons__List)
+            document.querySelector(`.i-modal .main`).prepend(copyButtons__List)
 
             if (actionHistoryQueued__ListItem.getAttribute(`data-action-state`) === `completed`) {
               let actionHistoryCompletedDialog__List = document.createElement(`ul`)
@@ -1931,26 +1931,26 @@ async function connectws() {
   
               function reloadButtonStates() {
                 if (actionHistoryCompletedDialog__CompletedListItem.classList.contains(`button-active`)) {
-                  document.querySelector(`.modal .main table#completed`).setAttribute(`hidden`, ``)
-                  document.querySelector(`.modal .main table#completed`).removeAttribute(`hidden`)
+                  document.querySelector(`.i-modal .main table#completed`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.i-modal .main table#completed`).removeAttribute(`hidden`)
                   
-                  document.querySelector(`.modal .main table#queued`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.i-modal .main table#queued`).setAttribute(`hidden`, ``)
   
                 } else if (actionHistoryCompletedDialog__QueuedListItem.classList.contains(`button-active`)) {
-                  document.querySelector(`.modal .main table#queued`).setAttribute(`hidden`, ``)
-                  document.querySelector(`.modal .main table#queued`).removeAttribute(`hidden`)
+                  document.querySelector(`.i-modal .main table#queued`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.i-modal .main table#queued`).removeAttribute(`hidden`)
                   
-                  document.querySelector(`.modal .main table#completed`).setAttribute(`hidden`, ``)
+                  document.querySelector(`.i-modal .main table#completed`).setAttribute(`hidden`, ``)
   
                 }
               }
   
-              document.querySelector(`.modal .main`).prepend(actionHistoryCompletedDialog__List)
+              document.querySelector(`.i-modal .main`).prepend(actionHistoryCompletedDialog__List)
             }
   
-            document.querySelector(`.modal .main .form-group.re-run button#re-run`).addEventListener(`click`, () => {
+            document.querySelector(`.i-modal .main .form-group.re-run button#re-run`).addEventListener(`click`, () => {
               let arguments = []
-              document.querySelectorAll(`.modal .main table:not([hidden]) tbody tr`).forEach(tableRow => {
+              document.querySelectorAll(`.i-modal .main table:not([hidden]) tbody tr`).forEach(tableRow => {
                 arguments.push([
                   tableRow.querySelector(`td:first-child`).innerHTML,
                   tableRow.querySelector(`td:last-child`).innerHTML
@@ -2854,29 +2854,29 @@ async function connectws() {
                   </table>
                 `, `${sourceData.sourceName}`, `Edit Transform Settings`, `medium`, {})
 
-                document.querySelector(`.modal .main .form-group button#update`).addEventListener(`click`, () => {
+                document.querySelector(`.i-modal .main .form-group button#update`).addEventListener(`click`, () => {
                   SB__StreamerbotActionPackageOBSRequest(`SetSceneItemTransform`, {
                     sceneName: document.querySelector(`main .main .card-grid .card.sources > ul`).getAttribute(`data-scene`),
                     sceneItemId: sourceData.sceneItemId,
                     sceneItemTransform: {
-                      alignment: +document.querySelector(`.modal .main table #alignment`).value || 5,
-                      boundsAlignment: +document.querySelector(`.modal .main table #bounds-alignment`).value || 0,
+                      alignment: +document.querySelector(`.i-modal .main table #alignment`).value || 5,
+                      boundsAlignment: +document.querySelector(`.i-modal .main table #bounds-alignment`).value || 0,
                       boundsWidth: +document.querySelector(`. .main table #bounds-width`).value || 1,
-                      boundsHeight: +document.querySelector(`.modal .main table #bounds-height`).value || 1,
-                      boundsType: document.querySelector(`.modal .main table #bounds-type`).value || "OBS_BOUNDS_NONE",
-                      cropTop: +document.querySelector(`.modal .main table #crop-top`).value || 0,
-                      cropRight: +document.querySelector(`.modal .main table #crop-right`).value || 0,
-                      cropBottom: +document.querySelector(`.modal .main table #crop-bottom`).value || 0,
-                      cropLeft: +document.querySelector(`.modal .main table #crop-left`).value || 0,
-                      width: +document.querySelector(`.modal .main table #width`).value || null,
-                      height: +document.querySelector(`.modal .main table #height`).value || null,
-                      positionX: +document.querySelector(`.modal .main table #position-x`).value || 0,
-                      positionY: +document.querySelector(`.modal .main table #position-y`).value || 0,
-                      rotation: +document.querySelector(`.modal .main table #rotation`).value || 0,
-                      scaleX: +document.querySelector(`.modal .main table #scale-x`).value || null,
-                      scaleY: +document.querySelector(`.modal .main table #scale-y`).value || null,
-                      sourceHeight: +document.querySelector(`.modal .main table #source-height`).value || 0,
-                      sourceWidth: +document.querySelector(`.modal .main table #source-width`).value || 0
+                      boundsHeight: +document.querySelector(`.i-modal .main table #bounds-height`).value || 1,
+                      boundsType: document.querySelector(`.i-modal .main table #bounds-type`).value || "OBS_BOUNDS_NONE",
+                      cropTop: +document.querySelector(`.i-modal .main table #crop-top`).value || 0,
+                      cropRight: +document.querySelector(`.i-modal .main table #crop-right`).value || 0,
+                      cropBottom: +document.querySelector(`.i-modal .main table #crop-bottom`).value || 0,
+                      cropLeft: +document.querySelector(`.i-modal .main table #crop-left`).value || 0,
+                      width: +document.querySelector(`.i-modal .main table #width`).value || null,
+                      height: +document.querySelector(`.i-modal .main table #height`).value || null,
+                      positionX: +document.querySelector(`.i-modal .main table #position-x`).value || 0,
+                      positionY: +document.querySelector(`.i-modal .main table #position-y`).value || 0,
+                      rotation: +document.querySelector(`.i-modal .main table #rotation`).value || 0,
+                      scaleX: +document.querySelector(`.i-modal .main table #scale-x`).value || null,
+                      scaleY: +document.querySelector(`.i-modal .main table #scale-y`).value || null,
+                      sourceHeight: +document.querySelector(`.i-modal .main table #source-height`).value || 0,
+                      sourceWidth: +document.querySelector(`.i-modal .main table #source-width`).value || 0
                     }
                   }, obsConnection)
                 })

@@ -1,101 +1,81 @@
-.tabset {
-  background: var(--background-alt);
+.i-tabset {
+  --i-tabset-background: var(--background-alt);
+  --i-tabset-alt-background: var(--background-primary);
+  --i-tabset-active-indicator-background: var(--link-primary);
+  --i-tabset-nav-button-background: var(--background-soft);
+  --i-tabset-nav-button-hover-background: var(--background-light);
+  background: var(--i-tabset-background);
   width: 50rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   position: relative;
   overflow: hidden;
 }
-
-.tabset nav {
-  margin-bottom: 1rem;
+.i-tabset .i-tabset-navigation ul {
   position: relative;
-}
-
-.tabset nav ul {
   display: flex;
   list-style: none;
 }
-
-.tabset nav ul li {
+.i-tabset .i-tabset-navigation ul li {
   width: 100%;
 }
-
-.tabset nav ul li::before {
+.i-tabset .i-tabset-navigation ul li::before {
   content: unset;
 }
-
-.tabset nav ul li button {
+.i-tabset .i-tabset-navigation ul li button {
   all: unset;
-  background: var(--background-soft);
-  padding-block: .75rem;
+  background: var(--i-tabset-nav-button-background);
+  padding-block: 0.75rem;
   width: 100%;
   text-align: center;
   cursor: pointer;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
-
-.tabset nav ul li.active button {
+.i-tabset .i-tabset-navigation ul li.active button {
   cursor: default;
 }
-
-.tabset nav ul li:not(.active):hover button,
-.tabset nav ul li:not(.active):focus-visible button {
-  background: var(--background-light);
+.i-tabset .i-tabset-navigation ul li:not(.active):hover button, .i-tabset .i-tabset-navigation ul li:not(.active):focus-visible button {
+  background: var(--i-tabset-nav-button-hover-background);
 }
-
-.tabset nav ul li:hover button,
-.tabset nav ul li:focus-visible button {
-  transition: background .3s ease;
+.i-tabset .i-tabset-navigation ul li:hover button, .i-tabset .i-tabset-navigation ul li:focus-visible button {
+  transition: background 0.3s ease;
 }
-
-.tabset nav .tabset-active-indicator {
-  background: var(--link-primary);
+.i-tabset .i-tabset-navigation .i-tabset-active-indicator {
+  background: var(--i-tabset-active-indicator-background);
   height: 5px;
   border-radius: 100vmax;
   position: absolute;
   left: 0%;
-  transition: left .5s ease;
+  transition: left 0.5s ease;
 }
-
-.tabset div[data-tab] {
+.i-tabset div[data-tab] {
+  margin-top: 1rem;
   padding-inline: 1rem;
-  padding-block: .5rem 1rem;
+  padding-block: 0.5rem 1rem;
 }
 
 /* ---------------- */
 /* Animation States */
 /* ---------------- */
-
-.tabset div[data-tab][data-state="becoming-inactive"] {
+.i-tabset div[data-tab][data-state=becoming-inactive] {
   display: none;
 }
-
-.tabset div[data-tab][data-state="inactive"] {
+.i-tabset div[data-tab][data-state=inactive] {
   display: none;
 }
-
-.tabset div[data-tab][data-state="becoming-active"] {
-}
-
-.tabset div[data-tab][data-state="active"] {
-}
-
 /* -------------- */
 /* Helper Classes */
 /* -------------- */
-
-.tabset.full {
+.i-tabset.full {
   width: 100%;
 }
-
-.tabset.full-height {
+.i-tabset.full-height {
   height: 100%;
 }
-
-.tabset.not-rounded {
+.i-tabset.not-rounded {
   border-radius: 0;
 }
-
-.tabset.alt-background {
-  background: var(--background-primary);
+.i-tabset.alt-background {
+  background: var(--i-tabset-alt-background);
 }
+
+/*# sourceMappingURL=style.css.map */

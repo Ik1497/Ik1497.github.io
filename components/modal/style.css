@@ -1,14 +1,13 @@
-.modal-wrapper {
+.i-modal-wrapper {
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 998;
   overflow: hidden;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
-
-.modal {
+.i-modal-wrapper .i-modal {
   background: var(--background-alt);
   width: 85vw;
   max-width: 85rem;
@@ -26,12 +25,7 @@
   width: 100%;
   height: 100%;
 }
-
-.modal-wrapper:has(.modal.fullscreen) {
-  border-radius: 0;
-}
-
-.modal .header {
+.i-modal-wrapper .i-modal .header {
   background: var(--color-link-hover);
   position: fixed;
   top: 0;
@@ -43,49 +37,38 @@
   padding-inline: 1rem;
   overflow: hidden;
 }
-
-.modal .close-button {
-  padding: .25rem;
+.i-modal-wrapper .i-modal .header .close-button {
+  padding: 0.25rem;
   border-radius: none;
   outline: none;
   border: none;
   background: none;
   cursor: pointer;
-  
   font-weight: 900;
   color: var(--text-900);
   border: 2px solid currentColor;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   margin-left: auto;
 }
-
-.modal .header h1,
-.modal .header h2,
-.modal .header h3,
-.modal .header h4,
-.modal .header h5,
-.modal .header h6 {
+.i-modal-wrapper .i-modal .header .close-button:active {
+  color: var(--text-800);
+}
+.i-modal-wrapper .i-modal .header .subtitle {
+  font-size: 0.75rem;
+  color: var(--text-800);
+}
+.i-modal-wrapper .i-modal .header .title {
+  font-weight: bold;
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
 }
-
-.modal .header h1 small,
-.modal .header h2 small,
-.modal .header h3 small,
-.modal .header h4 small,
-.modal .header h5 small,
-.modal .header h6 small {
-  font-size: .75rem;
-  padding-left: .5ch;
+.i-modal-wrapper .i-modal .header .title small {
+  font-size: 0.75rem;
+  padding-left: 0.5ch;
   color: var(--text-700);
 }
-
-.modal .header .subtitle {
-  font-size: .75rem;
-  color: var(--text-800);
-}
-
-.modal .main {
+.i-modal-wrapper .i-modal .main {
   width: 100%;
   height: 100%;
   padding-top: 3rem;
@@ -94,28 +77,26 @@
 /* ----- */
 /* Sizes */
 /* ----- */
-
-.modal.prompt {
+.i-modal-wrapper:has(.modal.fullscreen) {
+  border-radius: 0;
+}
+.i-modal-wrapper .i-modal.prompt {
   width: 25rem;
   height: 15 rem;
 }
-
-.modal.small {
+.i-modal-wrapper .i-modal.small {
   width: 35rem;
   height: 25rem;
 }
-
-.modal.medium {
+.i-modal-wrapper .i-modal.medium {
   width: 60rem;
   height: 35rem;
 }
-
-.modal.large {
+.i-modal-wrapper .i-modal.large {
   width: 100rem;
   height: 55rem;
 }
-
-.modal.fullscreen {
+.i-modal-wrapper .i-modal.fullscreen {
   width: 100vw;
   max-width: 100vw;
   height: 100vh;
@@ -125,28 +106,26 @@
 /* -------------- */
 /* Opacity Styles */
 /* -------------- */
-
-body[data-modal-state="closing"] > *:not(.modal-wrapper):not(.alert-wrapper):not(.snackbar-wrapper) {
-  transition: opacity .5s ease;
+body[data-modal-state=closing] > *:not(.i-modal-wrapper):not(.alert-wrapper):not(.snackbar-wrapper) {
+  transition: opacity 0.5s ease;
 }
 
-body[data-modal-state="opening"] > *:not(.modal-wrapper):not(.alert-wrapper):not(.snackbar-wrapper),
-body[data-modal-state="opened"] > *:not(.modal-wrapper):not(.alert-wrapper):not(.snackbar-wrapper) {
-  transition: opacity .5s ease;
-  opacity: .47;
+body[data-modal-state=opening] > *:not(.i-modal-wrapper):not(.alert-wrapper):not(.snackbar-wrapper),
+body[data-modal-state=opened] > *:not(.i-modal-wrapper):not(.alert-wrapper):not(.snackbar-wrapper) {
+  transition: opacity 0.5s ease;
+  opacity: 0.47;
   pointer-events: none;
 }
 
 /* ---------- */
 /* Animations */
 /* ---------- */
-
-body[data-modal-state="opening"] .modal:not(.modal-animation) {
-  animation: modalAnimationDefaultOpening forwards .5s;
+body[data-modal-state=opening] .i-modal:not(.modal-animation) {
+  animation: modalAnimationDefaultOpening forwards 0.5s;
 }
 
-body[data-modal-state="closing"] .modal:not(.modal-animation) {
-  animation: modalAnimationDefaultClosing forwards .5s;
+body[data-modal-state=closing] .i-modal:not(.modal-animation) {
+  animation: modalAnimationDefaultClosing forwards 0.5s;
 }
 
 @keyframes modalAnimationDefaultOpening {
@@ -159,7 +138,6 @@ body[data-modal-state="closing"] .modal:not(.modal-animation) {
     opacity: 1;
   }
 }
-
 @keyframes modalAnimationDefaultClosing {
   0% {
     scale: 1;
@@ -170,13 +148,12 @@ body[data-modal-state="closing"] .modal:not(.modal-animation) {
     opacity: 0;
   }
 }
-
-body[data-modal-state="opening"] .modal.modal-animation.animate-from-bottom {
-  animation: modalAnimationFromBottomOpening forwards .5s;
+body[data-modal-state=opening] .i-modal.modal-animation--animate-from-bottom {
+  animation: modalAnimationFromBottomOpening forwards 0.5s;
 }
 
-body[data-modal-state="closing"] .modal.modal-animation.animate-from-bottom {
-  animation: modalAnimationFromBottomClosing forwards .5s;
+body[data-modal-state=closing] .i-modal.modal-animation--animate-from-bottom {
+  animation: modalAnimationFromBottomClosing forwards 0.5s;
 }
 
 @keyframes modalAnimationFromBottomOpening {
@@ -187,7 +164,6 @@ body[data-modal-state="closing"] .modal.modal-animation.animate-from-bottom {
     transform: translateY(0%);
   }
 }
-
 @keyframes modalAnimationFromBottomClosing {
   0% {
     transform: translateY(0%);
@@ -196,3 +172,5 @@ body[data-modal-state="closing"] .modal.modal-animation.animate-from-bottom {
     transform: translateY(100%);
   }
 }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,5 +1,5 @@
 function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefined, scale = `small`, settings = {}) {
-  document.querySelectorAll(`.modal-wrapper`).forEach(settingsModalAlt => {
+  document.querySelectorAll(`.i-modal-wrapper`).forEach(settingsModalAlt => {
     settingsModalAlt.remove()
   });
   if (document.body.getAttribute(`modal-state`) != `opened` && document.body.getAttribute(`modal-state`) != `opening`) {
@@ -17,15 +17,15 @@ function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefi
     }
 
     if (settings.animation === `fromBottom` || scale === `fullscreen` && settings.animation === undefined) {
-      modalClasses += ` modal-animation animate-from-bottom`
+      modalClasses += ` modal-animation--animate-from-bottom`
     }
   
     document.body.insertAdjacentHTML(`afterbegin`, `
-    <div class="modal-wrapper">
-      <div class="modal ${modalClasses}"${attributes}>
+    <div class="i-modal-wrapper">
+      <div class="i-modal ${modalClasses}"${attributes}>
         <div class="header">
           <div>
-            <h2 class="title">${modalTitle}</h2>
+            <p class="title">${modalTitle}</p>
             ${modalSubtitle}
           </div>
           <button
@@ -51,12 +51,12 @@ function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefi
 function closeModal() {
   if (document.body.getAttribute(`data-modal-state`) === `opened`) {
     document.body.setAttribute(`data-modal-state`, `closing`)
-    if (document.querySelector(`.modal-wrapper`).getAttribute(`data-reload`) === ``) {
+    if (document.querySelector(`.i-modal-wrapper`).getAttribute(`data-reload`) === ``) {
       location.reload()
     }
     setTimeout(() => {
       document.body.setAttribute(`data-modal-state`, `closed`)
-      document.querySelectorAll(`.modal-wrapper`).forEach(settingsModalAlt => {
+      document.querySelectorAll(`.i-modal-wrapper`).forEach(settingsModalAlt => {
         settingsModalAlt.remove()
       });
     }, 500);

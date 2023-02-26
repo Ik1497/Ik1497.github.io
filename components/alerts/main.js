@@ -1,7 +1,7 @@
 function createAlert(alertHtml = ``, alertType = `success`, alertDuration = 5000, alertSettings = {}) {
-  if (document.querySelector(`.alert-wrapper`) === null) {
+  if (document.querySelector(`.i-alert-wrapper`) === null) {
     document.body.insertAdjacentHTML(`afterbegin`, `
-    <div class="alert-wrapper">
+    <div class="i-alert-wrapper">
       <ul></ul>
     </div>
     `)
@@ -15,7 +15,7 @@ function createAlert(alertHtml = ``, alertType = `success`, alertDuration = 5000
 
   let alert__li = document.createElement(`li`)
   alert__li.className = alertIcon
-  document.querySelector(`.alert-wrapper ul`).prepend(alert__li)
+  document.querySelector(`.i-alert-wrapper ul`).prepend(alert__li)
   
   alert__li__p = document.createElement(`p`)
   alert__li__p.innerHTML = alertHtml

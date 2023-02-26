@@ -1,4 +1,4 @@
-div.snackbar-wrapper {
+.i-snackbar-wrapper {
   position: fixed;
   bottom: 0rem;
   width: 100%;
@@ -8,21 +8,19 @@ div.snackbar-wrapper {
   transition-timing-function: ease-out;
   opacity: 0;
 }
-
-div.snackbar-wrapper[data-state="opening"],
-div.snackbar-wrapper[data-state="opened"] {
+.i-snackbar-wrapper[data-state=opening], .i-snackbar-wrapper[data-state=opened] {
   opacity: 1;
   bottom: 1rem;
 }
-
-div.snackbar-wrapper div.snackbar {
+.i-snackbar-wrapper .i-snackbar {
   background: #151515;
   display: flex;
   padding-block: 1rem;
   padding-inline: 2rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
-
-div.snackbar-wrapper div.snackbar div.snackbar-content {
+.i-snackbar-wrapper .i-snackbar .i-snackbar-content {
   display: flex;
 }
+
+/*# sourceMappingURL=style.css.map */

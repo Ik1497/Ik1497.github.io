@@ -1,0 +1,117 @@
+.i-tabset {
+  --i-tabset-background: var(--background-alt);
+  --i-tabset-alt-background: var(--background-primary);
+  --i-tabset-active-indicator-background: var(--link-primary);
+
+  --i-tabset-nav-button-background: var(--background-soft);
+  --i-tabset-nav-button-hover-background: var(--background-light);
+
+  background: var(--i-tabset-background);
+  width: 50rem;
+  border-radius: .5rem;
+  position: relative;
+  overflow: hidden;
+
+  .i-tabset-navigation {
+    
+    ul {
+      position: relative;
+
+      display: flex;
+      list-style: none;
+
+      li {
+        width: 100%;
+
+        &::before {
+          content: unset;
+        }
+        
+        button {
+          all: unset;
+          background: var(--i-tabset-nav-button-background);
+          padding-block: .75rem;
+          width: 100%;
+          text-align: center;
+          cursor: pointer;
+          border-radius: .5rem;
+        }
+
+        &.active button {
+          cursor: default;
+        }
+
+        &:not(.active):hover button,
+        &:not(.active):focus-visible button {
+          background: var(--i-tabset-nav-button-hover-background);
+        }
+
+        &:hover button,
+        &:focus-visible button {
+          transition: background .3s ease;
+        }
+      }
+    }
+
+
+    
+    .i-tabset-active-indicator {
+      background: var(--i-tabset-active-indicator-background);
+      height: 5px;
+      border-radius: 100vmax;
+      position: absolute;
+      left: 0%;
+      transition: left .5s ease;
+    }
+  }
+
+
+  div[data-tab] {
+    margin-top: 1rem;
+    padding-inline: 1rem;
+    padding-block: .5rem 1rem;
+  }
+}
+
+/* ---------------- */
+/* Animation States */
+/* ---------------- */
+
+.i-tabset div[data-tab] {
+  
+  &[data-state="becoming-inactive"] {
+    display: none;
+  }
+  
+  &[data-state="inactive"] {
+    display: none;
+  }
+  
+  &[data-state="becoming-active"] {
+  }
+  
+  &[data-state="active"] {
+  }
+}
+
+/* -------------- */
+/* Helper Classes */
+/* -------------- */
+
+.i-tabset {
+  &.full {
+    width: 100%;
+  }
+  
+  &.full-height {
+    height: 100%;
+  }
+  
+  &.not-rounded {
+    border-radius: 0;
+  }
+  
+  &.alt-background {
+    background: var(--i-tabset-alt-background);
+  }
+}

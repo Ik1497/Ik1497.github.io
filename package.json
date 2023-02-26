@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "sass": "sass --watch assets/scss:assets/css",
+    "components-build": "sass --watch components:components",
     "idiots-build": "node Extensions/IDIOTS/build.cjs"
   },
   "repository": {

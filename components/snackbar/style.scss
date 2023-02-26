@@ -1,0 +1,28 @@
+.i-snackbar-wrapper {
+  position: fixed;
+  bottom: 0rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transition-property: bottom, opacity;
+  transition-timing-function: ease-out;
+  opacity: 0;
+
+  &[data-state="opening"],
+  &[data-state="opened"] {
+    opacity: 1;
+    bottom: 1rem;
+  }
+  
+  .i-snackbar {
+    background: #151515;
+    display: flex;
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    border-radius: .5rem;
+
+    .i-snackbar-content {
+      display: flex;
+    }
+  }  
+}
