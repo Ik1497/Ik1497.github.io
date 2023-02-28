@@ -6,8 +6,7 @@
 }
 
 :root {
-    --background-opacity: .8;
-    --background: hsl(0, 0%, 0%, var(--background-opacity));
+    --background: hsl(0, 0%, 0%, .8);
     --background-progress-bar: hsl(279, 100%, 77%);
     --background-border-radius: .3em;
 
@@ -27,7 +26,16 @@ body {
     font-style: var(--font-style);
     font-size: var(--font-size);
     color: var(--font-color);
-    background: #181818;
+}
+
+.progress-bar-list {
+    position: fixed;
+    top: .5rem;
+    left: .5rem;
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+    margin-block: 1rem;
 }
 
 .container {
@@ -35,11 +43,14 @@ body {
     display: flex;
     position: relative;
     width: 900px;
-    margin: .5em;
     border-radius: var(--background-border-radius);
     overflow: hidden;
-
+    
     animation: showWidget var(--animation-duration) forwards;
+}
+
+.container.removing {
+    animation: hideWidget var(--animation-duration) forwards;
 }
 
 .container .progress-bar {
@@ -57,6 +68,10 @@ body {
     transition: width var(--transition-duration);
 }
 
+.container.removing .progress-bar {
+    animation: hideProgressBar var(--animation-duration) forwards;
+}
+
 .container .progress-text {
     font-size: .5em;
     display: flex;
@@ -69,11 +84,19 @@ body {
     animation: showGoalTitle var(--animation-duration) forwards;
 }
 
+.container.removing .progress-text {
+    animation: hideGoalTitle var(--animation-duration) forwards;
+}
+
 .container .start-goal {
     z-index: 1;
     padding-left: .25em;
 
     animation: showStartGoal var(--animation-duration) forwards;
+}
+
+.container.removing .start-goal {
+    animation: hideStartGoal var(--animation-duration) forwards;
 }
 
 .container .end-goal {
@@ -89,6 +112,10 @@ body {
     animation: showEndGoal var(--animation-duration) forwards;
 }
 
+.container.removing .end-goal {
+    animation: hideEndGoal var(--animation-duration) forwards;
+}
+
 .container .goal-title-container {
     z-index: 1;
     text-align: center;
@@ -99,8 +126,11 @@ body {
     height: 100%;
     font-size: .6em;
     position: absolute;
-
+    
     animation: showGoalTitle var(--animation-duration) forwards;
+}
+.container.removing .goal-title-container {
+    animation: hideGoalTitle var(--animation-duration) forwards;
 }
 
 .container .goal-title {
@@ -119,9 +149,14 @@ body {
     animation: showGoalFinished var(--animation-duration) forwards;
 }
 
+.container.removing .goal-finished {
+    animation: hideGoalFinished var(--animation-duration) forwards;
+}
+
 /* -------------- */
 /* Show Animation */
 /* -------------- */
+
 @keyframes showWidget {
     0% {
         background: transparent;
@@ -196,5 +231,94 @@ body {
 
     100% {
         transform: translateY(0%);
+    }
+}
+
+/* -------------- */
+/* Hide Animation */
+/* -------------- */
+
+@keyframes hideWidget {
+    0% {
+        background: var(--background);
+    }
+
+    60% {
+        background: var(--background);
+    }
+
+    100% {
+        background: transparent;
+    }
+}
+
+@keyframes hideProgressBar {
+    0% {
+        transform: translateY(0%);
+    }
+    
+    80% {
+        transform: translateY(0%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes hideStartGoal {
+    0% {
+        transform: translateY(0%);
+    }
+    
+    70% {
+        transform: translateY(0%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes hideGoalTitle {
+    0% {
+        transform: translateY(0%);
+    }
+    
+    50% {
+        transform: translateY(0%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+
+}
+
+@keyframes hideEndGoal {
+    0% {
+        transform: translateY(0%);
+    }
+
+    30% {
+        transform: translateY(0%);
+    }
+    
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes hideGoalFinished {
+    0% {
+        transform: translateY(0%);
+    }
+
+    50% {
+        transform: translateY(100%);
+    }
+    
+    100% {
+        transform: translateY(100%);
     }
 }

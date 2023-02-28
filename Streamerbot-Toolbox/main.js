@@ -1383,12 +1383,12 @@ async function connectws() {
             let argumentsData = []
             argumentsTable.querySelectorAll(`tr`).forEach(tableRow => {
               if (
-                tableRow.querySelector(`td:first-child`).innerHTML != `` &&
-                tableRow.querySelector(`td:last-child`).innerHTML != ``
+                tableRow.querySelector(`td:first-child`).innerText != `` &&
+                tableRow.querySelector(`td:last-child`).innerText != ``
               ) {
                 argumentsData.push([
-                  tableRow.querySelector(`td:first-child`).innerHTML.replaceAll(`<br>`, ``),
-                  tableRow.querySelector(`td:last-child`).innerHTML.replaceAll(`<br>`, ``)
+                  tableRow.querySelector(`td:first-child`).innerText.replaceAll(`<br>`, ``),
+                  tableRow.querySelector(`td:last-child`).innerText.replaceAll(`<br>`, ``)
                 ])
               }
             });
@@ -1953,8 +1953,8 @@ async function connectws() {
               let arguments = []
               document.querySelectorAll(`.i-modal .main table:not([hidden]) tbody tr`).forEach(tableRow => {
                 arguments.push([
-                  tableRow.querySelector(`td:first-child`).innerHTML,
-                  tableRow.querySelector(`td:last-child`).innerHTML
+                  tableRow.querySelector(`td:first-child`).innerText,
+                  tableRow.querySelector(`td:last-child`).innerText
                 ])
               });
               arguments = Object.fromEntries(arguments)

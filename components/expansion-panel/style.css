@@ -1,11 +1,21 @@
 i-expansion-panel-list {
   --expansion-panel-color: var(--text-900);
   --expansion-panel-background: var(--background-mute);
-  --expansion-panel-hr: linear-gradient(90deg, var(--background-mute), var(--background-light), var(--background-mute));
+  --expansion-panel-background-header: var(--background-soft);
   --expansion-panel-animation-time: .5s;
+  --expansion-panel-accodion-seperator: var(--background-light);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+i-expansion-panel-list[data-expansion-panel-accordion] {
+  gap: 0;
+}
+i-expansion-panel-list[data-expansion-panel-accordion] i-expansion-panel-list-item {
+  border-radius: 0;
+}
+i-expansion-panel-list[data-expansion-panel-accordion] i-expansion-panel-list-item:not(:last-child) {
+  border-bottom: 1px solid var(--expansion-panel-accodion-seperator);
 }
 i-expansion-panel-list i-expansion-panel-list-item {
   color: var(--expansion-panel-color);
@@ -15,7 +25,7 @@ i-expansion-panel-list i-expansion-panel-list-item {
   overflow: hidden;
 }
 i-expansion-panel-list i-expansion-panel-list-item i-expansion-panel-list-item-header {
-  background: var(--expansion-panel-background);
+  background: var(--expansion-panel-background-header);
   padding-block: 0.75rem;
   padding-inline: 0.5rem;
   position: relative;
@@ -30,13 +40,6 @@ i-expansion-panel-list i-expansion-panel-list-item i-expansion-panel-list-item-b
   background: var(--expansion-panel-background);
   transition: max-height var(--expansion-panel-animation-time) ease;
   padding-inline: 0.5rem;
-}
-i-expansion-panel-list i-expansion-panel-list-item i-expansion-panel-list-item-hr {
-  display: block;
-  width: 100%;
-  height: 1px;
-  background: var(--expansion-panel-hr);
-  margin-bottom: 0.75rem;
 }
 i-expansion-panel-list i-expansion-panel-list-item i-expansion-panel-list-item-spacer {
   display: block;

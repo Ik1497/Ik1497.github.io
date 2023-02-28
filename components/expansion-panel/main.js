@@ -44,12 +44,6 @@ class ExpansionPanelListItemHeaderContent extends HTMLElement {
   }
 }
 
-class ExpansionPanelListItemHr extends HTMLElement {
-  constructor() {
-    super()
-  }
-}
-
 class ExpansionPanelListItemSpacer extends HTMLElement {
   constructor() {
     super()
@@ -60,7 +54,7 @@ class ExpansionPanelListItemBody extends HTMLElement {
   constructor() {
     super()
     this.style.maxHeight = `0px`
-    this.prepend(document.createElement(`i-expansion-panel-list-item-hr`))
+    this.prepend(document.createElement(`i-expansion-panel-list-item-spacer`))
   }
 }
 
@@ -75,7 +69,6 @@ customElements.define("i-expansion-panel-list", ExpansionPanelList)
 customElements.define("i-expansion-panel-list-item", ExpansionPanelListItem)
 customElements.define("i-expansion-panel-list-item-header", ExpansionPanelListItemHeader)
 customElements.define("i-expansion-panel-list-item-header-content", ExpansionPanelListItemHeaderContent)
-customElements.define("i-expansion-panel-list-item-hr", ExpansionPanelListItemHr)
 customElements.define("i-expansion-panel-list-item-spacer", ExpansionPanelListItemSpacer)
 customElements.define("i-expansion-panel-list-item-body", ExpansionPanelListItemBody)
 customElements.define("i-expansion-panel-list-item-body-content", ExpansionPanelListItemBodyContent)

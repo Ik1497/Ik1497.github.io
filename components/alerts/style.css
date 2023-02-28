@@ -2,7 +2,7 @@
   --i-alert-background: var(--background-alt);
   z-index: 999;
   position: fixed;
-  right: 0;
+  left: 0;
   top: 0.5rem;
 }
 .i-alert-wrapper ul {
@@ -29,14 +29,14 @@
 /* Animations */
 /* ---------- */
 .i-alert-wrapper ul li {
-  transform: translateX(100%);
+  transform: translateX(-100%);
 }
 .i-alert-wrapper ul li[data-state=opening], .i-alert-wrapper ul li[data-state=opened] {
   transform: translateX(0%);
   transition: transform 0.5s ease-out;
 }
 .i-alert-wrapper ul li[data-state=closing], .i-alert-wrapper ul li[data-state=closed] {
-  transform: translateX(100%);
+  transform: translateX(-100%);
   transition: transform 0.5s ease-in;
 }
 
