@@ -60,125 +60,16 @@
 
       <h3>URL Parameters</h3>
       <ul class="button-grid">
-        <a href="/Extensions/Basics/URL-Parameters">
+        <a href="/Extensions-Builder/#Mute-Indicator" target="_blank">
           <li>
             <i class="mdi mdi-google-chrome"></i>
             <strong>
-              URL Parameters
-              <em>An explanation, on how to use these parameters in your browsersource</em>
+              Customize with URL Parameters
+              <em>Find the URL Parameters of this widget on this website</em>
             </strong>
           </li>
         </a>
       </ul>
-      <h4>Misc</h4>
-      <table data-table="misc"></table>
-      <h4>Font</h4>
-      <table data-table="fonts"></table>
-      <h4>Gap</h4>
-      <table data-table="gap"></table>
-      <h4>Chips</h4>
-      <table data-table="chips"></table>
-      <h4>Themes</h4>
-      <p class="subtitle">use ?theme</p>
-      <table data-table="themes"></table>
-      <h4>Extra</h4>
-      <table data-table="extra"></table>
-      <br>
-      <p>
-        Make it your own with URL Parameters! This example image below uses:<br>
-        <code>https://ik1497.github.io/Extensions/Mute-Indicator?chip-background=rgb(255,255, 255)&chip-border-radius=20px&exclude=[A] Music</code>
-      </p>
-      <img class="img-400 margin-top" src="./overview-url-parameters.png" alt="overview-url-parameters.png">
-      <p>
-        For any suggestions about this widget or any theme feel free to send me
-        a DM on discord or open an <a href="/Links/Issues">issue</a>.
-      </p>
     </main>
-    <script>
-      let tableData = [
-        {
-          id: `misc`,
-          contents: [
-            {
-              Name: `ws`,
-              Description: `The websocket server connection, <code>default: ws://localhost:8080/</code>.`
-            }
-          ]
-        },
-        {
-          id: `fonts`,
-          contents: [
-            {
-              Name: `font-family`,
-              Description: `The font family, <code>default: Uni Sans CAPS</code>.`
-            },
-            {
-              Name: `font-weight`,
-              Description: `The font weight, <code>default: 900</code>.`
-            },
-            {
-              Name: `font-style`,
-              Description: `The font style <code>default: normal</code>.`
-            },
-            {
-              Name: `font-size`,
-              Description: `The font size <code>default: 1.5em</code>.`
-            },
-            {
-              Name: `font-color`,
-              Description: `The font and the svg color <code>default: #181818</code>.`
-            }
-          ]
-        },
-        {
-          id: `gap`,
-          contents: [
-            {
-              Name: `gap-height`,
-              Description: `The height of the gap between the rows of chips, <code>default: .2em</code>.`
-            },
-            {
-              Name: `gap-width`,
-              Description: `The width of the gap between the collumns of chips, <code>default: .5em</code>.`
-            }
-          ]
-        },
-        {
-          id: `chips`,
-          contents: [
-            {
-              Name: `chip-background`,
-              Description: `The background of the chips <code>default: #ff4d4d</code>.<br>Doesn't work with hex, use RGB, HSL, etc.`
-            },
-            {
-              Name: `chip-border-radius`,
-              Description: `The border radius of the chips <code>default: 0</code>.`
-            }
-          ]
-        },
-        {
-          id: `themes`,
-          contents: [
-            {
-              Name: `big`,
-              Description: `If you think it's not noticable enough you can have an even bigger one!`
-            }
-          ]
-        },
-        {
-          id: `extra`,
-          contents: [
-            {
-              Name: `exclude`,
-              Description: `The audio sources to exclude  <code>no default</code>.<br>This can go in a string if you have only one e.g. <code>?exclude=[A] Music</code>.<br>If you have more it can be comma seperated or an array e.g. <code>?exclude=[A] Music,[A] TTS</code>.`
-            },
-            {
-              Name: `include`,
-              Description: `The audio sources to only include <code>no default</code>.<br>This can go in a string if you have only one e.g. <code>?include=[A] Music</code>.<br>If you have more it can be comma seperated or an array e.g. <code>?include=[A] Music,[A] TTS</code>.`
-            }
-          ]
-        }
-      ]
-    </script>
   </body>
 </html>

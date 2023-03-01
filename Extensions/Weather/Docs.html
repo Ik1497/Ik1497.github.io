@@ -29,152 +29,19 @@
       <img class="img-400" src="./overview-day.gif" alt="overview-day.gif">
       <h3>Night</h3>
       <img class="img-400" src="./overview-night.gif" alt="overview-night.gif">
+
       <h3>URL Parameters</h3>
       <ul class="button-grid">
-        <a href="/Extensions/Basics/URL-Parameters">
+        <a href="/Extensions-Builder/#Weather-Widget" target="_blank">
           <li>
             <i class="mdi mdi-google-chrome"></i>
             <strong>
-              URL Parameters
-              <em>An explanation, on how to use these parameters in your browser source</em>
+              Customize with URL Parameters
+              <em>Find the URL Parameters of this widget on this website</em>
             </strong>
           </li>
         </a>
       </ul>
-      <h4>Font</h4>
-      <table data-table="fonts"></table>
-      <h4>Location</h4>
-      <table data-table="location"></table>
-      <h4>Widget</h4>
-      <table data-table="widget"></table>
-      <h4>Misc</h4>
-      <table data-table="misc"></table>
-      <h4>Weather Name</h4>
-      <table data-table="weather-name"></table>
-      <h4>Open Weather Map</h4>
-      <p class="no-padding">You can use the Open Weather Map API for this widget, it requires the <code>open-weather-map-api-key</code> url parameter. When you have given this API key the weather widget will use this data for the icons and temprature. All URL parameters will work the same.</p>
-      <p>Example: <code>https://ik1497.github.io/Extensions/Weather/?lat=52.52&lon=13.419998&open-weather-map-api-key=&lt;your api key&gt;</code></p>
-      <table data-table="openweathermap"></table>
-      <br>
-      <p>
-        Make it your own with URL Parameters! This example image below uses:<br>
-        <code>http://ik1497.github.io/Extensions/Weather/?lat=52.52&lon=13.419998&lang=ja&animation-off&force-time=night&background=linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(0,39,255,1) 100%)</code>
-      </p>
-      <img class="img-400 margin-top" src="./overview-url-parameters.png" alt="overview-url-parameters.png">
-      <p>
-        For any suggestions about this widget or any theme feel free to send me
-        a DM on discord or open an <a href="/Links/Issues">issue</a>.
-      </p>
     </main>
-    <script>
-      let tableData = [
-        {
-          id: `fonts`,
-          contents: [
-            {
-              Name: `font-family`,
-              Description: `The font family, <code>Default: Uni Sans CAPS</code>.`
-            },
-            {
-              Name: `font-weight`,
-              Description: `The font weight, <code>Default: 900</code>.`
-            },
-            {
-              Name: `font-style`,
-              Description: `The font style <code>Default: normal</code>.`
-            },
-            {
-              Name: `font-size`,
-              Description: `The font size <code>Default: 1rem</code>.`
-            },
-            {
-              Name: `font-color`,
-              Description: `The font color <code>Default: #ffffff</code>.`
-            }
-          ]
-        },
-        {
-          id: `location`,
-          contents: [
-            {
-              Name: `lat`,
-              Description: `The latitude <code>Default: 52.52</code>.`
-            },
-            {
-              Name: `lon`,
-              Description: `The longitude <code>Default: 13.419998</code>.`
-            }
-          ]
-        },
-        {
-          id: `widget`,
-          contents: [
-            {
-              Name: `border-radius`,
-              Description: `The border radius of the widget <code>Default: 2rem</code>.`
-            },
-            {
-              Name: `background`,
-              Description: `Changes the background color, allows <a href="https://cssgradient.io/">CSS gradients</a>.<br>Doesn't allow hex codes, use something like HSL, RGB, etc. (this will remove day/night background and only use this one).<br><code>Default Day: linear-gradient(hsl(194, 97%, 44%), hsl(219, 94%, 41%))</code>.<br><code>Default Night: linear-gradient(hsl(224, 14%, 15%), hsl(255, 20%, 4%))</code>.`
-            }
-          ]
-        },
-        {
-          id: `misc`,
-          contents: [
-            {
-              Name: `lang`,
-              Description: `The language of the widget <code>Default: en</code>.<br>This is auto translated, if you spot wrong translations, send me a DM on Discord.<br>Choose between: ar, cs, da, de, el, en, es, fi, fr, it, ja, nl, no, pl, pt_BR, pt, ro, ru, sv, uk, zh-Hans, zh.`
-            },
-            {
-              Name: `animation-off`,
-              Description: `Turns the animated icons off.<br><span class="url-parameter-novalue"></span>.`
-            },
-            {
-              Name: `unit`,
-              Description: `The unit of the temprature, choose between <code>c</code> and <code>f</code> <code>Default: c</code>.`
-            },
-            {
-              Name: `force-time`,
-              Description: `Lets the widget have the same look in night and day (changes background and icons, icons can be change with <code>force-icon-time</code>) <code>No Default</code>.<br>Choose between <code>day</code> and <code>night</code>.`
-            },
-            {
-              Name: `force-icon-time`,
-              Description: `Lets the icons have the same look in night and day <code>No Default</code>.<br>Choose between <code>day</code> and <code>night</code>.`
-            }
-          ]
-        },
-        {
-          id: `weather-name`,
-          contents: [
-            {
-              Name: `weather-name`,
-              Description: `Sets the automated weather name to a customized name for things like your location (<code>?lang</code> will have no effect) <code>No Default</code>.`
-            },
-            {
-              Name: `weather-name-prefix`,
-              Description: `A text you can add before the weather name <code>No Default</code>.`
-            },
-            {
-              Name: `weather-name-suffix`,
-              Description: `A text you can add after the weather name <code>No Default</code>.`
-            },
-            {
-              Name: `weather-name-subtitle`,
-              Description: `A text you can add under the weather name <code>No Default</code>.`
-            }
-          ]
-        },
-        {
-          id: `openweathermap`,
-          contents: [
-            {
-              Name: `open-weather-map-api-key`,
-              Description: `Your open weather map API key, can be generated <a href="https://home.openweathermap.org/api_keys">here</a> (note: need an account for this) <code>No Default</code>.`
-            }
-          ]
-        }
-      ]
-    </script>
   </body>
 </html>

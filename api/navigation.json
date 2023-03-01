@@ -41,6 +41,18 @@
     "type": "group",
     "groupItems": [
       {
+        "name": "Progress Bar",
+        "description": "Make an easy to set-up dynamic progress bar with Streamer.bot",
+        "icon": "mdi mdi-progress-upload",
+        "href": "/Extensions/Progress-Bar/Docs",
+        "type": "link",
+        "channel": "public",
+        "lastEdited": {
+          "date": "1/03/2023",
+          "time": "16:43"
+        }
+      },
+      {
         "name": "Timer Widget",
         "description": "Start, pause and stop a timer with Streamer.bot",
         "icon": "mdi mdi-timer-outline",
@@ -50,48 +62,7 @@
         "lastEdited": {
           "date": "12/02/2023",
           "time": "17:41"
-        },
-        "urlParameters": [
-          {
-            "name": "ws"
-          },
-          {
-            "name": "font-family"
-          },
-          {
-            "name": "font-weight"
-          },
-          {
-            "name": "font-style"
-          },
-          {
-            "name": "font-size"
-          },
-          {
-            "name": "font-color"
-          },
-          {
-            "name": "timer-background"
-          },
-          {
-            "name": "timer-border-radius"
-          },
-          {
-            "name": "timer-spacing"
-          },
-          {
-            "name": "timer-padding"
-          },
-          {
-            "name": "timer-minimum-width"
-          },
-          {
-            "name": "animation-duration"
-          },
-          {
-            "name": "animation-scaled-size"
-          }
-        ]
+        }
       },
       {
         "name": "Weather Widget V2",

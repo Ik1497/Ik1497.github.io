@@ -63,16 +63,18 @@ function connectws() {
       }
 
 
-      function create(id, title = `Progress Bar`, maximum = 50, minimum = 0, startValue = 0) {
+      function create(id, title = `Progress Bar`, maximum = 50, minimum = 0, startValue = ``) {
         if (id === undefined || title === undefined || maximum === undefined) { return "[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "ERROR: Data is missing (string/number: id, string: title, number: maximum)"; }
         let progressBarContainer = document.createElement(`div`)
         progressBarContainer.id = id
         progressBarContainer.className = `container`
-        progressBarContainer.innerHTML = `<p class="start-goal">0</p><div class="progress-bar"></div><div class="goal-title-container"><p class="goal-title">${title}</p></div><p class="end-goal">${maximum}</p><p class="progress-text">0%</p>`
+        progressBarContainer.innerHTML = `<p class="start-goal">${minimum}</p><div class="progress-bar"></div><div class="goal-title-container"><p class="goal-title">${title}</p></div><p class="end-goal">${maximum}</p><p class="progress-text">0%</p>`
         document.querySelector(`ul.progress-bar-list`).prepend(progressBarContainer)
-        if (data?.data?.settings?.progressColor != null || data?.data?.settings?.progressColor != `None`) {
+        if (data?.data?.settings?.progressColor != null && data?.data?.settings?.progressColor != `None`) {
           progressBarContainer.style.setProperty(`--background-progress-bar`, data?.data?.settings?.progressColor)
         }
+
+        if (startValue != ``) progress(id, startValue)
       }
       
       function progress(id, value = `50`) {
@@ -110,7 +112,7 @@ function connectws() {
         
           setTimeout(() => {
             remove(id)
-          }, 3000);
+          }, 7500);
         });
       }
     })

@@ -8,7 +8,7 @@ let page = {
     buttons: [
         {
             name: "Latest Extension",
-            href: "/Extensions/Mute-Indicator/Docs",
+            href: "/Extensions/Progress-Bar/Docs",
             external: false,
             type: "default"
         },
@@ -21,7 +21,14 @@ let page = {
     ],
     items: [
         {
-            name: "Weather Widget",
+            name: "Progress Bar",
+            description: "Make an easy to set-up dynamic progress bar with Streamer.bot",
+            icon: "mdi mdi-progress-upload",
+            href: "/Extensions/Progress-Bar/Docs",
+            enabled: true
+        },
+        {
+            name: "Weather Widget V2",
             description: "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
             icon: "mdi mdi-weather-lightning",
             href: "/Extensions/Weather/Docs",
@@ -53,13 +60,6 @@ let page = {
             description: "Music Widget for Spotify",
             icon: "mdi mdi-spotify",
             href: "/Extensions/Music/Widget/Docs",
-            enabled: false
-        },
-        {
-            name: "Minimal Music Widget",
-            description: "Minimal Music Widget for Spotify",
-            icon: "mdi mdi-spotify",
-            href: "/Extensions/Music/Minimal/Docs",
             enabled: false
         },
     ]
@@ -146,7 +146,7 @@ function setGithubRepoInformation(githubStargazersCount, githubWatchers) {
     sessionStorage.setItem(`github_stargazers_count`, githubStargazersCount);
     sessionStorage.setItem(`github_watchers`, githubWatchers);
 
-    document.querySelector(`section.repository-info ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item" title="${githubStargazersCount} Stars" aria-label="${githubStargazersCount} Stars"><a href="https://github.com/${page.githubUser}/${page.githubRepository}/stargazers" target="_blank" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p8s"><div class="background"></div><i class="icon mdi mdi-star" style="color: #fff000"></i><p class="title">${githubStargazersCount} Stars</p><p class="description">Become a Stargazers!</p></article></a></li>`)
+    document.querySelector(`section.repository-info ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item" title="${githubStargazersCount} Stars" aria-label="${githubStargazersCount} Stars"><a href="https://github.com/${page.githubUser}/${page.githubRepository}/stargazers" target="_blank" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p8s"><div class="background"></div><i class="icon mdi mdi-star" style="color: #fff000"></i><p class="title">${githubStargazersCount} Stars</p><p class="description">Become a Stargazer!</p></article></a></li>`)
     document.querySelector(`section.repository-info ul.item-grid`).insertAdjacentHTML(`beforeend`, `<li class="item-grid-item" title="${githubWatchers} Watchers" aria-label="${githubWatchers} Watchers"><a href="https://github.com/${page.githubUser}/${page.githubRepository}/watchers" target="_blank" data-tilt class="item-grid-item"><article class="animated fadeInDown wait-p10s"><div class="background"></div><i class="icon mdi mdi-eye" style="color: var(--text-900)"></i><p class="title">${githubWatchers} Watchers</p><p class="description">Watch this Repository to be notified of all changes!</p></article></a></li>`)
 }
 
