@@ -1,0 +1,104 @@
+i-sb-import-wrapper {
+  --i-sb-import-background: #27272A;
+  --i-sb-import-code-background: #181818;
+  --i-sb-import-color: #E4E4E7;
+
+  --i-sb-import-border-radius: 8px;
+
+  margin-block: 1rem;
+  display: block;
+
+  &[no-margin] {
+    margin-block: 0;
+  }
+  
+  i-sb-import {
+    overflow: hidden;
+    display: block;
+    background: var(--i-sb-import-background);
+    border-radius: var(--i-sb-import-border-radius);
+    
+    pre {
+      border-top-left-radius: 0;
+      display: block;
+      padding-block: 1rem!important;
+      padding-inline: 0!important;
+      margin: 0!important;
+      
+      overflow-x: auto;
+      background: var(--i-sb-import-code-background);
+      width: 100%;
+
+      &::-webkit-scrollbar {
+        width: 3px!important;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #202020; 
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #262626; 
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: #303030; 
+      }
+      
+      code {
+        color: var(--i-sb-import-color)!important;
+        padding-inline: .5rem;
+        background: none;
+        border: none;
+        outline: none;
+
+      }
+    }
+
+    i-sb-import-actions {
+      display: flex;
+      overflow: hidden;
+
+      i-sb-import-actions-title,
+      i-sb-import-actions-item,
+      button[is="i-sb-import-actions-button"] {
+        background: var(--i-sb-import-code-background);
+        border: none;
+        outline: none;
+        border-radius: 0;
+        font: inherit;
+        padding-inline: 1.5rem;
+        padding-block: .25rem;
+        display: block;
+
+        &:not(:last-child) {
+          border-right: 1px solid #222;
+        }
+      }
+
+      i-sb-import-actions-title {
+        color: #87adff;
+        font-weight: 700;
+      }
+
+      i-sb-import-actions-item {
+
+      }
+
+      button[is="i-sb-import-actions-button"] {
+        all: none;
+        color: var(--i-sb-import-color);
+        cursor: pointer;
+
+        &:hover,
+        &:focus-visible {
+          background: #202020;
+        }
+
+        &:active {
+          background: #242424;
+        }
+      }
+    }
+  }
+}

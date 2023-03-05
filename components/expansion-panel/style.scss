@@ -1,10 +1,13 @@
 i-expansion-panel-list {
-  --expansion-panel-color: var(--text-900);
-  --expansion-panel-background: var(--background-mute);
-  --expansion-panel-background-header: var(--background-soft);
-  --expansion-panel-animation-time: .5s;
+  --i-expansion-panel-color: var(--text-900);
+  --i-expansion-panel-background: var(--background-mute);
+  --i-expansion-panel-background-header: var(--background-soft);
+  --i-expansion-panel-animation-time: .5s;
 
-  --expansion-panel-accodion-seperator: var(--background-light);
+  --i-expansion-panel-accodion-seperator: var(--background-light);
+
+  --i-expansion-panel-expaned-icon: "-";
+  --i-expansion-panel-contracted-icon: "+";
 
   display: flex;
   flex-direction: column;
@@ -18,26 +21,26 @@ i-expansion-panel-list {
     }
 
     i-expansion-panel-list-item:not(:last-child) {
-      border-bottom: 1px solid var(--expansion-panel-accodion-seperator);
+      border-bottom: 1px solid var(--i-expansion-panel-accodion-seperator);
     }
   }
   
   i-expansion-panel-list-item {
-    color: var(--expansion-panel-color);
+    color: var(--i-expansion-panel-color);
     display: flex;
     flex-direction: column;
     border-radius: .5rem;
     overflow: hidden;
     
     i-expansion-panel-list-item-header {
-      background: var(--expansion-panel-background-header);
+      background: var(--i-expansion-panel-background-header);
       padding-block: .75rem;
       padding-inline: .5rem;
       position: relative;
       cursor: pointer;
 
       &::after {
-        content: "+";
+        content: var(--i-expansion-panel-contracted-icon);
         position: absolute;
         right: .5rem;
       }
@@ -48,8 +51,8 @@ i-expansion-panel-list {
     }
 
     i-expansion-panel-list-item-body {
-      background: var(--expansion-panel-background);
-      transition: max-height var(--expansion-panel-animation-time) ease;
+      background: var(--i-expansion-panel-background);
+      transition: max-height var(--i-expansion-panel-animation-time) ease;
       padding-inline: .5rem;
       
       i-expansion-panel-list-item-body-content {
@@ -67,6 +70,6 @@ i-expansion-panel-list {
 
 i-expansion-panel-list-item[data-expansion-state="expanded"] {
   i-expansion-panel-list-item-header::after {
-    content: "-";
+    content: var(--i-expansion-panel-expaned-icon);
   }
 }

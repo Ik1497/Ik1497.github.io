@@ -2,6 +2,9 @@ document.body.insertAdjacentHTML(`afterbegin`, `
 <ul class="progress-bar-list"></ul>
 `)
 
+let cycleDuration = new URLSearchParams(window.location.search).get(`cycle-duration`) ||15000
+let cycleTransitionDuration = new URLSearchParams(window.location.search).get(`cycle-transition-duration`) ||500
+
 //////////////////////
 /// Websocket Code ///
 //////////////////////
@@ -39,61 +42,103 @@ function connectws() {
       const data = JSON.parse(event.data);
 
       if (data?.data?.widget != `progress-bar`) return
-      if (data?.data?.id === undefined) return
+      if (data?.data?.args?.id === undefined) return
       
       console.log(data)
       
-      if (data?.data?.eventType === `create`) {
-        if (data?.data?.title === undefined) return
-        if (data?.data?.maximum === undefined) return
-        if (data?.data?.minimum === undefined) return
-        if (data?.data?.startValue === undefined) return
+      if (data?.data?.args?.request === `create`) {
+        if (data?.data?.args?.title === undefined) return
+        if (data?.data?.args?.maximum === undefined) return
+        if (data?.data?.args?.minimum === undefined) return
+        if (data?.data?.args?.startValue === undefined) return
 
-        create(data?.data?.id, data?.data?.title, data?.data?.maximum, data?.data?.minimum, data?.data?.startValue)
+        create(data?.data?.args?.id, data?.data?.args?.title, data?.data?.args?.maximum, data?.data?.args?.minimum, data?.data?.args?.startValue)
       }
       
-      else if (data?.data?.eventType === `progress`) {
-        if (data?.data?.value === undefined) return
+      else if (data?.data?.args?.request === `progress`) {
+        if (data?.data?.args?.value === undefined) return
 
-        progress(data?.data?.id, data?.data?.value)
+        progress(data?.data?.args?.id, data?.data?.args?.value)
+      }
+
+      else if (data?.data?.args?.request === `update`) {
+        if (data?.data?.args === undefined) return
+
+        update(data?.data?.args?.id, data?.data?.args)
       }
       
-      else if (data?.data?.eventType === `remove`) {
+      else if (data?.data?.args?.request === `remove`) {
         remove(data?.data?.id)
       }
 
 
       function create(id, title = `Progress Bar`, maximum = 50, minimum = 0, startValue = ``) {
-        if (id === undefined || title === undefined || maximum === undefined) { return "[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "ERROR: Data is missing (string/number: id, string: title, number: maximum)"; }
         let progressBarContainer = document.createElement(`div`)
         progressBarContainer.id = id
         progressBarContainer.className = `container`
-        progressBarContainer.innerHTML = `<p class="start-goal">${minimum}</p><div class="progress-bar"></div><div class="goal-title-container"><p class="goal-title">${title}</p></div><p class="end-goal">${maximum}</p><p class="progress-text">0%</p>`
+        progressBarContainer.dataset.state = `hidden`
+
+        progressBarContainer.innerHTML = `
+        <p class="start-goal">${minimum}</p>
+        <div class="progress-bar"></div>
+        <div class="goal-title-container">
+          <p class="goal-title">${title}</p>
+        </div>
+        <p class="end-goal">${maximum}</p>
+        <p class="progress-text">0%</p>`
+
         document.querySelector(`ul.progress-bar-list`).prepend(progressBarContainer)
-        if (data?.data?.settings?.progressColor != null && data?.data?.settings?.progressColor != `None`) {
-          progressBarContainer.style.setProperty(`--background-progress-bar`, data?.data?.settings?.progressColor)
+        if (data?.data?.args?.progressColor != null && data?.data?.args?.progressColor != `None`) {
+          progressBarContainer.style.setProperty(`--background-progress-bar`, data?.data?.args?.progressColor)
         }
 
         if (startValue != ``) progress(id, startValue)
+
+        updateCycle()
       }
       
       function progress(id, value = `50`) {
-        if (id === undefined || value === undefined) { return "[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "ERROR: Data is missing (string/number: id, number: value)"; }
         document.querySelectorAll(`#${id}`).forEach(container => {
           let maximum = container.querySelector(".end-goal").innerText;
 
-          container.querySelector(".start-goal").innerText = Number(container.querySelector(".start-goal").innerText) + Number(value);
-          container.querySelector(".progress-bar").style.width = `${Number(container.querySelector(".start-goal").innerText) / maximum * 100}%`;
+          if (!isNaN(Math.round((Number(container.querySelector(".start-goal").innerText) + Number(value)) * 100) / 100)) {
+            container.querySelector(".start-goal").innerText = Math.round((Number(container.querySelector(".start-goal").innerText) + Number(value)) * 100) / 100;
+            container.querySelector(".progress-bar").style.width = `${Number(container.querySelector(".start-goal").innerText) / maximum * 100}%`
+          }
 
           if (Number(container.querySelector(".start-goal").innerText) >= maximum) {
             finish(id);
           }
         });
       }
+
+      function set(id, value = `0`) {
+        document.querySelectorAll(`#${id}`).forEach(container => {
+          let maximum = container.querySelector(".end-goal").innerText;
+
+          container.querySelector(".start-goal").innerText = value;
+          container.querySelector(".progress-bar").style.width = `${value / maximum * 100}%`;
+
+          if (Number(container.querySelector(".start-goal").innerText) >= maximum) {
+            finish(id);
+          }
+        });
+      }
+
+
+      function update(id, args) {
+        if (args.value != undefined) {
+          set(id, args.value)
+        }
+
+        if (args.progressColor != undefined) {
+          document.querySelectorAll(`#${id}`).forEach(container => {
+            container.style.setProperty(`--background-progress-bar`, args.progressColor)
+          })
+        }
+      }
       
-      function remove(id) {
-        if (id === undefined) { return "[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "ERROR: Data is missing (string/number: id)"; }
-        
+      function remove(id) {        
         document.querySelectorAll(`#${id}`).forEach(container => {
           container.classList.add(`removing`)
           
@@ -101,6 +146,8 @@ function connectws() {
             container.remove();
           });
         });
+
+        updateCycle()
       }
       
       
@@ -114,10 +161,58 @@ function connectws() {
             remove(id)
           }, 7500);
         });
+
+        updateCycle()
       }
+
     })
   }
 }
+
+function updateCycle() {
+  if (new URLSearchParams(window.location.search).get(`cycle`) != null) {
+    document.body.setAttribute(`progress-bar-count`, document.querySelectorAll(`.progress-bar-list .container`).length)
+    if (document.body.getAttribute(`current-progress-bar`) === null) {
+      document.body.setAttribute(`current-progress-bar`, 0)
+    }
+  }
+}
+
+setInterval(() => {
+  if (document.body.getAttribute(`current-progress-bar`) != null && document.body.getAttribute(`progress-bar-count`) != null) {
+    let currentProgressBar = Number(document.body.getAttribute(`current-progress-bar`))
+    let progressBarCount = Number(document.body.getAttribute(`progress-bar-count`))
+
+
+    if (Number(document.body.getAttribute(`current-progress-bar`)) < Number(document.body.getAttribute(`progress-bar-count`))) {
+      document.body.setAttribute(`current-progress-bar`, Number(document.body.getAttribute(`current-progress-bar`)) + 1)
+      currentProgressBar += 1
+    } else {
+      document.body.setAttribute(`current-progress-bar`, 1)
+      currentProgressBar = 1
+    }
+
+    console.log(progressBarCount, currentProgressBar)
+    document.querySelectorAll(`.progress-bar-list .container`).forEach(container => {
+      if (container.getAttribute(`data-state`) === `shown` || container.getAttribute(`data-state`) === `showing`) {
+        container.setAttribute(`data-state`, `hiding`)
+      }
+
+      setTimeout(() => {
+        if (container.getAttribute(`data-state`) === `hiding`) {
+          container.setAttribute(`data-state`, `hidden`)
+        }
+      }, cycleTransitionDuration);
+    });
+    Array.from(document.querySelectorAll(`.progress-bar-list .container`)).reverse()[currentProgressBar - 1].setAttribute(`data-state`, `showing`)
+    
+    setTimeout(() => {
+      if (Array.from(document.querySelectorAll(`.progress-bar-list .container`)).reverse()[currentProgressBar - 1].getAttribute(`data-state`) === `showing`) {
+        Array.from(document.querySelectorAll(`.progress-bar-list .container`)).reverse()[currentProgressBar - 1].setAttribute(`data-state`, `shown`)
+      }
+    }, cycleTransitionDuration);
+  }
+}, cycleDuration);
 
 //////////////////////
 /// URL parameters ///
@@ -141,3 +236,15 @@ root.style.setProperty("--background-border-radius", params.get("background-bord
 // Animations
 root.style.setProperty("--animation-duration", params.get("animation-duration"))
 root.style.setProperty("--transition-duration", params.get("transition-duration"))
+
+// Cycle
+root.style.setProperty("--cycle-transition-duration", cycleTransitionDuration + `ms`)
+root.style.setProperty("--cycle-duration", cycleDuration + `ms`)
+
+if (params.get("cycle") != null) {
+  if (params.get("cycle-transition") != null) {
+    document.body.dataset.cycleTransition = params.get("cycle-transition")
+  } else {
+    document.body.dataset.cycleTransition = `fade`
+  }
+}

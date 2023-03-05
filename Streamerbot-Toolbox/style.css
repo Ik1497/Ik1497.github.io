@@ -226,6 +226,13 @@ header aside button {
   cursor: pointer;
 }
 
+.buttons-row.list-items.tonal li {
+  --color: 42, 149, 229;
+  background: rgba(var(--color), .1);
+  color: rgb(var(--color));
+  border: 1px solid rgba(var(--color), .15);
+}
+
 .tags {
   display: flex;
   align-items: center;

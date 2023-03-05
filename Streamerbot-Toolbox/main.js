@@ -1050,7 +1050,7 @@ async function connectws() {
             }, 50);
           })
 
-          let groups = `<ul class="buttons-row list-items">`
+          let groups = `<ul class="buttons-row list-items tonal">`
           viewer.groups.forEach(group => {
             groups += `<li>${group}</li>`
           });
@@ -1058,15 +1058,9 @@ async function connectws() {
 
           viewerListItem__button.addEventListener(`click`, () => {
             let userSettingsHtml = ``
-            if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) {
-            } else {
-              // userSettingsHtml = `
-              // <blockquote class="error">
-              // The Streamer.bot Action Package must be properly installed to use the features below
-              // </blockquote>`
-            }
+
             createModal(`
-            <ul class="buttons-row list-items">
+            <ul class="buttons-row list-items tonal">
               <li class="${viewer.type === `YouTube` ? `mdi mdi-youtube` : `mdi mdi-twitch`}">${viewer.type}</li>
               ${viewer.subscribed ? `<li class="mdi mdi-account-star">Subscribed</li>` : ``}
               <li>${viewer.role}</li>

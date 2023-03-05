@@ -1,31 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Site Meta -->
     <meta name="og:site_name" content="Streamer.bot Actions">
     <meta property="og:image" content="https://ik1497.github.io/assets/images/favicon.png">
+    <meta property="og:type" content="website">
     <meta name="theme-color" content="#B80086">
-    
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <meta name="author" content="Ik1497">
+
+    <!-- Page Meta -->
+    <meta property="og:title" content="Progress Bar">
+    <title>Progress Bar</title>
+
+    <meta property="og:description" content="Make an easy to set-up dynamic progress bar with Streamer.bot">
+    <meta name="description" content="Make an easy to set-up dynamic progress bar with Streamer.bot">
+
+    <!-- Scripts -->
     <script src="/assets/js/head.js"></script>
     <script src="/assets/js/main.js" defer></script>
-    
-    <meta property="og:title" content="Progress Bar">
-    <meta property="og:description" content="Make an easy to set-up dynamic progress bar with Streamer.bot">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
   </head>
   <body>
     <main>
-      <h2>Import File</h2>
-      <ul class="button-grid">
-        <a href="./import.sb">
-          <li>
-            <i class="mdi mdi-file-download"></i>
-            <strong>
-              Import File
-              <em>Click to Download</em>
-            </strong>
-          </li>
-        </a>
-      </ul>
+      <h2>Action Imports</h2>
+      <h3>Twitch</h3>
+      <i-unloaded-tabs>
+        <i-unloaded-tabs-tab data-tab="Cheers">
+          <i-sb-import-loader import-name="Twitch Cheers">
+            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
+          </i-sb-import-loader>
+        </i-unloaded-tabs-tab>
+        <i-unloaded-tabs-tab data-tab="Followers">
+          <i-sb-import-loader import-name="Twitch Followers">
+            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
+          </i-sb-import-loader>
+        </i-unloaded-tabs-tab>
+        <i-unloaded-tabs-tab data-tab="Subscribers">
+          <i-sb-import-loader import-name="Twitch Subscribers">
+            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
+          </i-sb-import-loader>
+        </i-unloaded-tabs-tab>
+      </i-unloaded-tabs>
+
+      <h3>YouTube</h3>
+      <i-unloaded-tabs>
+        <i-unloaded-tabs-tab data-tab="Super Chat">
+          <i-sb-import-loader import-name="YouTube Super Chat">
+            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
+          </i-sb-import-loader>
+        </i-unloaded-tabs-tab>
+      </i-unloaded-tabs>
+
+      <h3>Ko-fi</h3>
+      <i-unloaded-tabs>
+        <i-unloaded-tabs-tab data-tab="Donations">
+          <i-sb-import-loader import-name="Ko-fi Donations">
+            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
+          </i-sb-import-loader>
+        </i-unloaded-tabs-tab>
+      </i-unloaded-tabs>
       <h2>Installation</h2>
       <p>
         In Streamer.bot select <code>Import</code> in the top left.<br>
@@ -50,8 +89,9 @@
         2. Put the URL of the widget in the Browser Source, find URL
         <a href="#widget">here</a>.<br>
       </p>
-      <h2>Actions Overview</h2>
-      <table data-table="actions"></table>
+      <h2>Requests</h2>
+      <p>Request variables can be updated server side. E.g. if you want the update request to contain an exta variable, I can add that in the widget and you don't need to update your action</p>
+      <table data-table="requests"></table>
 
       <h2>Widget</h2>
       <p>
@@ -61,7 +101,7 @@
       <br>
       <img class="img-400" src="./overview.png" alt="overview.png">
 
-      <h3>URL Parameters</h3>
+      <h2>URL Parameters</h2>
       <ul class="button-grid">
         <a href="/Extensions-Builder/#Progress-Bar" target="_blank">
           <li>
@@ -77,33 +117,40 @@
     <script>
       let tableData = [
         {
-          id: `actions`,
+          id: `requests`,
           contents: [
             {
-              Action: `[Progress Bar] Create`,
+              Action: `create`,
               Variables: `
-              <code>id</code>: Unique id for each progress bar,
+              <code>id</code>: Unique id for the progress bar,
               <br><code>title</code>: The title of the progress bar,
               <br><code>maximum</code>: The maximum amount before the progress bar finishes,
               <br><code>minimum</code>: The lowest value the progress bar can get,
               <br><code>startValue</code>: Where the value starts in the bar bewteen minimum and maximum,
-              <br><code>settingsProgressColor</code>: The unique color of this progress bar, don't provide this variable if you don't want to change it.
+              <br><code>progressColor</code>: The unique color of this progress bar, don't provide this variable if you don't want to change it.
               `
             },
             {
-              Action: `[Progress Bar] Progress`,
+              Action: `progress`,
               Variables: `
-              <code>id</code>: Unique id for each progress bar,
+              <code>id</code>: Unique id for the progress bar,
               <br><code>value</code>: The amount to increase the progress bar.
               `
             },
             {
-              Action: `[Progress Bar] Remove`,
-              Variables: `<code>id</code>: Unique id for each progress bar.`
+              Action: `remove`,
+              Variables: `
+              <code>id</code>: Unique id for the progress bar.
+              `
             },
             {
-              Action: `[SAMPLE: Progress Bar] ..........`,
-              Variables: `Nothing needed everything is already setup`
+              Action: `update`,
+              Variables: `
+              All of these except the id are optional
+              <br><code>id</code>: Unique id for the progress bar,
+              <br><code>value</code>: The current value of the progress bar, this doesn't increment or decrement it, this replaces it,
+              <br><code>progressColor</code>: The unique color of this progress bar.
+              `
             }
           ]
         },

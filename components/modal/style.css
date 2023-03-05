@@ -1,4 +1,8 @@
 .i-modal-wrapper {
+  --i-modal-theme: var(--color-link-hover);
+  --i-modal-background: var(--background-alt);
+  --i-modal-color: var(--text-900);
+  --i-modal-color-alt: var(--text-700);
   position: fixed;
   left: 50%;
   top: 50%;
@@ -8,7 +12,7 @@
   border-radius: 0.5rem;
 }
 .i-modal-wrapper .i-modal {
-  background: var(--background-alt);
+  background: var(--i-modal-background);
   width: 85vw;
   max-width: 85rem;
   height: 70vh;
@@ -26,7 +30,7 @@
   height: 100%;
 }
 .i-modal-wrapper .i-modal .header {
-  background: var(--color-link-hover);
+  background: var(--i-modal-theme);
   position: fixed;
   top: 0;
   left: 0;
@@ -45,17 +49,17 @@
   background: none;
   cursor: pointer;
   font-weight: 900;
-  color: var(--text-900);
+  color: var(--i-modal-color);
   border: 2px solid currentColor;
   border-radius: 0.25rem;
   margin-left: auto;
 }
 .i-modal-wrapper .i-modal .header .close-button:active {
-  color: var(--text-800);
+  color: var(--i-modal-color-alt);
 }
 .i-modal-wrapper .i-modal .header .subtitle {
   font-size: 0.75rem;
-  color: var(--text-800);
+  color: var(--i-modal-color-alt);
 }
 .i-modal-wrapper .i-modal .header .title {
   font-weight: bold;
@@ -66,7 +70,7 @@
 .i-modal-wrapper .i-modal .header .title small {
   font-size: 0.75rem;
   padding-left: 0.5ch;
-  color: var(--text-700);
+  color: var(--i-modal-color-alt);
 }
 .i-modal-wrapper .i-modal .main {
   width: 100%;

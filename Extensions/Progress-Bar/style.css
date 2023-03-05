@@ -1,156 +1,156 @@
 @import url(/assets/fonts/Uni-Sans-CAPS/font.css);
 
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
-    --background: hsl(0, 0%, 0%, .8);
-    --background-progress-bar: hsl(279, 100%, 77%);
-    --background-border-radius: .3em;
+  --background: hsl(0, 0%, 0%, .8);
+  --background-progress-bar: hsl(279, 100%, 77%);
+  --background-border-radius: .3em;
 
-    --font-family: Uni Sans CAPS;
-    --font-weight: 900;
-    --font-style: normal;
-    --font-size: 3em;
-    --font-color: #fff;
+  --font-family: Uni Sans CAPS;
+  --font-weight: 900;
+  --font-style: normal;
+  --font-size: 3em;
+  --font-color: #fff;
 
-    --animation-duration: 1500ms;
-    --transition-duration: 750ms;
+  --animation-duration: 1500ms;
+  --transition-duration: 750ms;
 }
 
 body {
-    font-family: var(--font-family);
-    font-weight: var(--font-weight);
-    font-style: var(--font-style);
-    font-size: var(--font-size);
-    color: var(--font-color);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  font-style: var(--font-style);
+  font-size: var(--font-size);
+  color: var(--font-color);
 }
 
 .progress-bar-list {
-    position: fixed;
-    top: .5rem;
-    left: .5rem;
-    list-style: none;
-    display: grid;
-    gap: 1rem;
-    margin-block: 1rem;
+  position: fixed;
+  top: .5rem;
+  left: .5rem;
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+  margin-block: 1rem;
 }
 
 .container {
-    background: var(--background);
-    display: flex;
-    position: relative;
-    width: 900px;
-    border-radius: var(--background-border-radius);
-    overflow: hidden;
-    
-    animation: showWidget var(--animation-duration) forwards;
+  background: var(--background);
+  display: flex;
+  position: relative;
+  width: 900px;
+  border-radius: var(--background-border-radius);
+  overflow: hidden;
+  
+  animation: showWidget var(--animation-duration) forwards;
 }
 
 .container.removing {
-    animation: hideWidget var(--animation-duration) forwards;
+  animation: hideWidget var(--animation-duration) forwards;
 }
 
 .container .progress-bar {
-    background: var(--background-progress-bar);
-    position: absolute;
-    inset: 0;
-    text-align: right;
-    justify-content: right;
-    align-items: center;
-    width: 0%;
-    display: flex;
-    border-radius: var(--background-border-radius) 0 0 var(--background-border-radius);
+  background: var(--background-progress-bar);
+  position: absolute;
+  inset: 0;
+  text-align: right;
+  justify-content: right;
+  align-items: center;
+  width: 0%;
+  display: flex;
+  border-radius: var(--background-border-radius) 0 0 var(--background-border-radius);
 
-    animation: showProgressBar var(--animation-duration) forwards;
-    transition: width var(--transition-duration);
+  animation: showProgressBar var(--animation-duration) forwards;
+  transition: width var(--transition-duration);
 }
 
 .container.removing .progress-bar {
-    animation: hideProgressBar var(--animation-duration) forwards;
+  animation: hideProgressBar var(--animation-duration) forwards;
 }
 
 .container .progress-text {
-    font-size: .5em;
-    display: flex;
-    width: 80%;
-    justify-content: end;
-    align-items: center;
-    position: absolute;
-    bottom: -50%;
+  font-size: .5em;
+  display: flex;
+  width: 80%;
+  justify-content: end;
+  align-items: center;
+  position: absolute;
+  bottom: -50%;
 
-    animation: showGoalTitle var(--animation-duration) forwards;
+  animation: showGoalTitle var(--animation-duration) forwards;
 }
 
 .container.removing .progress-text {
-    animation: hideGoalTitle var(--animation-duration) forwards;
+  animation: hideGoalTitle var(--animation-duration) forwards;
 }
 
 .container .start-goal {
-    z-index: 1;
-    padding-left: .25em;
+  z-index: 1;
+  padding-left: .25em;
 
-    animation: showStartGoal var(--animation-duration) forwards;
+  animation: showStartGoal var(--animation-duration) forwards;
 }
 
 .container.removing .start-goal {
-    animation: hideStartGoal var(--animation-duration) forwards;
+  animation: hideStartGoal var(--animation-duration) forwards;
 }
 
 .container .end-goal {
-    z-index: 1;
-    text-align: end;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    position: absolute;
-    right: .25em;
+  z-index: 1;
+  text-align: end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  right: .25em;
 
-    animation: showEndGoal var(--animation-duration) forwards;
+  animation: showEndGoal var(--animation-duration) forwards;
 }
 
 .container.removing .end-goal {
-    animation: hideEndGoal var(--animation-duration) forwards;
+  animation: hideEndGoal var(--animation-duration) forwards;
 }
 
 .container .goal-title-container {
-    z-index: 1;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    font-size: .6em;
-    position: absolute;
-    
-    animation: showGoalTitle var(--animation-duration) forwards;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: .6em;
+  position: absolute;
+  
+  animation: showGoalTitle var(--animation-duration) forwards;
 }
 .container.removing .goal-title-container {
-    animation: hideGoalTitle var(--animation-duration) forwards;
+  animation: hideGoalTitle var(--animation-duration) forwards;
 }
 
 .container .goal-title {
-    background: var(--background);
-    padding: .1em .5em;
-    border-radius: var(--background-border-radius);
+  background: var(--background);
+  padding: .1em .5em;
+  border-radius: var(--background-border-radius);
 }
 
 .container .goal-finished {
-    z-index: 2;
-    background: var(--background-progress-bar);
-    position: absolute;
-    inset: 0;
-    text-align: center;
+  z-index: 2;
+  background: var(--background-progress-bar);
+  position: absolute;
+  inset: 0;
+  text-align: center;
 
-    animation: showGoalFinished var(--animation-duration) forwards;
+  animation: showGoalFinished var(--animation-duration) forwards;
 }
 
 .container.removing .goal-finished {
-    animation: hideGoalFinished var(--animation-duration) forwards;
+  animation: hideGoalFinished var(--animation-duration) forwards;
 }
 
 /* -------------- */
@@ -158,80 +158,80 @@ body {
 /* -------------- */
 
 @keyframes showWidget {
-    0% {
-        background: transparent;
-    }
+  0% {
+    background: transparent;
+  }
 
-    100% {
-        background: var(--background);
-    }
+  100% {
+    background: var(--background);
+  }
 }
 
 @keyframes showProgressBar {
-    0% {
-        transform: translateY(100%);
-    }
+  0% {
+    transform: translateY(100%);
+  }
 
-    20% {
-        transform: translateY(100%);
-    }
+  20% {
+    transform: translateY(100%);
+  }
 
-    100% {
-        transform: translateY(0%);
-    }
+  100% {
+    transform: translateY(0%);
+  }
 }
 
 @keyframes showStartGoal {
-    0% {
-        transform: translateY(100%);
-    }
+  0% {
+    transform: translateY(100%);
+  }
 
-    30% {
-        transform: translateY(100%);
-    }
+  30% {
+    transform: translateY(100%);
+  }
 
-    100% {
-        transform: translateY(0%);
-    }
+  100% {
+    transform: translateY(0%);
+  }
 }
 
 @keyframes showGoalTitle {
-    0% {
-        transform: translateY(100%);
-    }
+  0% {
+    transform: translateY(100%);
+  }
 
-    50% {
-        transform: translateY(100%);
-    }
+  50% {
+    transform: translateY(100%);
+  }
 
-    100% {
-        transform: translateY(0%);
-    }
+  100% {
+    transform: translateY(0%);
+  }
 
 }
 
 @keyframes showEndGoal {
-    0% {
-        transform: translateY(100%);
-    }
+  0% {
+    transform: translateY(100%);
+  }
 
-    70% {
-        transform: translateY(100%);
-    }
+  70% {
+    transform: translateY(100%);
+  }
 
-    100% {
-        transform: translateY(0%);
-    }
+  100% {
+    transform: translateY(0%);
+  }
 }
 
 @keyframes showGoalFinished {
-    0% {
-        transform: translateY(100%);
-    }
+  0% {
+    transform: translateY(100%);
+  }
 
-    100% {
-        transform: translateY(0%);
-    }
+  100% {
+    transform: translateY(0%);
+  }
 }
 
 /* -------------- */
@@ -239,86 +239,129 @@ body {
 /* -------------- */
 
 @keyframes hideWidget {
-    0% {
-        background: var(--background);
-    }
+  0% {
+    background: var(--background);
+  }
 
-    60% {
-        background: var(--background);
-    }
+  60% {
+    background: var(--background);
+  }
 
-    100% {
-        background: transparent;
-    }
+  100% {
+    background: transparent;
+  }
 }
 
 @keyframes hideProgressBar {
-    0% {
-        transform: translateY(0%);
-    }
-    
-    80% {
-        transform: translateY(0%);
-    }
+  0% {
+    transform: translateY(0%);
+  }
+  
+  80% {
+    transform: translateY(0%);
+  }
 
-    100% {
-        transform: translateY(100%);
-    }
+  100% {
+    transform: translateY(100%);
+  }
 }
 
 @keyframes hideStartGoal {
-    0% {
-        transform: translateY(0%);
-    }
-    
-    70% {
-        transform: translateY(0%);
-    }
+  0% {
+    transform: translateY(0%);
+  }
+  
+  70% {
+    transform: translateY(0%);
+  }
 
-    100% {
-        transform: translateY(100%);
-    }
+  100% {
+    transform: translateY(100%);
+  }
 }
 
 @keyframes hideGoalTitle {
-    0% {
-        transform: translateY(0%);
-    }
-    
-    50% {
-        transform: translateY(0%);
-    }
+  0% {
+    transform: translateY(0%);
+  }
+  
+  50% {
+    transform: translateY(0%);
+  }
 
-    100% {
-        transform: translateY(100%);
-    }
+  100% {
+    transform: translateY(100%);
+  }
 
 }
 
 @keyframes hideEndGoal {
-    0% {
-        transform: translateY(0%);
-    }
+  0% {
+    transform: translateY(0%);
+  }
 
-    30% {
-        transform: translateY(0%);
-    }
-    
-    100% {
-        transform: translateY(100%);
-    }
+  30% {
+    transform: translateY(0%);
+  }
+  
+  100% {
+    transform: translateY(100%);
+  }
 }
 
 @keyframes hideGoalFinished {
-    0% {
-        transform: translateY(0%);
-    }
+  0% {
+    transform: translateY(0%);
+  }
 
-    50% {
-        transform: translateY(100%);
-    }
-    
-    100% {
-        transform: translateY(100%);
-    }
+  50% {
+    transform: translateY(100%);
+  }
+  
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* ----- */
+/* Cycle */
+/* ----- */
+
+/* Default */
+
+body[data-cycle-transition] .progress-bar-list .container {
+  position: absolute;
+  opacity: 1;
+}
+
+body[data-cycle-transition] .progress-bar-list .container[data-state="hidden"] {
+  display: none;
+}
+
+body[data-cycle-transition]:not(body[data-cycle-transition="fade"]) .progress-bar-list .container[data-state="hiding"] {
+  display: none;
+}
+
+body[data-cycle-transition] .progress-bar-list .container,
+body[data-cycle-transition] .progress-bar-list .container * {
+  animation: none;
+}
+
+/* Fade */
+body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="hidden"],
+body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="hiding"],
+body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="showing"],
+body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="shown"] {
+  transition: opacity var(--cycle-transition-duration) ease;
+}
+
+body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="hidden"],
+body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="hiding"] {
+  transition-delay: calc(var(--cycle-transition-duration) / 2);
+}
+
+body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="hiding"],
+body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="hidden"],
+body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="showing"] {
+  opacity: 0;
 }
