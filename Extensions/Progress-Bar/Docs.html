@@ -91,7 +91,14 @@
       </p>
       <h2>Requests</h2>
       <p>Request variables can be updated server side. E.g. if you want the update request to contain an exta variable, I can add that in the widget and you don't need to update your action</p>
-      <table data-table="requests"></table>
+      <h3>create</h3>
+      <table data-table="requests-create"></table>
+      <h3>progress</h3>
+      <table data-table="requests-progress"></table>
+      <h3>remove</h3>
+      <table data-table="requests-remove"></table>
+      <h3>update</h3>
+      <table data-table="requests-update"></table>
 
       <h2>Widget</h2>
       <p>
@@ -117,42 +124,78 @@
     <script>
       let tableData = [
         {
-          id: `requests`,
+          id: `requests-create`,
           contents: [
             {
-              Action: `create`,
-              Variables: `
-              <code class="required">id</code>: Unique id for the progress bar,
-              <br><code class="required">title</code>: The title of the progress bar,
-              <br><code class="required">maximum</code>: The maximum amount before the progress bar finishes,
-              <br><code class="required">minimum</code>: The lowest value the progress bar can get,
-              <br><code class="required">startValue</code>: Where the value starts in the bar bewteen minimum and maximum,
-              <br><code>progressBackgroundColor</code>: The background of the progress bar,
-              <br><code>progressBarColor</code>: The color of the bar for the progress bar.
-              `
+              Variable: `id<span class="required"></span>`,
+              Description: `Unique id for the progress bar.`
             },
             {
-              Action: `progress`,
-              Variables: `
-              <code class="required">id</code>: Unique id for the progress bar,
-              <br><code class="required">value</code>: The amount to increase the progress bar.
-              `
+              Variable: `title<span class="required"></span>`,
+              Description: `The title of the progress bar.`
             },
             {
-              Action: `remove`,
-              Variables: `
-              <code class="required">id</code>: Unique id for the progress bar.
-              `
+              Variable: `maximum<span class="required"></span>`,
+              Description: `The maximum amount before the progress bar finishes.`
             },
             {
-              Action: `update`,
-              Variables: `
-              All of these except the id are optional
-              <br><code class="required">id</code>: Unique id for the progress bar,
-              <br><code>value</code>: The current value of the progress bar, this doesn't increment or decrement it, this replaces it,
-              <br><code>progressBackgroundColor</code>: The background of the progress bar,
-              <br><code>progressBarColor</code>: The color of the bar for the progress bar.
-              `
+              Variable: `minimum<span class="required"></span>`,
+              Description: `The lowest value the progress bar can get.`
+            },
+            {
+              Variable: `startValue<span class="required"></span>`,
+              Description: `Where the value starts in the bar bewteen minimum and maximum.`
+            },
+            {
+              Variable: `progressBackgroundColor`,
+              Description: `The background of the progress bar.`
+            },
+            {
+              Variable: `progressBarColor`,
+              Description: `The color of the bar for the progress bar.`
+            }
+          ]
+        },
+        {
+          id: `requests-progress`,
+          contents: [
+            {
+              Variable: `id<span class="required"></span>`,
+              Description: `Unique id for the progress bar.`
+            },
+            {
+              Variable: `value<span class="required"></span>`,
+              Description: `The amount to increase the progress bar.`
+            }
+          ]
+        },
+        {
+          id: `requests-remove`,
+          contents: [
+            {
+              Variable: `id<span class="required"></span>`,
+              Description: `Unique id for the progress bar.`
+            }
+          ]
+        },
+        {
+          id: `requests-update`,
+          contents: [
+            {
+              Variable: `id<span class="required"></span>`,
+              Description: `Unique id for the progress bar.`
+            },
+            {
+              Variable: `value<span class="required"></span>`,
+              Description: `The current value of the progress bar, this doesn't increment or decrement it, this replaces it.`
+            },
+            {
+              Variable: `progressBackgroundColor`,
+              Description: `The background of the progress bar.`
+            },
+            {
+              Variable: `progressBarColor`,
+              Description: `The color of the bar for the progress bar.`
             }
           ]
         },
