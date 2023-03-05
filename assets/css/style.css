@@ -576,6 +576,7 @@ ul.grid-list li:nth-child(odd) {
 /* ==================== */
 /* Documentaion Helpers */
 /* ==================== */
+
 .url-parameter-novalue::before {
   color: var(--color-code);
   background: var(--text-background-700);
@@ -585,6 +586,11 @@ ul.grid-list li:nth-child(odd) {
 
 .url-parameter-novalue::before {
   content: "Doesn't allow any values, see URL Parmaters page above";
+}
+
+.required::after {
+  content: "*";
+  color: #ff6b6b;
 }
 
 [class*=img-] {

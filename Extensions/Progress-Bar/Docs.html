@@ -122,34 +122,36 @@
             {
               Action: `create`,
               Variables: `
-              <code>id</code>: Unique id for the progress bar,
-              <br><code>title</code>: The title of the progress bar,
-              <br><code>maximum</code>: The maximum amount before the progress bar finishes,
-              <br><code>minimum</code>: The lowest value the progress bar can get,
-              <br><code>startValue</code>: Where the value starts in the bar bewteen minimum and maximum,
-              <br><code>progressBackgroundColor</code>: The unique color of this progress bar, don't provide this variable if you don't want to change it.
+              <code class="required">id</code>: Unique id for the progress bar,
+              <br><code class="required">title</code>: The title of the progress bar,
+              <br><code class="required">maximum</code>: The maximum amount before the progress bar finishes,
+              <br><code class="required">minimum</code>: The lowest value the progress bar can get,
+              <br><code class="required">startValue</code>: Where the value starts in the bar bewteen minimum and maximum,
+              <br><code>progressBackgroundColor</code>: The background of the progress bar,
+              <br><code>progressBarColor</code>: The color of the bar for the progress bar.
               `
             },
             {
               Action: `progress`,
               Variables: `
-              <code>id</code>: Unique id for the progress bar,
-              <br><code>value</code>: The amount to increase the progress bar.
+              <code class="required">id</code>: Unique id for the progress bar,
+              <br><code class="required">value</code>: The amount to increase the progress bar.
               `
             },
             {
               Action: `remove`,
               Variables: `
-              <code>id</code>: Unique id for the progress bar.
+              <code class="required">id</code>: Unique id for the progress bar.
               `
             },
             {
               Action: `update`,
               Variables: `
               All of these except the id are optional
-              <br><code>id</code>: Unique id for the progress bar,
+              <br><code class="required">id</code>: Unique id for the progress bar,
               <br><code>value</code>: The current value of the progress bar, this doesn't increment or decrement it, this replaces it,
-              <br><code>progressColor</code>: The unique color of this progress bar.
+              <br><code>progressBackgroundColor</code>: The background of the progress bar,
+              <br><code>progressBarColor</code>: The color of the bar for the progress bar.
               `
             }
           ]
