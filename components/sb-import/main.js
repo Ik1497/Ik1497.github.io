@@ -75,7 +75,6 @@ class ISbImportWrapper extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    console.log(name, oldValue, newValue)
     if (name === `import-name`) {
       this.querySelector(`i-sb-import i-sb-import-actions i-sb-import-actions-title[data-type="import-title"]`).innerHTML = newValue
     }

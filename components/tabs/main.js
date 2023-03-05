@@ -11,13 +11,13 @@ class IUnloadedTabs extends HTMLElement {
     Array.from(this.children).forEach((tab, id) => {
       if (tab.getAttribute(`data-tab`) != null) {
         tabsHeaderNavigation += `
-        <i-tabs-header-navigation-list-item data-id="${id}">
+        <i-tabs-header-navigation-list-item data-id="${id}" role="tab">
           <button is="i-tabs-header-navigation-list-item-button">${tab.getAttribute(`data-tab`)}</button>
         </i-tabs-header-navigation-list-item>
         `
 
         tabsBodyTabs += `
-        <i-tabs-body-tab data-page="${tab.getAttribute(`data-tab`)}" data-id="${id}">
+        <i-tabs-body-tab data-page="${tab.getAttribute(`data-tab`)}" data-id="${id}" aria-labelledby="${tab}">
           <i-tabs-body-tab-content>${tab.innerHTML}</i-tabs-body-tab-content>
         </i-tabs-body-tab>
         `
@@ -36,14 +36,14 @@ class IUnloadedTabs extends HTMLElement {
 
     ITabsElement.innerHTML = `
     <i-tabs-header>
-      <i-tabs-header-navigation>
+      <i-tabs-header-navigation role="tablist">
         <i-tabs-header-navigation-list>${tabsHeaderNavigation}</i-tabs-header-navigation-list>
         <i-tabs-header-navigation-indicator></i-tabs-header-navigation-indicator>
       </i-tabs-header-navigation>
     </i-tabs-header>
 
 
-    <i-tabs-body>
+    <i-tabs-body role="tabpanel">
       <i-tabs-body-tabs>${tabsBodyTabs}</i-tabs-body-tabs>
     </i-tabs-body>
     `
@@ -77,7 +77,6 @@ class ITabs extends HTMLElement {
     this.querySelector(`i-tabs-header i-tabs-header-navigation-indicator`).style.left = `${this.querySelector(`i-tabs-header i-tabs-header-navigation-list i-tabs-header-navigation-list-item`).offsetLeft}px`
     this.querySelector(`i-tabs-header i-tabs-header-navigation-indicator`).style.width = `${this.querySelector(`i-tabs-header i-tabs-header-navigation-list i-tabs-header-navigation-list-item`).scrollWidth}px`
     this.querySelector(`i-tabs-body i-tabs-body-tabs i-tabs-body-tab`).setAttribute(`data-state`, `active`)
-    // this.querySelector(`i-tabs-body i-tabs-body-tabs`).style.maxHeight = `${this.querySelector(`i-tabs-body i-tabs-body-tabs i-tabs-body-tab`).scrollHeight}px`
     this.querySelector(`i-tabs-body i-tabs-body-tabs`).style.minHeight = `${this.querySelector(`i-tabs-body i-tabs-body-tabs i-tabs-body-tab`).scrollHeight}px`
   }
 }
@@ -190,12 +189,6 @@ class ITabsBodyTab extends HTMLElement {
     if (this.getAttribute(`data-state`) === null) {
       this.setAttribute(`data-state`, `inactive`)
     }
-
-    const resizeObserver = new ResizeObserver(entries => 
-      console.log(entries[0])
-    )
-    
-    resizeObserver.observe(this)
   }
 }
 

@@ -65,8 +65,8 @@
         }
       },
       {
-        "name": "Weather Widget V2",
-        "description": "Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
+        "name": "Weather Widget",
+        "description": "v2.1 | Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.",
         "icon": "mdi mdi-weather-lightning",
         "href": "/Extensions/Weather/Docs",
         "type": "link",
