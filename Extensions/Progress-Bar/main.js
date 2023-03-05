@@ -88,8 +88,8 @@ function connectws() {
         <p class="progress-text">0%</p>`
 
         document.querySelector(`ul.progress-bar-list`).prepend(progressBarContainer)
-        if (data?.data?.args?.progressColor != null && data?.data?.args?.progressColor != `None`) {
-          progressBarContainer.style.setProperty(`--background-progress-bar`, data?.data?.args?.progressColor)
+        if (data?.data?.args?.progressBackgroundColor != null && data?.data?.args?.progressBackgroundColor != `None`) {
+          progressBarContainer.style.setProperty(`--background-progress-bar`, data?.data?.args?.progressBackgroundColor)
         }
 
         if (startValue != ``) progress(id, startValue)
@@ -131,7 +131,7 @@ function connectws() {
           set(id, args.value)
         }
 
-        if (args.progressColor != undefined) {
+        if (args.progressBackgroundColor != undefined) {
           document.querySelectorAll(`#${id}`).forEach(container => {
             container.style.setProperty(`--background-progress-bar`, args.progressColor)
           })
