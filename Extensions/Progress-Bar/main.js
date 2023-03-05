@@ -88,11 +88,15 @@ function connectws() {
         <p class="progress-text">0%</p>`
 
         document.querySelector(`ul.progress-bar-list`).prepend(progressBarContainer)
-        if (data?.data?.args?.progressBackgroundColor != null && data?.data?.args?.progressBackgroundColor != `None`) {
-          progressBarContainer.style.setProperty(`--background-progress-bar`, data?.data?.args?.progressBackgroundColor)
+        if (data?.data?.args?.progressBackgroundColor != null && data?.data?.args?.progressBackgroundColor != undefined) {
+          progressBarContainer.style.setProperty(`--background`, data?.data?.args?.progressBackgroundColor)
         }
 
-        if (startValue != ``) progress(id, startValue)
+        if (data?.data?.args?.progressBarColor != null && data?.data?.args?.progressBarColor != undefined) {
+          progressBarContainer.style.setProperty(`--background-progress-bar`, data?.data?.args?.progressBarColor)
+        }
+
+        if (startValue != ``) set(id, startValue)
 
         updateCycle()
       }
@@ -130,10 +134,16 @@ function connectws() {
         if (args.value != undefined) {
           set(id, args.value)
         }
-
+        
         if (args.progressBackgroundColor != undefined) {
           document.querySelectorAll(`#${id}`).forEach(container => {
-            container.style.setProperty(`--background-progress-bar`, args.progressColor)
+            container.style.setProperty(`--background`, args.progressBackgroundColor)
+          })
+        }
+
+        if (args.progressBarColor != undefined) {
+          document.querySelectorAll(`#${id}`).forEach(container => {
+            container.style.setProperty(`--background-progress-bar`, args.progressBarColor)
           })
         }
       }
