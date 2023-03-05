@@ -342,8 +342,8 @@ body[data-cycle-transition]:not(body[data-cycle-transition="fade"]) .progress-ba
   display: none;
 }
 
-body[data-cycle-transition] .progress-bar-list .container,
-body[data-cycle-transition] .progress-bar-list .container * {
+body[data-cycle-transition] .progress-bar-list .container:not(.removing),
+body[data-cycle-transition] .progress-bar-list .container:not(.removing) * {
   animation: none;
 }
 

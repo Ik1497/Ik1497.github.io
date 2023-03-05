@@ -68,7 +68,7 @@ function connectws() {
       }
       
       else if (data?.data?.args?.request === `remove`) {
-        remove(data?.data?.id)
+        remove(data?.data?.args?.id)
       }
 
 
@@ -144,10 +144,11 @@ function connectws() {
           
           container.addEventListener(`animationend`, () => {
             container.remove();
+
+            updateCycle()
           });
         });
 
-        updateCycle()
       }
       
       
@@ -161,10 +162,7 @@ function connectws() {
             remove(id)
           }, 7500);
         });
-
-        updateCycle()
       }
-
     })
   }
 }
