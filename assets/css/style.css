@@ -306,22 +306,6 @@ h6:hover a.anchorjs-link {
   transition: opacity 1s;
 }
 
-h2:target,
-h3:target,
-h4:target,
-h5:target,
-h6:target {
-  padding-block: .75em;
-}
-
-h2,
-h3,
-h4,
-h5,
-h6 {
-  transition: padding-block .5s;
-}
-
 p {
   color: var(--text-primary);
   padding-block: .5em;
