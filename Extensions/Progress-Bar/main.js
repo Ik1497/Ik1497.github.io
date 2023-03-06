@@ -135,15 +135,28 @@ function connectws() {
           set(id, args.value)
         }
         
-        if (args.progressBackgroundColor != undefined) {
+        if (args.progressBarBackgroundColor != undefined) {
           document.querySelectorAll(`#${id}`).forEach(container => {
-            container.style.setProperty(`--background`, args.progressBackgroundColor)
+            container.style.setProperty(`--background`, args.progressBarBackgroundColor)
           })
         }
 
         if (args.progressBarColor != undefined) {
           document.querySelectorAll(`#${id}`).forEach(container => {
             container.style.setProperty(`--background-progress-bar`, args.progressBarColor)
+          })
+        }
+
+        if (args.progressBarTitle != undefined) {
+          document.querySelectorAll(`#${id}`).forEach(container => {
+            container.querySelector(`.goal-title`).innerText = args.progressBarTitle
+          })
+        }
+
+        if (args.progressBarMaximum != undefined) {
+          document.querySelectorAll(`#${id}`).forEach(container => {
+            container.querySelector(`.end-goal`).innerText = args.progressBarMaximum
+            progress(id, 0)
           })
         }
       }
