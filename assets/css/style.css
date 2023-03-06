@@ -312,11 +312,6 @@ h4:target,
 h5:target,
 h6:target {
   padding-block: .75em;
-  color: var(--accent-primary);
-}
-
-h2:target {
-  background: var(--background-soft);
 }
 
 h2,
@@ -324,7 +319,7 @@ h3,
 h4,
 h5,
 h6 {
-  transition: padding-block .5s, background .5s, color .5s;
+  transition: padding-block .5s;
 }
 
 p {
