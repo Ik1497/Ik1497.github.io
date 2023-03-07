@@ -2090,38 +2090,40 @@ async function connectws() {
       }
 
       if (data?.id === undefined && data?.event?.source != null && data?.event?.type != null && data?.data?.name != streamerbotActionPackage__name && data?.data?.parentName != streamerbotActionPackage__name) {
-        let eventHistory__listItem = document.createElement(`li`)
-        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid .card#event-history ul`).prepend(eventHistory__listItem)
-
-        let eventHistory__listItem__button = document.createElement(`button`)
-        eventHistory__listItem.append(eventHistory__listItem__button)
-
-        let eventHistory__listItem__button__title = document.createElement(`p`)
-        eventHistory__listItem__button__title.className = `title`
-        eventHistory__listItem__button__title.innerText = data.event.type
-        eventHistory__listItem__button.append(eventHistory__listItem__button__title)
-
-        let eventHistory__listItem__button__description = document.createElement(`p`)
-        eventHistory__listItem__button__description.className = `description`
-        eventHistory__listItem__button__description.innerText = `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`
-        eventHistory__listItem__button.append(eventHistory__listItem__button__description)
-
-        eventHistory__listItem__button.addEventListener(`click`, () => {
-          createModal(`
-          <div class="buttons-row">
-            <li>
-              <button class="active-state mdi mdi-code-json" id="copy-as-json-button">Copy as JSON</button>
-            </li>
-          </div>
-          <br>
-          <pre><code>${formatJson(data.data).html}</code></pre>
-          `, data.event.type, `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`, `medium`, {})
-
-          document.getElementById(`copy-as-json-button`).addEventListener(`click`, () => {
-            createSnackbar(`Copying websocket data as JSON to clipboard`)
-            navigator.clipboard.writeText(JSON.stringify(data.data, null, 2))
+        if (data?.event?.source != `Obs` && data?.event?.type != `Event`) {
+          let eventHistory__listItem = document.createElement(`li`)
+          document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid .card#event-history ul`).prepend(eventHistory__listItem)
+  
+          let eventHistory__listItem__button = document.createElement(`button`)
+          eventHistory__listItem.append(eventHistory__listItem__button)
+  
+          let eventHistory__listItem__button__title = document.createElement(`p`)
+          eventHistory__listItem__button__title.className = `title`
+          eventHistory__listItem__button__title.innerText = data.event.type
+          eventHistory__listItem__button.append(eventHistory__listItem__button__title)
+  
+          let eventHistory__listItem__button__description = document.createElement(`p`)
+          eventHistory__listItem__button__description.className = `description`
+          eventHistory__listItem__button__description.innerText = `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`
+          eventHistory__listItem__button.append(eventHistory__listItem__button__description)
+  
+          eventHistory__listItem__button.addEventListener(`click`, () => {
+            createModal(`
+            <div class="buttons-row">
+              <li>
+                <button class="active-state mdi mdi-code-json" id="copy-as-json-button">Copy as JSON</button>
+              </li>
+            </div>
+            <br>
+            <pre><code>${formatJson(data.data).html}</code></pre>
+            `, data.event.type, `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`, `medium`, {})
+  
+            document.getElementById(`copy-as-json-button`).addEventListener(`click`, () => {
+              createSnackbar(`Copying websocket data as JSON to clipboard`)
+              navigator.clipboard.writeText(JSON.stringify(data.data, null, 2))
+            })
           })
-        })
+        }
       }
 
       /***
@@ -2640,6 +2642,14 @@ async function connectws() {
                       <button id="scene-preview">Open preview image from current Scene</button>
                     </div>
                 </div>
+                <div class="card events">
+                  <div class="card-header">
+                    <p class="card-title">Events</p>
+                    </div>
+                    <hr>
+                    <ul class="styled"></ul>
+                  </div>
+                </div>
               </div>
             </aside>
             `
@@ -2880,7 +2890,7 @@ async function connectws() {
             });
             break
           case `GetVersion`:
-            document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] aside .card-grid`).insertAdjacentHTML(`beforeend`, `
+            document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] aside .card-grid .card.settings`).insertAdjacentHTML(`afterend`, `
             <div class="card">
               <div class="card-header">
                 <p class="card-title">Connection</p>
@@ -2908,6 +2918,53 @@ async function connectws() {
           default:
             break
         }
+      }
+
+      if (data?.event?.source === `Obs` && data?.event?.type === `Event`) {
+        console.log(`[OBS EVENTS]`, data?.data)
+        let obsEventListItem = document.createElement(`li`)
+        document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.events ul.styled`).prepend(obsEventListItem)
+
+        let obsEventListItem__Button = document.createElement(`button`)
+        obsEventListItem.append(obsEventListItem__Button)
+        
+        let obsEventListItem__Button__Title = document.createElement(`p`)
+        obsEventListItem__Button.append(obsEventListItem__Button__Title)
+        obsEventListItem__Button__Title.className = `title`
+        obsEventListItem__Button__Title.innerText = data?.data["obsEvent.event"]
+        
+        let obsEventListItem__Button__Description = document.createElement(`p`)
+        obsEventListItem__Button__Description.className = `description`
+        obsEventListItem__Button__Description.innerText = SB__FormatTimestamp(data.timeStamp, `small`)
+        obsEventListItem__Button.append(obsEventListItem__Button__Description)
+
+        obsEventListItem__Button.addEventListener(`click`, () => {
+          let table = ``
+          Object.entries(data?.data).forEach(entry => {
+            table += `
+            <tr>
+              <td style="text-align: right;">${entry[0]}</td>
+              <td style="text-align: left;">${ValidateJson(entry[1]) ? formatJson(entry[1]).html : entry[1]}</td>
+            </tr>
+            `
+          });
+
+          table = `
+          <table class="styled">
+            <thead>
+              <th style="text-align: right;">Name</th>
+              <th style="text-align: left;">Value</th>
+            </thead>
+            <tbody>
+              ${table}
+            </tbody>
+          </table>
+          `
+
+          createModal(`
+            ${table}
+          `, data?.data["obsEvent.event"], SB__FormatTimestamp(data.timeStamp, `small`), `medium`, {})
+        })
       }
 
       /***

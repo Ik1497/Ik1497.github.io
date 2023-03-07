@@ -204,7 +204,6 @@ setInterval(() => {
     let currentProgressBar = Number(document.body.getAttribute(`current-progress-bar`))
     let progressBarCount = Number(document.body.getAttribute(`progress-bar-count`))
 
-
     if (Number(document.body.getAttribute(`current-progress-bar`)) < Number(document.body.getAttribute(`progress-bar-count`))) {
       document.body.setAttribute(`current-progress-bar`, Number(document.body.getAttribute(`current-progress-bar`)) + 1)
       currentProgressBar += 1
@@ -213,7 +212,6 @@ setInterval(() => {
       currentProgressBar = 1
     }
 
-    console.log(progressBarCount, currentProgressBar)
     document.querySelectorAll(`.progress-bar-list .container`).forEach(container => {
       if (container.getAttribute(`data-state`) === `shown` || container.getAttribute(`data-state`) === `showing`) {
         container.setAttribute(`data-state`, `hiding`)

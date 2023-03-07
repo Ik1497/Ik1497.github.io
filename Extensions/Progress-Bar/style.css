@@ -338,16 +338,13 @@ body[data-cycle-transition] .progress-bar-list .container[data-state="hidden"] {
   display: none;
 }
 
-body[data-cycle-transition]:not(body[data-cycle-transition="fade"]) .progress-bar-list .container[data-state="hiding"] {
-  display: none;
-}
-
 body[data-cycle-transition] .progress-bar-list .container:not(.removing),
 body[data-cycle-transition] .progress-bar-list .container:not(.removing) * {
   animation: none;
 }
 
 /* Fade */
+
 body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="hidden"],
 body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="hiding"],
 body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="showing"],
@@ -365,3 +362,83 @@ body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="hid
 body[data-cycle-transition="fade"] .progress-bar-list .container[data-state="showing"] {
   opacity: 0;
 }
+
+/* Slide WIP */
+
+body[data-cycle-transition^="slide-"] .progress-bar-list {
+  height: 4rem;
+  width: 900px;
+  overflow: hidden;
+}
+
+body[data-cycle-transition^="slide-"] .progress-bar-list .container[data-state="hidden"],
+body[data-cycle-transition^="slide-"] .progress-bar-list .container[data-state="hiding"],
+body[data-cycle-transition^="slide-"] .progress-bar-list .container[data-state="showing"],
+body[data-cycle-transition^="slide-"] .progress-bar-list .container[data-state="shown"] {
+  transition: transform var(--cycle-transition-duration) ease;
+}
+
+body[data-cycle-transition^="slide-"] .progress-bar-list .container[data-state="hidden"] {
+  transition-duration: 0ms;
+}
+
+/* Down */
+
+body[data-cycle-transition="slide-down"] .progress-bar-list .container[data-state="hidden"] {
+  transform: translateY(-150%);
+}
+
+body[data-cycle-transition="slide-down"] .progress-bar-list .container[data-state="hiding"] {
+  transform: translateY(150%);
+}
+
+body[data-cycle-transition="slide-down"] .progress-bar-list .container[data-state="showing"],
+body[data-cycle-transition="slide-down"] .progress-bar-list .container[data-state="shown"] {
+  transform: translateY(0%);
+}
+
+/* Up */
+
+body[data-cycle-transition="slide-up"] .progress-bar-list .container[data-state="hidden"] {
+  transform: translateY(150%);
+}
+
+body[data-cycle-transition="slide-up"] .progress-bar-list .container[data-state="hiding"] {
+  transform: translateY(-150%);
+}
+
+body[data-cycle-transition="slide-up"] .progress-bar-list .container[data-state="showing"],
+body[data-cycle-transition="slide-up"] .progress-bar-list .container[data-state="shown"] {
+  transform: translateY(0%);
+}
+
+/* Right */
+
+body[data-cycle-transition="slide-right"] .progress-bar-list .container[data-state="hidden"] {
+  transform: translateX(-150%);
+}
+
+body[data-cycle-transition="slide-right"] .progress-bar-list .container[data-state="hiding"] {
+  transform: translateX(150%);
+}
+
+body[data-cycle-transition="slide-right"] .progress-bar-list .container[data-state="showing"],
+body[data-cycle-transition="slide-right"] .progress-bar-list .container[data-state="shown"] {
+  transform: translateX(0%);
+}
+
+/* Left */
+
+body[data-cycle-transition="slide-left"] .progress-bar-list .container[data-state="hidden"] {
+  transform: translateX(150%);
+}
+
+body[data-cycle-transition="slide-left"] .progress-bar-list .container[data-state="hiding"] {
+  transform: translateX(-150%);
+}
+
+body[data-cycle-transition="slide-left"] .progress-bar-list .container[data-state="showing"],
+body[data-cycle-transition="slide-left"] .progress-bar-list .container[data-state="shown"] {
+  transform: translateX(0%);
+}
+
