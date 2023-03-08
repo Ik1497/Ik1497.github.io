@@ -115,8 +115,26 @@
         "type": "link",
         "channel": "beta",
         "lastEdited": {
-          "date": "09/01/2023",
+          "date": "",
           "time": ""
+        }
+      }
+    ]
+  },
+  {
+    "name": "OBS Plugins With Streamer.bot",
+    "type": "group",
+    "groupItems": [
+      {
+        "name": "Time Warp Scan",
+        "description": "Actions for changing setting for the Time Warp Scan OBS plugin with Streamer.bot",
+        "icon": "mdi mdi-barcode",
+        "href": "/OBS-Plugins/Time-Warp-Scan/Docs",
+        "type": "link",
+        "channel": "beta",
+        "lastEdited": {
+          "date": "07/03/2023",
+          "time": "12:53"
         }
       }
     ]

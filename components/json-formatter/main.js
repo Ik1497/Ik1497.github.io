@@ -2,7 +2,8 @@ let codeColors = {
   property: `#ff79c6`,
   value: `#bd93f9`,
   string: `#50fa7b`,
-  default: `#ffffff`
+  default: `#ffffff`,
+  alt: `#aaa`
 }
 
 function formatJson(json) {
@@ -50,7 +51,7 @@ function formatJson(json) {
       returnData = `<div style="padding-left: 2ch;">${returnData}</div>`
     }
 
-    return `${!ignoreDropdown ? `<details style="display: inline;"><summary style="color: ${codeColors.property};">Object <span style="color: ${codeColors.value}">${Object.entries(json).length}</span> {}</summary>` : ``}${returnData}${!ignoreDropdown ? `</details>` : ``}`
+    return `${!ignoreDropdown ? `<details style="display: inline;"><summary style="color: ${codeColors.alt}"><span style="color: ${codeColors.property};">Object <span style="color: ${codeColors.value}">${Object.entries(json).length}</span> {}</span></summary>` : ``}${returnData}${!ignoreDropdown ? `</details>` : ``}`
   }
 
   function ArrayConverter(json, ignoreDropdown = false) {
@@ -67,7 +68,7 @@ function formatJson(json) {
       returnData = `<div style="padding-left: 2ch;">${returnData}</div>`
     }
 
-    return `${!ignoreDropdown ? `<details style="display: inline;"><summary style="color: ${codeColors.property};">Array <span style="color: ${codeColors.value}">${json.length}</span> []</summary>` : ``}${returnData}${!ignoreDropdown ? `</details>` : ``}`
+    return `${!ignoreDropdown ? `<details style="display: inline;"><summary style="color: ${codeColors.alt}"><span style="color: ${codeColors.property};">Array <span style="color: ${codeColors.value}">${json.length}</span> []</span></summary>` : ``}${returnData}${!ignoreDropdown ? `</details>` : ``}`
   }
   
   function DefaultsConverter(json) {

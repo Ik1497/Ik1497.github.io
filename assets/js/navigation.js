@@ -87,40 +87,44 @@ async function app() {
     }
   });
   document.querySelectorAll(`nav.navbar-wrapper ul.navbar .navbar-group`).forEach(navbarGroup => {
-    navbarGroup.querySelector(`button.group-title`).addEventListener(`click`, function () {
-      let navbarSettings__collapsedGroups = localStorage.getItem(`navbarSettings__collapsedGroups`)
-      navbarSettings__collapsedGroups = JSON.parse(navbarSettings__collapsedGroups)
-      if (navbarSettings__collapsedGroups === `undefined` || navbarSettings__collapsedGroups === null) {
-        navbarSettings__collapsedGroups = []
-      } else if (JSON.stringify(navbarSettings__collapsedGroups).charAt(0) != `[`) {
-        navbarSettings__collapsedGroups = `["${navbarSettings__collapsedGroups}"]`
-      }
-
-      let navbarGroupState = navbarGroup.getAttribute(`data-navbar-group-state`)
-
-      if (navbarGroupState === `opened`) {
-        navbarGroup.setAttribute(`data-navbar-group-state`, `closed`)
-
-        if (!navbarSettings__collapsedGroups.includes(navbarGroup.querySelector(`button.group-title`).innerHTML)) {
-          navbarSettings__collapsedGroups.push(navbarGroup.querySelector(`button.group-title`).innerHTML)
+    if (navbarGroup.querySelectorAll(`ul li`).length < 1) {
+      navbarGroup.remove()
+    } else {      
+      navbarGroup.querySelector(`button.group-title`).addEventListener(`click`, function () {
+        let navbarSettings__collapsedGroups = localStorage.getItem(`navbarSettings__collapsedGroups`)
+        navbarSettings__collapsedGroups = JSON.parse(navbarSettings__collapsedGroups)
+        if (navbarSettings__collapsedGroups === `undefined` || navbarSettings__collapsedGroups === null) {
+          navbarSettings__collapsedGroups = []
+        } else if (JSON.stringify(navbarSettings__collapsedGroups).charAt(0) != `[`) {
+          navbarSettings__collapsedGroups = `["${navbarSettings__collapsedGroups}"]`
         }
-        localStorage.setItem(`navbarSettings__collapsedGroups`, JSON.stringify(navbarSettings__collapsedGroups))
-
-      } else if (navbarGroupState === `closed`) {
-        navbarGroup.setAttribute(`data-navbar-group-state`, `opened`)
-
-        navbarSettings__collapsedGroups.forEach(navbarSettings__collapsedGroup => {
-          if (navbarSettings__collapsedGroup === navbarGroup.querySelector(`button.group-title`).innerText) {
-            const index = navbarSettings__collapsedGroups.indexOf(navbarSettings__collapsedGroup);
-            if (index > -1) {
-              navbarSettings__collapsedGroups.splice(index, 1)
-            }
-
-            localStorage.setItem(`navbarSettings__collapsedGroups`, JSON.stringify(navbarSettings__collapsedGroups))
+  
+        let navbarGroupState = navbarGroup.getAttribute(`data-navbar-group-state`)
+  
+        if (navbarGroupState === `opened`) {
+          navbarGroup.setAttribute(`data-navbar-group-state`, `closed`)
+  
+          if (!navbarSettings__collapsedGroups.includes(navbarGroup.querySelector(`button.group-title`).innerHTML)) {
+            navbarSettings__collapsedGroups.push(navbarGroup.querySelector(`button.group-title`).innerHTML)
           }
-        });
-
-      }
-    })
+          localStorage.setItem(`navbarSettings__collapsedGroups`, JSON.stringify(navbarSettings__collapsedGroups))
+  
+        } else if (navbarGroupState === `closed`) {
+          navbarGroup.setAttribute(`data-navbar-group-state`, `opened`)
+  
+          navbarSettings__collapsedGroups.forEach(navbarSettings__collapsedGroup => {
+            if (navbarSettings__collapsedGroup === navbarGroup.querySelector(`button.group-title`).innerText) {
+              const index = navbarSettings__collapsedGroups.indexOf(navbarSettings__collapsedGroup);
+              if (index > -1) {
+                navbarSettings__collapsedGroups.splice(index, 1)
+              }
+  
+              localStorage.setItem(`navbarSettings__collapsedGroups`, JSON.stringify(navbarSettings__collapsedGroups))
+            }
+          });
+  
+        }
+      })
+    }
   });
 }

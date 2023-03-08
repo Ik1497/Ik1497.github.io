@@ -36,6 +36,7 @@ function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefi
         </div>
         <div class="main">
           ${modalHtml}
+          <div class="i-modal__spacer"></div>
         </div>
       </div>
     </div>

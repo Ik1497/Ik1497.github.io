@@ -1247,7 +1247,11 @@ async function connectws() {
                 </div>
               </div>
               <hr>
-              <ul class="styled" data-exclusion="${localStorage.getItem(`streamerbotToolbox__actionHistory`) || `false`}"></ul>
+              <div class="form-group styled no-margin">
+                <input type="search" placeholder="Search...">
+              </div>
+              <ul class="styled" data-exclusion="${localStorage.getItem(`streamerbotToolbox__actionHistory`) || `false`}">
+              </ul>
             </div>
           </div>
         </aside>
@@ -1271,6 +1275,25 @@ async function connectws() {
             toggleActionHistoryExclusionUlStyled.setAttribute(`data-exclusion`, `false`)
           }
         })
+
+        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history input[type="search"]`).addEventListener(`keydown`, updateActionHistorySearch)
+
+        updateActionHistorySearch()
+
+        function updateActionHistorySearch() {
+          setTimeout(() => {
+            let searchTerm = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history input[type="search"]`).value.toLowerCase()
+            document.querySelectorAll(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history ul.styled li`).forEach(listItem => {
+              let listItemTitle = listItem.querySelector(`p.title`).innerText.toLowerCase()
+              if (listItemTitle.includes(searchTerm)) {
+                listItem.setAttribute(`hidden`, ``)
+                listItem.removeAttribute(`hidden`)
+              } else {
+                listItem.setAttribute(`hidden`, ``)
+              }
+            });
+          });
+        }
         
         // End Action History
 
@@ -1681,23 +1704,39 @@ async function connectws() {
       if (data?.event?.source === `Raw` && data?.event?.type === `Action`) {
         if (data.data.name != streamerbotActionPackage__name) {
           let actionHistoryQueued__List = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history ul`)
-  
+          
           let actionHistoryQueued__ListItem = document.createElement(`li`)
+          actionHistoryQueued__ListItem.setAttribute(`hidden`, ``)
           actionHistoryQueued__ListItem.setAttribute(`data-action-running-id`, data.data.id)
           actionHistoryQueued__ListItem.setAttribute(`data-action-id`, data.data.actionId)
           actionHistoryQueued__ListItem.setAttribute(`data-action-queued-data`, JSON.stringify(data))
           actionHistoryQueued__ListItem.setAttribute(`data-action-state`, `queued`)
-  
+          actionHistoryQueued__List.prepend(actionHistoryQueued__ListItem)
+          
+          let actionHistoryQueued__Button = document.createElement(`button`)
+          actionHistoryQueued__ListItem.append(actionHistoryQueued__Button)
+          
           let actionHistoryQueued__Title = document.createElement(`p`)
           actionHistoryQueued__Title.classList.add(`title`)
           actionHistoryQueued__Title.innerHTML = data.data.name
-  
-          let actionHistoryQueued__Button = document.createElement(`button`)
-          
           actionHistoryQueued__Button.append(actionHistoryQueued__Title)
-          actionHistoryQueued__ListItem.append(actionHistoryQueued__Button)
-          actionHistoryQueued__List.prepend(actionHistoryQueued__ListItem)
-  
+
+          updateActionHistorySearch()
+
+          function updateActionHistorySearch() {
+            setTimeout(() => {
+              let searchTerm = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history input[type="search"]`).value.toLowerCase()
+              document.querySelectorAll(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history ul.styled li`).forEach(listItem => {
+                let listItemTitle = listItem.querySelector(`p.title`).innerText.toLowerCase()
+                if (listItemTitle.includes(searchTerm)) {
+                  listItem.setAttribute(`hidden`, ``)
+                  listItem.removeAttribute(`hidden`)
+                } else {
+                  listItem.setAttribute(`hidden`, ``)
+                }
+              });
+            });
+          }
           
           actionHistoryQueued__Button.addEventListener(`click`, () => {
             let actionHistoryQueued__table = ``
@@ -1743,7 +1782,7 @@ async function connectws() {
                 actionHistoryQueued__table += `
                 <tr>
                   <td style="text-align: right;">${argument[0]}</td>
-                  <td style="text-align: left;${typeof argument[1] === `object` ? ` font-family: monospace;` : ``}">${typeof argument[1] != `object` ? argument[1] : formatJson(argument[1]).html}</td>
+                  <td style="text-align: left;">${typeof argument[1] != `object` ? argument[1] : `<pre><code>${formatJson(argument[1]).html}</code></pre>`}</td>
                 </tr>
                 `
               });
@@ -1765,6 +1804,7 @@ async function connectws() {
   
             let copyButtons__List = document.createElement(`ul`)
             copyButtons__List.className = `buttons-row`
+            copyButtons__List.style.paddingBottom = `1rem`
 
             let copyButtons__List__copyForDiscord = document.createElement(`li`)
             let copyButtons__List__copyAsJson = document.createElement(`li`)
@@ -1774,21 +1814,20 @@ async function connectws() {
             copyButtons__List__copyForDiscord__button.innerHTML = `Copy for Discord`
             copyButtons__List__copyForDiscord__button.className = `active-state mdi mdi-forum`
             copyButtons__List__copyForDiscord.append(copyButtons__List__copyForDiscord__button)
+            copyButtons__List.append(copyButtons__List__copyForDiscord)
             
             let copyButtons__List__copyAsJson__button = document.createElement(`button`)
             copyButtons__List__copyAsJson__button.innerHTML = `Copy as JSON`
             copyButtons__List__copyAsJson__button.className = `active-state mdi mdi-code-json`
             copyButtons__List__copyAsJson.append(copyButtons__List__copyAsJson__button)
+            copyButtons__List.append(copyButtons__List__copyAsJson)
 
             let copyButtons__List__copyForWiki__button = document.createElement(`button`)
             copyButtons__List__copyForWiki__button.innerHTML = `Copy for Wiki`
             copyButtons__List__copyForWiki__button.className = `active-state mdi mdi-wikipedia`
             copyButtons__List__copyForWiki.append(copyButtons__List__copyForWiki__button)
-
-            copyButtons__List.append(copyButtons__List__copyForDiscord)
-            copyButtons__List.append(copyButtons__List__copyAsJson)
             copyButtons__List.append(copyButtons__List__copyForWiki)
-            copyButtons__List.style.paddingBottom = `1rem`
+
 
             copyButtons__List__copyForDiscord__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables for Discord to clipboard`)
@@ -1885,6 +1924,7 @@ async function connectws() {
             if (actionHistoryQueued__ListItem.getAttribute(`data-action-state`) === `completed`) {
               let actionHistoryCompletedDialog__List = document.createElement(`ul`)
               actionHistoryCompletedDialog__List.className = `buttons-row`
+              document.querySelector(`.i-modal .main`).prepend(actionHistoryCompletedDialog__List)
   
               let actionHistoryCompletedDialog__QueuedListItem = document.createElement(`li`)
               
@@ -1939,8 +1979,6 @@ async function connectws() {
   
                 }
               }
-  
-              document.querySelector(`.i-modal .main`).prepend(actionHistoryCompletedDialog__List)
             }
   
             document.querySelector(`.i-modal .main .form-group.re-run button#re-run`).addEventListener(`click`, () => {
@@ -1978,8 +2016,8 @@ async function connectws() {
       ***/
 
       if (data?.id === `GetEvents`) {
-        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}`).classList.add(`col-2`)
-        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}`).innerHTML = `
+        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"]`).classList.add(`col-2`)
+        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"]`).innerHTML = `
         <div class="card-grid" id="events"></div>
         <aside>
           <div class="card-grid">
@@ -1988,10 +2026,33 @@ async function connectws() {
                 <p class="card-title">Event History</p>
               </div>
               <hr>
+              <div class="form-group styled no-margin">
+                <input type="search" placeholder="Search...">
+              </div>
               <ul class="styled"></ul>           
             </div>
           </div>
         </aside>`
+
+        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history input[type="search"]`).addEventListener(`keydown`, updateEventHistorySearch)
+        updateEventHistorySearch()
+
+        function updateEventHistorySearch() {
+          setTimeout(() => {
+            let searchTerm = document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history input[type="search"]`).value.toLowerCase()
+            document.querySelectorAll(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history ul.styled li`).forEach(listItem => {
+              let listItemTitle = listItem.querySelector(`p.title`).innerText.toLowerCase()
+              let listItemDescription = listItem.querySelector(`p.description`).innerText.toLowerCase()
+  
+              if (listItemTitle.includes(searchTerm) || listItemDescription.includes(searchTerm)) {
+                listItem.setAttribute(`hidden`, ``)
+                listItem.removeAttribute(`hidden`)
+              } else {
+                listItem.setAttribute(`hidden`, ``)
+              }
+            });
+          });
+        }
 
         let eventsEntries = Object.entries(data.events)
         eventsEntries.sort()
@@ -2092,6 +2153,7 @@ async function connectws() {
       if (data?.id === undefined && data?.event?.source != null && data?.event?.type != null && data?.data?.name != streamerbotActionPackage__name && data?.data?.parentName != streamerbotActionPackage__name) {
         if (data?.event?.source != `Obs` && data?.event?.type != `Event`) {
           let eventHistory__listItem = document.createElement(`li`)
+          eventHistory__listItem.setAttribute(`hidden`, ``)
           document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid .card#event-history ul`).prepend(eventHistory__listItem)
   
           let eventHistory__listItem__button = document.createElement(`button`)
@@ -2107,6 +2169,25 @@ async function connectws() {
           eventHistory__listItem__button__description.innerText = `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`
           eventHistory__listItem__button.append(eventHistory__listItem__button__description)
   
+          updateEventHistorySearch()
+
+          function updateEventHistorySearch() {
+            setTimeout(() => {
+              let searchTerm = document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history input[type="search"]`).value.toLowerCase()
+              document.querySelectorAll(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history ul.styled li`).forEach(listItem => {
+                let listItemTitle = listItem.querySelector(`p.title`).innerText.toLowerCase()
+                let listItemDescription = listItem.querySelector(`p.description`).innerText.toLowerCase()
+    
+                if (listItemTitle.includes(searchTerm) || listItemDescription.includes(searchTerm)) {
+                  listItem.setAttribute(`hidden`, ``)
+                  listItem.removeAttribute(`hidden`)
+                } else {
+                  listItem.setAttribute(`hidden`, ``)
+                }
+              });
+            });
+          }
+
           eventHistory__listItem__button.addEventListener(`click`, () => {
             createModal(`
             <div class="buttons-row">
@@ -2647,12 +2728,37 @@ async function connectws() {
                     <p class="card-title">Events</p>
                     </div>
                     <hr>
+                    <div class="form-group styled no-margin">
+                      <input type="search" placeholder="Search...">
+                    </div>
                     <ul class="styled"></ul>
                   </div>
                 </div>
               </div>
             </aside>
             `
+
+            document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.events input[type=search]`).addEventListener(`keydown`, updateObsEventsSearch)
+
+            updateObsEventsSearch()
+
+            function updateObsEventsSearch() {
+              setTimeout(() => {
+                let searchTerm = document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.events input[type=search]`).value.toLowerCase()
+
+                document.querySelectorAll(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.events ul.styled li`).forEach(listItem => {
+                  let listItemTitle = listItem.querySelector(`p.title`).innerText.toLowerCase()
+                  let listItemDescription = listItem.querySelector(`p.description`).innerText.toLowerCase()
+  
+                  if (listItemTitle.includes(searchTerm) || listItemDescription.includes(searchTerm)) {
+                    listItem.setAttribute(`hidden`, ``)
+                    listItem.removeAttribute(`hidden`)
+                  } else {
+                    listItem.setAttribute(`hidden`, ``)
+                  }
+                });
+              });
+            }
 
             document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.settings .form-group #nav-switch-scenes`).onchange = () => {
               let streamerbotToolbox__obsStudio = localStorage.getItem(`streamerbotToolbox__obsStudio`) || `{}`
@@ -2921,8 +3027,8 @@ async function connectws() {
       }
 
       if (data?.event?.source === `Obs` && data?.event?.type === `Event`) {
-        console.log(`[OBS EVENTS]`, data?.data)
         let obsEventListItem = document.createElement(`li`)
+        obsEventListItem.setAttribute(`hidden`, ``)
         document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.events ul.styled`).prepend(obsEventListItem)
 
         let obsEventListItem__Button = document.createElement(`button`)
@@ -2938,13 +3044,33 @@ async function connectws() {
         obsEventListItem__Button__Description.innerText = SB__FormatTimestamp(data.timeStamp, `small`)
         obsEventListItem__Button.append(obsEventListItem__Button__Description)
 
+        updateObsEventsSearch()
+
+        function updateObsEventsSearch() {
+          setTimeout(() => {
+            let searchTerm = document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.events input[type=search]`).value.toLowerCase()
+
+            document.querySelectorAll(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.events ul.styled li`).forEach(listItem => {
+              let listItemTitle = listItem.querySelector(`p.title`).innerText.toLowerCase()
+              let listItemDescription = listItem.querySelector(`p.description`).innerText.toLowerCase()
+
+              if (listItemTitle.includes(searchTerm) || listItemDescription.includes(searchTerm)) {
+                listItem.setAttribute(`hidden`, ``)
+                listItem.removeAttribute(`hidden`)
+              } else {
+                listItem.setAttribute(`hidden`, ``)
+              }
+            });
+          });
+        }
+
         obsEventListItem__Button.addEventListener(`click`, () => {
           let table = ``
           Object.entries(data?.data).forEach(entry => {
             table += `
             <tr>
               <td style="text-align: right;">${entry[0]}</td>
-              <td style="text-align: left;">${ValidateJson(entry[1]) ? formatJson(entry[1]).html : entry[1]}</td>
+              <td style="text-align: left;">${ValidateJson(entry[1]) ? `<pre><code>${formatJson(entry[1]).html}</code></pre>` : entry[1]}</td>
             </tr>
             `
           });

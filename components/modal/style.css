@@ -77,6 +77,10 @@
   height: 100%;
   padding-top: 3rem;
 }
+.i-modal-wrapper .i-modal .main .i-modal__spacer {
+  width: 100%;
+  height: 1rem;
+}
 
 /* ----- */
 /* Sizes */
