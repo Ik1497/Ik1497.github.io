@@ -382,6 +382,7 @@ main footer.footer-info {
 }
 main footer.footer-info .footer-edit {
   grid-area: footer-grid-edit;
+  text-align: left;
 }
 main footer.footer-info .footer-update {
   grid-area: footer-grid-update;
