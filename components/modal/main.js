@@ -19,33 +19,49 @@ function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefi
     if (settings.animation === `fromBottom` || scale === `fullscreen` && settings.animation === undefined) {
       modalClasses += ` modal-animation--animate-from-bottom`
     }
-  
-    document.body.insertAdjacentHTML(`afterbegin`, `
-    <div class="i-modal-wrapper">
-      <div class="i-modal ${modalClasses}"${attributes}>
-        <div class="header">
-          <div>
-            <p class="title">${modalTitle}</p>
-            ${modalSubtitle}
-          </div>
-          <button
-            class="close-button mdi mdi-close-thick" 
-            title="[ESC] Close"
-            onclick="closeModal()"
-          >Close</button>
-        </div>
-        <div class="main">
-          ${modalHtml}
-          <div class="i-modal__spacer"></div>
-        </div>
-      </div>
+
+    let IModalWrapper = document.createElement(`div`)
+    document.body.prepend(IModalWrapper)
+    IModalWrapper.className = `i-modal-wrapper`
+    
+    let IModalWrapper__Modal = document.createElement(`div`)
+    IModalWrapper.append(IModalWrapper__Modal)
+    IModalWrapper__Modal.className = `i-modal ${modalClasses}`
+    IModalWrapper__Modal.attributes = attributes
+
+    let IModalWrapper__Modal__Main = document.createElement(`div`)
+    IModalWrapper__Modal.append(IModalWrapper__Modal__Main)
+    IModalWrapper__Modal__Main.className = `main`
+    IModalWrapper__Modal__Main.innerHTML = `
+    ${modalHtml}
+    <div class="i-modal__spacer"></div>
+    `
+
+    let IModalWrapper__Modal__Header = document.createElement(`div`)
+    IModalWrapper__Modal.append(IModalWrapper__Modal__Header)
+    IModalWrapper__Modal__Header.className = `header`
+    IModalWrapper__Modal__Header.innerHTML = `
+    <div>
+      <p class="title">${modalTitle}</p>
+      ${modalSubtitle}
     </div>
-    `)
+    <button
+      class="close-button mdi mdi-close-thick" 
+      title="[ESC] Close"
+      onclick="closeModal()"
+    >Close</button>
+    `
 
     document.body.setAttribute(`data-modal-state`, `opening`)
     setTimeout(() => {
       document.body.setAttribute(`data-modal-state`, `opened`)
     }, 500);
+  }
+
+  return {
+    title: modalTitle,
+    subtitle: modalSubtitle,
+    scale: scale
   }
 }
 

@@ -2191,9 +2191,7 @@ async function connectws() {
           eventHistory__listItem__button.addEventListener(`click`, () => {
             createModal(`
             <div class="buttons-row">
-              <li>
-                <button class="active-state mdi mdi-code-json" id="copy-as-json-button">Copy as JSON</button>
-              </li>
+              <button class="active-state mdi mdi-code-json" id="copy-as-json-button">Copy as JSON</button>
             </div>
             <br>
             <pre><code>${formatJson(data.data).html}</code></pre>
@@ -2201,7 +2199,7 @@ async function connectws() {
   
             document.getElementById(`copy-as-json-button`).addEventListener(`click`, () => {
               createSnackbar(`Copying websocket data as JSON to clipboard`)
-              navigator.clipboard.writeText(JSON.stringify(data.data, null, 2))
+              navigator.clipboard.writeText(formatJson(data.data).json)
             })
           })
         }
