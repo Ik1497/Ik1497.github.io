@@ -1,21 +1,30 @@
-<script>
-  var date = "01/01/2023";
-  var time = "00:43";
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Site Meta -->
     <meta name="og:site_name" content="Streamer.bot Actions">
     <meta property="og:image" content="https://ik1497.github.io/assets/images/favicon.png">
+    <meta property="og:type" content="website">
     <meta name="theme-color" content="#B80086">
-    
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <meta name="author" content="Ik1497">
+
+    <!-- Page Meta -->
+    <meta property="og:title" content="Local Script Actions Handler">
+    <title>Local Script Actions Handler</title>
+
+    <meta property="og:description" content="Run action with Local Scripts.">
+    <meta name="description" content="Run action with Local Scripts.">
+
+    <!-- Scripts -->
     <script src="/assets/js/head.js"></script>
     <script src="/assets/js/main.js" defer></script>
-    
-    <meta property="og:title" content="Local Script Actions Handler">
-    <meta property="og:description" content="Run action with Local Scripts.">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
   </head>
   <body>
     <main>
@@ -41,10 +50,14 @@
       <img src="./overview.gif" alt="GIF showcasing the build script" class="img-400">
       <p>In the <code>.zip</code> file attached there is a folder, this by default contains two files: <code>_action.cjs</code>, <code>_build.bat</code> you don't have to touch the <code>_action.cjs</code>. To make the scripts you need to use the <code>_build.bat</code> file, open this file and fill in the form. After you've filled in this form there will be two new files in your folder. a <code>.bat</code> and a <code>.vbs</code> file, I'll recommended you to use the <code>.vbs</code> file, but you can also use the <code>.bat</code> file fine (note: the <code>.bat</code> file will temporarily open a black window).</p>
       <h2>HIDMacros Setup Guide (Optional)</h2>
+      <p>Optional: Give it a good name that indicates it's from SB</p>
+      <p>Connect this macro to a key on your keyboard</p>
+      <p>In the action field choose <code>run application</code> and select a file that has been build with the script you can download <a href="#download">above</a></p>
+      <p>Match This image below to have it working:</p>
       <img src="./HIDMacros-Overview.png" class="img-400" alt="An overview of what needs to be done in HIDMacros">
       <hr>
       <p>For any suggestions about this extension send me a DM on discord or open an <a href="/Links/Issues">issue</a>.</p>
       <p>If there are any bugs with this Extension you can make a #support post in <a href="https://discord.streamer.bot">The Streamer.bot Discord Server</a>.</p>
     </main>
-</body>
+  </body>
 </html>

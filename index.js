@@ -42,8 +42,8 @@ let page = {
             enabled: true
         },
         {
-            name: ".bat/.vbs File Actions Handler.",
-            description: "Run actions with a .bat file.",
+            name: "Local Script Actions Handler",
+            description: "Run action with Local Scripts.",
             icon: "mdi mdi-script-text-play",
             href: "/Extensions/Local-Script-Action-Handler/Docs",
             enabled: true
