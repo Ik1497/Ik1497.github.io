@@ -7,7 +7,13 @@ async function app() {
   let navItemsArray = await fetch(`/api/navigation.json`)
   navItemsArray = await navItemsArray.json()
 
-  document.body.insertAdjacentHTML(`afterbegin`, `<nav class="navbar-wrapper"><ul class="navbar"></ul></nav>`);
+  document.body.insertAdjacentHTML(`afterbegin`, `
+  <div class="main-wrapper__col-1">
+    <nav class="navbar-wrapper">
+      <ul class="navbar"></ul>
+    </nav>
+  </div>
+  `);
 
   navItemsArray.forEach(navItemGroup => {
     if (navItemGroup.type === `group`) {
@@ -65,7 +71,11 @@ async function app() {
           
           // If page is published or user has access
           if (published != `beta` || localStorage.getItem(`websiteSettings__visibilityChannel`) === `beta`) { 
-            navItemList += `<li title="${navItem.name}" aria-label="${navItem.name}"${navActive}${published}><a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a></li>`
+            navItemList += `
+            <li title="${navItem.name}" aria-label="${navItem.name}"${navActive}${published}>
+              <a href="${navItem.href}" class="${navItem.icon}">${navItem.name}</a>
+            </li>
+            `
           }
         }
       });
@@ -82,7 +92,16 @@ async function app() {
       if (navbarSettings__collapsedGroups.includes(navItemGroup.name)) {
         openState = `closed`
       }
-      document.querySelector("nav.navbar-wrapper ul.navbar").insertAdjacentHTML(`beforeend`, `<div class="navbar-group" data-navbar-group-state="${openState}"><button class="group-title" title="${navItemGroup.name}" aria-label="${navItemGroup.name}">${navItemGroup.name}</button><ul>${navItemList}</ul></div>`)
+      document.querySelector("nav.navbar-wrapper ul.navbar").insertAdjacentHTML(`beforeend`, `
+      <div class="navbar-group" data-navbar-group-state="${openState}">
+        <button class="group-title" title="${navItemGroup.name}" aria-label="${navItemGroup.name}">
+          ${navItemGroup.name}
+        </button>
+        <ul>
+          ${navItemList}
+        </ul>
+      </div>
+      `)
        
     }
   });

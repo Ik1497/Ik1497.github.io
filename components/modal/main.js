@@ -56,12 +56,15 @@ function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefi
     setTimeout(() => {
       document.body.setAttribute(`data-modal-state`, `opened`)
     }, 500);
-  }
 
-  return {
-    title: modalTitle,
-    subtitle: modalSubtitle,
-    scale: scale
+    return {
+      title: modalTitle,
+      subtitle: modalSubtitle,
+      scale: scale,
+      modal: IModalWrapper__Modal,
+      header: IModalWrapper__Modal__Header,
+      main: IModalWrapper__Modal__Main
+    }
   }
 }
 

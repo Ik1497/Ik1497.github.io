@@ -2,240 +2,240 @@
 @import url(/assets/css/style.css);
 
 * {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 :root {
-    --main-text-gradient: -webkit-linear-gradient(300deg, rgba(0,255,252,1) 0%, rgba(255,0,215,1) 100%);
-    --alt-text-gradient: -webkit-linear-gradient(270deg, rgba(0,255,252,1) 0%, rgba(255,0,215,1) 100%);
+  --main-text-gradient: -webkit-linear-gradient(300deg, rgba(0,255,252,1) 0%, rgba(255,0,215,1) 100%);
+  --alt-text-gradient: -webkit-linear-gradient(270deg, rgba(0,255,252,1) 0%, rgba(255,0,215,1) 100%);
 }
 body {
-    font-family: Poppins;
-    line-height: 1;
+  font-family: Poppins;
+  line-height: 1;
 }
 
 footer.footer-info {
-    display: none;
+  display: none;
 }
 
 /* Items Grid */
 
 ul.item-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(400px,1fr));
-    gap: .8em;
-    margin: 0 auto;
-    margin-top: 1em;
-    list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(400px,1fr));
+  gap: .8em;
+  margin: 0 auto;
+  margin-top: 1em;
+  list-style: none;
 }
 
 li.item-grid-item {
-    width: 100%;
-    color: var(--text-primary);
-    text-decoration: none;
-    transform-style: preserve-3d;
-    position: relative;
-    min-height: 140px;
-    height: 100%;
+  width: 100%;
+  color: var(--text-primary);
+  text-decoration: none;
+  transform-style: preserve-3d;
+  position: relative;
+  min-height: 140px;
+  height: 100%;
 }
 
 li.item-grid-item.disabled a {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 
 li.item-grid-item.disabled article > * {
-    filter: blur(5px);
+  filter: blur(5px);
 }
 
 li.item-grid-item.disabled article::after {
-    content: "SOON...";
-    color: var(--text-900);
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    font-size: 2em;
-    font-weight: bold;
+  content: "SOON...";
+  color: var(--text-900);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 li.item-grid-item article:hover {
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 10px 5px #555;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    color: var(--text-900);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 10px 5px #555;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: var(--text-900);
 }
 
 li.item-grid-item article {
-    border: 3px solid var(--background-soft);
-    border-radius: 12px;
-    color: var(--text-900);
-    padding: 24px;
-    transition: all 0.3s ease;
-    transform-style: preserve-3d;
-    position: relative;
-    box-sizing: content-box;
+  border: 3px solid var(--background-soft);
+  border-radius: 12px;
+  color: var(--text-900);
+  padding: 24px;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  position: relative;
+  box-sizing: content-box;
 }
 
 li.item-grid-item .background {
-    border: 3px solid var(--background-soft);
-    border-radius: 12px;
-    padding: 24px;
-    box-sizing: border-box;
-    height: 100%;
-    width: 100%;
-    background-color: var(--background-darken);
-    opacity: .4;
-    filter: blur(20px);
-    transition: all 0.3s ease;
-    position: absolute;
-    inset: 0;
+  border: 3px solid var(--background-soft);
+  border-radius: 12px;
+  padding: 24px;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  background-color: var(--background-darken);
+  opacity: .4;
+  filter: blur(20px);
+  transition: all 0.3s ease;
+  position: absolute;
+  inset: 0;
 }
 
 li.item-grid-item .icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    background-color: var(--background-primary);
-    width: 48px;
-    height: 48px;
-    font-size: 24px;
-    transform: translateZ(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  background-color: var(--background-primary);
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+  transform: translateZ(10px);
 }
 
 li.item-grid-item .title {
-    line-height: 24px;
-    font-size: 16px;
-    font-weight: 600;
-    transform: translateZ(8px);
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  transform: translateZ(8px);
 }
 
 li.item-grid-item .description {
-    padding-top: 8px;
-    line-height: 24px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-300);
-    transform: translateZ(4px);
+  padding-top: 8px;
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-300);
+  transform: translateZ(4px);
 }
 
 /* Footer */
 
 footer {
-    text-align: center;
-    margin-top: 2em;
-    padding-bottom: 1em;
-    color: var(--text-primary);
+  text-align: center;
+  margin-top: 2em;
+  padding-bottom: 1em;
+  color: var(--text-primary);
 }
 
 /* Top Section */
 
 .top-section {
-    display: grid;
-    grid-template-areas: "main-text logo";
-    padding-top: 3rem;
+  display: grid;
+  grid-template-areas: "main-text logo";
+  padding-top: 3rem;
 }
 
 .top-section .main-text {
-    grid-area: main-text;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    place-self: start;
-    margin-bottom: auto;
+  grid-area: main-text;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  place-self: start;
+  margin-bottom: auto;
 }
 
 .top-section .main-text .title {
-    font-size: 3.5rem;
-    font-weight: bold;
-    width: fit-content;
-    background: var(--main-text-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  font-size: 3.5rem;
+  font-weight: bold;
+  width: fit-content;
+  background: var(--main-text-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .top-section .main-text .description {
-    font-size: 2.5rem;
-    font-weight: bold;
-    max-width: 17.5ch;
+  font-size: 2.5rem;
+  font-weight: bold;
+  max-width: 17.5ch;
 }
 
 .top-section .logo {
-    width: 260px;
-    border-radius: 100vmax;
-    margin: auto;
-    grid-area: logo;
-    position: relative;
+  width: 260px;
+  border-radius: 100vmax;
+  margin: auto;
+  grid-area: logo;
+  position: relative;
 }
 
 .top-section .logo .logo-image {
-    max-width: 260px;
-    background: var(--background-mute);
-    border-radius: 100vmax;
+  max-width: 260px;
+  background: var(--background-mute);
+  border-radius: 100vmax;
 }
 
 .top-section .logo .logo-background {
-    background: var(--main-text-gradient);
-    width: 100%;
-    position: absolute;
-    aspect-ratio: 1;
-    filter: blur(40px);
-    border-radius: 100vmax;
+  background: var(--main-text-gradient);
+  width: 100%;
+  position: absolute;
+  aspect-ratio: 1;
+  filter: blur(40px);
+  border-radius: 100vmax;
 }
 
 .main-buttons {
-    margin-top: 2em;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5em;
+  margin-top: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5em;
 }
 
 .main-buttons a {
-    padding: .7em 1.2em;
-    border-radius: 100vmax;
-    transition: all .5s ease;
-    text-decoration: none;
-    color: var(--text-primary);
-    border: 2px solid;
+  padding: .7em 1.2em;
+  border-radius: 100vmax;
+  transition: all .5s ease;
+  text-decoration: none;
+  color: var(--text-primary)!important;
+  border: 2px solid;
 }
 
 .main-buttons a { 
-    background-color: var(--accent-primary);
-    border-color: var(--accent-alt);
+  background-color: var(--accent-primary);
+  border-color: var(--accent-alt);
 }
 
 .main-buttons a.alt {
-    background-color: var(--background-mute);
-    border-color: var(--background-soft);
+  background-color: var(--background-mute);
+  border-color: var(--background-soft);
 }
 
 .main-buttons a:hover {
-    box-shadow: 0 0 15px #000;
-    border-color: black!important;
-    transition: all .5s ease;
+  box-shadow: 0 0 15px #000;
+  border-color: black!important;
+  transition: all .5s ease;
 }
 
 h2 {
-    color: var(--text-primary);
-    background: none;
+  color: var(--text-primary)!important;
+  background: none!important;
+  padding: 0!important;
 }
 
 @media (max-width: 50em) {
-    .top-section {
-        grid-template-areas:
-            "logo" 
-            "main-text";
-        text-align: center;
-    }
+  .top-section {
+    grid-template-areas:
+      "logo" 
+      "main-text";
+    text-align: center;
+  }
 
-    .main-text {
-        align-items: center;
-    }
-
+  .main-text {
+    align-items: center;
+  }
 }
 
 @import url(/assets/css/navbar.css);
