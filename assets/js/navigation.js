@@ -37,9 +37,9 @@ async function app() {
             if (location.pathname.replace(`index.html`, ``).replace(`.html`, ``) != `/`) {
               document.title = `${navItem.name} | Streamer.bot Actions`
               document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
-              <header class="page-info">
-                <p class="title">${navItem.name}</p>
-                <p class="description">${navItem.description}</p>
+              <header class="page-info animated fadeInDown">
+                <p class="title animated fadeInDown wait-p2s">${navItem.name}</p>
+                <p class="description animated fadeInDown wait-p4s">${navItem.description}</p>
               </header>
               `)
 

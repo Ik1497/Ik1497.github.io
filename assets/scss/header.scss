@@ -1,0 +1,69 @@
+header.header-primary {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-inline: .5rem;
+  display: grid;
+  grid-template-columns: max-content auto;
+  background: var(--background-soft);
+  align-items: center;
+  height: 4rem;
+  z-index: 10;
+  line-height: 1.5;
+}
+
+header a {
+  text-decoration: none;
+}
+
+header.header-primary .main-info {
+  display: flex;
+  column-gap: .5rem;
+  align-items: center;
+}
+
+header.header-primary img {
+  width: 3rem;
+  height: 3rem;
+}
+
+header.header-primary p {
+  margin: 0;
+  padding: 0;
+}
+
+header.header-primary p.name {
+  color: var(--text-900);
+  font-weight: 600;
+}
+
+header.header-primary p.description {
+  color: var(--text-300);
+}
+
+header.header-primary aside {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+
+header.header-primary aside .settings:hover,
+header.header-primary aside .settings:focus-visible {
+  background: var(--background-light);
+}
+
+header.header-primary aside .settings,
+header.header-primary aside .settings:active {
+  border: 0;
+  outline: 0;
+  color: #fff;
+  background: var(--background-mute);
+  padding: .5rem;
+  border-radius: 100vmax;
+  cursor: pointer;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.5rem;
+}

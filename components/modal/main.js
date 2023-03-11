@@ -1,4 +1,5 @@
 function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefined, scale = `small`, settings = {}) {
+  let modal__Subtitle = modalSubtitle
   document.querySelectorAll(`.i-modal-wrapper`).forEach(settingsModalAlt => {
     settingsModalAlt.remove()
   });
@@ -59,7 +60,7 @@ function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefi
 
     return {
       title: modalTitle,
-      subtitle: modalSubtitle,
+      subtitle: modal__Subtitle,
       scale: scale,
       modal: IModalWrapper__Modal,
       header: IModalWrapper__Modal__Header,

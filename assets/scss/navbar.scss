@@ -24,6 +24,10 @@ $mq-sm: 93rem;
       max-height: 80vh;
       overflow-y: auto;
       padding-bottom: .5rem;
+
+      @media (max-width: $mq-sm) {
+        max-height: 17.5rem;
+      }
   
       .navbar-group {
         padding-inline: .5rem;

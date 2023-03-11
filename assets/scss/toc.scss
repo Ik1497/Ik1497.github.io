@@ -2,46 +2,62 @@
 $mq-md: 115rem;
 
 .main-wrapper__col-3 {
+  overflow: hidden;
+  overflow-y: auto;
+  grid-area: body__col-3;
+  margin-right: auto;
+  margin-top: 6rem;
+  height: fit-content;
+  max-height: 80vh;
+  width: 17.5rem;
+  
+  .table-of-contents__title {
+    margin-bottom: .5rem;
+    font-weight: bold;
+  }
+  
   ul.table-of-contents {
     list-style: none;
-    overflow: hidden;
-    overflow-y: auto;
-    grid-area: body__col-3;
-    margin-right: auto;
-    margin-top: 6rem;
-    background: var(--background-soft);
-    height: fit-content;
-    max-height: 80vh;
-    width: 17.5rem;
-    border-radius: .5rem;
-    padding-block: .5rem;
-    padding-inline: .5rem;
 
     .anchorjs-link {
       display: none;
     }
 
     li {
+      border-left: 2px solid var(--text-400);
+      color: var(--text-900);
+      transition: border-color 500ms ease;
+      
+      &:hover,
+      &.toc-active {
+        border-color: var(--link-hover);
+      }
+
+      &:hover button,
+      &.toc-active button {
+        color: var(--link-primary)!important;
+      }
+      
       button {
         background: transparent;
         border: 0;
         border-radius: .25rem;
         outline: 0;
-        color: var(--text-900);
         width: 100%;
+        max-width: 100%;
         padding-block: .25em;
+        padding-inline: .25rem;
+        margin-left: .5rem;
         text-align: left;
         font-size: 1rem;
+        color: inherit;
+        transition: color 500ms ease;
         cursor: pointer;
   
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-  
-        &:hover,
-        &:focus-visible {
-          background: var(--background-light);
-        }
+        
       }
 
       &.heading-tag-h3 button {
