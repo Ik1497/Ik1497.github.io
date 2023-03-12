@@ -206,7 +206,7 @@ footer {
 
 .main-buttons a { 
   background-color: var(--accent-primary);
-  border-color: var(--accent-alt);
+  border-color: var(--accent-primary-alt);
 }
 
 .main-buttons a.alt {

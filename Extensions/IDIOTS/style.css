@@ -24,7 +24,7 @@
     font-size: 4rem;
     font-weight: 900;
     color: var(--text-900);
-    background: var(--accent-alt);
+    background: var(--accent-primary-alt);
     line-height: 1;
     padding-block: .5rem;
     padding-inline: 1rem;

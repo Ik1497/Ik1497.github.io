@@ -93,12 +93,12 @@ headerLinksMap.forEach(headerLink => {
   }
 
   if (!headerLink.navbarHidden) {
-    document.querySelector("nav.navbar").insertAdjacentHTML(`afterbegin`,`
+    document.querySelector("nav.navbar").insertAdjacentHTML(`beforeend`,`
     <ul class="navbar-list" data-page="${urlSafe(headerLink.name)}"${location.hash === `#${urlSafe(headerLink.name)}` ? `` : `hidden`}></ul>
     `)
   }
 
-  document.querySelector("main").insertAdjacentHTML(`afterbegin`,`
+  document.querySelector("main").insertAdjacentHTML(`beforeend`,`
   <div class="main nested" data-page="${urlSafe(headerLink.name)}"${location.hash === `#${urlSafe(headerLink.name)}` ? `` : `hidden`}></div>
   `)
 });
@@ -344,35 +344,13 @@ async function connectws() {
         `)
 
         document.querySelector(`.open-settings-modal`).addEventListener(`click`, () => {
-          createModal(`
+          const Modal__Settings = createModal(`
           <div class="i-tabset full alt-background">
             <div data-tab="Integrations">
               <ul class="integrations-list">
                 <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
               </ul>
             </div>
-
-
-            <div data-tab="Broadcaster">
-              <p>Choose Between YouTube or Twitch</p>
-              <small>When the service is disconnected no broadcaster variables will be emitted</small>
-              <div class="form-group styled">
-                <select>
-                  <option>Disabled</option>
-                  <option>Twitch</option>
-                  <option>YouTube</option>
-                </select>
-              </div>
-            </div>
-
-
-            <div data-tab="Random Users">
-              <div class="form-group styled">
-                <label>Random Users</label>
-                <input type="number" value="${localStorage.getItem(`streamerbotToolbox__randomUsers`) || 0}">
-              </div>
-            </div>
-
 
             <div data-tab="OBS Studio">
               <p>OBS Studio is fully managed with Streamer.bot in combination with the Streamer.bot Action Package</p>
@@ -393,15 +371,15 @@ async function connectws() {
 
           // Streamer.bot Action Package
 
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download, More Info, and Authentication</button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you have broken something <button id="more-info">Please re-install it again</button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `unauthorized`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you're unauthorized please provide a working password <button id="more-info">Authorize</button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `disabled`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, the action is currently disabled enable the action again <button id="more-info" class="mdi mdi-cog"></button></li>`)
-          if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl} <button id="more-info" class="mdi mdi-cog"></button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download, More Info, and Authentication</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `outdated`) Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (outdated) <button id="more-info">Update to use it again</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `renamed`) Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-alert" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you have broken something <button id="more-info">Please re-install it again</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `unauthorized`) Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, you're unauthorized please provide a working password <button id="more-info">Authorize</button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `disabled`) Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="streamer.bot-action-package"> Streamer.bot Action Package, the action is currently disabled enable the action again <button id="more-info" class="mdi mdi-cog"></button></li>`)
+          if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl} <button id="more-info" class="mdi mdi-cog"></button></li>`)
 
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
-            createModal(`
+          Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
+            const streamerbotActionPackageModal__Settings = createModal(`
             <div class="form-group styled">
               <label for="password">Password</label>
               <div class="flex">
@@ -423,19 +401,19 @@ async function connectws() {
             </div>
             `, `Streamer.bot Action Package`, undefined, `medium`, {})
 
-            document.querySelector(`.i-modal .main .form-group input#password`).addEventListener(`keydown`, () => {
+            streamerbotActionPackageModal__Settings.main.querySelector(`.form-group input#password`).addEventListener(`keydown`, () => {
               setTimeout(() => {
                 let streamerbotToolbox__StreamerbotActionPackage = JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{}`) ?? {}
-                streamerbotToolbox__StreamerbotActionPackage.password = document.querySelector(`.i-modal .main .form-group input#password`).value
+                streamerbotToolbox__StreamerbotActionPackage.password = streamerbotActionPackageModal__Settings.main.querySelector(`.form-group input#password`).value
                 localStorage.setItem(`streamerbotToolbox__StreamerbotActionPackage`, JSON.stringify(streamerbotToolbox__StreamerbotActionPackage))
               }, 50);
             })
 
-            document.getElementById(`show-password`).addEventListener(`click`, () => {
-              if (document.getElementById(`password`).type === `password`) {
-                document.getElementById(`password`).type = `text`
+            streamerbotActionPackageModal__Settings.main.querySelector(`#show-password`).addEventListener(`click`, () => {
+              if (streamerbotActionPackageModal__Settings.main.querySelector(`#password`).type === `password`) {
+                streamerbotActionPackageModal__Settings.main.querySelector(`#password`).type = `text`
               } else {
-                document.getElementById(`password`).type = `password`
+                streamerbotActionPackageModal__Settings.main.querySelector(`#password`).type = `password`
               }
             })
           })
@@ -443,9 +421,9 @@ async function connectws() {
           // OBS Studio
 
           if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) {
-            document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="obs-studio"> OBS Studio (Connected) • Connection: ${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}</li>`)
+            Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="obs-studio"> OBS Studio (Connected) • Connection: ${JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`) ?? `{"connection": 0}`).connection || 0}</li>`)
           } else {
-            document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (Disconnected)</li>`)
+            Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-close-thick" data-integration="obs-studio"> OBS Studio (Disconnected)</li>`)
           }
 
           // Speaker.bot
@@ -462,9 +440,9 @@ async function connectws() {
             integrationsList__speakerbot = `<li class="mdi mdi-reload" data-integration="speakerbot"> Speaker.bot <button>Reconnect!</button></p>`
           }
 
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__speakerbot)
+          Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__speakerbot)
           
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="speakerbot"] button`).addEventListener(`click`, function () {
+          Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="speakerbot"] button`).addEventListener(`click`, function () {
             let speakerbotDefaultValues = localStorage.getItem(`streamerbotToolbox__speakerbot`)
             if (speakerbotDefaultValues === null) {
               speakerbotDefaultValues = {}
@@ -475,7 +453,7 @@ async function connectws() {
               speakerbotDefaultValues = JSON.parse(speakerbotDefaultValues)
             }
 
-            createModal(`
+            const speakerBotModal__Settings = createModal(`
             <div class="form-group styled">
               <label for="websocket-url">Host</label>
               <input type="url" name="websocket-host" id="websocket-host" value="${speakerbotDefaultValues.host}" placeholder="${speakerbotDefaultValues.host}" class="no-margin">
@@ -483,12 +461,12 @@ async function connectws() {
 
             <div class="form-group styled">
               <label for="websocket-url">Port</label>
-              <input type="url" name="websocket-port" id="websocket-port" value="${speakerbotDefaultValues.port}" placeholder="${speakerbotDefaultValues.port}" class="no-margin">
+              <input type="number" name="websocket-port" id="websocket-port" value="${speakerbotDefaultValues.port}" placeholder="${speakerbotDefaultValues.port}" class="no-margin">
             </div>
 
             <div class="form-group styled">
               <label for="websocket-url">Endpoint</label>
-              <input type="url" name="websocket-endpoint" id="websocket-endpoint" value="${speakerbotDefaultValues.endpoint}" placeholder="${speakerbotDefaultValues.endpoint}" class="no-margin">
+              <input type="text" name="websocket-endpoint" id="websocket-endpoint" value="${speakerbotDefaultValues.endpoint}" placeholder="${speakerbotDefaultValues.endpoint}" class="no-margin">
             </div>
 
             <div class="form-group styled">
@@ -496,11 +474,11 @@ async function connectws() {
             </div>
             `, `Speaker.bot Settings`, undefined, `small`, {})
 
-            document.querySelector(`.i-modal .main .form-group button.connect-button`).addEventListener(`click`, function () {
+            speakerBotModal__Settings.main.querySelector(`.form-group button.connect-button`).addEventListener(`click`, function () {
               localStorage.setItem(`streamerbotToolbox__speakerbot`, JSON.stringify({
-                  host: document.querySelector(`.i-modal .main .form-group input#websocket-host`).value,
-                  port: document.querySelector(`.i-modal .main .form-group input#websocket-port`).value,
-                  endpoint: document.querySelector(`.i-modal .main .form-group input#websocket-endpoint`).value
+                  host: speakerBotModal__Settings.main.querySelector(`.form-group input#websocket-host`).value,
+                  port: speakerBotModal__Settings.main.querySelector(`.form-group input#websocket-port`).value,
+                  endpoint: speakerBotModal__Settings.main.querySelector(`.form-group input#websocket-endpoint`).value
                 })
               )
 
@@ -508,84 +486,16 @@ async function connectws() {
             })
           })
 
-
-          /* ----------- */
-          /* Broadcaster */
-          /* ----------- */
-
-
-          let broadcasterOptions = {
-            Disabled: `<option>Disabled</option>`,
-            Twitch: `<option>Twitch</option>`,
-            YouTube: `<option>YouTube</option>`
-          }
-          let broadcastService = localStorage.getItem(`streamerbotToolbox__broadcastService`) || `Disabled`
-
-          if (broadcastService === `Twitch`) {
-            broadcasterOptions = broadcasterOptions.Twitch + broadcasterOptions.Twitch + broadcasterOptions.Disabled
-          } else if (broadcastService === `YouTube`) {
-            broadcasterOptions = broadcasterOptions.YouTube + broadcasterOptions.Twitch + broadcasterOptions.Disabled
-          } else if (broadcastService === `Disabled`) {
-            broadcasterOptions = broadcasterOptions.Disabled + broadcasterOptions.Twitch + broadcasterOptions.YouTube
-          }
-          
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"]`).innerHTML = `
-          <p>Choose Between YouTube or Twitch</p>
-            <small>When the service is disconnected no broadcaster variables will be emitted</small>
-          <div class="form-group styled">
-            <select>${broadcasterOptions}</select>
-          </div>`
-
-          localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).value)
-
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).addEventListener(`click`, function () {
-            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).value)
-          })
-
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).addEventListener(`wheel`, function () {
-            localStorage.setItem(`streamerbotToolbox__broadcastService`, document.querySelector(`.i-modal .main .i-tabset div[data-tab="Broadcaster"] select`).value)
-          })
-
-
-          /* ------------ */
-          /* Random Users */
-          /* ------------ */
-
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Random Users"] input`).addEventListener(`keydown`, function () {
-            let randomUsersCount = document.querySelector(`.i-modal .main .i-tabset div[data-tab="Random Users"] input`).value
-
-            if (randomUsersCount < 1) {
-              randomUsersCount = 0
-            }
-
-            setTimeout(() => {
-              localStorage.setItem(`streamerbotToolbox__randomUsers`, randomUsersCount)
-            })
-          })
-
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="Random Users"] input`).addEventListener(`wheel`, function () {
-            let randomUsersCount = document.querySelector(`.i-modal .main .i-tabset div[data-tab="Random Users"] input`).value
-
-            if (randomUsersCount < 1) {
-              randomUsersCount = 0
-            }
-
-            setTimeout(() => {
-              localStorage.setItem(`streamerbotToolbox__randomUsers`, randomUsersCount)
-            })
-          })
-
-
           /* ---------- */
           /* OBS Studio */
           /* ---------- */
 
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="OBS Studio"] input`).addEventListener(`keydown`, updateObsStudioSettings)
-          document.querySelector(`.i-modal .main .i-tabset div[data-tab="OBS Studio"] input`).addEventListener(`wheel`, updateObsStudioSettings)
+          Modal__Settings.main.querySelector(`.i-tabset div[data-tab="OBS Studio"] input`).addEventListener(`keydown`, updateObsStudioSettings)
+          Modal__Settings.main.querySelector(`.i-tabset div[data-tab="OBS Studio"] input`).addEventListener(`wheel`, updateObsStudioSettings)
 
           function updateObsStudioSettings() {
             let obsStudioSettings = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
-            let obsStudioConnection = document.querySelector(`.i-modal .main .i-tabset div[data-tab="OBS Studio"] input`).value
+            let obsStudioConnection = Modal__Settings.main.querySelector(`.i-tabset div[data-tab="OBS Studio"] input`).value
 
             if (obsStudioConnection < 1) {
               obsStudioConnection = 0
@@ -613,7 +523,6 @@ async function connectws() {
 
 
       if (data.id === `GetBroadcaster`) {
-
         document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).innerHTML = `
         <aside>
           <div class="card-grid" style="grid-template-columns: auto max-content;${new URLSearchParams(window.location.search).get("popout") != null ? ` height: 100%;` : ``}">
@@ -681,9 +590,9 @@ async function connectws() {
 
         DashboardAsyncPage()
         async function DashboardAsyncPage() {
-          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).classList.add(`full`)
-          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).classList.add(`grid`)
-          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).classList.add(`auto-col`)
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).classList.add(`full`)
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).classList.add(`grid`)
+          document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).classList.add(`auto-col`)
           let profileImage = ``
           if (data.connected.includes(`youtube`)) profileImage = data.platforms.youtube.broadcastUserProfileImage
           if (data.connected.includes(`twitch`)) profileImage = await fetch(`https://decapi.me/twitch/avatar/${data.platforms.twitch.broadcastUserName}`)
@@ -698,7 +607,7 @@ async function connectws() {
           if (data.connected.includes(`twitch`) || data.connected.includes(`youtube`)) welcomeMessage = `Welcome, <span style="display: flex; align-items: center;">${profileImage}${welcomeUser}!</span>`
 
           if (new URLSearchParams(window.location.search).get("popout") === null) {
-            document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}`).insertAdjacentHTML(`afterbegin`, `
+            document.querySelector(`main .main[data-page="${urlSafe(`Dashboard`)}"]`).insertAdjacentHTML(`afterbegin`, `
             <div class="main-contents">
               <blockquote class="error streamerbot-action-package--outdated">
                 <p class="blockquote-text">Your Streamer.bot Action Package is outdated, please go to the settings and re-install the new version to properly use it again.</p>
@@ -1046,7 +955,7 @@ async function connectws() {
                 } else {
                   listItem.setAttribute(`hidden`, ``)
                 }
-              });4
+              });
             }, 50);
           })
 
@@ -1198,37 +1107,13 @@ async function connectws() {
       ***************************
       ***************************
       ***/
-
-      if (data?.id === `GetActions`) {
-
-        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}`).classList.add(`col-2`)
-
-        // let eventTestDropdown = ``
-        // let eventArgsEntries = Object.entries(eventArgsMap)
-        // eventArgsEntries.forEach(eventArgEntry => {
-        //   eventTestDropdown += `<option value="${eventArgEntry[0]}">[${eventArgEntry[1].category.toUpperCase()}] ${eventArgEntry[1].display}</option>`
-        // });
-        // eventTestDropdown = `
-        // <div class="form-group styled flex align-center">
-        //   <label for="event-search">Search Event</label>
-        //   <input id="event-search" type="search" placeholder="search...">
-        // </div>        
-        // <div class="form-group styled">
-        //   <select><option value="None">None</option>${eventTestDropdown}</select>
-        // </div>`
-
-        
-        // <div class="card events">
-        //   <div class="card-header">
-        //     <p class="card-title">Emulate Events</p>
-        //   </div>
-        //   <hr>
-        //   ${eventTestDropdown}
-        // </div>
-        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}`).insertAdjacentHTML(`beforeend`, `
+     
+      if (document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] > .card-grid`) === null) {
+        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"]`).classList.add(`col-2`)
+        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"]`).insertAdjacentHTML(`beforeend`, `
         <div class="card-grid"></div>
         <aside>
-        <div class="card-grid">
+          <div class="card-grid">
             <div class="card arguments">
               <div class="card-header">
                 <p class="card-title">Arguments</p>
@@ -1256,12 +1141,12 @@ async function connectws() {
           </div>
         </aside>
         `)
-
+  
         // Action History
-        
+  
         let toggleActionHistoryExclusionButton = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history .card-header .card-header-append button`)
         let toggleActionHistoryExclusionUlStyled = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history ul.styled`)
-
+  
         toggleActionHistoryExclusionButton.addEventListener(`click`, () => {
           if (toggleActionHistoryExclusionButton.getAttribute(`data-button-state`) === `offline`) {
             toggleActionHistoryExclusionButton.setAttribute(`data-button-state`, `online`)
@@ -1275,11 +1160,11 @@ async function connectws() {
             toggleActionHistoryExclusionUlStyled.setAttribute(`data-exclusion`, `false`)
           }
         })
-
+  
         document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history input[type="search"]`).addEventListener(`keydown`, updateActionHistorySearch)
-
+  
         updateActionHistorySearch()
-
+  
         function updateActionHistorySearch() {
           setTimeout(() => {
             let searchTerm = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.action-history input[type="search"]`).value.toLowerCase()
@@ -1294,51 +1179,31 @@ async function connectws() {
             });
           });
         }
-        
+  
         // End Action History
-
-        // Emulate Events
-
-        // document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.events input[type="search"]`).addEventListener(`keydown`, () => {
-        //   setTimeout(() => {
-        //     let searchTerm = document.querySelector(`main aside .card.events input[type="search"]`).value.toLowerCase()
-        //     document.querySelectorAll(`main aside .card.events select option`).forEach(option => {
-        //       if (option.innerHTML.toLowerCase().includes(searchTerm) || option.value.toLowerCase().includes(searchTerm) || searchTerm === ``) {
-        //         if (option.value != `None`) {
-        //           option.setAttribute(`hidden`, ``)
-        //           option.removeAttribute(`hidden`)
-        //         }
-        //       } else {
-        //         if (option.value != `None`) {
-        //           option.setAttribute(`hidden`, ``)
-        //         }
-        //       }
-        //     });
-        //   }, 50);
-        // })
-            
+  
         // Arguments
-
+  
         reloadArgumentsTable()
-
+  
         document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments .card-header .card-header-append button`).addEventListener(`click`, () => {
-          createModal(`
+          const Modal__ClearArguments = createModal(`
           <div class="form-group styled" id="clear" style="display: grid; place-items: center; height: 100%;">
             <button style="font-size: 2rem;">Yes</button>
           </div>
           `, `Are you sure?`, `Remove arguments`, `prompt`, {})
-
-          document.querySelector(`.i-modal .main .form-group#clear button`).addEventListener(`click`, () => {
+  
+          Modal__ClearArguments.querySelector(`.form-group#clear button`).addEventListener(`click`, () => {
             clearArgumentsTable()
-            closeModal()
+            closeModal(Modal__ClearArguments.modal)
           })
-
+  
         })
-        
+  
         function reloadArgumentsTable() {
           let argumentsTable = document.querySelector(`main aside .card.arguments table`)
           let argumentsData = Object.entries(JSON.parse(localStorage.getItem(`streamerbotToolbox__arguments`) || `{}`) ?? {}) ?? []
-
+  
           if (argumentsData.length === 0) {
             argumentsTable.innerHTML = `
             <tbody>
@@ -1347,10 +1212,10 @@ async function connectws() {
                 <td contenteditable="true"></td>
               </tr>
             </tbody>`
-
+  
           } else {
             argumentsTable.innerHTML = `<tbody></tbody>`
-
+  
             argumentsData.forEach(arg => {
               argumentsTable.querySelector(`tbody`).insertAdjacentHTML(`beforeend`, `
               <tr>
@@ -1362,7 +1227,7 @@ async function connectws() {
           }
           updateArgumentsRows()
         }
-        
+  
         function updateArgumentsRows() {
           setTimeout(() => {
             let argumentsTable = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments table`)
@@ -1393,7 +1258,7 @@ async function connectws() {
             });
           }, 50);
         }
-
+  
         function saveArgumentsTable() {
           setTimeout(() => {
             let argumentsTable = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments table`)
@@ -1413,11 +1278,11 @@ async function connectws() {
             localStorage.setItem(`streamerbotToolbox__arguments`, JSON.stringify(Object.fromEntries(argumentsData)))
           }, 50);
         }
-        
+  
         function clearArgumentsTable() {
           let argumentsTable = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments table`)
           localStorage.setItem(`streamerbotToolbox__arguments`, JSON.stringify({}))
-
+  
           argumentsTable.innerHTML = `
           <tbody>
             <tr>
@@ -1425,11 +1290,16 @@ async function connectws() {
               <td contenteditable="true"></td>
             </tr>
           </tbody>`
-
+  
           reloadArgumentsTable()
         }
-
+  
         // End Arguments
+      }
+
+      if (data?.id === `GetActions`) {
+        document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Actions`)}"]`).innerHTML = ``
+        document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] > .card-grid`).innerHTML = ``
 
         let uniqueGroups = []
         
@@ -1454,7 +1324,7 @@ async function connectws() {
 
           let navbar__listItem = document.createElement(`li`)
           navbar__listItem.className = `navbar-list-item`
-          document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Actions`)}`).append(navbar__listItem)
+          document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Actions`)}"]`).append(navbar__listItem)
           
           let navbar__listItem__button = document.createElement(`button`)
           navbar__listItem.append(navbar__listItem__button)
@@ -1511,7 +1381,7 @@ async function connectws() {
 
                     data.actions.forEach(action => {
                       if (uniqueGroup === action.group) {
-                        addActionsToUi(action)
+                        addActionToUi(action)
                       }
                     })
 
@@ -1519,10 +1389,10 @@ async function connectws() {
                 })
               });
             } else {
-              data.actions.forEach(addActionsToUi)
+              data.actions.forEach(action => addActionToUi(action))
             }
 
-            function addActionsToUi(action) {
+            function addActionToUi(action) {
               if (action.group === group || group === `View All`) {
                 let listItem = document.createElement(`li`)
                 document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] > .card-grid .card ul.styled`).append(listItem)
@@ -1556,16 +1426,11 @@ async function connectws() {
                 listItem__appendDiv__button.addEventListener(`click`, RunActionFromActionsPage)
 
                 listItem__button.addEventListener(`click`, function () {
-                  createModal(`
-                  <div class="buttons-row list-items">
+                  const Modal__InspectAction = createModal(`
+                  <ul class="buttons-row list-items tonal">
                     <li>${action.subaction_count} ${action.subaction_count === 1 ? `Sub-Action` : `Sub-Actions`}</li>
                     <li>${action.enabled ? `Enabled` : `Disabled`}</li>
-                  </div>
-                  <br>
-                  <div class="buttons-row">
-                    <li>
-                    </li>
-                  </div>
+                  </ul>
                   <br>
                   <table class="styled">
                     <tr>
@@ -1585,8 +1450,9 @@ async function connectws() {
                   <div class="form-group styled execute">
                     <button id="execute" title="${action.enabled ? `Execute Action` : `Disabled Action`}"${action.enabled ? `` : ` disabled`}>Execute</button>
                   </div>
-                  `, action.name, `Inspect Sub-Action`, `small`, {})
-                  document.querySelector(`.i-modal .main .form-group.execute button#execute`).addEventListener(`click`, () => {
+                  `, action.name, `Inspect Action`, `small`, {})
+
+                  Modal__InspectAction.querySelector(`.form-group.execute button#execute`).addEventListener(`click`, () => {
                     RunActionFromActionsPage()
                   })
                 })
@@ -1638,54 +1504,6 @@ async function connectws() {
 
                   arguments.push([`source`, `StreamerbotToolbox`])
 
-                  // let selectedEventArgs = document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.events select`).value
-                  // eventArgsEntries.forEach(eventArgsEntry => {
-                  //   if (eventArgsEntry[0] === selectedEventArgs) {
-                  //     let randomEventArgs__user = randomEventArgs.user[Math.floor(Math.random()*randomEventArgs.user.length)]
-
-                  //     Object.entries(eventArgsEntry[1].arguments).forEach(arg => {
-                  //       let randomEventArgs__message = randomEventArgs.message[Math.floor(Math.random()*randomEventArgs.message.length)]
-
-                  //       if (arg[0] === `userId`)              arg[1] = randomEventArgs__user.userId
-                  //       if (arg[0] === `userName`)            arg[1] = randomEventArgs__user.userName
-                  //       if (arg[0] === `user`)                arg[1] = randomEventArgs__user.user
-                  //       if (arg[0] === `userType`)            arg[1] = randomEventArgs__user.userType
-                  //       if (arg[0] === `isSubscribed`)        arg[1] = randomEventArgs__user.isSubscribed
-                  //       if (arg[0] === `isVip`)               arg[1] = randomEventArgs__user.isVip
-                  //       if (arg[0] === `isModerator`)         arg[1] = randomEventArgs__user.isModerator
-                  //       if (arg[0] === `userPreviousActive`)  arg[1] = randomEventArgs__user.userPreviousActive
-
-                  //       if (arg[0] === `rawInput`)           arg[1] = randomEventArgs__message
-                  //       if (arg[0] === `rawInputEscaped`)    arg[1] = encodeURI(randomEventArgs__message)
-                  //       if (arg[0] === `rawInputUrlEncoded`) arg[1] = encodeURI(randomEventArgs__message)
-                  //       if (arg[0] === `message`)            arg[1] = randomEventArgs__message
-                  //       if (arg[0] === `messageStripped`)    arg[1] = randomEventArgs__message
-                  //       if (arg[0] === `rawInput`) randomEventArgs__message.split(` `).forEach((input, index) => {
-                  //         arguments.push([`input${index}`,           input])
-                  //         arguments.push([`inputEscaped${index}`,    encodeURI(input)])
-                  //         arguments.push([`inputUrlEncoded${index}`, encodeURI(input)])
-                  //       });
-
-                  //       if (arg[0] === `tagCount`) {
-                  //         let randomEventArgs__tagCount = Math.floor(Math.random() * 5) + 1
-                  //         let randomEventArgs__tagsDelimited = []
-                  //         arg[1] = `${randomEventArgs__tagCount}`
-                  //         arguments.push([`tags`, 'System.Collections.Generic.List`1[System.String]'])
-
-                  //         for (let randomEventArgs__tagRunTime = 0; randomEventArgs__tagRunTime < randomEventArgs__tagCount; randomEventArgs__tagRunTime++) {
-                  //           let randomEventArgs__tags = randomEventArgs.tags[Math.floor(Math.random()*randomEventArgs.tags.length)]
-                  //           arguments.push([`tag${randomEventArgs__tagRunTime}`, randomEventArgs__tags])
-                  //           randomEventArgs__tagsDelimited.push(randomEventArgs__tags)
-                  //         }
-
-                  //         arguments.push([`tagsDelimited`, randomEventArgs__tagsDelimited.join(`,`)])
-                  //       }
-                        
-                  //       arguments.push(arg)
-                  //     });
-                  //   }
-                  // });
-
                   let argumentsLocalStorage = Object.entries(JSON.parse(localStorage.getItem(`streamerbotToolbox__arguments`) || `{}`) ?? {}) ?? []
                   argumentsLocalStorage.forEach(argument => {
                     arguments.push([argument[0], argument[1]])
@@ -1699,6 +1517,12 @@ async function connectws() {
             }
           })
         })
+      }
+
+      if (data?.event?.source === `Application`) {
+        if (data?.event?.type === `ActionAdded` || data?.event?.type === `ActionDeleted` || data?.event?.type === `ActionUpdated`) {
+          SB__GetActions(`GetActions`)
+        }
       }
 
       if (data?.event?.source === `Raw` && data?.event?.type === `Action`) {
@@ -1785,6 +1609,12 @@ async function connectws() {
                   <td style="text-align: left;">${typeof argument[1] != `object` ? argument[1] : `<pre><code>${formatJson(argument[1]).html}</code></pre>`}</td>
                 </tr>
                 `
+
+                if (typeof argument[1] != `object`) {
+                  console.log(`OBJECT`, argument[1])
+                } else {
+                  console.log(`NOT OBJECT`, argument[1])
+                }
               });
   
               actionHistoryQueued__table += `
@@ -1793,7 +1623,7 @@ async function connectws() {
               `
             }
   
-            createModal(`
+            const Modal__ActionHistory = createModal(`
             <h3>Arguments</h3>
             <br>
             ${actionHistoryQueued__table}
@@ -1831,8 +1661,8 @@ async function connectws() {
 
             copyButtons__List__copyForDiscord__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables for Discord to clipboard`)
-              if (document.querySelector(`.i-modal .main table#completed`) != null) {
-                if (document.querySelector(`.i-modal .main table#completed`).getAttribute(`hidden`) === null) {
+              if (Modal__ActionHistory.main.querySelector(`table#completed`) != null) {
+                if (Modal__ActionHistory.main.querySelector(`table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForDiscord(`completed`)
                 } else {
                   copyArgumentsForDiscord(`queued`)
@@ -1844,11 +1674,9 @@ async function connectws() {
               function copyArgumentsForDiscord(state) {
                 if (state === `queued`) {
                   let discord = copyArgumentsForDiscordFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)).data.arguments)
-                  console.log(`Copying:`, discord)
                   navigator.clipboard.writeText(discord)
                 } else if (state === `completed`) {
                   let discord = copyArgumentsForDiscordFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)).data.arguments)
-                  console.log(`Copying:`, discord)
                   navigator.clipboard.writeText(discord)
                 }
               }
@@ -1865,8 +1693,8 @@ async function connectws() {
 
             copyButtons__List__copyForWiki__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables for the Streamer.bot Wiki to clipboard`)
-              if (document.querySelector(`.i-modal .main table#completed`) != null) {
-                if (document.querySelector(`.i-modal .main table#completed`).getAttribute(`hidden`) === null) {
+              if (Modal__ActionHistory.main.querySelector(`table#completed`) != null) {
+                if (Modal__ActionHistory.main.querySelector(`table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForWiki(`completed`)
                 } else {
                   copyArgumentsForWiki(`queued`)
@@ -1878,11 +1706,9 @@ async function connectws() {
               function copyArgumentsForWiki(state) {
                 if (state === `queued`) {
                   let table = copyArgumentsForWikiFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-queued-data`)).data.arguments)
-                  console.log(`Copying:`, table)
                   navigator.clipboard.writeText(table)
                 } else if (state === `completed`) {
                   let table = copyArgumentsForWikiFormatter(JSON.parse(actionHistoryQueued__ListItem.getAttribute(`data-action-completed-data`)).data.arguments)
-                  console.log(`Copying:`, table)
                   navigator.clipboard.writeText(table)
                 }
               }
@@ -1898,8 +1724,8 @@ async function connectws() {
 
             copyButtons__List__copyAsJson__button.addEventListener(`click`, () => {
               createSnackbar(`Copying variables as JSON to clipboard`)
-              if (document.querySelector(`.i-modal .main table#completed`) != null) {
-                if (document.querySelector(`.i-modal .main table#completed`).getAttribute(`hidden`) === null) {
+              if (Modal__ActionHistory.main.querySelector(`table#completed`) != null) {
+                if (Modal__ActionHistory.main.querySelector(`table#completed`).getAttribute(`hidden`) === null) {
                   copyArgumentsForJson(`completed`)
                 } else {
                   copyArgumentsForJson(`queued`)
@@ -1919,12 +1745,12 @@ async function connectws() {
               }
             })
 
-            document.querySelector(`.i-modal .main`).prepend(copyButtons__List)
+            Modal__ActionHistory.main.prepend(copyButtons__List)
 
             if (actionHistoryQueued__ListItem.getAttribute(`data-action-state`) === `completed`) {
               let actionHistoryCompletedDialog__List = document.createElement(`ul`)
               actionHistoryCompletedDialog__List.className = `buttons-row`
-              document.querySelector(`.i-modal .main`).prepend(actionHistoryCompletedDialog__List)
+              Modal__ActionHistory.main.prepend(actionHistoryCompletedDialog__List)
   
               let actionHistoryCompletedDialog__QueuedListItem = document.createElement(`li`)
               
@@ -1966,24 +1792,24 @@ async function connectws() {
   
               function reloadButtonStates() {
                 if (actionHistoryCompletedDialog__CompletedListItem.classList.contains(`button-active`)) {
-                  document.querySelector(`.i-modal .main table#completed`).setAttribute(`hidden`, ``)
-                  document.querySelector(`.i-modal .main table#completed`).removeAttribute(`hidden`)
+                  Modal__ActionHistory.main.querySelector(`table#completed`).setAttribute(`hidden`, ``)
+                  Modal__ActionHistory.main.querySelector(`table#completed`).removeAttribute(`hidden`)
                   
-                  document.querySelector(`.i-modal .main table#queued`).setAttribute(`hidden`, ``)
+                  Modal__ActionHistory.main.querySelector(`table#queued`).setAttribute(`hidden`, ``)
   
                 } else if (actionHistoryCompletedDialog__QueuedListItem.classList.contains(`button-active`)) {
-                  document.querySelector(`.i-modal .main table#queued`).setAttribute(`hidden`, ``)
-                  document.querySelector(`.i-modal .main table#queued`).removeAttribute(`hidden`)
+                  Modal__ActionHistory.main.querySelector(`table#queued`).setAttribute(`hidden`, ``)
+                  Modal__ActionHistory.main.querySelector(`table#queued`).removeAttribute(`hidden`)
                   
-                  document.querySelector(`.i-modal .main table#completed`).setAttribute(`hidden`, ``)
+                  Modal__ActionHistory.main.querySelector(`table#completed`).setAttribute(`hidden`, ``)
   
                 }
               }
             }
   
-            document.querySelector(`.i-modal .main .form-group.re-run button#re-run`).addEventListener(`click`, () => {
+            Modal__ActionHistory.main.querySelector(`.form-group.re-run button#re-run`).addEventListener(`click`, () => {
               let arguments = []
-              document.querySelectorAll(`.i-modal .main table:not([hidden]) tbody tr`).forEach(tableRow => {
+              Modal__ActionHistory.main.querySelectorAll(`table:not([hidden]) tbody tr`).forEach(tableRow => {
                 arguments.push([
                   tableRow.querySelector(`td:first-child`).innerText,
                   tableRow.querySelector(`td:last-child`).innerText
@@ -2412,7 +2238,7 @@ async function connectws() {
             commandGroups.forEach(command => {     
               let commandsText = `${command[1]} Commands`
               if (command[1] === 1) commandsText = `${command[1]} Command`    
-              document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Commands`)}`).insertAdjacentHTML(`beforeend`, `
+              document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Commands`)}"]`).insertAdjacentHTML(`beforeend`, `
               <li class="navbar-list-item" data-command-name="${command[0]}" data-command-count="${command[1]}">
                 <button>
                   <p class="title">${command[0]}</p>
@@ -2443,7 +2269,7 @@ async function connectws() {
                   }
                 });
 
-                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}`).innerHTML = `
+                document.querySelector(`main .main[data-page="${urlSafe(`Commands`)}"]`).innerHTML = `
                 <div class="command-information">
                   <h2>${listItem.getAttribute(`data-command-name`)}</h2>
                   <hr>
@@ -2861,7 +2687,7 @@ async function connectws() {
               }
 
               listItem.querySelector(`.dropdown-section .dropdown-list li#transform-settings button`).addEventListener(`click`, () => {
-                createModal(`
+                let Modal_ObsStudioTransformSettings = createModal(`
                 <table class="styled">
                   <div class="form-group styled">
                     <button id="update">Update Transform Settings</button>
@@ -2963,33 +2789,32 @@ async function connectws() {
                   </table>
                 `, `${sourceData.sourceName}`, `Edit Transform Settings`, `medium`, {})
 
-                document.querySelector(`.i-modal .main .form-group button#update`).addEventListener(`click`, () => {
+                Modal_ObsStudioTransformSettings.main.querySelector(`.form-group button#update`).addEventListener(`click`, () => {
                   SB__StreamerbotActionPackageOBSRequest(`SetSceneItemTransform`, {
-                    sceneName: document.querySelector(`main .main .card-grid .card.sources > ul`).getAttribute(`data-scene`),
+                    sceneName: document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.sources > ul`).getAttribute(`data-scene`),
                     sceneItemId: sourceData.sceneItemId,
                     sceneItemTransform: {
-                      alignment: +document.querySelector(`.i-modal .main table #alignment`).value || 5,
-                      boundsAlignment: +document.querySelector(`.i-modal .main table #bounds-alignment`).value || 0,
-                      boundsWidth: +document.querySelector(`. .main table #bounds-width`).value || 1,
-                      boundsHeight: +document.querySelector(`.i-modal .main table #bounds-height`).value || 1,
-                      boundsType: document.querySelector(`.i-modal .main table #bounds-type`).value || "OBS_BOUNDS_NONE",
-                      cropTop: +document.querySelector(`.i-modal .main table #crop-top`).value || 0,
-                      cropRight: +document.querySelector(`.i-modal .main table #crop-right`).value || 0,
-                      cropBottom: +document.querySelector(`.i-modal .main table #crop-bottom`).value || 0,
-                      cropLeft: +document.querySelector(`.i-modal .main table #crop-left`).value || 0,
-                      width: +document.querySelector(`.i-modal .main table #width`).value || null,
-                      height: +document.querySelector(`.i-modal .main table #height`).value || null,
-                      positionX: +document.querySelector(`.i-modal .main table #position-x`).value || 0,
-                      positionY: +document.querySelector(`.i-modal .main table #position-y`).value || 0,
-                      rotation: +document.querySelector(`.i-modal .main table #rotation`).value || 0,
-                      scaleX: +document.querySelector(`.i-modal .main table #scale-x`).value || null,
-                      scaleY: +document.querySelector(`.i-modal .main table #scale-y`).value || null,
-                      sourceHeight: +document.querySelector(`.i-modal .main table #source-height`).value || 0,
-                      sourceWidth: +document.querySelector(`.i-modal .main table #source-width`).value || 0
+                      alignment: +Modal_ObsStudioTransformSettings.main.querySelector(`table #alignment`).value || 5,
+                      boundsAlignment: +Modal_ObsStudioTransformSettings.main.querySelector(`table #bounds-alignment`).value || 0,
+                      boundsWidth: +Modal_ObsStudioTransformSettings.main.querySelector(`. .main table #bounds-width`).value || 1,
+                      boundsHeight: +Modal_ObsStudioTransformSettings.main.querySelector(`table #bounds-height`).value || 1,
+                      boundsType: Modal_ObsStudioTransformSettings.main.querySelector(`table #bounds-type`).value || "OBS_BOUNDS_NONE",
+                      cropTop: +Modal_ObsStudioTransformSettings.main.querySelector(`table #crop-top`).value || 0,
+                      cropRight: +Modal_ObsStudioTransformSettings.main.querySelector(`table #crop-right`).value || 0,
+                      cropBottom: +Modal_ObsStudioTransformSettings.main.querySelector(`table #crop-bottom`).value || 0,
+                      cropLeft: +Modal_ObsStudioTransformSettings.main.querySelector(`table #crop-left`).value || 0,
+                      width: +Modal_ObsStudioTransformSettings.main.querySelector(`table #width`).value || null,
+                      height: +Modal_ObsStudioTransformSettings.main.querySelector(`table #height`).value || null,
+                      positionX: +Modal_ObsStudioTransformSettings.main.querySelector(`table #position-x`).value || 0,
+                      positionY: +Modal_ObsStudioTransformSettings.main.querySelector(`table #position-y`).value || 0,
+                      rotation: +Modal_ObsStudioTransformSettings.main.querySelector(`table #rotation`).value || 0,
+                      scaleX: +Modal_ObsStudioTransformSettings.main.querySelector(`table #scale-x`).value || null,
+                      scaleY: +Modal_ObsStudioTransformSettings.main.querySelector(`table #scale-y`).value || null,
+                      sourceHeight: +Modal_ObsStudioTransformSettings.main.querySelector(`table #source-height`).value || 0,
+                      sourceWidth: +Modal_ObsStudioTransformSettings.main.querySelector(`table #source-width`).value || 0
                     }
                   }, obsConnection)
                 })
-
               })
             });
             break

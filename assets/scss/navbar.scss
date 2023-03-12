@@ -57,7 +57,7 @@ $mq-sm: 93rem;
   
           &:hover,
           &:focus-visible {
-            background: var(--accent-alt);
+            background: var(--accent-primary-alt);
             color: var(--text-900);
           }
         }
@@ -81,7 +81,7 @@ $mq-sm: 93rem;
   
             &:hover,
             &:focus-visible {
-              background: var(--accent-alt);
+              background: var(--accent-primary-alt);
             }
   
             &.nav-active {

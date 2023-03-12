@@ -5,14 +5,16 @@
   --i-modal-color-alt: var(--text-700);
 
   position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   z-index: 998;
   overflow: hidden;
-  border-radius: .5rem;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  
   .i-modal {
+    border-radius: .5rem;
     background: var(--i-modal-background);
     width: 85vw;
     max-width: 85rem;
@@ -22,9 +24,9 @@
     overflow-y: auto;
     max-width: 95vw;
     max-height: 95vh;
-    padding: 2rem;
     position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -32,15 +34,12 @@
   
     .header {
       background: var(--i-modal-theme);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
       display: flex;
       align-items: center;
       height: 3.5rem;
       padding-inline: 1rem;
       overflow: hidden;
+      width: 100%;
   
       .close-button {
         padding: .25rem;
@@ -84,12 +83,9 @@
     .main {
       width: 100%;
       height: 100%;
-      padding-top: 3rem;
-
-      .i-modal__spacer {
-        width: 100%;
-        height: 1rem;
-      }
+      overflow-y: auto;
+      padding-block: 1rem;
+      padding-inline: 2rem;
     }
   }
 }
@@ -99,7 +95,7 @@
 /* ----- */
 
 .i-modal-wrapper {
-  &:has(.i-modal.fullscreen) {
+  .i-modal.fullscreen {
     border-radius: 0;
   }
 
@@ -133,31 +129,17 @@
   }
 }
 
-
-/* -------------- */
-/* Opacity Styles */
-/* -------------- */
-
-body[data-modal-state="closing"] > *:not(.i-modal-wrapper):not(.i-alert-wrapper):not(.i-snackbar-wrapper) {
-  transition: opacity .5s ease;
-}
-
-body[data-modal-state="opening"] > *:not(.i-modal-wrapper):not(.i-alert-wrapper):not(.i-snackbar-wrapper),
-body[data-modal-state="opened"] > *:not(.i-modal-wrapper):not(.i-alert-wrapper):not(.i-snackbar-wrapper) {
-  transition: opacity .5s ease;
-  opacity: .47;
-  pointer-events: none;
-}
-
 /* ---------- */
 /* Animations */
 /* ---------- */
 
-body[data-modal-state="opening"] .i-modal:not(.modal-animation) {
+/* Center */
+
+.i-modal-wrapper[data-state="opening"][data-animation="center"] .i-modal {
   animation: modalAnimationDefaultOpening forwards .5s;
 }
 
-body[data-modal-state="closing"] .i-modal:not(.modal-animation) {
+.i-modal-wrapper[data-state="closing"][data-animation="center"] .i-modal {
   animation: modalAnimationDefaultClosing forwards .5s;
 }
 
@@ -183,11 +165,13 @@ body[data-modal-state="closing"] .i-modal:not(.modal-animation) {
   }
 }
 
-body[data-modal-state="opening"] .i-modal.modal-animation--animate-from-bottom {
+/* Bottom */
+
+.i-modal-wrapper[data-state="opening"][data-animation="bottom"] .i-modal {
   animation: modalAnimationFromBottomOpening forwards .5s;
 }
 
-body[data-modal-state="closing"] .i-modal.modal-animation--animate-from-bottom {
+.i-modal-wrapper[data-state="closing"][data-animation="bottom"] .i-modal {
   animation: modalAnimationFromBottomClosing forwards .5s;
 }
 
@@ -206,5 +190,33 @@ body[data-modal-state="closing"] .i-modal.modal-animation--animate-from-bottom {
   }
   100% {
     transform: translateY(100%);
+  }
+}
+
+/* Top */
+
+.i-modal-wrapper[data-state="opening"][data-animation="top"] .i-modal {
+  animation: modalAnimationFromTopOpening forwards .5s;
+}
+
+.i-modal-wrapper[data-state="closing"][data-animation="top"] .i-modal {
+  animation: modalAnimationFromTopClosing forwards .5s;
+}
+
+@keyframes modalAnimationFromTopOpening {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes modalAnimationFromTopClosing {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
   }
 }

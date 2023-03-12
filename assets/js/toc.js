@@ -53,9 +53,13 @@ function updateTocActive() {
     tocItem.classList.remove(`toc-active`)
   });
 
+  let headingNotSelected = true
+
   headings.forEach(heading => {
-    if (isScrolledIntoView(heading)) {
+    if (isScrolledIntoView(heading) && headingNotSelected) {
       getTocItem(heading.dataset.hash)?.classList?.add(`toc-active`)
+      // location.hash = heading.dataset.hash
+      headingNotSelected = false
     }
   });
 }

@@ -5,7 +5,7 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "sass": "sass --watch assets/scss:assets/css --style compressed",
+    "build": "sass --watch assets/scss:assets/css --style compressed",
     "components-build": "sass --watch components --style compressed",
     "idiots-build": "node Extensions/IDIOTS/build.cjs"
   },

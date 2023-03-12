@@ -10,6 +10,10 @@ $mq-md: 115rem;
   height: fit-content;
   max-height: 80vh;
   width: 17.5rem;
+
+  @media (max-width: $mq-md) {
+    display: none;
+  }
   
   .table-of-contents__title {
     margin-bottom: .5rem;
@@ -73,13 +77,6 @@ $mq-md: 115rem;
         padding-left: 1.5rem;
         color: var(--text-400);
       }
-
     }
-  }
-}
-
-@media (max-width: $mq-md) {
-  ul.table-of-contents {
-    display: none;
   }
 }

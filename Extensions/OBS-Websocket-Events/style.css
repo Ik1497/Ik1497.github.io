@@ -144,7 +144,7 @@ h2 {
 }
 
 .obs-events-nav .obs-event-list-item.obs-events-nav-active a {
-    background: var(--accent-alt);
+    background: var(--accent-primary-alt);
 }
 
 .obs-events-nav .obs-event-list-item a .obs-event-list-item-title {
