@@ -41,15 +41,15 @@
     "type": "group",
     "groupItems": [
       {
-        "name": "Progress Bar V2",
+        "name": "Progress Bar v2.2",
         "description": "Make an easy to set-up dynamic progress bar with Streamer.bot",
         "icon": "mdi mdi-progress-upload",
         "href": "/Extensions/Progress-Bar/Docs",
         "type": "link",
         "channel": "public",
         "lastEdited": {
-          "date": "1/03/2023",
-          "time": "18:43"
+          "date": "13/03/2023",
+          "time": "08:22"
         }
       },
       {
