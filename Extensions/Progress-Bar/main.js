@@ -247,6 +247,9 @@ root.style.setProperty("--font-style", params.get("font-style"))
 root.style.setProperty("--font-size", params.get("font-size"))
 root.style.setProperty("--font-color", params.get("font-color"))
 
+// Position
+params.get("position") != null ? document.body.dataset.position = params.get("position") : document.body.dataset.position = `top-left`
+
 // Background
 root.style.setProperty("--background", params.get("background"))
 root.style.setProperty("--background-progress-bar", params.get("background-progress-bar"))

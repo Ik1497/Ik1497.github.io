@@ -30,8 +30,6 @@ body {
 
 .progress-bar-list {
   position: fixed;
-  top: .5rem;
-  left: .5rem;
   list-style: none;
   display: grid;
   gap: 1rem;
@@ -321,6 +319,46 @@ body {
   100% {
     transform: translateY(100%);
   }
+}
+
+/* -------- */
+/* Position */
+/* -------- */
+body:not([data-position]) .progress-bar-list {
+  top: .5rem;
+  left: .5rem;
+}
+
+body[data-position^="top-"] .progress-bar-list {
+  top: .5rem;
+}
+
+body[data-position^="middle-"] .progress-bar-list {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+body[data-position^="bottom-"] .progress-bar-list {
+  bottom: .5rem;
+}
+
+body[data-position$="-left"] .progress-bar-list {
+  left: .5rem;
+}
+
+body[data-position$="-center"] .progress-bar-list {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+body[data-position$="-right"] .progress-bar-list {
+  right: .5rem;
+}
+
+body[data-position="middle-center"] .progress-bar-list {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* ----- */
