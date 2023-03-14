@@ -58,7 +58,6 @@ async function app() {
                   window.location = `/403`
                 }
               }
-
             }
           }
 
@@ -67,7 +66,6 @@ async function app() {
               navItem.href += `.html`
             }
           }
-
           
           // If page is published or user has access
           if (published != `beta` || localStorage.getItem(`websiteSettings__visibilityChannel`) === `beta`) { 
@@ -85,27 +83,31 @@ async function app() {
       if (navbarSettings__collapsedGroups === `undefined` || navbarSettings__collapsedGroups === null) {
         navbarSettings__collapsedGroups = []
       } else if (JSON.stringify(navbarSettings__collapsedGroups).charAt(0) != `[`) {
-        navbarSettings__collapsedGroups = `["${navbarSettings__collapsedGroups}"]`
+        navbarSettings__collapsedGroups = [`${navbarSettings__collapsedGroups}`]
       }
 
-      let openState = `opened`
+      let openState = `true`
       if (navbarSettings__collapsedGroups.includes(navItemGroup.name)) {
-        openState = `closed`
+        openState = `false`
       }
+
       document.querySelector("nav.navbar-wrapper ul.navbar").insertAdjacentHTML(`beforeend`, `
-      <div class="navbar-group" data-navbar-group-state="${openState}">
+      <div class="navbar-group" data-open="${openState}">
         <button class="group-title" title="${navItemGroup.name}" aria-label="${navItemGroup.name}">
           ${navItemGroup.name}
         </button>
-        <ul>
+        <ul class="navbar-group-items" style="max-height: 0px;">
           ${navItemList}
         </ul>
       </div>
       `)
-       
     }
   });
   document.querySelectorAll(`nav.navbar-wrapper ul.navbar .navbar-group`).forEach(navbarGroup => {
+    if (navbarGroup.dataset.open === `true`) {
+      navbarGroup.querySelector(`ul.navbar-group-items`).style.maxHeight = `${navbarGroup.querySelector(`ul.navbar-group-items`).scrollHeight}px`
+    }
+
     if (navbarGroup.querySelectorAll(`ul li`).length < 1) {
       navbarGroup.remove()
     } else {      
@@ -115,21 +117,22 @@ async function app() {
         if (navbarSettings__collapsedGroups === `undefined` || navbarSettings__collapsedGroups === null) {
           navbarSettings__collapsedGroups = []
         } else if (JSON.stringify(navbarSettings__collapsedGroups).charAt(0) != `[`) {
-          navbarSettings__collapsedGroups = `["${navbarSettings__collapsedGroups}"]`
+          navbarSettings__collapsedGroups = [`${navbarSettings__collapsedGroups}`]
         }
   
-        let navbarGroupState = navbarGroup.getAttribute(`data-navbar-group-state`)
-  
-        if (navbarGroupState === `opened`) {
-          navbarGroup.setAttribute(`data-navbar-group-state`, `closed`)
-  
+        if (navbarGroup.dataset.open === `true`) {
+          navbarGroup.dataset.open = `false`
+          navbarGroup.querySelector(`ul.navbar-group-items`).style.maxHeight = `0px`
+          
           if (!navbarSettings__collapsedGroups.includes(navbarGroup.querySelector(`button.group-title`).innerHTML)) {
-            navbarSettings__collapsedGroups.push(navbarGroup.querySelector(`button.group-title`).innerHTML)
+            navbarSettings__collapsedGroups.push(navbarGroup.querySelector(`button.group-title`).innerText.trim())
           }
+
           localStorage.setItem(`navbarSettings__collapsedGroups`, JSON.stringify(navbarSettings__collapsedGroups))
   
-        } else if (navbarGroupState === `closed`) {
-          navbarGroup.setAttribute(`data-navbar-group-state`, `opened`)
+        } else if (navbarGroup.dataset.open === `false`) {
+          navbarGroup.dataset.open = `true`
+          navbarGroup.querySelector(`ul.navbar-group-items`).style.maxHeight = `${navbarGroup.querySelector(`ul.navbar-group-items`).scrollHeight}px`
   
           navbarSettings__collapsedGroups.forEach(navbarSettings__collapsedGroup => {
             if (navbarSettings__collapsedGroup === navbarGroup.querySelector(`button.group-title`).innerText) {
@@ -141,7 +144,6 @@ async function app() {
               localStorage.setItem(`navbarSettings__collapsedGroups`, JSON.stringify(navbarSettings__collapsedGroups))
             }
           });
-  
         }
       })
     }

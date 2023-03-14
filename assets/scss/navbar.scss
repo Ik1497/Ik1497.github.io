@@ -16,6 +16,12 @@ $mq-sm: 93rem;
   }
 
   .navbar-wrapper {
+
+    @media (max-width: $mq-sm) {
+      width: 100%;
+      padding-inline: 1rem;
+      padding-bottom: 2rem;
+    }
   
     ul.navbar {
       list-style: none;
@@ -27,8 +33,9 @@ $mq-sm: 93rem;
 
       @media (max-width: $mq-sm) {
         max-height: 17.5rem;
+        overflow-y: auto;
       }
-  
+
       .navbar-group {
         padding-inline: .5rem;
         border-radius: .5rem;
@@ -53,6 +60,7 @@ $mq-sm: 93rem;
             font-family: Material Design Icons;
             position: absolute;
             right: .25rem;
+            transition: rotate .5s ease;
           }
   
           &:hover,
@@ -62,16 +70,14 @@ $mq-sm: 93rem;
           }
         }
   
-        &[data-navbar-group-state=closed] .group-title::after {
+        &[data-open="false"] .group-title::after {
           rotate: -90deg;
-        }
-  
-        &[data-navbar-group-state=closed] ul {
-          display: none;
         }
   
         ul {
           list-style: none;
+          overflow: hidden;
+          transition: max-height 0.5s ease;
   
           li {
             border-radius: .25rem;
@@ -105,18 +111,5 @@ $mq-sm: 93rem;
         }
       }
     }
-  }
-}
-
-@media (max-width: 93rem) {
-  .navbar-wrapper {
-    width: 100%;
-    padding-inline: 1rem;
-    padding-bottom: 2rem;
-  }
-
-  .navbar-wrapper ul.navbar {
-    max-height: 16.5rem;
-    overflow-y: auto;
   }
 }
