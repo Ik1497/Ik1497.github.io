@@ -13,7 +13,6 @@ function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefi
     if (settings.reload === true) {
       attributes = `data-reload `
     }
-
     
     let IModalWrapper = document.createElement(`div`)
     IModalWrapper.className = `i-modal-wrapper`
@@ -61,6 +60,42 @@ function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefi
     IModalWrapper__Modal__Main.className = `main`
     IModalWrapper__Modal__Main.innerHTML = modalHtml
 
+    let returnData = {
+      title: modalTitle,
+      subtitle: modal__Subtitle,
+      scale: scale,
+      modal: IModalWrapper,
+      header: IModalWrapper__Modal__Header,
+      main: IModalWrapper__Modal__Main
+    }
+
+    if (scale === `submit`) {
+      returnData.onClose = () => {}
+      returnData.onSubmit = () => {}
+
+      let IModalWrapper__Modal__Main__Submit = document.createElement(`div`)
+      IModalWrapper__Modal__Main.append(IModalWrapper__Modal__Main__Submit)
+      IModalWrapper__Modal__Main__Submit.className = `modalSubmit`
+
+      let IModalWrapper__Modal__Main__Submit__Close = document.createElement(`button`)
+      IModalWrapper__Modal__Main__Submit.append(IModalWrapper__Modal__Main__Submit__Close)
+      IModalWrapper__Modal__Main__Submit__Close.className = `modalSubmit__close`
+      IModalWrapper__Modal__Main__Submit__Close.innerText = `Close`
+      IModalWrapper__Modal__Main__Submit__Close.addEventListener(`click`, () => {
+        returnData.onClose()
+        closeModal(IModalWrapper)
+      })
+      
+      let IModalWrapper__Modal__Main__Submit__Submit = document.createElement(`button`)
+      IModalWrapper__Modal__Main__Submit.append(IModalWrapper__Modal__Main__Submit__Submit)
+      IModalWrapper__Modal__Main__Submit__Submit.className = `modalSubmit__submit`
+      IModalWrapper__Modal__Main__Submit__Submit.innerText = `Submit`
+      IModalWrapper__Modal__Main__Submit__Submit.addEventListener(`click`, () => {
+        returnData.onSubmit()
+        closeModal(IModalWrapper)
+      })
+    }
+
     if (scale === `fullscreen`) {
       IModalWrapper.dataset.animation = `bottom`
     }
@@ -75,14 +110,7 @@ function createModal(modalHtml = ``, modalTitle = title , modalSubtitle = undefi
       IModalWrapper.dataset.state = `opened`
     }, 500);
 
-    return {
-      title: modalTitle,
-      subtitle: modal__Subtitle,
-      scale: scale,
-      modal: IModalWrapper,
-      header: IModalWrapper__Modal__Header,
-      main: IModalWrapper__Modal__Main
-    }
+    return returnData
   }
 }
 
@@ -113,7 +141,6 @@ function closeModal(modal) {
 }
 
 document.addEventListener(`mouseup`, (e) => {
-  console.log(e)
   if (e.target.className === `i-overlay`) {
     closeModal(Array.from(document.querySelectorAll(`.i-modal-wrapper`)).reverse()[0])
   }

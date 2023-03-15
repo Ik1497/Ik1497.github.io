@@ -56,10 +56,14 @@ function updateTocActive() {
   let headingNotSelected = true
 
   headings.forEach(heading => {
-    if (isScrolledIntoView(heading) && headingNotSelected) {
+    // if (isScrolledIntoView(heading) && headingNotSelected) {
+    //   getTocItem(heading.dataset.hash)?.classList?.add(`toc-active`)
+    //   // location.hash = heading.dataset.hash
+    //   headingNotSelected = false
+    // }
+
+    if (isScrolledIntoView(heading)) {
       getTocItem(heading.dataset.hash)?.classList?.add(`toc-active`)
-      // location.hash = heading.dataset.hash
-      headingNotSelected = false
     }
   });
 }

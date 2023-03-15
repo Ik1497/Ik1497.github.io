@@ -20,9 +20,13 @@ if (tableData != undefined) {
         }
       });
 
-      let td = `` 
-      Object.values(tableContent).forEach(tableBodyValues => {
-        td += `<td style="text-align: center;">${tableBodyValues}</td>`
+      let td = ``
+      Object.values(tableContent).forEach(tableBodyValue => {
+        if (tableBodyValue != null) {
+          td += `<td style="text-align: center;">${tableBodyValue}</td>`
+        } else {
+          td += `<td style="text-align: center;"></td>`
+        }
       });
       selectedTable.querySelector(`tbody`).innerHTML += `<tr>${td}</tr>`
 
@@ -34,7 +38,9 @@ if (tableData != undefined) {
       element.style.textAlign = `left`
     });
     selectedTable.querySelectorAll(`tbody tr td:not(:last-child)`).forEach(element => {
-      element.innerHTML = `<code>${element.innerHTML}</code>`
+      if (element.innerHTML != ``) {
+        element.innerHTML = `<code>${element.innerHTML}</code>`
+      }
     });
   });
 }

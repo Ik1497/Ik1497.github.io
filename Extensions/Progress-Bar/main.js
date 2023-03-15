@@ -40,7 +40,7 @@ function connectws() {
     ws.addEventListener("message", (event) => {
       if (!event.data) return;
       const data = JSON.parse(event.data);
-
+      
       if (data?.data?.widget != `progress-bar`) return
       if (data?.data?.args?.id === undefined) return
       
@@ -52,13 +52,13 @@ function connectws() {
         if (data?.data?.args?.minimum === undefined) return
         if (data?.data?.args?.startValue === undefined) return
 
-        create(data?.data?.args?.id, data?.data?.args?.title, data?.data?.args?.maximum, data?.data?.args?.minimum, data?.data?.args?.startValue)
+        create(data?.data?.args?.id, data?.data?.args?.title, data?.data?.args?.maximum, data?.data?.args?.minimum, data?.data?.args?.startValue, data?.data?.args)
       }
       
       else if (data?.data?.args?.request === `progress`) {
         if (data?.data?.args?.value === undefined) return
 
-        progress(data?.data?.args?.id, data?.data?.args?.value)
+        progress(data?.data?.args?.id, data?.data?.args?.value, data?.data?.args)
       }
 
       else if (data?.data?.args?.request === `update`) {
@@ -68,11 +68,11 @@ function connectws() {
       }
       
       else if (data?.data?.args?.request === `remove`) {
-        remove(data?.data?.args?.id)
+        remove(data?.data?.args?.id, data?.data?.args)
       }
 
 
-      function create(id, title = `Progress Bar`, maximum = 50, minimum = 0, startValue = ``) {
+      function create(id, title = `Progress Bar`, maximum = 50, minimum = 0, startValue = ``, args) {
         let progressBarContainer = document.createElement(`div`)
         progressBarContainer.id = id
         progressBarContainer.className = `container`
@@ -94,6 +94,12 @@ function connectws() {
 
         if (data?.data?.args?.actionOnFinish != null && data?.data?.args?.actionOnFinish != undefined) {
           progressBarContainer.dataset.actionOnFinish = data?.data?.args?.actionOnFinish
+        } if (data?.data?.args?.actionOnRemove != null && data?.data?.args?.actionOnRemove != undefined) {
+          progressBarContainer.dataset.actionOnRemove = data?.data?.args?.actionOnRemove
+        } if (data?.data?.args?.actionOnUpdate != null && data?.data?.args?.actionOnUpdate != undefined) {
+          progressBarContainer.dataset.actionOnUpdate = data?.data?.args?.actionOnUpdate
+        } if (data?.data?.args?.actionOnProgress != null && data?.data?.args?.actionOnProgress != undefined) {
+          progressBarContainer.dataset.actionOnProgress = data?.data?.args?.actionOnProgress
         }
 
         if (data?.data?.args?.progressBarColor != null && data?.data?.args?.progressBarColor != undefined) {
@@ -105,7 +111,7 @@ function connectws() {
         updateCycle()
       }
       
-      function progress(id, value = `50`) {
+      function progress(id, value = `50`, args) {
         document.querySelectorAll(`#${id}`).forEach(container => {
           let maximum = container.querySelector(".end-goal").innerText;
 
@@ -115,12 +121,16 @@ function connectws() {
           }
 
           if (Number(container.querySelector(".start-goal").innerText) >= maximum) {
-            finish(id);
+            finish(id, args);
+          }
+
+          if (container.dataset?.actionOnProgress != undefined && container.dataset?.actionOnProgress != null) {
+            RunAction(container.dataset?.actionOnProgress, args)
           }
         });
       }
 
-      function set(id, value = `0`) {
+      function set(id, value = `0`, args) {
         document.querySelectorAll(`#${id}`).forEach(container => {
           let maximum = container.querySelector(".end-goal").innerText;
 
@@ -128,7 +138,7 @@ function connectws() {
           container.querySelector(".progress-bar").style.width = `${value / maximum * 100}%`;
 
           if (Number(container.querySelector(".start-goal").innerText) >= maximum) {
-            finish(id);
+            finish(id, args);
           }
         });
       }
@@ -136,7 +146,7 @@ function connectws() {
 
       function update(id, args) {
         if (args.value != undefined) {
-          set(id, args.value)
+          set(id, args.value, args)
         }
         
         if (args.progressBarBackgroundColor != undefined) {
@@ -160,12 +170,30 @@ function connectws() {
         if (args.progressBarMaximum != undefined) {
           document.querySelectorAll(`#${id}`).forEach(container => {
             container.querySelector(`.end-goal`).innerText = args.progressBarMaximum
-            progress(id, 0)
+            progress(id, 0, args)
           })
         }
+
+        document.querySelectorAll(`#${id}`).forEach(container => {
+          if (container.dataset?.actionOnUpdate != undefined && container.dataset?.actionOnUpdate != null) {
+            RunAction(container.dataset?.actionOnUpdate, args)
+          }
+        })
+
+        document.querySelectorAll(`#${id}`).forEach(progressBarContainer => {
+          if (data?.data?.args?.actionOnFinish != null && data?.data?.args?.actionOnFinish != undefined) {
+            progressBarContainer.dataset.actionOnFinish = data?.data?.args?.actionOnFinish
+          } if (data?.data?.args?.actionOnRemove != null && data?.data?.args?.actionOnRemove != undefined) {
+            progressBarContainer.dataset.actionOnRemove = data?.data?.args?.actionOnRemove
+          } if (data?.data?.args?.actionOnUpdate != null && data?.data?.args?.actionOnUpdate != undefined) {
+            progressBarContainer.dataset.actionOnUpdate = data?.data?.args?.actionOnUpdate
+          } if (data?.data?.args?.actionOnProgress != null && data?.data?.args?.actionOnProgress != undefined) {
+            progressBarContainer.dataset.actionOnProgress = data?.data?.args?.actionOnProgress
+          }
+        })
       }
       
-      function remove(id) {        
+      function remove(id, args) {        
         document.querySelectorAll(`#${id}`).forEach(container => {
           container.classList.add(`removing`)
           
@@ -174,33 +202,37 @@ function connectws() {
 
             updateCycle()
           });
-        });
 
+          if (container.dataset?.actionOnRemove != undefined && container.dataset?.actionOnRemove != null) {
+            RunAction(container.dataset?.actionOnRemove, args)
+          }
+        });
       }
       
-      function finish(id) {
+      function finish(id, args) {
         document.querySelectorAll(`#${id}`).forEach(container => {
           let title = container.querySelector(`.goal-title`).innerHTML;
         
           container.insertAdjacentHTML(`beforeend`, `<p class="goal-finished">${title} Finished!!!</p>`);
         
           setTimeout(() => {
-            remove(id)
+            remove(id, args)
           }, 7500);
 
           if (container.dataset?.actionOnFinish != undefined && container.dataset?.actionOnFinish != null) {
-            RunAction(container.dataset?.actionOnFinish)
+            RunAction(container.dataset?.actionOnFinish, args)
           }
         });
       }
 
-      function RunAction(name) {
+      function RunAction(name, args = {}) {
         ws.send(
           JSON.stringify({
             request: "DoAction",
             action: {
               name: name
             },
+            args: args,
             id: "RunAction",
           })
         );

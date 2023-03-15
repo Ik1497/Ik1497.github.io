@@ -1188,16 +1188,12 @@ async function connectws() {
   
         document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments .card-header .card-header-append button`).addEventListener(`click`, () => {
           const Modal__ClearArguments = createModal(`
-          <div class="form-group styled" id="clear" style="display: grid; place-items: center; height: 100%;">
-            <button style="font-size: 2rem;">Yes</button>
-          </div>
-          `, `Are you sure?`, `Remove arguments`, `prompt`, {})
-  
-          Modal__ClearArguments.querySelector(`.form-group#clear button`).addEventListener(`click`, () => {
+          You're currently trying to remove all your arguments.
+          `, `Are you sure?`, null, `submit`)
+
+          Modal__ClearArguments.onSubmit = () => {
             clearArgumentsTable()
-            closeModal(Modal__ClearArguments.modal)
-          })
-  
+          }
         })
   
         function reloadArgumentsTable() {
