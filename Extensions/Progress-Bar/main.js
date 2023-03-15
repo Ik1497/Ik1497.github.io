@@ -92,6 +92,10 @@ function connectws() {
           progressBarContainer.style.setProperty(`--background`, data?.data?.args?.progressBackgroundColor)
         }
 
+        if (data?.data?.args?.actionOnFinish != null && data?.data?.args?.actionOnFinish != undefined) {
+          progressBarContainer.dataset.actionOnFinish = data?.data?.args?.actionOnFinish
+        }
+
         if (data?.data?.args?.progressBarColor != null && data?.data?.args?.progressBarColor != undefined) {
           progressBarContainer.style.setProperty(`--background-progress-bar`, data?.data?.args?.progressBarColor)
         }
@@ -174,7 +178,6 @@ function connectws() {
 
       }
       
-      
       function finish(id) {
         document.querySelectorAll(`#${id}`).forEach(container => {
           let title = container.querySelector(`.goal-title`).innerHTML;
@@ -184,7 +187,23 @@ function connectws() {
           setTimeout(() => {
             remove(id)
           }, 7500);
+
+          if (container.dataset?.actionOnFinish != undefined && container.dataset?.actionOnFinish != null) {
+            RunAction(container.dataset?.actionOnFinish)
+          }
         });
+      }
+
+      function RunAction(name) {
+        ws.send(
+          JSON.stringify({
+            request: "DoAction",
+            action: {
+              name: name
+            },
+            id: "RunAction",
+          })
+        );
       }
     })
   }
