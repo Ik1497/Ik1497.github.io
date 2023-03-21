@@ -284,11 +284,7 @@ header aside button {
 
 table.styled.full {
   min-width: 100%;
-}
-
-table.styled.full td {
-  min-width: 6rem;
-  max-width: 7.5rem;
+  table-layout: fixed
 }
 
 table.styled {
@@ -420,7 +416,7 @@ ul.styled li button {
   text-overflow: ellipsis;
 }
 
-ul.styled li button.append {
+ul.styled li .append {
   position: absolute;
   right: 0;
   bottom: 50%;
@@ -431,6 +427,12 @@ ul.styled li button.append {
   padding-inline: .9rem;
   background: none;
   border-radius: 100vmax;
+  display: flex;
+  gap: .25rem;
+}
+
+ul.styled li .append > * {
+  width: fit-content;
 }
 
 .navbar .navbar-list .navbar-list-item button:not(:disabled):active,
@@ -907,6 +909,40 @@ body[data-streamerbot-action-package="outdated"] .streamerbot-action-package--ou
 body[data-streamerbot-action-package="renamed"] .streamerbot-action-package--renamed {display: x;}
 body[data-streamerbot-action-package="unauthorized"] .streamerbot-action-package--unauthorized {display: x;}
 body[data-streamerbot-action-package="disabled"] .streamerbot-action-package--disabled {display: x;}
+
+/* ------------ */
+/* Marked Boxes */
+/* ------------ */
+
+.marked-box {
+  --marked-box-background: var(--marked-box-background-default);
+  --marked-box-background-default: #4a6e80;
+  --marked-box-background-success: #4caf50;
+  --marked-box-background-info: #2196f3;
+  --marked-box-background-warning: #fb8c00;
+  --marked-box-background-error: #ff5252;
+
+  background: var(--marked-box-background);
+  padding-inline: .75rem;
+  padding-block: .25rem;
+  border-radius: .25rem;
+}
+
+.marked-box.success {
+  --marked-box-background: var(--marked-box-background-success);
+}
+
+.marked-box.info {
+  --marked-box-background: var(--marked-box-background-info);
+}
+
+.marked-box.warning {
+  --marked-box-background: var(--marked-box-background-warning);
+}
+
+.marked-box.error {
+  --marked-box-background: var(--marked-box-background-error);
+}
 
 /* ------------- */
 /* Media Queries */

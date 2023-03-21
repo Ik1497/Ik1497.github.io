@@ -1,5 +1,9 @@
 .i-overlay {
-  background: hsla(0 0% 0% / 0.3);
+  --i-overlay-color-hsl: 0 0% 0%;
+  --i-overlay-color-opacity: 0.3;
+  --i-overlay-color: hsla(var(--i-overlay-color-hsl) / var(--i-overlay-color-opacity));
+
+  background: var(--i-overlay-color);
   position: fixed;
   inset: 0;
   opacity: 0;

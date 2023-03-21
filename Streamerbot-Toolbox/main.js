@@ -7,21 +7,14 @@ let streamerbotActionPackage__version = version
 let streamerbotActionPackage__name  = `Streamer.bot Toolbox Partial - Websocket Handler`
 let streamerbotActionPackage__group = `Streamer.bot Toolbox Partials (v${streamerbotActionPackage__version})`
 
-let streamerbotToolbox__connection = localStorage.getItem(`streamerbotToolbox__connection`)
-if (streamerbotToolbox__connection === undefined || streamerbotToolbox__connection === null || streamerbotToolbox__connection === ``) {
-  streamerbotToolbox__connection = {
-    host: `localhost`,
-    port: `8080`,
-    endpoint: `/`
-  }
-} else {
-  streamerbotToolbox__connection = JSON.parse(streamerbotToolbox__connection)
-  if (streamerbotToolbox__connection.host === undefined) streamerbotToolbox__connection.host = `localhost`
-  if (streamerbotToolbox__connection.port === undefined) streamerbotToolbox__connection.port = `8080`
-  if (streamerbotToolbox__connection.endpoint === undefined) streamerbotToolbox__connection.endpoint = `/`
-}
+let streamerbotToolbox__connection = loadDataFromStorage(`streamerbotToolbox__connection`)
+if (streamerbotToolbox__connection === {}) {
+  streamerbotToolbox__connection.host = `localhost`
+  streamerbotToolbox__connection.port = `8080`
+  streamerbotToolbox__connection.endpoint = `/`
 
-if (localStorage.getItem(`streamerbotToolbox__connection`) === null) localStorage.setItem(`streamerbotToolbox__connection`, JSON.stringify(streamerbotToolbox__connection))
+  saveKeyToStorage(`streamerbotToolbox__connection`, streamerbotToolbox__connection)
+}
 
 let wsServerUrl = `ws://${streamerbotToolbox__connection.host}:${streamerbotToolbox__connection.port}${streamerbotToolbox__connection.endpoint}`
 
@@ -162,13 +155,11 @@ navbarTogglerButton.addEventListener(`click`, () => {
 document.body.append(navbarTogglerButton)
 
 document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, function (e) {
-  let DOM_streamerbotToolbox__connection = {}
-
-  DOM_streamerbotToolbox__connection.host = document.querySelector(`header aside .form-area .url`).value
-  DOM_streamerbotToolbox__connection.port = document.querySelector(`header aside .form-area .port`).value
-  DOM_streamerbotToolbox__connection.endpoint = document.querySelector(`header aside .form-area .endpoint`).value
-
-  localStorage.setItem(`streamerbotToolbox__connection`, JSON.stringify(DOM_streamerbotToolbox__connection))
+  saveKeyToStorage(`streamerbotToolbox__connection`, {
+    host: document.querySelector(`header aside .form-area .url`).value,
+    port: document.querySelector(`header aside .form-area .port`).value,
+    endpoint: document.querySelector(`header aside .form-area .endpoint`).value
+  })
 
   location.reload()
 })
@@ -230,7 +221,6 @@ async function connectws() {
   // let randomEventArgs = await fetch(`./random.json`)
   // randomEventArgs = await randomEventArgs.json()
 
-
   if ("WebSocket" in window) {
     const ws = new WebSocket(wsServerUrl)
     console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...")
@@ -290,7 +280,8 @@ async function connectws() {
               general: [`Custom`]
             }, `WebsocketHandlerAction`)
 
-            let obsConnection = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
+            let obsConnection = loadDataFromStorage(`streamerbotToolbox__obsStudio`)
+            if (obsConnection === {}) obsConnection.connection = 0
             obsConnection = obsConnection.connection
 
             SB__StreamerbotActionPackageRequest(`ObsIsConnected`, obsConnection)
@@ -347,9 +338,7 @@ async function connectws() {
           const Modal__Settings = createModal(`
           <div class="i-tabset full alt-background">
             <div data-tab="Integrations">
-              <ul class="integrations-list">
-                <li class="mdi mdi-check" data-integration="streamer.bot"> Streamer.bot (${instance.version}) • ${wsServerUrl}</li>
-              </ul>
+              <ul class="integrations-list"></ul>
             </div>
 
             <div data-tab="OBS Studio">
@@ -369,6 +358,66 @@ async function connectws() {
           /* Integrations */
           /* ------------ */
 
+          // Streamer.bot
+
+          let streamerbotSettings__ListItem = document.createElement(`li`)
+          Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).prepend(streamerbotSettings__ListItem)
+          streamerbotSettings__ListItem.className = `mdi mdi-check`
+          streamerbotSettings__ListItem.dataset.integration = `streamer.bot`
+          streamerbotSettings__ListItem.innerHTML = ` Streamer.bot (${instance.version}) • ${wsServerUrl} `
+
+          let streamerbotSettings__ListItem__Button = document.createElement(`button`)
+          streamerbotSettings__ListItem.append(streamerbotSettings__ListItem__Button)
+          streamerbotSettings__ListItem__Button.className = `mdi mdi-cog`
+
+          streamerbotSettings__ListItem__Button.addEventListener(`click`, () => {
+            let Modal__streamerbotSettings = createModal(`
+            <div class="form-group styled">
+              <label for="streamerbot-settings-input--host">Host</label>
+              <input type="text" id="streamerbot-settings-input--host">
+            </div>
+
+            <div class="form-group styled">
+              <label for="streamerbot-settings-input--port">Port</label>
+              <input type="text" id="streamerbot-settings-input--port">
+            </div>
+
+            <div class="form-group styled">
+              <label for="streamerbot-settings-input--endpoint">Endpoint</label>
+              <input type="text" id="streamerbot-settings-input--endpoint">
+            </div>
+            `, `Streamer.bot Settings`, undefined, `medium`, {
+              footerButtons: [
+                {
+                  name: `Cancel`,
+                  id: `cancel`,
+                  type: `plain`
+                },
+                {
+                  name: `Save`,
+                  id: `save`,
+                  type: `theme`
+                }
+              ]
+            })
+
+            Modal__streamerbotSettings.onFooterButtonPress = (id) => {
+              console.log(Modal__streamerbotSettings)
+              console.log(Modal__streamerbotSettings.main)
+              console.log(Modal__streamerbotSettings.main.querySelector(`#streamerbot-settings-input--host`))
+              console.log(Modal__streamerbotSettings.main.querySelector(`#streamerbot-settings-input--host`).value)
+              if (id === `save`) {
+                saveKeyToStorage(`streamerbotToolbox__connection`, {
+                  host: Modal__streamerbotSettings.main.querySelector(`#streamerbot-settings-input--host`).value,
+                  port: Modal__streamerbotSettings.main.querySelector(`#streamerbot-settings-input--port`).value,
+                  endpoint: Modal__streamerbotSettings.main.querySelector(`#streamerbot-settings-input--endpoint`).value
+                })
+
+                location.reload()
+              }
+            }
+          })
+
           // Streamer.bot Action Package
 
           if (document.body.getAttribute(`data-streamerbot-action-package`) === `absent`) Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-cloud-download" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (used for global variables, chat and more) <button id="more-info">Download, More Info, and Authentication</button></li>`)
@@ -379,11 +428,12 @@ async function connectws() {
           if (document.body.getAttribute(`data-streamerbot-action-package`) === `installed`) Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, `<li class="mdi mdi-check" data-integration="streamer.bot-action-package"> Streamer.bot Action Package (v${streamerbotActionPackage__version}) • ${wsServerUrl} <button id="more-info" class="mdi mdi-cog"></button></li>`)
 
           Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="streamer.bot-action-package"] button#more-info`).addEventListener(`click`, function () {
-            const streamerbotActionPackageModal__Settings = createModal(`
+            const streamerbotToolbox__StreamerbotActionPackage = loadDataFromStorage(`streamerbotToolbox__StreamerbotActionPackage`)
+            const Modal__streamerbotActionPackageModal = createModal(`
             <div class="form-group styled">
               <label for="password">Password</label>
               <div class="flex">
-                <input type="password" name="password" id="password" value="${JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{"password": ""}`).password || ``}" placeholder="Password">
+                <input type="password" name="password" id="password" value="${streamerbotToolbox__StreamerbotActionPackage.password === undefined ? `` : streamerbotToolbox__StreamerbotActionPackage.password}" placeholder="Password">
                 <button class="mdi mdi-eye" id="show-password"></button>
               </div>
             </div>
@@ -401,19 +451,19 @@ async function connectws() {
             </div>
             `, `Streamer.bot Action Package`, undefined, `medium`, {})
 
-            streamerbotActionPackageModal__Settings.main.querySelector(`.form-group input#password`).addEventListener(`keydown`, () => {
+            Modal__streamerbotActionPackageModal.main.querySelector(`.form-group input#password`).addEventListener(`keydown`, () => {
               setTimeout(() => {
                 let streamerbotToolbox__StreamerbotActionPackage = JSON.parse(localStorage.getItem(`streamerbotToolbox__StreamerbotActionPackage`) || `{}`) ?? {}
-                streamerbotToolbox__StreamerbotActionPackage.password = streamerbotActionPackageModal__Settings.main.querySelector(`.form-group input#password`).value
+                streamerbotToolbox__StreamerbotActionPackage.password = Modal__streamerbotActionPackageModal.main.querySelector(`.form-group input#password`).value
                 localStorage.setItem(`streamerbotToolbox__StreamerbotActionPackage`, JSON.stringify(streamerbotToolbox__StreamerbotActionPackage))
               }, 50);
             })
 
-            streamerbotActionPackageModal__Settings.main.querySelector(`#show-password`).addEventListener(`click`, () => {
-              if (streamerbotActionPackageModal__Settings.main.querySelector(`#password`).type === `password`) {
-                streamerbotActionPackageModal__Settings.main.querySelector(`#password`).type = `text`
+            Modal__streamerbotActionPackageModal.main.querySelector(`#show-password`).addEventListener(`click`, () => {
+              if (Modal__streamerbotActionPackageModal.main.querySelector(`#password`).type === `password`) {
+                Modal__streamerbotActionPackageModal.main.querySelector(`#password`).type = `text`
               } else {
-                streamerbotActionPackageModal__Settings.main.querySelector(`#password`).type = `password`
+                Modal__streamerbotActionPackageModal.main.querySelector(`#password`).type = `password`
               }
             })
           })
@@ -432,9 +482,8 @@ async function connectws() {
 
           if (document.body.getAttribute(`speakerbot-state`) === null) {
           } else if (document.body.getAttribute(`speakerbot-state`) === `connected`) {
-            let integrationsList__speakerbot_wsUrl = localStorage.getItem(`streamerbotToolbox__speakerbot`)
-            integrationsList__speakerbot_wsUrl = JSON.parse(integrationsList__speakerbot_wsUrl)
-            integrationsList__speakerbot_wsUrl = `ws://${integrationsList__speakerbot_wsUrl.host}:${integrationsList__speakerbot_wsUrl.port}${integrationsList__speakerbot_wsUrl.endpoint}`
+            let integrationsList__speakerbot_wsUrl = localStorage.getItem(`streamerbotToolbox__speakerbot`) || {}
+            integrationsList__speakerbot_wsUrl = `ws://${JSON.parse(integrationsList__speakerbot_wsUrl).host}:${JSON.parse(integrationsList__speakerbot_wsUrl).port}${JSON.parse(integrationsList__speakerbot_wsUrl).endpoint}`
             integrationsList__speakerbot = `<li class="mdi mdi-check" data-integration="speakerbot"> Speaker.bot (Connected) • ${integrationsList__speakerbot_wsUrl} <button class="mdi mdi-cog"></button></p>`
           } else if (document.body.getAttribute(`speakerbot-state`) === `disconnected`) {
             integrationsList__speakerbot = `<li class="mdi mdi-reload" data-integration="speakerbot"> Speaker.bot <button>Reconnect!</button></p>`
@@ -443,14 +492,11 @@ async function connectws() {
           Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list`).insertAdjacentHTML(`beforeend`, integrationsList__speakerbot)
           
           Modal__Settings.main.querySelector(`.i-tabset div[data-tab="Integrations"] ul.integrations-list li[data-integration="speakerbot"] button`).addEventListener(`click`, function () {
-            let speakerbotDefaultValues = localStorage.getItem(`streamerbotToolbox__speakerbot`)
-            if (speakerbotDefaultValues === null) {
-              speakerbotDefaultValues = {}
-              speakerbotDefaultValues.host     = `localhost`
-              speakerbotDefaultValues.port     = `7580`
+            let speakerbotDefaultValues = loadDataFromStorage(`streamerbotToolbox__speakerbot`)
+            if (speakerbotDefaultValues === {}) {
+              speakerbotDefaultValues.host = `localhost`
+              speakerbotDefaultValues.port = `7580`
               speakerbotDefaultValues.endpoint = `/`
-            } else {
-              speakerbotDefaultValues = JSON.parse(speakerbotDefaultValues)
             }
 
             const speakerBotModal__Settings = createModal(`
@@ -468,22 +514,33 @@ async function connectws() {
               <label for="websocket-url">Endpoint</label>
               <input type="text" name="websocket-endpoint" id="websocket-endpoint" value="${speakerbotDefaultValues.endpoint}" placeholder="${speakerbotDefaultValues.endpoint}" class="no-margin">
             </div>
+            `, `Speaker.bot Settings`, undefined, `medium`, {
+              footerButtons: [
+                {
+                  name: `Cancel`,
+                  id: `cancel`,
+                  type: `plain`,
+                  closeModal: true
+                },
+                {
+                  name: `Connect`,
+                  id: `connect`,
+                  type: `theme`
+                }
+              ]
+            })
 
-            <div class="form-group styled">
-              <button class="connect-button">Connect!</button>
-            </div>
-            `, `Speaker.bot Settings`, undefined, `small`, {})
-
-            speakerBotModal__Settings.main.querySelector(`.form-group button.connect-button`).addEventListener(`click`, function () {
-              localStorage.setItem(`streamerbotToolbox__speakerbot`, JSON.stringify({
+            speakerBotModal__Settings.onFooterButtonPress = (id) => {
+              if (id === `connect`) {
+                saveKeyToStorage(`streamerbotToolbox__speakerbot`, {
                   host: speakerBotModal__Settings.main.querySelector(`.form-group input#websocket-host`).value,
                   port: speakerBotModal__Settings.main.querySelector(`.form-group input#websocket-port`).value,
                   endpoint: speakerBotModal__Settings.main.querySelector(`.form-group input#websocket-endpoint`).value
                 })
-              )
 
-              location.reload()
-            })
+                location.reload()
+              }
+            }
           })
 
           /* ---------- */
@@ -1188,8 +1245,20 @@ async function connectws() {
   
         document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] aside .card.arguments .card-header .card-header-append button`).addEventListener(`click`, () => {
           const Modal__ClearArguments = createModal(`
-          You're currently trying to remove all your arguments.
-          `, `Are you sure?`, null, `submit`)
+          <p><span class="marked-box error">${Object.keys(loadDataFromStorage(`streamerbotToolbox__arguments`)).length}</span> <span class="marked-box default">${Object.keys(loadDataFromStorage(`streamerbotToolbox__arguments`)).length === 1 ? `Argument` : `Arguments`}</span></p>
+          <br>
+          <p>You're currently trying to remove all your arguments. These arguments are currently saved locally, so next time you open this website it will still exist. If you clear these, these will be permantly be removed.</p>
+          `, `Are you sure?`, null, `submit`, {
+            submitTitle: `Clear`,
+            props: {
+              "--i-modal-theme": `#fa2d2d`,
+              "--i-modal-theme-alt": `#ff5b5b`
+            },
+            overlayProps: {
+              "--i-overlay-color-hsl": `0 100% 40%`,
+              "--i-overlay-color-opacity": `0.5`
+            }
+          })
 
           Modal__ClearArguments.onSubmit = () => {
             clearArgumentsTable()
@@ -1198,7 +1267,7 @@ async function connectws() {
   
         function reloadArgumentsTable() {
           let argumentsTable = document.querySelector(`main aside .card.arguments table`)
-          let argumentsData = Object.entries(JSON.parse(localStorage.getItem(`streamerbotToolbox__arguments`) || `{}`) ?? {}) ?? []
+          let argumentsData = Object.entries(loadDataFromStorage(`streamerbotToolbox__arguments`))
   
           if (argumentsData.length === 0) {
             argumentsTable.innerHTML = `
@@ -1410,7 +1479,6 @@ async function connectws() {
                 listItem.append(listItem__appendDiv)
                 
                 let listItem__appendDiv__button = document.createElement(`button`)
-                listItem__appendDiv__button.classList.add(`append`)
                 listItem__appendDiv__button.classList.add(`primary`)
                 listItem__appendDiv__button.classList.add(`dense`)
                 listItem__appendDiv__button.title = `Execute Action`
@@ -1418,8 +1486,17 @@ async function connectws() {
                 if (!action.enabled) listItem__appendDiv__button.setAttribute(`disabled`, ``)
                 if (!action.enabled) listItem__appendDiv__button.title = `Disabled Action`
                 listItem__appendDiv.append(listItem__appendDiv__button)
-
                 listItem__appendDiv__button.addEventListener(`click`, RunActionFromActionsPage)
+                
+                let listItem__appendDiv__button__args = document.createElement(`button`)
+                listItem__appendDiv__button__args.classList.add(`primary`)
+                listItem__appendDiv__button__args.classList.add(`dense`)
+                listItem__appendDiv__button__args.title = `Execute Action with Arguments`
+                listItem__appendDiv__button__args.innerText = `+ Args`
+                if (!action.enabled) listItem__appendDiv__button__args.setAttribute(`disabled`, ``)
+                if (!action.enabled) listItem__appendDiv__button__args.title = `Disabled Action`
+                listItem__appendDiv.append(listItem__appendDiv__button__args)
+                listItem__appendDiv__button__args.addEventListener(`click`, RunActionFromActionsPageWithArguments)
 
                 listItem__button.addEventListener(`click`, function () {
                   const Modal__InspectAction = createModal(`
@@ -1442,61 +1519,127 @@ async function connectws() {
                       <td style="text-align: left;">${action.group}</td>
                     </tr>
                   </table>
-                  <br>
-                  <div class="form-group styled execute">
-                    <button id="execute" title="${action.enabled ? `Execute Action` : `Disabled Action`}"${action.enabled ? `` : ` disabled`}>Execute</button>
-                  </div>
-                  `, action.name, `Inspect Action`, `small`, {})
-
-                  Modal__InspectAction.querySelector(`.form-group.execute button#execute`).addEventListener(`click`, () => {
-                    RunActionFromActionsPage()
+                  `, `Inspect Action`, `${action.name} • ${action.id}`, `small`, {
+                    footerButtons: [
+                      {
+                          name: `Cancel`,
+                          id: `cancel`,
+                          type: `plain`,
+                          closeModal: true
+                      },
+                      {
+                          name: `Execute`,
+                          id: `execute`,
+                          type: `theme`,
+                          disabled: !action.enabled
+                      },
+                      {
+                          name: `+ Args`,
+                          id: `execute-with-arguments`,
+                          type: `theme`,
+                          disabled: !action.enabled
+                      }
+                    ]
                   })
-                })
-                
-                function RunActionFromActionsPage() {
-                  let broadcasterObj = {}
 
-                  if (broadcaster?.connected.includes(`twitch`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `Twitch`) {
-                    broadcasterObj.user = broadcaster?.platforms?.twitch?.broadcastUser ?? `ik1497`
-                    broadcasterObj.userName = broadcaster?.platforms?.twitch?.broadcastUserName ?? `ik1497`
-                    broadcasterObj.userId = broadcaster?.platforms?.twitch?.broadcastUserId ?? `695682330`
-                    broadcasterObj.isAffiliate = broadcaster?.platforms?.twitch?.broadcasterIsAffiliate ?? `false`
-                    broadcasterObj.isPartner = broadcaster?.platforms?.twitch?.broadcasterIsPartner ?? `false`
-                  }
-
-                  if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
-                    broadcasterObj.userName = broadcaster?.platforms?.youtube?.broadcastUserName ?? `Ik1497 Tutorials`
-                    broadcasterObj.userId = broadcaster?.platforms?.youtube?.broadcastUserId ?? `UCl3oatIf9tYopHaZHvnH3xw`
-                    broadcasterObj.profileImage = broadcaster?.platforms?.youtube?.broadcastUserProfileImage ?? `https://yt3.ggpht.com/VpC8_9WcDEKcPSvnD6p1iGT_S2_XxdeZtL6tTL2axexj0SpG-c4Wx8i5lYNbJtvmzwCnzm9Bsg=s88-c-k-c0x00ffffff-no-rj`
-                  }
-
-                  let arguments = []
-
-                  if (broadcaster?.connected.includes(`twitch`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `Twitch`) {
-                    arguments.push([`broadcastUser`, broadcasterObj.user])
-                    arguments.push([`broadcastUserName`, broadcasterObj.userName])
-                    arguments.push([`broadcastUserId`, broadcasterObj.userId])
-                    arguments.push([`broadcastIsAffiliate`, broadcasterObj.isAffiliate])
-                    arguments.push([`broadcastIsPartner`, broadcasterObj.isPartner])
-                  }
-                  
-                  if (broadcaster?.connected.includes(`youtube`) && localStorage.getItem(`streamerbotToolbox__broadcastService`) === `YouTube`) {
-                    arguments.push([`broadcastUserName`, broadcasterObj.userName])
-                    arguments.push([`broadcastUserId`, broadcasterObj.userId])
-                    arguments.push([`broadcastUserProfileImage`, broadcasterObj.profileImage])
-                  }
-
-                  let randomUserCount = localStorage.getItem(`streamerbotToolbox__randomUsers`)
-                  if (randomUserCount <= 0) randomUserCount = 0
-                  if (isNaN(randomUserCount)) randomUserCount = 0
-                  if (randomUserCount > 0 && presentViewers.viewers.length > 0) {
-                    for (let presentViewerRunTime = 0; presentViewerRunTime < randomUserCount; presentViewerRunTime++) {                    
-                      let randomUser = presentViewers.viewers[Math.floor(Math.random()*presentViewers.viewers.length)];
-                      arguments.push([`randomUser${presentViewerRunTime}`, randomUser.display])
-                      arguments.push([`randomUserName${presentViewerRunTime}`, randomUser.login])
-                      arguments.push([`randomUserId${presentViewerRunTime}`, randomUser.id])  
+                  Modal__InspectAction.onFooterButtonPress = (id) => {
+                    if (id === `execute`) {
+                      RunActionFromActionsPage()
+                    } else if (id === `execute-with-arguments`) {
+                      RunActionFromActionsPageWithArguments()
                     }
                   }
+                })
+
+                function RunActionFromActionsPageWithArguments() {
+                  const Modal__RunActionWithArguments = createModal(`
+                  <table class="styled full">
+                    <tbody>
+                      <tr>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  `, `Execute Action with Arguments`, `${action.name} • ${action.id}`, `medium`, {
+                    persisted: true,
+                    footerButtons: [
+                      {
+                          name: `Cancel`,
+                          id: `cancel`,
+                          type: `plain`,
+                          closeModal: true
+                      },
+                      {
+                          name: `Execute`,
+                          id: `execute`,
+                          type: `theme`,
+                          disabled: !action.enabled
+                      }
+                    ]
+                  })
+
+                  const table = Modal__RunActionWithArguments.main.querySelector(`table`)
+                  const tbody = table.querySelector(`tbody`)
+
+                  updateRunActionWithArgumentsTable()
+                  tbody.addEventListener(`keydown`, () => {
+                    setTimeout(() => {
+                      updateRunActionWithArgumentsTable()
+                    })
+                  })
+
+                  function updateRunActionWithArgumentsTable() {
+                    tbody.querySelectorAll(`tr:not(:first-child)`).forEach((tr, index, array) => {
+                      let td = [
+                        tr.querySelector(`td:first-child`),
+                        tr.querySelector(`td:last-child`)
+                      ]
+
+                      if (index != array.length - 1) {
+                        if (td[0].innerText === `` && td[1].innerText === ``) {
+                          tr.remove()
+                        }
+                      }
+                    });
+
+                    let trLastChild = tbody.querySelector(`tr:last-child`)
+                    let trLastChild__td = [
+                      trLastChild.querySelector(`td:first-child`),
+                      trLastChild.querySelector(`td:last-child`)
+                    ]
+
+                    if (trLastChild__td[0].innerText != `` && trLastChild__td[1].innerText != ``) {
+                      trLastChild.insertAdjacentHTML(`afterend`, `
+                      <tr>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                      </tr>
+                      `)
+                    }
+                  }
+
+                  Modal__RunActionWithArguments.onFooterButtonPress = (id) => {
+                    if (id === `execute`) {
+                      let arguments = []
+                      tbody.querySelectorAll(`tr`).forEach(tr => {
+                        let td = [
+                          tr.querySelector(`td:first-child`),
+                          tr.querySelector(`td:last-child`)
+                        ]
+
+                        if (td[0].innerText != `` && td[1].innerText != ``) {
+                          arguments.push([td[0].innerText, td[1].innerText])
+                        }
+                      });
+
+                      RunActionFromActionsPage(Object.fromEntries(arguments))
+                    }
+                  }
+                }
+                
+                function RunActionFromActionsPage(arguments = {}) {
+                  arguments = Object.entries(arguments)
 
                   arguments.push([`source`, `StreamerbotToolbox`])
 
@@ -1605,12 +1748,6 @@ async function connectws() {
                   <td style="text-align: left;">${typeof argument[1] != `object` ? argument[1] : `<pre><code>${formatJson(argument[1]).html}</code></pre>`}</td>
                 </tr>
                 `
-
-                if (typeof argument[1] != `object`) {
-                  console.log(`OBJECT`, argument[1])
-                } else {
-                  console.log(`NOT OBJECT`, argument[1])
-                }
               });
   
               actionHistoryQueued__table += `
@@ -1623,10 +1760,36 @@ async function connectws() {
             <h3>Arguments</h3>
             <br>
             ${actionHistoryQueued__table}
-            <div class="form-group styled re-run">
-              <button id="re-run">Re-run</button>
-            </div>
-            `, `${data.data.name}<small>${SB__FormatTimestamp(data.data.arguments.actionQueuedAt, `small`)}</small>`, data.data.actionId, `medium`, {})
+            `, `${data.data.name}<small>${SB__FormatTimestamp(data.data.arguments.actionQueuedAt, `small`)}</small>`, data.data.actionId, `medium`, {
+              footerButtons: [
+                {
+                    name: `Close`,
+                    id: `close`,
+                    type: `plain`,
+                    closeModal: true
+                },
+                {
+                    name: `Re-run`,
+                    id: `rerun`,
+                    type: `theme`
+                }
+              ],
+              footerType: `elevated`
+            })
+
+            Modal__ActionHistory.onFooterButtonPress = (id) => {
+              if (id === `rerun`) {
+                let arguments = []
+                Modal__ActionHistory.main.querySelectorAll(`table:not([hidden]) tbody tr`).forEach(tableRow => {
+                  arguments.push([
+                    tableRow.querySelector(`td:first-child`).innerText,
+                    tableRow.querySelector(`td:last-child`).innerText
+                  ])
+                });
+                arguments = Object.fromEntries(arguments)
+                SB__RunActionById(data.data.actionId, arguments)
+              }
+            }
   
             let copyButtons__List = document.createElement(`ul`)
             copyButtons__List.className = `buttons-row`
@@ -1802,18 +1965,6 @@ async function connectws() {
                 }
               }
             }
-  
-            Modal__ActionHistory.main.querySelector(`.form-group.re-run button#re-run`).addEventListener(`click`, () => {
-              let arguments = []
-              Modal__ActionHistory.main.querySelectorAll(`table:not([hidden]) tbody tr`).forEach(tableRow => {
-                arguments.push([
-                  tableRow.querySelector(`td:first-child`).innerText,
-                  tableRow.querySelector(`td:last-child`).innerText
-                ])
-              });
-              arguments = Object.fromEntries(arguments)
-              SB__RunActionById(data.data.actionId, arguments)
-            })
           })
         }
       }
@@ -1846,6 +1997,9 @@ async function connectws() {
             <div class="card" id="event-history">
               <div class="card-header">
                 <p class="card-title">Event History</p>
+                <div class="form-group styled no-margin no-padding dense card-header-append">
+                  <button class="outlined no-margin no-padding dense">Settings</button>
+                </div>
               </div>
               <hr>
               <div class="form-group styled no-margin">
@@ -1855,6 +2009,41 @@ async function connectws() {
             </div>
           </div>
         </aside>`
+
+        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history .card-header .card-header-append button`).addEventListener(`click`, () => {
+          const Modal__EventHistorySettings = createModal(`
+          
+          `, `Event History Settings`, undefined, `medium`)
+
+          let EventHistorySettings__ExcludeObs = ICreateCheckbox(`Exclude OBS Events`, {checked: loadDataFromStorage(`streamerbotToolbox__eventHistory`)?.excludeObsStudio})
+          Modal__EventHistorySettings.main.append(EventHistorySettings__ExcludeObs.element)
+
+          EventHistorySettings__ExcludeObs.onStateChange = (state) => {
+            if (state) {
+              saveKeyToStorage(`streamerbotToolbox__eventHistory`, {excludeObsStudio: true})
+            } else {
+              saveKeyToStorage(`streamerbotToolbox__eventHistory`, {excludeObsStudio: false})
+            }
+          }
+
+          let EventHistorySettings__ExcludeActions = ICreateCheckbox(`Exclude Actions`, {checked: loadDataFromStorage(`streamerbotToolbox__eventHistory`)?.excludeActions})
+          Modal__EventHistorySettings.main.append(EventHistorySettings__ExcludeActions.element)
+
+          EventHistorySettings__ExcludeActions.onStateChange = (state) => {
+            if (state) {
+              saveKeyToStorage(`streamerbotToolbox__eventHistory`, {excludeActions: true})
+            } else {
+              saveKeyToStorage(`streamerbotToolbox__eventHistory`, {excludeActions: false})
+            }
+          }
+
+          let EventHistorySettings__Spacing = document.createElement(`br`)
+          Modal__EventHistorySettings.main.append(EventHistorySettings__Spacing)
+
+          let EventHistorySettings__Note = document.createElement(`p`)
+          Modal__EventHistorySettings.main.append(EventHistorySettings__Note)
+          EventHistorySettings__Note.innerText = `These events above can be viewed from seperate tabs.`
+        })
 
         document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history input[type="search"]`).addEventListener(`keydown`, updateEventHistorySearch)
         updateEventHistorySearch()
@@ -1973,58 +2162,61 @@ async function connectws() {
       }
 
       if (data?.id === undefined && data?.event?.source != null && data?.event?.type != null && data?.data?.name != streamerbotActionPackage__name && data?.data?.parentName != streamerbotActionPackage__name) {
-        if (data?.event?.source != `Obs` && data?.event?.type != `Event`) {
-          let eventHistory__listItem = document.createElement(`li`)
-          eventHistory__listItem.setAttribute(`hidden`, ``)
-          document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid .card#event-history ul`).prepend(eventHistory__listItem)
-  
-          let eventHistory__listItem__button = document.createElement(`button`)
-          eventHistory__listItem.append(eventHistory__listItem__button)
-  
-          let eventHistory__listItem__button__title = document.createElement(`p`)
-          eventHistory__listItem__button__title.className = `title`
-          eventHistory__listItem__button__title.innerText = data.event.type
-          eventHistory__listItem__button.append(eventHistory__listItem__button__title)
-  
-          let eventHistory__listItem__button__description = document.createElement(`p`)
-          eventHistory__listItem__button__description.className = `description`
-          eventHistory__listItem__button__description.innerText = `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`
-          eventHistory__listItem__button.append(eventHistory__listItem__button__description)
-  
-          updateEventHistorySearch()
+        if (data?.event?.source === `Obs` && data?.event?.type === `Event` && loadDataFromStorage(`streamerbotToolbox__eventHistory`)?.excludeObsStudio === true) return
+        if (data?.event?.source === `Raw` && data?.event?.type === `Action` && loadDataFromStorage(`streamerbotToolbox__eventHistory`)?.excludeActions === true) return
+        if (data?.event?.source === `Raw` && data?.event?.type === `SubAction` && loadDataFromStorage(`streamerbotToolbox__eventHistory`)?.excludeActions === true) return
+        if (data?.event?.source === `Raw` && data?.event?.type === `ActionCompleted` && loadDataFromStorage(`streamerbotToolbox__eventHistory`)?.excludeActions === true) return
 
-          function updateEventHistorySearch() {
-            setTimeout(() => {
-              let searchTerm = document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history input[type="search"]`).value.toLowerCase()
-              document.querySelectorAll(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history ul.styled li`).forEach(listItem => {
-                let listItemTitle = listItem.querySelector(`p.title`).innerText.toLowerCase()
-                let listItemDescription = listItem.querySelector(`p.description`).innerText.toLowerCase()
-    
-                if (listItemTitle.includes(searchTerm) || listItemDescription.includes(searchTerm)) {
-                  listItem.setAttribute(`hidden`, ``)
-                  listItem.removeAttribute(`hidden`)
-                } else {
-                  listItem.setAttribute(`hidden`, ``)
-                }
-              });
+        let eventHistory__listItem = document.createElement(`li`)
+        eventHistory__listItem.setAttribute(`hidden`, ``)
+        document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] .card-grid .card#event-history ul`).prepend(eventHistory__listItem)
+
+        let eventHistory__listItem__button = document.createElement(`button`)
+        eventHistory__listItem.append(eventHistory__listItem__button)
+
+        let eventHistory__listItem__button__title = document.createElement(`p`)
+        eventHistory__listItem__button__title.className = `title`
+        eventHistory__listItem__button__title.innerText = data.event.type
+        eventHistory__listItem__button.append(eventHistory__listItem__button__title)
+
+        let eventHistory__listItem__button__description = document.createElement(`p`)
+        eventHistory__listItem__button__description.className = `description`
+        eventHistory__listItem__button__description.innerText = `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`
+        eventHistory__listItem__button.append(eventHistory__listItem__button__description)
+
+        updateEventHistorySearch()
+
+        function updateEventHistorySearch() {
+          setTimeout(() => {
+            let searchTerm = document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history input[type="search"]`).value.toLowerCase()
+            document.querySelectorAll(`main .main[data-page="${urlSafe(`Websocket Events`)}"] aside .card-grid .card#event-history ul.styled li`).forEach(listItem => {
+              let listItemTitle = listItem.querySelector(`p.title`).innerText.toLowerCase()
+              let listItemDescription = listItem.querySelector(`p.description`).innerText.toLowerCase()
+  
+              if (listItemTitle.includes(searchTerm) || listItemDescription.includes(searchTerm)) {
+                listItem.setAttribute(`hidden`, ``)
+                listItem.removeAttribute(`hidden`)
+              } else {
+                listItem.setAttribute(`hidden`, ``)
+              }
             });
-          }
-
-          eventHistory__listItem__button.addEventListener(`click`, () => {
-            createModal(`
-            <div class="buttons-row">
-              <button class="active-state mdi mdi-code-json" id="copy-as-json-button">Copy as JSON</button>
-            </div>
-            <br>
-            <pre><code>${formatJson(data.data).html}</code></pre>
-            `, data.event.type, `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`, `medium`, {})
-  
-            document.getElementById(`copy-as-json-button`).addEventListener(`click`, () => {
-              createSnackbar(`Copying websocket data as JSON to clipboard`)
-              navigator.clipboard.writeText(formatJson(data.data).json)
-            })
-          })
+          });
         }
+
+        eventHistory__listItem__button.addEventListener(`click`, () => {
+          createModal(`
+          <div class="buttons-row">
+            <button class="active-state mdi mdi-code-json" id="copy-as-json-button">Copy as JSON</button>
+          </div>
+          <br>
+          <pre><code>${formatJson(data.data).html}</code></pre>
+          `, data.event.type, `${data.event.source} • ${SB__FormatTimestamp(data.timeStamp, `small`)}`, `medium`, {})
+
+          document.getElementById(`copy-as-json-button`).addEventListener(`click`, () => {
+            createSnackbar(`Copying websocket data as JSON to clipboard`)
+            navigator.clipboard.writeText(formatJson(data.data).json)
+          })
+        })
       }
 
       /***
@@ -2142,18 +2334,12 @@ async function connectws() {
 
         function updateVariableGlobalVariablesStorage() {
           let wsDataGlobalVariableName = document.getElementById(`set-global-variable--variable-name`).value
-
-          let streamerbotToolbox__globalVariables = JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{}`)
-          streamerbotToolbox__globalVariables.variable = wsDataGlobalVariableName
-          localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
+          saveKeyToStorage(`streamerbotToolbox__globalVariables`, {variable: wsDataGlobalVariableName})
         }
-
+        
         function updateValueGlobalVariablesStorage() {
           let wsDataGlobalVariableValue = document.getElementById(`set-global-variable--value`).value
-
-          let streamerbotToolbox__globalVariables = JSON.parse(localStorage.getItem(`streamerbotToolbox__globalVariables`) || `{}`)
-          streamerbotToolbox__globalVariables.value = wsDataGlobalVariableValue
-          localStorage.setItem(`streamerbotToolbox__globalVariables`, JSON.stringify(streamerbotToolbox__globalVariables))
+          saveKeyToStorage(`streamerbotToolbox__globalVariables`, {variable: wsDataGlobalVariableValue})
         }
 
         document.getElementById(`set-global-variable--submit`).addEventListener(`click`, () => {
@@ -2164,6 +2350,7 @@ async function connectws() {
             wsDataName: wsDataGlobalVariableName,
             wsDataValue: wsDataGlobalVariableValue
           })
+
           SB__StreamerbotActionPackageRequest(`GetGlobalVariable`, wsDataGlobalVariableName)
         })
 
@@ -2484,8 +2671,8 @@ async function connectws() {
 
       if (data?.event?.source === `None` && data?.event?.type === `Custom` && data?.data?.wsRequest === `ObsIsConnected`) {
         if (data.data.wsData === true) {
-          let obsConnection = JSON.parse(localStorage.getItem(`streamerbotToolbox__obsStudio`)) || {connection: 0}
-          obsConnection = obsConnection.connection
+          let obsConnection = loadDataFromStorage(`streamerbotToolbox__obsStudio`)
+          obsConnection = obsConnection.connection || 0
           document.body.setAttribute(`obs-connection-state`, `connected`)
 
           SB__StreamerbotActionPackageOBSRequest(`GetSceneList`, {}, obsConnection)
@@ -2683,7 +2870,7 @@ async function connectws() {
               }
 
               listItem.querySelector(`.dropdown-section .dropdown-list li#transform-settings button`).addEventListener(`click`, () => {
-                let Modal_ObsStudioTransformSettings = createModal(`
+                let Modal__ObsStudioTransformSettings = createModal(`
                 <table class="styled">
                   <div class="form-group styled">
                     <button id="update">Update Transform Settings</button>
@@ -2785,29 +2972,29 @@ async function connectws() {
                   </table>
                 `, `${sourceData.sourceName}`, `Edit Transform Settings`, `medium`, {})
 
-                Modal_ObsStudioTransformSettings.main.querySelector(`.form-group button#update`).addEventListener(`click`, () => {
+                Modal__ObsStudioTransformSettings.main.querySelector(`.form-group button#update`).addEventListener(`click`, () => {
                   SB__StreamerbotActionPackageOBSRequest(`SetSceneItemTransform`, {
                     sceneName: document.querySelector(`main .main[data-page="${urlSafe(`OBS Studio`)}"] .card-grid .card.sources > ul`).getAttribute(`data-scene`),
                     sceneItemId: sourceData.sceneItemId,
                     sceneItemTransform: {
-                      alignment: +Modal_ObsStudioTransformSettings.main.querySelector(`table #alignment`).value || 5,
-                      boundsAlignment: +Modal_ObsStudioTransformSettings.main.querySelector(`table #bounds-alignment`).value || 0,
-                      boundsWidth: +Modal_ObsStudioTransformSettings.main.querySelector(`. .main table #bounds-width`).value || 1,
-                      boundsHeight: +Modal_ObsStudioTransformSettings.main.querySelector(`table #bounds-height`).value || 1,
-                      boundsType: Modal_ObsStudioTransformSettings.main.querySelector(`table #bounds-type`).value || "OBS_BOUNDS_NONE",
-                      cropTop: +Modal_ObsStudioTransformSettings.main.querySelector(`table #crop-top`).value || 0,
-                      cropRight: +Modal_ObsStudioTransformSettings.main.querySelector(`table #crop-right`).value || 0,
-                      cropBottom: +Modal_ObsStudioTransformSettings.main.querySelector(`table #crop-bottom`).value || 0,
-                      cropLeft: +Modal_ObsStudioTransformSettings.main.querySelector(`table #crop-left`).value || 0,
-                      width: +Modal_ObsStudioTransformSettings.main.querySelector(`table #width`).value || null,
-                      height: +Modal_ObsStudioTransformSettings.main.querySelector(`table #height`).value || null,
-                      positionX: +Modal_ObsStudioTransformSettings.main.querySelector(`table #position-x`).value || 0,
-                      positionY: +Modal_ObsStudioTransformSettings.main.querySelector(`table #position-y`).value || 0,
-                      rotation: +Modal_ObsStudioTransformSettings.main.querySelector(`table #rotation`).value || 0,
-                      scaleX: +Modal_ObsStudioTransformSettings.main.querySelector(`table #scale-x`).value || null,
-                      scaleY: +Modal_ObsStudioTransformSettings.main.querySelector(`table #scale-y`).value || null,
-                      sourceHeight: +Modal_ObsStudioTransformSettings.main.querySelector(`table #source-height`).value || 0,
-                      sourceWidth: +Modal_ObsStudioTransformSettings.main.querySelector(`table #source-width`).value || 0
+                      alignment: +Modal__ObsStudioTransformSettings.main.querySelector(`table #alignment`).value || 5,
+                      boundsAlignment: +Modal__ObsStudioTransformSettings.main.querySelector(`table #bounds-alignment`).value || 0,
+                      boundsWidth: +Modal__ObsStudioTransformSettings.main.querySelector(`. .main table #bounds-width`).value || 1,
+                      boundsHeight: +Modal__ObsStudioTransformSettings.main.querySelector(`table #bounds-height`).value || 1,
+                      boundsType: Modal__ObsStudioTransformSettings.main.querySelector(`table #bounds-type`).value || "OBS_BOUNDS_NONE",
+                      cropTop: +Modal__ObsStudioTransformSettings.main.querySelector(`table #crop-top`).value || 0,
+                      cropRight: +Modal__ObsStudioTransformSettings.main.querySelector(`table #crop-right`).value || 0,
+                      cropBottom: +Modal__ObsStudioTransformSettings.main.querySelector(`table #crop-bottom`).value || 0,
+                      cropLeft: +Modal__ObsStudioTransformSettings.main.querySelector(`table #crop-left`).value || 0,
+                      width: +Modal__ObsStudioTransformSettings.main.querySelector(`table #width`).value || null,
+                      height: +Modal__ObsStudioTransformSettings.main.querySelector(`table #height`).value || null,
+                      positionX: +Modal__ObsStudioTransformSettings.main.querySelector(`table #position-x`).value || 0,
+                      positionY: +Modal__ObsStudioTransformSettings.main.querySelector(`table #position-y`).value || 0,
+                      rotation: +Modal__ObsStudioTransformSettings.main.querySelector(`table #rotation`).value || 0,
+                      scaleX: +Modal__ObsStudioTransformSettings.main.querySelector(`table #scale-x`).value || null,
+                      scaleY: +Modal__ObsStudioTransformSettings.main.querySelector(`table #scale-y`).value || null,
+                      sourceHeight: +Modal__ObsStudioTransformSettings.main.querySelector(`table #source-height`).value || 0,
+                      sourceWidth: +Modal__ObsStudioTransformSettings.main.querySelector(`table #source-width`).value || 0
                     }
                   }, obsConnection)
                 })
@@ -3195,17 +3382,17 @@ async function connectws() {
   }
 }
 
-let speakerbotConnectionData = localStorage.getItem(`streamerbotToolbox__speakerbot`) || undefined
+let speakerbotConnectionData = localStorage.getItem(`streamerbotToolbox__speakerbot`) || `{}`
 
-if (speakerbotConnectionData != undefined) {
-  speakerbotConnectionData = JSON.parse(speakerbotConnectionData)
+if (speakerbotConnectionData != `{}`) {
   document.body.setAttribute(`speakerbot-state`, `enabled`)
   connectSpeakerbotws()
 }
 
 async function connectSpeakerbotws() {
   if ("WebSocket" in window) {
-    let wsServerUrl = `ws://${speakerbotConnectionData.host}:${speakerbotConnectionData.port}${speakerbotConnectionData.endpoint}`
+    let speakerbotConnectionJson = loadDataFromStorage(`streamerbotToolbox__speakerbot`)
+    let wsServerUrl = `ws://${speakerbotConnectionJson.host}:${speakerbotConnectionJson.port}${speakerbotConnectionJson.endpoint}`
     const ws = new WebSocket(wsServerUrl)
     console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Speaker.bot...")
 
@@ -3444,7 +3631,6 @@ function ValidateJson(json) {
   }
   return true;
 }
-
 
 function SB__FormatTimestamp(timestamp, textSize = `small`) {
   let timestampObject = SB__TimestampObject(timestamp)

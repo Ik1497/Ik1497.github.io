@@ -5,9 +5,8 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "build": "sass --watch assets/scss:assets/css --style compressed",
-    "components-build": "sass --watch components --style compressed",
-    "idiots-build": "node Extensions/IDIOTS/build.cjs"
+    "dev": "sass --watch assets/scss:assets/css components extensions --style compressed",
+    "build": "node Extensions/IDIOTS/build.cjs"
   },
   "repository": {
     "type": "git",

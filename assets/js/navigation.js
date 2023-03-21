@@ -78,13 +78,7 @@ async function app() {
         }
       });
 
-      let navbarSettings__collapsedGroups = localStorage.getItem(`navbarSettings__collapsedGroups`)
-      navbarSettings__collapsedGroups = JSON.parse(navbarSettings__collapsedGroups)
-      if (navbarSettings__collapsedGroups === `undefined` || navbarSettings__collapsedGroups === null) {
-        navbarSettings__collapsedGroups = []
-      } else if (JSON.stringify(navbarSettings__collapsedGroups).charAt(0) != `[`) {
-        navbarSettings__collapsedGroups = [`${navbarSettings__collapsedGroups}`]
-      }
+      let navbarSettings__collapsedGroups = loadDataFromStorage(`navbarSettings__collapsedGroups`, `array`)
 
       let openState = `true`
       if (navbarSettings__collapsedGroups.includes(navItemGroup.name)) {
@@ -92,7 +86,7 @@ async function app() {
       }
 
       document.querySelector("nav.navbar-wrapper ul.navbar").insertAdjacentHTML(`beforeend`, `
-      <div class="navbar-group" data-open="${openState}">
+      <div class="navbar-group" data-open="${openState}" data-name="${navItemGroup.name}">
         <button class="group-title" title="${navItemGroup.name}" aria-label="${navItemGroup.name}">
           ${navItemGroup.name}
         </button>
@@ -103,7 +97,10 @@ async function app() {
       `)
     }
   });
-  document.querySelectorAll(`nav.navbar-wrapper ul.navbar .navbar-group`).forEach(navbarGroup => {
+
+  const navbar = document.querySelector(`nav.navbar-wrapper ul.navbar`)
+
+  navbar.querySelectorAll(`.navbar-group`).forEach(navbarGroup => {
     if (navbarGroup.dataset.open === `true`) {
       navbarGroup.querySelector(`ul.navbar-group-items`).style.maxHeight = `${navbarGroup.querySelector(`ul.navbar-group-items`).scrollHeight}px`
     }
@@ -112,39 +109,21 @@ async function app() {
       navbarGroup.remove()
     } else {      
       navbarGroup.querySelector(`button.group-title`).addEventListener(`click`, function () {
-        let navbarSettings__collapsedGroups = localStorage.getItem(`navbarSettings__collapsedGroups`)
-        navbarSettings__collapsedGroups = JSON.parse(navbarSettings__collapsedGroups)
-        if (navbarSettings__collapsedGroups === `undefined` || navbarSettings__collapsedGroups === null) {
-          navbarSettings__collapsedGroups = []
-        } else if (JSON.stringify(navbarSettings__collapsedGroups).charAt(0) != `[`) {
-          navbarSettings__collapsedGroups = [`${navbarSettings__collapsedGroups}`]
-        }
-  
         if (navbarGroup.dataset.open === `true`) {
           navbarGroup.dataset.open = `false`
           navbarGroup.querySelector(`ul.navbar-group-items`).style.maxHeight = `0px`
-          
-          if (!navbarSettings__collapsedGroups.includes(navbarGroup.querySelector(`button.group-title`).innerHTML)) {
-            navbarSettings__collapsedGroups.push(navbarGroup.querySelector(`button.group-title`).innerText.trim())
-          }
-
-          localStorage.setItem(`navbarSettings__collapsedGroups`, JSON.stringify(navbarSettings__collapsedGroups))
-  
         } else if (navbarGroup.dataset.open === `false`) {
           navbarGroup.dataset.open = `true`
           navbarGroup.querySelector(`ul.navbar-group-items`).style.maxHeight = `${navbarGroup.querySelector(`ul.navbar-group-items`).scrollHeight}px`
-  
-          navbarSettings__collapsedGroups.forEach(navbarSettings__collapsedGroup => {
-            if (navbarSettings__collapsedGroup === navbarGroup.querySelector(`button.group-title`).innerText) {
-              const index = navbarSettings__collapsedGroups.indexOf(navbarSettings__collapsedGroup);
-              if (index > -1) {
-                navbarSettings__collapsedGroups.splice(index, 1)
-              }
-  
-              localStorage.setItem(`navbarSettings__collapsedGroups`, JSON.stringify(navbarSettings__collapsedGroups))
-            }
-          });
         }
+
+        localStorage.setItem(`navbarSettings__collapsedGroups`, `[]`)
+
+        navbar.querySelectorAll(`.navbar-group`).forEach(navbarGroup => {
+          if (navbarGroup.dataset.open === `false`) {
+            saveItemToStorage(`navbarSettings__collapsedGroups`, navbarGroup.dataset.name)
+          }
+        });
       })
     }
   });

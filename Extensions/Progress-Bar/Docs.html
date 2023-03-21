@@ -90,7 +90,7 @@
         <a href="#widget">here</a>.<br>
       </p>
       <h2>Requests</h2>
-      <p>Request variables can be updated server side. E.g. if you want the update request to contain an exta variable, I can add that in the widget and you don't need to update your action</p>
+      <p>Request variables can be updated server side. E.g. if you want the update request to contain an extra variable, you can request it and I can add that in the widget and you don't need to re-import your actions, you only need to add a new set argument.</p>
       <h3>create</h3>
       <table data-table="requests-create"></table>
       <h3>progress</h3>
@@ -153,6 +153,18 @@
             {
               Variable: `progressBarColor`,
               Description: `The color of the bar for the progress bar.`
+            },
+            {
+              Variable: null,
+              Description: null
+            },
+            {
+              Variable: `prependIcon`,
+              Description: `A URL to an image before the progress bar.`
+            },
+            {
+              Variable: `appendIcon`,
+              Description: `A URL to an image after the progress bar.`
             },
             {
               Variable: null,

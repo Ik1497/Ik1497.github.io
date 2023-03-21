@@ -1,6 +1,8 @@
 .i-modal-wrapper {
-  --i-modal-theme: var(--color-link-hover);
+  --i-modal-theme: var(--accent-secondary);
+  --i-modal-theme-alt: var(--accent-secondary-alt);
   --i-modal-background: var(--background-alt);
+  --i-modal-background-alt: var(--background-primary);
   --i-modal-color: var(--text-900);
   --i-modal-color-alt: var(--text-700);
 
@@ -32,112 +34,148 @@
     width: 100%;
     height: 100%;
   
-    .header {
+    .i-modal-header {
       background: var(--i-modal-theme);
-      display: flex;
-      align-items: center;
-      height: 3.5rem;
+      min-height: 3.5rem;
       padding-inline: 1rem;
       overflow: hidden;
       width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
   
-      .close-button {
-        padding: .25rem;
-        border-radius: none;
-        outline: none;
-        border: none;
-        background: none;
-        cursor: pointer;
+      .i-modal-header__info {
+        width: fit-content;
         
+        .i-modal-header__title,
+        .i-modal-header__subtitle {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+    
+        .i-modal-header__title {
+          font-weight: bold;
+          font-size: 1.5rem;
+          
+          display: flex;
+          align-items: center;
+
+          small {
+            font-size: .75rem;
+            padding-left: .5ch;
+            color: var(--i-modal-color-alt);
+          }
+        }
+
+        .i-modal-header__subtitle {
+          font-size: .75rem;
+          color: var(--i-modal-color-alt);
+        }
+      }
+  
+      .i-modal-header__close-button {
+        outline: none;
+        
+        cursor: pointer;
         font-weight: 900;
+        
+        padding: .25rem;
+        position: absolute;
+        right: .75rem;
+        top: 50%;
+        transform: translateY(-50%);
+
         color: var(--i-modal-color);
+        background: var(--i-modal-theme);
         border: 2px solid currentColor;
         border-radius: .25rem;
-        margin-left: auto;
 
         &:active {
           color: var(--i-modal-color-alt);
         }
       }
-  
-      .subtitle {
-        font-size: .75rem;
-        color: var(--i-modal-color-alt);
-      }
-  
-      .title {
-        font-weight: bold;
-        font-size: 1.5rem;
-        
-        display: flex;
-        align-items: center;
-      }
-  
-      .title small {
-        font-size: .75rem;
-        padding-left: .5ch;
-        color: var(--i-modal-color-alt);
-      }
     }
   
-    .main {
+    .i-modal-main {
       width: 100%;
       height: 100%;
       overflow-y: auto;
+      overflow-x: hidden;
       padding-block: 1rem;
       padding-inline: 2rem;
       display: flex;
       flex-direction: column;
     }
 
-    &.submit {
+    .i-modal-footer {
+      width: 100%;
+      min-height: 3.5rem;
+      padding-inline: 1rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: var(--i-modal-background-alt);
 
-      .modalSubmit {
+      &[data-type="elevated"] {
+        box-shadow: 0 0 20px 2px var(--text-background-800);
+      }
+
+      .i-modal-footer__buttons {
         display: flex;
-        gap: .25rem;
-        align-self: flex-end;
-        justify-self: flex-end;
-        margin-top: auto;
+        gap: .5rem;
+        justify-content: flex-end;
         align-items: center;
-
-        .modalSubmit__close,
-        .modalSubmit__submit {
+        width: 100%;
+  
+        .i-modal-footer-buttons__plain,
+        .i-modal-footer-buttons__theme {
           background: none;
           outline: 0;
           border: 0;
           border-radius: .25rem;
           height: fit-content;
-        }
-
-        .modalSubmit__close {
+          color: var(--i-modal-color);
           text-transform: uppercase;
           letter-spacing: 2px;
+          cursor: pointer;
+
+          &:disabled {
+            filter: brightness(50%);
+          }
+        }
+  
+        .i-modal-footer-buttons__plain {
           padding-inline: .75em;
           padding-block: .5em;
-          font-size: .75rem;
+          font-size: .7rem;
+          color: var(--i-modal-color);
           transition: background .2s ease;
-
-          &:hover {
+          cursor: pointer;
+  
+          &:hover,
+          &:focus-visible {
             background: var(--background-soft);
           }
-
+  
           &:active {
             background: none;
           }
         }
-
-        .modalSubmit__submit {
-          background: var(--background-mute);
+  
+        .i-modal-footer-buttons__theme {
+          background: var(--i-modal-theme);
           transition: background .2s ease;
           padding-inline: .75rem;
           padding-block: .5rem;
-
-          &:hover {
-            background: var(--background-light);
+  
+          &:hover,
+          &:focus-visible {
+            background: var(--i-modal-theme-alt);
           }
-
+  
           &:active {
-            background: var(--background-mute);
+            background: var(--i-modal-theme);
           }
         }
       }
@@ -156,8 +194,8 @@
 
   .i-modal {
     &.submit {
-      width: 25rem;
-      height: 15rem;
+      width: 30rem;
+      height: 17.5rem;
     }
     
     &.small {

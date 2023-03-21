@@ -1,8 +1,0 @@
-{
-  "extensions": {
-    "music": {
-      "defaultSongTitle": "Soita kappale",
-      "defaultSongArtist": "jotta tämä widget toimisi!"
-    }
-  }
-}

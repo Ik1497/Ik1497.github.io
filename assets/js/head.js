@@ -13,6 +13,7 @@ document.write(`
 <script src="/assets/js/navigation.js" defer></script>
 <script src="/assets/js/header.js" defer></script>
 <script src="/assets/js/theme.js" defer></script>
+<script src="/assets/js/storage.js" defer></script>
 <script src="/assets/js/footer.js" defer></script>
 <script src="/assets/js/toc.js" defer></script>
 <script src="/assets/js/image-handler.js" defer></script>

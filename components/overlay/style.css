@@ -1,1 +1,1 @@
-.i-overlay{background:rgba(0,0,0,.3);position:fixed;inset:0;opacity:0;transition:opacity .5s ease}.i-overlay[data-state=opening],.i-overlay[data-state=opened]{opacity:1}/*# sourceMappingURL=style.css.map */
+.i-overlay{--i-overlay-color-hsl: 0 0% 0%;--i-overlay-color-opacity: 0.3;--i-overlay-color: hsla(var(--i-overlay-color-hsl) / var(--i-overlay-color-opacity));background:var(--i-overlay-color);position:fixed;inset:0;opacity:0;transition:opacity .5s ease}.i-overlay[data-state=opening],.i-overlay[data-state=opened]{opacity:1}/*# sourceMappingURL=style.css.map */

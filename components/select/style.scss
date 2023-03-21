@@ -1,0 +1,88 @@
+.i-select-wrapper {
+  font-size: 1rem;
+
+  .i-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    .i-select-main-wrapper {
+      background: #181818;
+      padding-block: 1rem;
+      padding-inline: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
+
+      .i-select-title {
+        font-size: 1.5rem;
+        transition: 500ms ease;
+        transition-property: font-size color;
+      }
+      
+      .i-select-active {
+        font-size: 0rem;
+        transition: 500ms ease;
+        transition-property: font-size;
+      }
+    }
+
+    .i-select-options-wrapper {
+      display: none;
+      flex-direction: column;
+      gap: .5rem;
+      width: 100%;
+      max-height: 20rem;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .i-select-option-wrapper {
+        
+        .i-select-option {
+          background: #202020;
+          padding-block: 1rem;
+          padding-inline: 1rem;
+
+          &:hover,
+          &:focus-visible {
+            background: #353535;
+          }
+
+          &[data-active="true"] {
+            background: #808080;
+          }
+        }
+      }
+    }
+  }
+
+  &:focus-within {
+    .i-select-options-wrapper {
+      display: flex;
+    }
+  }
+
+  &[data-active-value] {
+    .i-select-main-wrapper {
+      .i-select-title {
+        font-size: 1rem;
+        color: #ccc;
+      }
+
+      .i-select-active {
+        font-size: 1.3rem;
+      }
+    }
+  }
+
+  button {
+    width: 100%;
+    text-align: left;
+    background: none;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    font: inherit;
+  }
+}

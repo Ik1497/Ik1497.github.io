@@ -23,6 +23,8 @@ function formatJson(json) {
       returnData = `array`
     }
 
+    if (json === undefined || json === null) returnData = `none`
+
     return returnData
   }
 

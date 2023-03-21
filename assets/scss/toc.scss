@@ -34,12 +34,12 @@ $mq-md: 115rem;
       
       &:hover,
       &.toc-active {
-        border-color: var(--link-hover);
+        border-color: var(--accent-secondary);
       }
 
       &:hover button,
       &.toc-active button {
-        color: var(--link-primary)!important;
+        color: var(--accent-secondary-alt)!important;
       }
       
       button {
