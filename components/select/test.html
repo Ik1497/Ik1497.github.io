@@ -33,6 +33,9 @@
   <script src="./main.js"></script>
   <link rel="stylesheet" href="./style.css">
 
+  <script src="/components/alerts/main.js"></script>
+  <link rel="stylesheet" href="/components/alerts/style.css">
+
   <!-- End Components -->
   
   <meta name="og:site_name" content="Streamer.bot Actions">
@@ -105,6 +108,13 @@
     ], {
 
     })
+
+    console.log(select)
+
+    select.onChange = (name, value) => {
+      console.log(`[${value}] ${name}`)
+      createAlert(`<span style="font-weight: bold; color: coral;">[${value}]</span> ${name}`, `default`)
+    }
 
     document.querySelector(`.main`).append(select.element)
   </script>

@@ -1,19 +1,26 @@
 .i-select-wrapper {
+  --i-select-primary: 30 30 30;
+  --i-select-active: 40 40 40;
+  --i-select-item-active: 40 82 146;
+  --i-select-border: 200 200 200;
+  --i-select-animation-duration: .25s;
+
   font-size: 1rem;
 
   .i-select {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: .5rem;
 
     .i-select-main-wrapper {
-      background: #181818;
+      background: rgb(var(--i-select-primary));
       padding-block: 1rem;
       padding-inline: 1rem;
       display: flex;
       flex-direction: column;
       gap: .25rem;
+      transition: background var(--i-select-animation-duration) ease;
+      border-bottom: 1px solid rgb(var(--i-select-border));
 
       .i-select-title {
         font-size: 1.5rem;
@@ -23,43 +30,43 @@
       
       .i-select-active {
         font-size: 0rem;
-        transition: 500ms ease;
+        transition: var(--i-select-animation-duration) ease;
         transition-property: font-size;
       }
     }
 
     .i-select-options-wrapper {
-      display: none;
+      display: flex;
       flex-direction: column;
-      gap: .5rem;
       width: 100%;
-      max-height: 20rem;
-      overflow-y: auto;
-      overflow-x: hidden;
+      max-height: 0rem;
+      overflow: hidden;
+      transition: max-height var(--i-select-animation-duration) ease-out;
 
       .i-select-option-wrapper {
         
         .i-select-option {
-          background: #202020;
+          background: rgb(var(--i-select-primary));
           padding-block: 1rem;
           padding-inline: 1rem;
 
           &:hover,
           &:focus-visible {
-            background: #353535;
+            background: rgb(var(--i-select-active));
           }
 
           &[data-active="true"] {
-            background: #808080;
+            background: rgb(var(--i-select-item-active));
           }
         }
       }
     }
   }
 
-  &:focus-within {
+  &[data-state="open"] {
     .i-select-options-wrapper {
-      display: flex;
+      max-height: 25rem;
+      overflow-y: auto;
     }
   }
 

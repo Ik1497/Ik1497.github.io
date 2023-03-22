@@ -1,4 +1,4 @@
-function createSelect(label, options, settings) {
+function createSelect(label, options = [], settings = {}) {
   let returnData = {}
 
   let ISelect__Wrapper = document.createElement(`div`)
@@ -39,6 +39,11 @@ function createSelect(label, options, settings) {
   ISelect.append(ISelect__Options__Wrapper)
   ISelect__Options__Wrapper.className = `i-select-options-wrapper`
 
+  returnData.onChange = (name, value) => {}
+  returnData.currentValue = {
+    name: null,
+    value: null
+  }
   
   options.forEach(option => {
     let ISelect__Option__Wrapper = document.createElement(`div`)
@@ -52,6 +57,13 @@ function createSelect(label, options, settings) {
     ISelect__Option.dataset.value = option.value
 
     ISelect__Option.addEventListener(`click`, () => {
+      returnData.currentValue = {
+        name: option.name,
+        value: option.value
+      }
+
+      returnData.onChange(option.name, option.value)
+
       ISelect__Active.innerText = option.name
       ISelect__Active.dataset.value = option.value
 
