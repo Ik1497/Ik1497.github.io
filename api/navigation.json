@@ -80,7 +80,7 @@
         "name": "Mute Indicator",
         "description": "Mute Indicator so you can see if and what sources are muted.",
         "icon": "mdi mdi-volume-mute",
-        "href": "/Extensions/Mute-Indicator/Docs",
+        "href": "/Docs/Mute-Indicator",
         "type": "link",
         "channel": "public",
         "home": 2,
