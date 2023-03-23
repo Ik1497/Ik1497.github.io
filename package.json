@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "sass --watch assets/scss:assets/css components extensions --style compressed",
     "build": "node Extensions/IDIOTS/build.cjs",
-    "deploy": "git commit -a -m \"Small Fixes\" && git push"
+    "deploy": "git commit -a -m \"Small Fixes\" && git push",
+    "pull": "git pull"
   },
   "repository": {
     "type": "git",
