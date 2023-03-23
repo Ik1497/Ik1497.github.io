@@ -30,11 +30,12 @@
 
     .i-button-text-wrapper {
       .i-button-grid-item-title {
+        padding: 0!important;
         font-weight: bold;
       }
-
+      
       .i-button-grid-item-description {
-
+        padding: 0!important;
       }
     }
   }
