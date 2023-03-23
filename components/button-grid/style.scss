@@ -1,0 +1,41 @@
+.i-button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  gap: .5rem;
+
+  .i-button-grid-item {
+    background: #181818;
+    border: 1px solid #303030;
+    color: #ffffff;
+    text-decoration: none;
+    padding-inline: .5rem;
+    padding-block: .25rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    transition: background .25s ease;
+
+    &:hover {
+      background: #202020;
+    }
+
+    div.i-button-grid-item-icon {
+      font-size: 3em;
+    }
+
+    img.i-button-grid-item-icon {
+      height: 3em;
+      width: 3em;
+    }
+
+    .i-button-text-wrapper {
+      .i-button-grid-item-title {
+        font-weight: bold;
+      }
+
+      .i-button-grid-item-description {
+
+      }
+    }
+  }
+}
