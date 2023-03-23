@@ -1,5 +1,7 @@
 function createModal(modalHtml = ``, modalTitle = `Streamer.bot Actions` , modalSubtitle = undefined, scale = `small`, settings = {}) {
   let modal__Subtitle = modalSubtitle
+  let modalUUID = btoa(((modalTitle + modal__Subtitle + modalHtml).trim().replaceAll(` `, ``).replaceAll(`\n`, ``)).replace(/[^a-zA-Z0-9]/g, ``))
+
   if (document.body.getAttribute(`modal-state`) != `opened` && document.body.getAttribute(`modal-state`) != `opening`) {
     if (modalSubtitle != undefined || modalSubtitle != null) {
       modalSubtitle = `<p class="i-modal-header__subtitle">${modalSubtitle}</p>`
@@ -18,6 +20,7 @@ function createModal(modalHtml = ``, modalTitle = `Streamer.bot Actions` , modal
     IModalWrapper.className = `i-modal-wrapper`
     IModalWrapper.dataset.state = `opening`
     IModalWrapper.dataset.animation = `center`
+    IModalWrapper.dataset.uuid = modalUUID
 
     let IModalWrapper__Overlay = document.createElement(`div`)
     IModalWrapper__Overlay.className = `i-overlay`

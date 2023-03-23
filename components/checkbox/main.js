@@ -2,7 +2,7 @@ function ICreateCheckbox(label, options = {}) {
   let returnObject = {}
 
   let checkboxesCount = document.querySelectorAll(`input[type="checkbox"]`).length
-  let checkboxId = `i-checkbox-${Math.round(Math.random() * (999999999 - 111111111) + 111111111)}${checkboxesCount}${Math.round(Math.random() * (999999999 - 111111111) + 111111111)}`
+  let checkboxId = `i-checkbox-${btoa(`${Math.round(Math.random() * (999999999 - 111111111) + 111111111)}` + `${checkboxesCount}` + `${Math.round(Math.random() * (999999999 - 111111111) + 111111111)}`)}`
   returnObject.id = checkboxId
 
   let ICheckbox__Wrapper = document.createElement(`div`)
@@ -61,6 +61,5 @@ function ICreateCheckbox(label, options = {}) {
   ICheckbox__Wrapper__Label.className = `i-checkbox-label`
   ICheckbox__Wrapper__Label.setAttribute(`for`, checkboxId)
   ICheckbox__Wrapper__Label.innerHTML = label
-
   return returnObject
 }
