@@ -1,11 +1,15 @@
 .i-button-grid {
+  --i-button-grid-background-primary: var(--background-alt);
+  --i-button-grid-background-alt: var(--background-soft);
+  --i-button-grid-background-border: var(--background-darken);
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
   gap: .5rem;
 
   .i-button-grid-item {
-    background: #181818;
-    border: 1px solid #303030;
+    background: var(--i-button-grid-background-primary);
+    border: 1px solid var(--i-button-grid-background-border);
     color: #ffffff;
     text-decoration: none;
     padding-inline: .5rem;
@@ -16,7 +20,7 @@
     transition: background .25s ease;
 
     &:hover {
-      background: #202020;
+      background: var(--i-button-grid-background-alt);
     }
 
     div.i-button-grid-item-icon {
