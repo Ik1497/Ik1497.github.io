@@ -17,50 +17,6 @@ let page = {
       external: true,
       type: `alt`
     }
-  ],
-  items: [
-    {
-      name: `Progress Bar`,
-      description: `Make an easy to set-up dynamic progress bar with Streamer.bot`,
-      icon: `mdi mdi-progress-upload`,
-      href: `/Extensions/Progress-Bar/Docs`,
-      enabled: true
-    },
-    {
-      name: `Weather Widget V2`,
-      description: `Minimal night/day animated/static weather widget, including icons for weather events like rain, thunderstorms, snow, etc.`,
-      icon: `mdi mdi-weather-lightning`,
-      href: `/Extensions/Weather/Docs`,
-      enabled: true
-    },
-    {
-      name: `Mute Indicator`,
-      description: `Mute Indicator so you can see if and what sources are muted.`,
-      icon: `mdi mdi-volume-mute`,
-      href: `/Extensions/Mute-Indicator/Docs`,
-      enabled: true
-    },
-    {
-      name: `Local Script Actions Handler`,
-      description: `Run action with Local Scripts.`,
-      icon: `mdi mdi-script-text-play`,
-      href: `/Extensions/Local-Script-Action-Handler/Docs`,
-      enabled: true
-    },
-    {
-      name: `Timer Widget`,
-      description: `Start, pause and stop a timer with Streamer.bot`,
-      icon: `mdi mdi-timer-outline`,
-      href: `/Extensions/Timer/Docs`,
-      enabled: false
-    },
-    {
-      name: `Music Widget`,
-      description: `Music Widget for Spotify`,
-      icon: `mdi mdi-spotify`,
-      href: `/Extensions/Music/Widget/Docs`,
-      enabled: false
-    },
   ]
 }
 
@@ -81,28 +37,6 @@ document.querySelector(`main`).insertAdjacentHTML(`afterbegin`, `
   </div>
 </section>
 `)
-
-// ------- //
-// Buttons //
-// ------- //
-
-for (let buttonsLength = 0; buttonsLength < page.buttons.length; buttonsLength++) {
-  index = page.buttons[buttonsLength];
-  let type = "";
-  let external = "";
-
-  if (index.type === "alt") { 
-    type = " alt"
-  }
-
-  if (index.external === true) { 
-    external = ` target="_blank"`
-  }
-
-  document.querySelector(`section.top-section .main-buttons`).insertAdjacentHTML(`beforeend`, `
-  <a href="${index.href}" ${external} class="animated fadeInDown wait-p${(buttonsLength * 2) + 6}s${type}" title="${index.name}">${index.name}</a>
-  `)
-}
 
 // -------------- //
 // Item grid Code //
@@ -150,7 +84,7 @@ async function itemGrid() {
     let href = item.href
 
     if (location.hostname != `ik1497.github.io`) {
-      if (index.href.slice(-1) != `/`) {
+      if (item.href.slice(-1) != `/`) {
         href = `https://ik1497.github.io${item.href}`
       }
     }
@@ -167,6 +101,13 @@ async function itemGrid() {
       </a>
     </li>
     `)
+
+    if (itemIndex === 0) {
+      document.querySelector(`section.top-section .main-buttons`).insertAdjacentHTML(`beforeend`, `
+      <a href="${href}" class="animated fadeInDown wait-p6s" title="Latest Extension">Latest Extension</a>
+      <a href="https://github.com/Ik1497/Ik1497.github.io" target="_blank" class="animated fadeInDown wait-p8s alt" title="View on Github">View on Github</a>
+      `)
+    }
   });
 }
 
