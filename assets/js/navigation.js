@@ -6,7 +6,6 @@ if (document.body.getAttribute(`data-layout-hidden`) === null) {
 async function app() {
   let navItemsArray = await fetch(`https://raw.githubusercontent.com/Ik1497/Docs/main/api/navigation.json`)
   navItemsArray = await navItemsArray.json()
-  console.log(navItemsArray)
   navItemsArray = navItemsArray.navigationItems
 
   document.body.insertAdjacentHTML(`afterbegin`, `

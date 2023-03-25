@@ -111,40 +111,63 @@ for (let buttonsLength = 0; buttonsLength < page.buttons.length; buttonsLength++
 document.querySelector(`section.top-section`).insertAdjacentHTML(`afterend`, `
 <section class="recent-extensions">
   <h2 class="animated fadeInDown wait-p2s">Recent Extensions</h2>
-  <ul class="item-grid"></ul>
+  <ul class="item-grid">Loading items...</ul>
 </section>
 `)
 
-for (let itemsLength = 0; itemsLength < page.items.length; itemsLength++) {
-  index = page.items[itemsLength];
-  let enabled = "";
-  let itemGridTitle = index.name
-  
-  if (index.enabled === false) { 
-    enabled = " disabled"
-    itemGridTitle = `SOON...`
-  }
+itemGrid()
 
-  let hrefSuffix = ``
+async function itemGrid() {
+  let navigation = await fetch(`https://raw.githubusercontent.com/Ik1497/Docs/main/api/navigation.json`)
+  navigation = await navigation.json()
+  navigation = navigation.navigationItems
 
-  if (location.hostname != `ik1497.github.io`) {
-    if (index.href.slice(-1) != `/`) {
-      hrefSuffix = `.html`
+  let items = []
+
+  navigation.forEach(navigationGroup => {
+    navigationGroup.groupItems.forEach(groupItem => {
+      if (groupItem.groupItem.homePageIndex != `` && groupItem.groupItem.homePageIndex != undefined) {
+        items.push(groupItem.groupItem)
+      }
+    });
+  });
+
+  items.sort((a, b) => {
+    if (a.homePageIndex > b.homePageIndex) {
+      return 1
     }
-  }
 
-  document.querySelector(`section.recent-extensions ul.item-grid`).insertAdjacentHTML(`beforeend`, `
-  <li class="item-grid-item${enabled}" title="${itemGridTitle}" aria-label="${itemGridTitle}">
-    <a href="${index.href}${hrefSuffix}" data-tilt class="item-grid-item">
-      <article class="animated fadeInDown wait-p${(itemsLength * 2) + 2}s">
-        <div class="background"></div>
-        <i class="icon ${index.icon}"></i>
-        <p class="title">${index.name}</p>
-        <p class="description">${index.description}</p>
-      </article>
-    </a>
-  </li>
-  `)
+    if (a.homePageIndex < b.homePageIndex) {
+      return -1
+    }
+
+    return 0
+  })
+
+  document.querySelector(`section.recent-extensions ul.item-grid`).innerHTML = ``
+
+  items.forEach((item, itemIndex) => {
+    let href = item.href
+
+    if (location.hostname != `ik1497.github.io`) {
+      if (index.href.slice(-1) != `/`) {
+        href = `https://ik1497.github.io${item.href}`
+      }
+    }
+
+    document.querySelector(`section.recent-extensions ul.item-grid`).insertAdjacentHTML(`beforeend`, `
+    <li class="item-grid-item${item.channel != `public` ? ` disabled` : ``}" title="${item.channel != `public` ? `SOON...` : item.name}" aria-label="${item.channel != `public` ? `Extensions will be published in the future` : item.name}">
+      <a href="${href}" data-tilt class="item-grid-item">
+        <article class="animated fadeInDown wait-p${(itemIndex * 2) + 2}s">
+          <div class="background"></div>
+          <i class="icon ${item.icon}"></i>
+          <p class="title">${item.name}</p>
+          <p class="description">${item.description}</p>
+        </article>
+      </a>
+    </li>
+    `)
+  });
 }
 
 // ---------- //
