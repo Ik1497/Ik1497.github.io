@@ -25,6 +25,9 @@ document.write(`
 <script src="/components/button-grid/main.js" defer></script>
 <link rel="stylesheet" href="/components/button-grid/style.css">
 
+<script src="/components/select/main.js" defer></script>
+<link rel="stylesheet" href="/components/select/style.css">
+
 <script src="/components/json-formatter/main.js"></script>
 
 <!-- End Components -->

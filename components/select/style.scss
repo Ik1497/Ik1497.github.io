@@ -4,8 +4,11 @@
   --i-select-item-active: 40 82 146;
   --i-select-border: 200 200 200;
   --i-select-animation-duration: .25s;
+  --i-select-width: 100%;
+  --i-select-font-size: 1rem;
 
-  font-size: 1rem;
+  font-size: var(--i-select-font-size);
+  width: var(--i-select-width);
 
   .i-select {
     position: relative;
@@ -14,22 +17,22 @@
 
     .i-select-main-wrapper {
       background: rgb(var(--i-select-primary));
-      padding-block: 1rem;
-      padding-inline: 1rem;
+      padding-block: 1em;
+      padding-inline: 1em;
       display: flex;
       flex-direction: column;
-      gap: .25rem;
+      gap: .25em;
       transition: background var(--i-select-animation-duration) ease;
       border-bottom: 1px solid rgb(var(--i-select-border));
 
       .i-select-title {
-        font-size: 1.5rem;
+        font-size: 1.5em;
         transition: 500ms ease;
         transition-property: font-size color;
       }
       
       .i-select-active {
-        font-size: 0rem;
+        font-size: 0em;
         transition: var(--i-select-animation-duration) ease;
         transition-property: font-size;
       }
@@ -39,7 +42,7 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      max-height: 0rem;
+      max-height: 0em;
       overflow: hidden;
       transition: max-height var(--i-select-animation-duration) ease-out;
 
@@ -47,8 +50,8 @@
         
         .i-select-option {
           background: rgb(var(--i-select-primary));
-          padding-block: 1rem;
-          padding-inline: 1rem;
+          padding-block: 1em;
+          padding-inline: 1em;
 
           &:hover,
           &:focus-visible {
@@ -65,7 +68,7 @@
 
   &[data-state="open"] {
     .i-select-options-wrapper {
-      max-height: 25rem;
+      max-height: 25em;
       overflow-y: auto;
     }
   }
@@ -73,12 +76,12 @@
   &[data-active-value] {
     .i-select-main-wrapper {
       .i-select-title {
-        font-size: 1rem;
+        font-size: 1em;
         color: #ccc;
       }
 
       .i-select-active {
-        font-size: 1.3rem;
+        font-size: 1.3em;
       }
     }
   }

@@ -200,7 +200,7 @@ function connectws() {
 
         if (args.progressBarTitle != undefined) {
           document.querySelectorAll(`#${id}`).forEach(container => {
-            container.querySelector(`.goal-title`).innerText = args.progressBarTitle
+            progressBarSetTitle(container, args.progressBarTitle, args)
           })
         }
 
@@ -311,6 +311,10 @@ function connectws() {
 
       function progressBarSetMaximum(element, maximum, args) {
         element.dataset.maximum = maximum
+
+        if (theme === `default`) {
+          element.querySelector(`.end-goal`).innerText = maximum
+        }
 
         progressBarSetValue(element, element.dataset.currentValue, args)
       }
