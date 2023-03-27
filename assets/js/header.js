@@ -16,7 +16,13 @@ document.body.insertAdjacentHTML(`afterbegin`, `
 `)
 
 document.querySelector(`header.header-primary aside .settings`).addEventListener(`click`, function () {
-  const websiteModal = createModal(``, `Website Settings`, null, `medium`, {})
+  const websiteModal = createModal(``, `Website Settings`, null, `medium`, {
+    headerPrependIcon: `mdi:cog`,
+    overlayProps: {
+      "--i-overlay-color-hsl": `0 100% 100%`,
+      "--i-overlay-color-opacity": `0.2`
+    }
+  })
   
   let websiteModal__darkMode = document.createElement(`div`)
   websiteModal.main.append(websiteModal__darkMode)

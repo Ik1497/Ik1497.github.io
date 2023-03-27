@@ -39,13 +39,24 @@ function createModal(modalHtml = ``, modalTitle = `Streamer.bot Actions` , modal
     IModalWrapper__Modal.className = `i-modal ${modalClasses}`
     IModalWrapper__Modal.attributes = attributes
 
+    if (settings?.headerPrependIcon != null && settings?.headerPrependIcon != undefined) {
+      if (settings?.headerPrependIcon.startsWith(`mdi:`)) {
+        settings.headerPrependIcon = `<div class="i-modal-header__prepend-icon ${settings?.headerPrependIcon.replace(`mdi:`, `mdi mdi-`)}"></div>`
+      }
+    } else {
+      settings.headerPrependIcon = ``
+    }
+
     let IModalWrapper__Modal__Header = document.createElement(`div`)
     IModalWrapper__Modal.append(IModalWrapper__Modal__Header)
     IModalWrapper__Modal__Header.className = `i-modal-header`
     IModalWrapper__Modal__Header.innerHTML = `
-    <div class="i-modal-header__info">
-      <p class="i-modal-header__title">${modalTitle}</p>
-      ${modalSubtitle}
+    <div class="i-modal-header__info-wrapper">
+      ${settings?.headerPrependIcon}
+      <div class="i-modal-header__info">
+        <p class="i-modal-header__title">${modalTitle}</p>
+        ${modalSubtitle}
+      </div>
     </div>
     `
 

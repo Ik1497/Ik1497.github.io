@@ -350,7 +350,9 @@ async function connectws() {
               </div>
             </div>
           </div>
-          `, `Settings`, undefined, `fullscreen`)
+          `, `Settings`, undefined, `fullscreen`, {
+            headerPrependIcon: `mdi:cog`
+          })
 
           reloadTabSets()
 
@@ -1249,6 +1251,7 @@ async function connectws() {
           <br>
           <p>You're currently trying to remove all your arguments. These arguments are currently saved locally, so next time you open this website it will still exist. If you clear these, these will be permantly be removed.</p>
           `, `Are you sure?`, null, `submit`, {
+            headerPrependIcon: `mdi:alert`,
             submitTitle: `Clear`,
             props: {
               "--i-modal-theme": `#fa2d2d`,
