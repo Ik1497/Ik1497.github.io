@@ -167,16 +167,7 @@ function connectws() {
 
       function set(id, value = `0`, args) {
         document.querySelectorAll(`#${id}`).forEach(container => {
-          let maximum = container.dataset.maximum;
-
-          container.querySelector(".start-goal").innerText = value;
-          container.querySelector(".progress-bar").style.width = `${value / maximum * 100}%`;
-
-          container.dataset.currentValue = value
-
-          if (Number(container.dataset.currentValue) >= maximum) {
-            finish(id, args);
-          }
+          progressBarSetValue(container, value, args)
         });
       }
 
@@ -206,9 +197,7 @@ function connectws() {
 
         if (args.progressBarMaximum != undefined) {
           document.querySelectorAll(`#${id}`).forEach(container => {
-            container.querySelector(`.end-goal`).innerText = args.progressBarMaximum
-            container.dataset.maximum = args.progressBarMaximum
-            progress(id, 0, args)
+            progressBarSetMaximum(container, args.progressBarMaximum, args)
           })
         }
 
