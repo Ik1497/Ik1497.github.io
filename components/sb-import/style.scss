@@ -1,7 +1,7 @@
 i-sb-import-wrapper {
-  --i-sb-import-background: #27272A;
-  --i-sb-import-code-background: #181818;
-  --i-sb-import-color: #E4E4E7;
+  --i-sb-import-background: var(--background-soft);
+  --i-sb-import-code-background: var(--background-alt);
+  --i-sb-import-color: var(--text-700);
 
   --i-sb-import-border-radius: 8px;
 
@@ -34,15 +34,16 @@ i-sb-import-wrapper {
       }
 
       &::-webkit-scrollbar-track {
-        background: #202020; 
+        background: var(--background-alt);
       }
-
+      
       &::-webkit-scrollbar-thumb {
-        background: #262626; 
+        background: var(--background-soft); 
+        opacity: .8;
       }
 
       &::-webkit-scrollbar-thumb:hover {
-        background: #303030; 
+        opacity: 1;
       }
       
       code {
@@ -72,7 +73,7 @@ i-sb-import-wrapper {
         display: block;
 
         &:not(:last-child) {
-          border-right: 1px solid #222;
+          border-right: 1px solid var(--text-background-700);
         }
       }
 
@@ -92,11 +93,11 @@ i-sb-import-wrapper {
 
         &:hover,
         &:focus-visible {
-          background: #202020;
+          background: var(--background-soft);
         }
 
         &:active {
-          background: #242424;
+          background: var(--background-mute);
         }
       }
     }

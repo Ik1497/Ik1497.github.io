@@ -1,0 +1,84 @@
+$colors: (
+    background: (
+        primary: #0c0c0c,
+        alt: #000000,
+        darken: #050505,
+        soft: #1a1a1a,
+        mute: #1f1f1f,
+        light: #252525,
+        lighten: #3a3a3a,
+        keyboard: rgba(100, 100, 100, 0.4)
+    ),
+    accent: (
+        primary: #8c75fa,
+        primary-alt: #5430ff,
+        secondary: #0066FF,
+        secondary-alt: #0096ff
+    ),
+    brand: (
+        youtube: #ff0000,
+        twitch: #6441a5,
+        discord: #5865F2
+    ),
+    link: (
+        primary: #0096ff,
+        hover: #0066FF
+    ),
+
+    blockquote: (
+        base: #717fab30,
+        color: #c0c0c0,
+
+        box-shadow-color: #212121,
+        code-base: #141414,
+        code-fw: 500,
+        code-border-color: #444,
+        border-radius: 12px
+    ),
+    blockquote-is-warning: (
+        base: #fcd25315,
+        color: #fcd253
+    ),
+    blockquote-is-info: (
+        base: #53aafc15,
+        color: #53aafc
+    ),
+    blockquote-is-success: (
+        base: #42d39215,
+        color: #42d392
+    ),
+    blockquote-is-danger: (
+        base: #f54e8215,
+        color: #f54e82
+    ),
+    text: (
+        100: #777777,
+        200: #888888,
+        300: #999999,
+        400: #aaaaaa,
+        500: #bbbbbb,
+        600: #cccccc,
+        700: #dddddd,
+        800: #eeeeee,
+        900: #ffffff,
+        primary: rgba(255 255 255 / 0.87)
+    ),
+    text-background: (
+        100: #888888,
+        200: #777777,
+        300: #666666,
+        400: #555555,
+        500: #444444,
+        600: #333333,
+        700: #222222,
+        800: #111111,
+        900: #000000,
+        primary: rgba(0 0 0 / 0.87)
+    )
+);
+
+$colorElements: (
+    "background",
+    "color",
+    "border-color"
+);

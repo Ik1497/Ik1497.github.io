@@ -29,53 +29,81 @@ function connectws() {
     };
 
     ws.addEventListener("message", (event) => {
-      if (!event.data) return;
-      const data = JSON.parse(event.data);
-      console.log(data);
+      if (!event.data) return
 
-      if (data?.data?.widget != "timer") return;
+      const data = JSON.parse(event.data)
+      const args = data?.data?.args
+      const request = args?.request
 
-      let eventType = data?.data?.eventType;
-      let duration = data?.data?.duration;
+      if (data?.data?.widget != "timer") return
+      if (args === undefined) return
+      if (request === undefined) return
 
-      let timeSeconds = duration
+      console.log(data)
+      
+      switch (request) {
+        case `start`:
+          if (args?.duration != undefined) start(args?.duration)
+          break
+        case `stop`:
+          stop()
+          break
+        case `set-relative-duration`:
+          if (args?.duration != undefined) setRelativeDuration(args?.duration)
+          break
+        case `set-duration`:
+          if (args?.duration != undefined) setDuration(args?.duration)
+          break
+        case `pause`:
+          pause()
+          break
+        case `unpause`:
+          unpause()
+          break
+        case `toggle-pause`:
+          togglePause()
+          break
+      }
 
-      if (eventType === "start") {
-        if (document.querySelector(`.container`) != null) return
+      function start(duration) {
+        if (document.querySelector(`.container`) != null) {
+          unpause()
+          return
+        }
         document.body.insertAdjacentHTML(`afterbegin`, `<div class="container"><div class="timer-wrapper"><p class="timer-text">0:00</p></div></div>`);
 
-        let normalTimeMinutes = Math.floor(timeSeconds / 60);
-        let normalTimeSeconds = Math.round(timeSeconds - (normalTimeMinutes * 60));
+        let normalTimeMinutes = Math.floor(duration / 60);
+        let normalDuration = Math.round(duration - (normalTimeMinutes * 60))
       
-        if (normalTimeSeconds < 10) {normalTimeSeconds = "0" + normalTimeSeconds;}
-        let normalTime    = `${normalTimeMinutes}:${normalTimeSeconds}`;
+        if (normalDuration < 10) normalDuration = "0" + normalDuration
+        let normalTime = `${normalTimeMinutes}:${normalDuration}`
       
-        let timeSecondsMinus = timeSeconds - 1
-        let minusTimeMinutes = Math.floor(timeSecondsMinus / 60);
-        let minusTimeSeconds = Math.round(timeSecondsMinus - (minusTimeMinutes * 60));
+        let durationMinus = duration - 1
+        let minusTimeMinutes = Math.floor(durationMinus / 60)
+        let minusDuration = Math.round(durationMinus - (minusTimeMinutes * 60))
       
-        if (minusTimeSeconds < 10) {minusTimeSeconds = "0" + minusTimeSeconds;}
-        let minusTime    = `${minusTimeMinutes}:${minusTimeSeconds}`;
+        if (minusDuration < 10) minusDuration = "0" + minusDuration
+        let minusTime = `${minusTimeMinutes}:${minusDuration}`
         
-        document.querySelector(".timer-text").innerHTML = normalTime;
+        document.querySelector(".timer-text").innerHTML = normalTime
 
-        let timeSecondsInterval = timeSeconds;
-        
-        let intervalTime;
+        let intervalTime
         let timerInterval = setInterval(() => {
-          if (document.querySelector(`.container`) != null && document.querySelector(`.timer-wrapper`).getAttribute(`data-paused`) === null && document.querySelector(`.timer-wrapper`).getAttribute(`data-stopped`) === null) {
-            timeSecondsInterval = timeSecondsInterval - 1;
+          if (document.querySelector(`.container`) != null && document.querySelector(`.timer-wrapper`).dataset.stopped === undefined && document.querySelector(`.timer-wrapper`).dataset.paused === undefined) {
+            if (document.querySelector(`.timer-wrapper`).dataset.duration === undefined) document.querySelector(`.timer-wrapper`).dataset.duration = duration
+            document.querySelector(`.timer-wrapper`).dataset.duration = parseInt(document.querySelector(`.timer-wrapper`).dataset.duration) - 1 
+            let durationInterval = parseInt(document.querySelector(`.timer-wrapper`).dataset.duration)
             
-            let intervalTimeMinutes = Math.floor(timeSecondsInterval / 60);
-            let intervalTimeSeconds = Math.round(timeSecondsInterval - (intervalTimeMinutes * 60));
+            let intervalTimeMinutes = Math.floor(durationInterval / 60);
+            let intervalDuration = Math.round(durationInterval - (intervalTimeMinutes * 60));
           
-            if (intervalTimeSeconds < 10) {intervalTimeSeconds = "0" + intervalTimeSeconds;}
-            intervalTime = `${intervalTimeMinutes}:${intervalTimeSeconds}`;
+            if (intervalDuration < 10) {intervalDuration = "0" + intervalDuration;}
+            intervalTime = `${intervalTimeMinutes}:${intervalDuration}`;
             
             
             document.querySelector(".timer-text").innerHTML = intervalTime;
         
-            if (timeSecondsInterval < 1) {
+            if (durationInterval < 1) {
               document.querySelector(".timer-text").innerHTML = "0:00";
               clearInterval(timerInterval);
               stop();
@@ -83,29 +111,33 @@ function connectws() {
           }
         }, 1000);
         if (document.querySelector(`.container`) === null) clearInterval(timerInterval)
-      };
+      }
 
       if (document.querySelector(`.container`) === null) return
 
-      if (eventType === "pause") {
-        document.querySelector(`.timer-wrapper`).setAttribute(`data-paused`, ``)
-      };
-      
-      if (eventType === "unpause") {
-        document.querySelector(`.timer-wrapper`).setAttribute(`data-paused`, ``)
+      function pause() {
+        document.querySelector(`.timer-wrapper`).dataset.paused = ``
+      }
+
+      function unpause() {
+        document.querySelector(`.timer-wrapper`).dataset.paused = ``
         document.querySelector(`.timer-wrapper`).removeAttribute(`data-paused`)
-      };
+      }
 
-      if (eventType === "togglepause") {
+      function togglePause() {
         document.querySelector(`.timer-wrapper`).toggleAttribute(`data-paused`)
-      };
+      }
 
-      if (eventType === "stop") {
-        stop()
-      };
+      function setDuration(duration) {
+        document.querySelector(`.timer-wrapper`).dataset.duration = parseInt(duration)
+      }
+
+      function setRelativeDuration(duration) {
+        setDuration(parseInt(document.querySelector(`.timer-wrapper`).dataset.duration) + parseInt(duration))
+      }
 
       function stop() {
-        document.querySelector(`.timer-wrapper`).setAttribute(`data-stopped`, ``)
+        document.querySelector(`.timer-wrapper`).dataset.stopped = ``
         setTimeout(function () {
           document.querySelector('.container').classList.add('center-animation'); 
 
@@ -128,8 +160,6 @@ function connectws() {
     });
   }
 }
-
-
 
 // -------------- //
 // URL parameters //
