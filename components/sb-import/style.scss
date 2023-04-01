@@ -93,11 +93,11 @@ i-sb-import-wrapper {
 
         &:hover,
         &:focus-visible {
-          background: var(--background-soft);
+          background: var(--i-sb-import-background);
         }
 
         &:active {
-          background: var(--background-mute);
+          background: none;
         }
       }
     }
