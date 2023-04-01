@@ -1,3 +1,5 @@
+window.$StreamerbotToolbox = {}
+
 let version = `1.0.0-pre`
 let title = `Streamer.bot Toolbox v${version}`
 let documentTitle = `${title} | Streamer.bot Actions`
@@ -215,20 +217,14 @@ async function connectws() {
     navbar.innerHTML = ``
   });
 
-  // let eventArgsMap = await fetch(`./eventArgsMap.json`)
-  // eventArgsMap = await eventArgsMap.json()
-
-  // let randomEventArgs = await fetch(`./random.json`)
-  // randomEventArgs = await randomEventArgs.json()
-
   if ("WebSocket" in window) {
-    const ws = new WebSocket(wsServerUrl)
+    $StreamerbotToolbox.streamerbot_ws = new WebSocket(wsServerUrl)
     console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...")
     document.querySelector(`header aside button.connect-websocket`).innerText = `Connecting...`
     document.querySelector(`header aside`).setAttribute(`data-connection`, `connecting`)
     document.documentElement.style.cursor = `wait`
     
-    ws.onclose = function () {
+    $StreamerbotToolbox.streamerbot_ws.addEventListener("close", (event) => {
       setTimeout(connectws, 10000)
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to Streamer.bot, reconnecting every 10s...")
       if (document.querySelector(`header aside`))
@@ -237,34 +233,35 @@ async function connectws() {
       document.querySelector(`header aside`).setAttribute(`data-connection`, `disconnected`)
       document.documentElement.style.cursor = ``
       document.body.classList.add(`disconnected`)
-    }
+    })
     
-    ws.onopen = function () {
+    $StreamerbotToolbox.streamerbot_ws.addEventListener("open", (event) => {
       SB__GetInfo(`GetInfo`)
       SB__GetActions(`VerifyActions`)
       console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot")
       document.querySelector(`header aside button.connect-websocket`).innerText = `Connected`
       document.querySelector(`header aside`).setAttribute(`data-connection`, `connected`)
       document.documentElement.style.cursor = ``
+      document.body.classList.add(`disconnected`)
       document.body.classList.remove(`disconnected`)
-    }
+    })
     
-    ws.addEventListener("message", (event) => {
+    $StreamerbotToolbox.streamerbot_ws.addEventListener("message", (event) => {
       if (!event.data) return
       const data = JSON.parse(event.data)
       console.log(data)
       let instance
       if (data?.id === `GetInfo`) {
-        instance = data.info
-        let instanceOS = instance.os
-        if (instance.os === `windows`) instanceOS = `<span class="mdi mdi-microsoft-windows"> Windows</span>`
-        if (instance.os === `linux`) instanceOS = `<span class="mdi mdi-linux"> Linux</span>`
-        if (instance.os === `macosx`) instanceOS = `<span class="mdi mdi-apple"> MacOS</span>`
+        $StreamerbotToolbox.instance = data.info
+        let instanceOS = $StreamerbotToolbox.instance.os
+        if ($StreamerbotToolbox.instance.os === `windows`) instanceOS = `<span class="mdi mdi-microsoft-windows"> Windows</span>`
+        if ($StreamerbotToolbox.instance.os === `linux`) instanceOS = `<span class="mdi mdi-linux"> Linux</span>`
+        if ($StreamerbotToolbox.instance.os === `macosx`) instanceOS = `<span class="mdi mdi-apple"> MacOS</span>`
         document.querySelector(`header aside`).innerHTML = `
-        <p class="instance-info">Streamer.bot${data.info.name != `Streamer.bot` ? ` -  ${data.info.name}` : ``}
-        <small>${instance.instanceId}<br>
-        ${instanceOS} • ${instance.version}</small></p>`
-        document.title = `${instance.name} (${instance.version}) • ${documentTitle}`
+        <p class="instance-info">Streamer.bot${data.info.name != `Streamer.bot` ? ` -  ${$StreamerbotToolbox.instance.name}` : ``}
+        <small>${$StreamerbotToolbox.instance.instanceId}<br>
+        ${instanceOS} • ${$StreamerbotToolbox.instance.version}</small></p>`
+        document.title = `${$StreamerbotToolbox.instance.name} (${$StreamerbotToolbox.instance.version}) • ${documentTitle}`
       }
 
       if (data?.id === `VerifyActions`) {
@@ -1366,6 +1363,8 @@ async function connectws() {
       }
 
       if (data?.id === `GetActions`) {
+        $StreamerbotToolbox.actions = data.actions
+
         document.querySelector(`nav.navbar ul.navbar-list[data-page="${urlSafe(`Actions`)}"]`).innerHTML = ``
         document.querySelector(`main .main[data-page="${urlSafe(`Actions`)}"] > .card-grid`).innerHTML = ``
 
@@ -1992,6 +1991,8 @@ async function connectws() {
       ***/
 
       if (data?.id === `GetEvents`) {
+        $StreamerbotToolbox.events = data.events
+
         document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"]`).classList.add(`col-2`)
         document.querySelector(`main .main[data-page="${urlSafe(`Websocket Events`)}"]`).innerHTML = `
         <div class="card-grid" id="events"></div>
@@ -3194,7 +3195,7 @@ async function connectws() {
 
         if (args != {}) jsonBody.args = args
 
-        ws.send(JSON.stringify(jsonBody))
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
         console.log(`%c[Streamer.bot Requests]%c Running action "${name}" with the args ${JSON.stringify(args)} and a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
       }
@@ -3210,7 +3211,7 @@ async function connectws() {
         
         if (args != {}) jsonBody.args = args
         
-        ws.send(JSON.stringify(jsonBody))
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
         console.log(`%c[Streamer.bot Requests]%c Running action "${actionId}" with the args ${JSON.stringify(args)} and a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
       }
@@ -3245,7 +3246,7 @@ async function connectws() {
       }
 
       if (args != {}) jsonBody.args = args
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Action Package Requests]%c Running method "${wsRequest}" with the data ${JSON.stringify(wsData)} and a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3266,7 +3267,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Action Package Requests]%c Running OBS Request "${obsRequest}" with the data ${JSON.stringify(obsRequestData)} on the connection "${obsConnection}" and a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3277,7 +3278,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Fetching all actions with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3288,7 +3289,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Fetching all events with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3299,7 +3300,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Fetching instance info with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3310,7 +3311,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Fetching all active viewers with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3321,7 +3322,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Fetching broadcaster information with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3333,7 +3334,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Fetching all events with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3345,7 +3346,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Fetching all events with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3356,7 +3357,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Fetching credits with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3367,7 +3368,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Testing credits with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3378,7 +3379,7 @@ async function connectws() {
         id: id
       }
 
-      ws.send(JSON.stringify(jsonBody))
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Clearing credits with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
@@ -3483,7 +3484,7 @@ async function connectSpeakerbotws() {
         speakerbotData = Object.fromEntries(speakerbotData)
         localStorage.setItem(`streamerbotToolbox__speakerbot`, JSON.stringify(speakerbotData))
 
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Speak",
             voice: voiceAlias,
             message: message,
@@ -3495,7 +3496,7 @@ async function connectSpeakerbotws() {
       })
 
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Enable"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Enable",
             id: "Enable"
           }
@@ -3505,7 +3506,7 @@ async function connectSpeakerbotws() {
       })
       
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Disable"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
           request: "Disable",
           id: "Disable"
         }
@@ -3515,7 +3516,7 @@ async function connectSpeakerbotws() {
       })
       
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Pause"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Pause",
             id: "Pause"
           }
@@ -3525,7 +3526,7 @@ async function connectSpeakerbotws() {
       })
       
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Resume"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
           request: "Resume",
           id: "Resume"
         }
@@ -3535,7 +3536,7 @@ async function connectSpeakerbotws() {
       })
       
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="On"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "On",
             id: "On"
           }
@@ -3545,7 +3546,7 @@ async function connectSpeakerbotws() {
       })
       
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Off"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Off",
             id: "Off"
           }
@@ -3554,7 +3555,7 @@ async function connectSpeakerbotws() {
       })
 
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Stop"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Stop",
             id: "Stop"
           }
@@ -3564,7 +3565,7 @@ async function connectSpeakerbotws() {
       })
 
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Clear"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Clear",
             id: "Clear"
           }
@@ -3574,7 +3575,7 @@ async function connectSpeakerbotws() {
       })
 
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Enable Events"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Events",
             state: "on",
             id: "Enable Events"
@@ -3585,7 +3586,7 @@ async function connectSpeakerbotws() {
       })
 
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Disable Events"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Events",
             state: "off",
             id: "Disable Events"
@@ -3596,7 +3597,7 @@ async function connectSpeakerbotws() {
       })
 
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Speaking Mode: All"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Mode",
             mode: "all",
             id: "Speaking Mode: All"
@@ -3607,7 +3608,7 @@ async function connectSpeakerbotws() {
       })
 
       document.querySelector(`main .main[data-page="${urlSafe(`Speaker.bot`)}"] .tags li button[title="Speaking Mode: Command"]`).addEventListener(`click`, function () {
-        ws.send(JSON.stringify({
+        $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify({
             request: "Mode",
             mode: "command",
             id: "Speaking Mode: Command"
