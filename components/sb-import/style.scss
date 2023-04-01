@@ -34,11 +34,11 @@ i-sb-import-wrapper {
       }
 
       &::-webkit-scrollbar-track {
-        background: var(--background-alt);
+        background: var(--i-sb-import-code-background);
       }
       
       &::-webkit-scrollbar-thumb {
-        background: var(--background-soft); 
+        background: var(--i-sb-import-background); 
         opacity: .8;
       }
 
