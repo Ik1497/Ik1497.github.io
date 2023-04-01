@@ -1,6 +1,6 @@
 .i-tabs-wrapper {
-  --i-tab-title-background: var(--accent-primary);
-  --i-tab-content-background: var(--background-soft);
+  --i-tabs-title-background: var(--accent-primary);
+  --i-tabs-content-background: var(--background-soft);
 
   .i-tabs-content {
     .i-tabs-content-tab {
@@ -12,11 +12,11 @@
       }
     
       .i-tabs-content-tab-title {
-        background: var(--i-tab-title-background);
+        background: var(--i-tabs-title-background);
       }
       
       .i-tabs-content-tab-content {
-        background: var(--i-tab-content-background);
+        background: var(--i-tabs-content-background);
       }
     }
   }
