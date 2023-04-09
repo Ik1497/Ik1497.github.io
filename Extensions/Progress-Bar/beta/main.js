@@ -246,12 +246,16 @@ function connectws() {
         if (data?.data?.args?.maximum === undefined) return
         if (data?.data?.args?.minimum === undefined) return
         if (data?.data?.args?.startValue === undefined) return
-
+        if (isNaN(data?.data?.args?.maximum) || data?.data?.args?.maximum === "NaN") return
+        if (isNaN(data?.data?.args?.minimum) || data?.data?.args?.minimum === "NaN") return
+        if (isNaN(data?.data?.args?.startValue) || data?.data?.args?.startValue === "NaN") return
+        
         create(data?.data?.args?.id, data?.data?.args?.title, data?.data?.args?.maximum, data?.data?.args?.minimum, data?.data?.args?.startValue, data?.data?.args)
       }
       
       else if (data?.data?.args?.request === `progress`) {
         if (data?.data?.args?.value === undefined) return
+        if (isNaN(data?.data?.args?.value) || data?.data?.args?.value === "NaN") return
 
         progress(data?.data?.args?.id, data?.data?.args?.value, data?.data?.args)
       }
