@@ -49,7 +49,7 @@ async function app() {
   document.querySelector(`header aside .form-area.url input`).value = sbStorageConnectionData.host
   document.querySelector(`header aside .form-area.port input`).value = sbStorageConnectionData.port
 
-  document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, () => {
+  document.querySelector(`header aside button.connect-websocket`).addEventListener(`click`, async () => {
     let sbConnectionData = {
       host: document.querySelector(`header aside .form-area.url input`).value,
       port: document.querySelector(`header aside .form-area.port input`).value
@@ -64,6 +64,20 @@ async function app() {
 }
 
 async function loadData() {
+  let info = await fetch(`${getApiUrl()}/info`)
+  info = await info.json()
+  info = info.info
+
+  console.log(info)
+
+  document.querySelector(`header aside`).innerHTML = `
+  <p class="instance-info">
+    ${info.name === `Streamer.bot` ? `Streamer.bot` : `Streamer.bot - ${info.name}`}
+    <small>${info.instanceId}<br>
+    <span class="mdi mdi-${info.os === `windows` ? `microsoft-windows` : info.os === `linux` ? `linux` : info.os === `macosx` ? `apple` : ``}"> ${info.os === `windows` ? `Windows` : info.os === `linux` ? `Linux` : info.os === `macosx` ? `MacOS` : ``}</span> • ${info.version}</small>
+  </p>
+  `
+
   let sbStorageConnectionData = loadDataFromStorage(`streamerbotToolbox__network__connection`)
   let url = `http://${sbStorageConnectionData.host}:${sbStorageConnectionData.port}`
 
@@ -96,6 +110,8 @@ async function loadData() {
     if (b[0] == `View All`) return 1
     return 0
   });
+
+  document.querySelector(`nav.navbar ul.navbar-list`).innerHTML = ``
 
   actionsGroups.forEach(actionGroup => {
     let navbarItem = document.createElement(`li`)
@@ -161,7 +177,7 @@ async function loadData() {
         actionItem__Button.addEventListener(`click`, () => {
           const Modal__InspectAction = createModal(`
           <ul class="buttons-row list-items tonal">
-            <li>${action.subactions_count} ${action.subaction_count === 1 ? `Sub-Action` : `Sub-Actions`}</li>
+            <li>${action.subaction_count} ${action.subaction_count === 1 ? `Sub-Action` : `Sub-Actions`}</li>
             <li>${action.enabled ? `Enabled` : `Disabled`}</li>
           </ul>
           <br>
@@ -212,15 +228,14 @@ async function loadData() {
 }
 
 async function RunAction(name) {
-  let sbStorageConnectionData = loadDataFromStorage(`streamerbotToolbox__network__connection`)
-  let url = `http://${sbStorageConnectionData.host}:${sbStorageConnectionData.port}`
-
-  await fetch(`${url}/actions?runActionName=${name}`)
+  await fetch(`${getApiUrl()}/action/name/${name}`)
 }
 
 async function RunActionById(id) {
-  let sbStorageConnectionData = loadDataFromStorage(`streamerbotToolbox__network__connection`)
-  let url = `http://${sbStorageConnectionData.host}:${sbStorageConnectionData.port}`
+  await fetch(`${getApiUrl()}/action/id/${id}`)
+}
 
-  await fetch(`${url}/actions?runActionId=${id}`)
+function getApiUrl() {
+  let sbStorageConnectionData = loadDataFromStorage(`streamerbotToolbox__network__connection`)
+  return`http://${sbStorageConnectionData.host}:${sbStorageConnectionData.port}`
 }
