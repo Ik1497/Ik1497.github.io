@@ -1,15 +1,208 @@
 window.$progressConfig = {
   actionsOnLoad: [],
-  twitch: {
-    cheers: false,
-    followers: false,
-    subscribers: false
-  },
-  youtube: {
-    superchat: false
-  },
-  kofi: {
-    donations: false
+  integrations: {
+    twitch: {
+      cheers: {
+        enabled: false,
+        config: {
+          id: `cheersgoal`,
+          title: `Cheers Goal`,
+          maximum: `2000`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `Twitch`,
+            eventType: `Cheer`,
+            value: `message.bits`
+          }
+        ]
+      },
+      followers: {
+        enabled: false,
+        config: {
+          id: `followgoal`,
+          title: `Followers Goal`,
+          maximum: `200`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `Twitch`,
+            eventType: `Follow`,
+            value: 1
+          }
+        ]
+      },
+      subscribers: {
+        enabled: false,
+        config: {
+          id: `subgoal`,
+          title: `Sub Goal`,
+          maximum: `20`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `Twitch`,
+            eventType: `Sub`,
+            value: 1
+          }
+        ]
+      },
+      'channel-goal': {
+        enabled: false,
+        config: {
+          id: `twitchchannelgoal`,
+          title: `Twitch Channel Goal`,
+          maximum: `100`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `Twitch`,
+            eventType: `GoalProgress`,
+            value: `goal.currentAmount`,
+            type: `set`
+          }
+        ]
+      },
+      'charity-goal': {
+        enabled: false,
+        config: {
+          id: `twitchcharitygoal`,
+          title: `Twitch Charity Goal`,
+          maximum: `100`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `Twitch`,
+            eventType: `CharityDonation`,
+            value: `charity.amount.value`
+          }
+        ]
+      }
+    },
+    youtube: {
+      superchat: {
+        enabled: false,
+        config: {
+          id: `youtubesuperchat`,
+          title: `Super Chat Goal`,
+          maximum: `100`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `YouTube`,
+            eventType: `SuperChat`,
+            value: `amount`
+          }
+        ]
+      }
+    },
+    kofi: {
+      donations: {
+        enabled: false,
+        config: {
+          id: `kofidonations`,
+          title: `Ko-fi Donation Goal`,
+          maximum: `100`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `Kofi`,
+            eventType: `Donation`,
+            value: `amount`
+          }
+        ]
+      }
+    },
+    donordrive: {
+      donations: {
+        enabled: false,
+        config: {
+          id: `donordrivedonations`,
+          title: `DonorDrive Donations Goal`,
+          maximum: `100`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `DonorDrive`,
+            eventType: `Donation`,
+            value: `donorAmount`
+          }
+        ]
+      }
+    },
+    streamelements: {
+      tips: {
+        enabled: false,
+        config: {
+          id: `streamelementstips`,
+          title: `StreamElements Tip Goal`,
+          maximum: `100`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `StreamElements`,
+            eventType: `Tip`,
+            value: `tipAmount`
+          }
+        ]
+      }
+    },
+    streamlabs: {
+      donations: {
+        enabled: false,
+        config: {
+          id: `streamlabsdonations`,
+          title: `Streamlabs Donations Goal`,
+          maximum: `100`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `Streamlabs`,
+            eventType: `Donation`,
+            value: `donationAmount`
+          }
+        ]
+      }
+    },
+    tipeeestream: {
+      donations: {
+        enabled: false,
+        config: {
+          id: `tipeeestreamdonations`,
+          title: `TipeeeStream Donations Goal`,
+          maximum: `100`,
+          minimum: `0`,
+          startValue: `0`
+        },
+        events: [
+          {
+            eventSource: `TipeeeStream`,
+            eventType: `Donation`,
+            value: `amount`
+          }
+        ]
+      }
+    }
   }
 };
 
@@ -29,22 +222,19 @@ window.$progressConfig = {
 
       window.$progressConfig.actionsOnLoad = JSON.parse(value)
       break
-    case `twitch-cheers`: 
-      $progressConfig.twitch.cheers = true
-      break
-    case `twitch-followers`: 
-      $progressConfig.twitch.followers = true
-      break
-    case `twitch-subscribers`: 
-      $progressConfig.twitch.subscribers = true
-      break
-    case `youtube-superchat`: 
-      $progressConfig.youtube.superchat = true
-      break
-    case `kofi-donations`: 
-      $progressConfig.kofi.donations = true
-      break
   }
+
+  Object.entries($progressConfig.integrations).forEach(entry => {
+    let integration = entry[0]
+  
+    Object.entries(entry[1]).forEach(integrationType => {
+      let type = integrationType[0]
+  
+      if (name === `${integration}-${type}`) {
+        integrationType[1].enabled = true
+      }
+    });
+  });
 })
 
 function useParam(param, existCallback = () => {}, notExistCallback = () => {}, defaultValue) {
@@ -130,67 +320,33 @@ function connectws() {
           progressBarColor: useParam(`${name}-progressBackgroundColor`, undefined, undefined, undefined),
           prependIcon: useParam(`${name}-prependIcon`, undefined, undefined, undefined),
           appendIcon: useParam(`${name}-appendIcon`, undefined, undefined, undefined),
-          actionOnFinish: useParam(`${name}-actionOnFinish`, undefined, undefined, undefined),
-          actionOnRemove: useParam(`${name}-actionOnRemove`, undefined, undefined, undefined),
-          actionOnUpdate: useParam(`${name}-actionOnUpdate`, undefined, undefined, undefined),
-          actionOnProgress: useParam(`${name}-actionOnProgress`, undefined, undefined, undefined)
+          actionOnFinish: useParam(`${name}-action-on-finish`, undefined, undefined, undefined),
+          actionOnRemove: useParam(`${name}-action-on-remove`, undefined, undefined, undefined),
+          actionOnUpdate: useParam(`${name}-action-on-update`, undefined, undefined, undefined),
+          actionOnProgress: useParam(`${name}-action-on-progress`, undefined, undefined, undefined)
         }
       }
 
-      if ($progressConfig.twitch.cheers === true) {
-        create(
-          useParam(`twitch-cheers-id`, undefined, undefined, `cheersgoal`),
-          useParam(`twitch-cheers-title`, undefined, undefined, `Cheers Goal`),
-          useParam(`twitch-cheers-maximum`, undefined, undefined, `2000`),
-          useParam(`twitch-cheers-minimum`, undefined, undefined, `0`),
-          useParam(`twitch-cheers-startValue`, undefined, undefined, `0`),
-          progressConfigDefaultCreateArgs(`twitch-cheers`)
-        )
-      }
+      Object.entries($progressConfig.integrations).forEach(entry => {
+        let integration = entry[0]
 
-      if ($progressConfig.twitch.followers === true) {
-        create(
-          useParam(`twitch-followers-id`, undefined, undefined, `followgoal`),
-          useParam(`twitch-followers-title`, undefined, undefined, `Followers Goal`),
-          useParam(`twitch-followers-maximum`, undefined, undefined, `200`),
-          useParam(`twitch-followers-minimum`, undefined, undefined, `0`),
-          useParam(`twitch-followers-startValue`, undefined, undefined, `0`),
-          progressConfigDefaultCreateArgs(`twitch-followers`)
-        )
-      }
+        Object.entries(entry[1]).forEach(integrationType => {
+          let type = integrationType[0]
+          let typeConfig = integrationType[1]
+          let typeOptions = integrationType[1].config
 
-      if ($progressConfig.twitch.subscribers === true) {
-        create(
-          useParam(`twitch-subscribers-id`, undefined, undefined, `subgoal`),
-          useParam(`twitch-subscribers-title`, undefined, undefined, `Sub Goal`),
-          useParam(`twitch-subscribers-maximum`, undefined, undefined, `20`),
-          useParam(`twitch-subscribers-minimum`, undefined, undefined, `0`),
-          useParam(`twitch-subscribers-startValue`, undefined, undefined, `0`),
-          progressConfigDefaultCreateArgs(`twitch-subscribers`)
-        )
-      }
-
-      if ($progressConfig.youtube.superchat === true) {
-        create(
-          useParam(`youtube-superchat-id`, undefined, undefined, `youtubesuperchat`),
-          useParam(`youtube-superchat-title`, undefined, undefined, `Super Chat Goal`),
-          useParam(`youtube-superchat-maximum`, undefined, undefined, `100`),
-          useParam(`youtube-superchat-minimum`, undefined, undefined, `0`),
-          useParam(`youtube-superchat-startValue`, undefined, undefined, `0`),
-          progressConfigDefaultCreateArgs(`youtube-superchat`)
-        )
-      }
-
-      if ($progressConfig.kofi.donations === true) {
-        create(
-          useParam(`kofi-donations-id`, undefined, undefined, `kofidonations`),
-          useParam(`kofi-donations-title`, undefined, undefined, `Ko-fi Donation Goal`),
-          useParam(`kofi-donations-maximum`, undefined, undefined, `100`),
-          useParam(`kofi-donations-minimum`, undefined, undefined, `0`),
-          useParam(`kofi-donations-startValue`, undefined, undefined, `0`),
-          progressConfigDefaultCreateArgs(`kofi-donations`)
-        )
-      }
+          if (typeConfig.enabled) {
+            create(
+              useParam(`${integration}-${type}-id`, undefined, undefined, typeOptions.id),
+              useParam(`${integration}-${type}-title`, undefined, undefined, typeOptions.title),
+              useParam(`${integration}-${type}-maximum`, undefined, undefined, typeOptions.maximum),
+              useParam(`${integration}-${type}-minimum`, undefined, undefined, typeOptions.minimum),
+              useParam(`${integration}-${type}-start-value`, undefined, undefined, typeOptions.startValue),
+              progressConfigDefaultCreateArgs(`${integration}-${type}`)
+            )
+          }
+        });
+      });
     }
 
     ws.addEventListener("message", (event) => {
