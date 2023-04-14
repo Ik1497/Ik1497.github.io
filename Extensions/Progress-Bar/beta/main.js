@@ -50,6 +50,21 @@ window.$progressConfig = {
             eventSource: `Twitch`,
             eventType: `Sub`,
             value: 1
+          },
+          {
+            eventSource: `Twitch`,
+            eventType: `ReSub`,
+            value: 1
+          },
+          {
+            eventSource: `Twitch`,
+            eventType: `GiftSub`,
+            value: 1
+          },
+          {
+            eventSource: `Twitch`,
+            eventType: `GiftBomb`,
+            value: `gifts`
           }
         ]
       },
@@ -292,7 +307,7 @@ function connectws() {
           request: `Subscribe`,
           events: {
             general: [`Custom`],
-            twitch: [`Cheer`, `Follow`, `Sub`, `GiftSub`, `GiftBomb`, `GoalProgress`, `CharityDonation`],
+            twitch: [`Cheer`, `Follow`, `Sub`, `ReSub`, `GiftSub`, `GiftBomb`, `GoalProgress`, `CharityDonation`],
             youTube: [`SuperChat`],
             kofi: [`Donation`],
             tipeeeStream: [`Donation`],
