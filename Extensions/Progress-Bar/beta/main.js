@@ -392,47 +392,13 @@ function connectws() {
               if (amount === undefined || amount === null) amount = 0
 
               if (typeEvent?.type === `set`) {
-
+                update(typeOptions.id, {value: amount})
               } else {
                 progress(typeOptions.id, amount)
               }
             });
           });
         });
-
-        switch (data?.event?.source) {
-          case `Twitch`:
-            switch (data?.event?.type) {
-              case `Cheer`:
-                if (paramExist(`twitch-cheers`)) {
-                  progress(`cheersgoal`, data.data.message.bits, {})
-                }
-                break
-              case `Follow`:
-                if (paramExist(`twitch-followers`)) {
-                  progress(`followgoal`, 1, {})
-                }
-                break
-              case `Follow`:
-                if (paramExist(`twitch-followers`)) {
-                  progress(`followgoal`, 1, {})
-                }
-                break
-              case `GiftSub`:
-              case `Sub`:
-                if (paramExist(`twitch-subscribers`)) {
-                  progress(`subgoal`, 1, {})
-                }
-                break
-              case `GiftBomb`:
-                if (paramExist(`twitch-subscribers`) && useParam(`twitch-subscribers-disable-gift-bombs`, undefined, undefined, null) != null) {
-                  progress(`subgoal`, data?.data?.gifts, {})
-                  console.log(data?.data?.gifts, data?.data, data)
-                }
-                break
-            }
-            break
-        }
       }
       
       if (data?.data?.widget != `progress-bar`) return
