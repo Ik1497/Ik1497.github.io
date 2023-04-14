@@ -292,9 +292,13 @@ function connectws() {
           request: `Subscribe`,
           events: {
             general: [`Custom`],
-            twitch: [`Cheer`, `Follow`, `Sub`, `GiftSub`, `GiftBomb`],
+            twitch: [`Cheer`, `Follow`, `Sub`, `GiftSub`, `GiftBomb`, `GoalProgress`, `CharityDonation`],
             youTube: [`SuperChat`],
-            kofi: [`Donation`]
+            kofi: [`Donation`],
+            tipeeeStream: [`Donation`],
+            streamElements: [`Tip`],
+            streamlabs: [`Donation`],
+            donorDrive: [`Donation`],
           },
           id: `123`,
         })
@@ -316,10 +320,10 @@ function connectws() {
 
       function progressConfigDefaultCreateArgs(name) {
         return {
-          progressBackgroundColor: useParam(`${name}-progressBackgroundColor`, undefined, undefined, undefined),
-          progressBarColor: useParam(`${name}-progressBackgroundColor`, undefined, undefined, undefined),
-          prependIcon: useParam(`${name}-prependIcon`, undefined, undefined, undefined),
-          appendIcon: useParam(`${name}-appendIcon`, undefined, undefined, undefined),
+          progressBackgroundColor: useParam(`${name}-progress-background-color`, undefined, undefined, undefined),
+          progressBarColor: useParam(`${name}-progress-background-color`, undefined, undefined, undefined),
+          prependIcon: useParam(`${name}-prepend-icon`, undefined, undefined, undefined),
+          appendIcon: useParam(`${name}-append-icon`, undefined, undefined, undefined),
           actionOnFinish: useParam(`${name}-action-on-finish`, undefined, undefined, undefined),
           actionOnRemove: useParam(`${name}-action-on-remove`, undefined, undefined, undefined),
           actionOnUpdate: useParam(`${name}-action-on-update`, undefined, undefined, undefined),
@@ -336,12 +340,18 @@ function connectws() {
           let typeOptions = integrationType[1].config
 
           if (typeConfig.enabled) {
+            typeOptions.id = useParam(`${integration}-${type}-id`, undefined, undefined, typeOptions.id),
+            typeOptions.title = useParam(`${integration}-${type}-title`, undefined, undefined, typeOptions.title),
+            typeOptions.maximum = useParam(`${integration}-${type}-maximum`, undefined, undefined, typeOptions.maximum),
+            typeOptions.minimum = useParam(`${integration}-${type}-minimum`, undefined, undefined, typeOptions.minimum),
+            typeOptions.startValue = useParam(`${integration}-${type}-start-value`, undefined, undefined, typeOptions.startValue),
+
             create(
-              useParam(`${integration}-${type}-id`, undefined, undefined, typeOptions.id),
-              useParam(`${integration}-${type}-title`, undefined, undefined, typeOptions.title),
-              useParam(`${integration}-${type}-maximum`, undefined, undefined, typeOptions.maximum),
-              useParam(`${integration}-${type}-minimum`, undefined, undefined, typeOptions.minimum),
-              useParam(`${integration}-${type}-start-value`, undefined, undefined, typeOptions.startValue),
+              typeOptions.id,
+              typeOptions.title,
+              typeOptions.maximum,
+              typeOptions.minimum,
+              typeOptions.startValue,
               progressConfigDefaultCreateArgs(`${integration}-${type}`)
             )
           }
@@ -356,6 +366,40 @@ function connectws() {
       console.log(data)
 
       if (data?.event) {
+
+        Object.entries($progressConfig.integrations).forEach(entry => {
+          let integration = entry[0]
+  
+          Object.entries(entry[1]).forEach(integrationType => {
+            let type = integrationType[0]
+            let typeConfig = integrationType[1]
+            let typeOptions = integrationType[1].config
+            let typeEvents = integrationType[1].events
+  
+            typeEvents.forEach(typeEvent => {
+              if (data.event.source != typeEvent.eventSource) return
+              if (data.event.type != typeEvent.eventType) return
+
+              let amount = typeEvent.value
+              if (typeof amount === `string`) {
+                let amountSplit = amount.split(`.`)
+                amount = data.data
+                amountSplit.forEach(amountSplitItem => {
+                  if (amount != undefined && amount != null) amount = amount[amountSplitItem]
+                });
+              }
+
+              if (amount === undefined || amount === null) amount = 0
+
+              if (typeEvent?.type === `set`) {
+
+              } else {
+                progress(typeOptions.id, amount)
+              }
+            });
+          });
+        });
+
         switch (data?.event?.source) {
           case `Twitch`:
             switch (data?.event?.type) {
