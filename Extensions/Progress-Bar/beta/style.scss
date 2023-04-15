@@ -31,9 +31,17 @@ body {
   padding: 1rem;
 }
 
-body.wrap[data-theme] .progress-bar-list {
+body.nowrap[data-theme] .progress-bar-list {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+body.row[data-theme] .progress-bar-list {
   flex-direction: row;
-  flex-wrap: wrap;
+}
+
+body.column[data-theme] .progress-bar-list {
+  flex-direction: column;
 }
 
 .progress-bar-list {
@@ -42,7 +50,8 @@ body.wrap[data-theme] .progress-bar-list {
   list-style: none;
   display: flex;
   position: fixed;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-block: 1rem;
   width: 100%;

@@ -750,36 +750,38 @@ const params = new URLSearchParams(window.location.search)
 const root = document.querySelector(":root")
 
 // Misc
-params.get("theme") != null ? document.body.dataset.theme = params.get("theme") : document.body.dataset.theme = `default`
-params.get("position") != null ? document.body.dataset.position = params.get("position") : document.body.dataset.position = `top-left`
-params.get("wrap") != null ? document.body.classList.add(`wrap`) : ``
+params.get(`theme`) != null ? document.body.dataset.theme = params.get(`theme`) : document.body.dataset.theme = `default`
+params.get(`position`) != null ? document.body.dataset.position = params.get(`position`) : document.body.dataset.position = `top-left`
+params.get(`nowrap`) != null ? document.body.classList.add(`nowrap`) : ``
+params.get(`row`) != null ? document.body.classList.add(`row`) : ``
+params.get(`column`) != null ? document.body.classList.add(`column`) : ``
 
 // Misc Styling
-root.style.setProperty("--custom-progress-bar-width", params.get("width"))
+root.style.setProperty(`--custom-progress-bar-width`, params.get(`width`))
 
 // Font
-root.style.setProperty("--font-family", params.get("font-family"))
-root.style.setProperty("--font-weight", params.get("font-weight"))
-root.style.setProperty("--font-style", params.get("font-style"))
-root.style.setProperty("--font-size", params.get("font-size"))
-root.style.setProperty("--font-color", params.get("font-color"))
+root.style.setProperty(`--font-family`, params.get(`font-family`))
+root.style.setProperty(`--font-weight`, params.get(`font-weight`))
+root.style.setProperty(`--font-style`, params.get(`font-style`))
+root.style.setProperty(`--font-size`, params.get(`font-size`))
+root.style.setProperty(`--font-color`, params.get(`font-color`))
 
 // Background
-root.style.setProperty("--background", params.get("background"))
-root.style.setProperty("--background-progress-bar", params.get("background-progress-bar"))
-root.style.setProperty("--background-border-radius", params.get("background-border-radius"))
+root.style.setProperty(`--background`, params.get(`background`))
+root.style.setProperty(`--background-progress-bar`, params.get(`background-progress-bar`))
+root.style.setProperty(`--background-border-radius`, params.get(`background-border-radius`))
 
 // Animations
-root.style.setProperty("--animation-duration", params.get("animation-duration"))
-root.style.setProperty("--transition-duration", params.get("transition-duration"))
+root.style.setProperty(`--animation-duration`, params.get(`animation-duration`))
+root.style.setProperty(`--transition-duration`, params.get(`transition-duration`))
 
 // Cycle
-root.style.setProperty("--cycle-transition-duration", cycleTransitionDuration + `ms`)
-root.style.setProperty("--cycle-duration", cycleDuration + `ms`)
+root.style.setProperty(`--cycle-transition-duration`, `${cycleTransitionDuration}ms`)
+root.style.setProperty(`--cycle-duration`, `${cycleDuration}ms`)
 
-if (params.get("cycle") != null) {
-  if (params.get("cycle-transition") != null) {
-    document.body.dataset.cycleTransition = params.get("cycle-transition")
+if (params.get(`cycle`) != null) {
+  if (params.get(`cycle-transition`) != null) {
+    document.body.dataset.cycleTransition = params.get(`cycle-transition`)
   } else {
     document.body.dataset.cycleTransition = `fade`
   }
