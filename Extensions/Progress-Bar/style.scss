@@ -31,9 +31,17 @@ body {
   padding: 1rem;
 }
 
-body.wrap[data-theme] .progress-bar-list {
+body.nowrap[data-theme] .progress-bar-list {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+body.row[data-theme] .progress-bar-list {
   flex-direction: row;
-  flex-wrap: wrap;
+}
+
+body.column[data-theme] .progress-bar-list {
+  flex-direction: column;
 }
 
 .progress-bar-list {
@@ -42,7 +50,8 @@ body.wrap[data-theme] .progress-bar-list {
   list-style: none;
   display: flex;
   position: fixed;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-block: 1rem;
   width: 100%;
@@ -187,10 +196,6 @@ body[data-theme="compact"] {
   .progress-bar-list {
     --progress-bar-width: var(--custom-progress-bar-width, 450px);
 
-    position: fixed;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
     gap: 1rem;
     margin-block: 1rem;
     width: 100%;
@@ -560,3 +565,10 @@ body[data-cycle-transition="slide-left"] .progress-bar-list .container[data-stat
   transform: translateX(0%);
 }
 
+/****************/
+/** Components **/
+/****************/
+
+.i-snackbar-wrapper {
+  font-size: 2rem;
+}

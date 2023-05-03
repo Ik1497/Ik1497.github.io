@@ -1,5 +1,7 @@
 window.$progressConfig = {
   actionsOnLoad: [],
+  exclude: [],
+  include: [],
   integrations: {
     twitch: {
       cheers: {
@@ -237,6 +239,28 @@ window.$progressConfig = {
 
       window.$progressConfig.actionsOnLoad = JSON.parse(value)
       break
+    case `include`:
+      try {
+        JSON.parse(value)
+      } catch {
+        return
+      }
+
+      if (!Array.isArray(JSON.parse(value))) return
+
+      window.$progressConfig.include = JSON.parse(value)
+      break
+    case `exclude`:
+      try {
+        JSON.parse(value)
+      } catch {
+        return
+      }
+
+      if (!Array.isArray(JSON.parse(value))) return
+
+      window.$progressConfig.exclude = JSON.parse(value)
+      break
   }
 
   Object.entries($progressConfig.integrations).forEach(entry => {
@@ -450,11 +474,12 @@ function connectws() {
       else if (data?.data?.args?.request === `remove`) {
         remove(data?.data?.args?.id, data?.data?.args)
       }
-
-
     })
 
     function create(id, title = `Progress Bar`, maximum = 50, minimum = 0, startValue = 0, args) {
+      if ($progressConfig.exclude.includes(id)) return
+      if (JSON.stringify($progressConfig.include) != `[]` && !$progressConfig.include.includes(id)) return
+
       let progressContainer = document.createElement(`div`)
       progressContainer.className = `progress-container`
 
