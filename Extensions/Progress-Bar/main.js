@@ -158,7 +158,7 @@ window.$progressConfig = {
           {
             eventSource: `DonorDrive`,
             eventType: `Donation`,
-            value: `donorAmount`
+            value: `donation.amount`
           }
         ]
       }
@@ -177,7 +177,7 @@ window.$progressConfig = {
           {
             eventSource: `StreamElements`,
             eventType: `Tip`,
-            value: `tipAmount`
+            value: `amount`
           }
         ]
       }
@@ -196,7 +196,7 @@ window.$progressConfig = {
           {
             eventSource: `Streamlabs`,
             eventType: `Donation`,
-            value: `donationAmount`
+            value: `amount`
           }
         ]
       }
