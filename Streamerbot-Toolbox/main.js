@@ -38,6 +38,11 @@ let headerLinksMap = [
     icon: `mdi mdi-creation`
   },
   {
+    name: `Triggers`,
+    integration: `streamer.bot`,
+    icon: `mdi mdi-creation`
+  },
+  {
     name: `Global Variables`,
     integration: `streamer.bot-action-package`,
     icon: `mdi mdi-earth`,
@@ -301,6 +306,7 @@ async function connectws() {
       } else if (data.id === `GetInfo`) {
         SB__GetEvents(`GetEvents`)
         SB__GetActions(`GetActions`)
+        SB__GetCodeTriggers(`GetCodeTriggers`)
         SB__GetBroadcaster(`GetBroadcaster`)
         SB__GetActiveViewers(`GetActiveViewers`)
       }
@@ -2165,6 +2171,90 @@ async function connectws() {
         });
       }
 
+      /***
+      ****************************
+      ****************************
+      ****************************
+      ********* Triggers *********
+      ****************************
+      ****************************
+      ****************************
+      ***/
+
+      if (data?.id === `GetCodeTriggers`) {
+        $StreamerbotToolbox.triggers = data.triggers
+
+        document.querySelector(`main .main[data-page="${urlSafe(`Triggers`)}"]`).classList.add(`col-2`)
+        document.querySelector(`main .main[data-page="${urlSafe(`Triggers`)}"]`).innerHTML = `
+        <div class="card-grid" id="triggers"></div>
+        <aside>
+          <div class="card-grid">
+            <div class="card" id="event-history">
+              <div class="card-header">
+                <p class="card-title">Event History</p>
+                <div class="form-group styled no-margin no-padding dense card-header-append">
+                  <button class="outlined no-margin no-padding dense">Settings</button>
+                </div>
+              </div>
+              <hr>
+              <div class="form-group styled no-margin">
+                <input type="search" placeholder="Search...">
+              </div>
+              <ul class="styled"></ul>           
+            </div>
+          </div>
+        </aside>`
+
+        let triggers = [...$StreamerbotToolbox.triggers]
+
+        triggers.forEach(trigger => {
+          const navbar__listItem = document.createElement(`li`)
+          document.querySelector(`nav.navbar ul.navbar-list[data-page="Triggers"]`).append(navbar__listItem)
+          navbar__listItem.className = `navbar-list-item`
+
+          const navbar__listItem__button = document.createElement(`button`)
+          navbar__listItem.append(navbar__listItem__button)
+
+          const navbar__listItem__button__title = document.createElement(`p`)
+          navbar__listItem__button.append(navbar__listItem__button__title)
+          navbar__listItem__button__title.className = `title`
+          navbar__listItem__button__title.innerText = trigger.name
+
+          const navbar__listItem__button__description = document.createElement(`p`)
+          navbar__listItem__button.append(navbar__listItem__button__description)
+          navbar__listItem__button__description.className = `description`
+          navbar__listItem__button__description.innerText = trigger.category
+
+          navbar__listItem__button.addEventListener(`click`, () => {
+            document.querySelectorAll(`nav.navbar ul.navbar-list[data-page="Triggers"] li.navbar-list-item.nav-active`).forEach(navActiveListItem => {
+              navActiveListItem.classList.remove(`nav-active`)
+            });
+
+            navbar__listItem.classList.add(`nav-active`)
+
+            document.querySelector(`main .main[data-page="${urlSafe(`Triggers`)}"] .card-grid#triggers`).innerHTML = `
+            <div class="card">
+              <div class="card-header">
+                <p class="card-title">${trigger.category}/${trigger.name}</p>
+              </div>
+              <hr>
+              <ul class="styled">
+                <li>
+                  <button id="execute-trigger">
+                    <p class="title">Execute Trigger</p>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            `
+
+            document.querySelector(`main .main[data-page="${urlSafe(`Triggers`)}"] .card-grid#triggers .card ul li button#execute-trigger`).addEventListener(`click`, () => {
+              SB__ExecuteCodeTrigger(trigger.eventName)
+            })
+          })
+        });
+      }
+
       if (data?.id === undefined && data?.event?.source != null && data?.event?.type != null && data?.data?.name != streamerbotActionPackage__name && data?.data?.parentName != streamerbotActionPackage__name) {
         if (data?.event?.source === `Obs` && data?.event?.type === `Event` && loadDataFromStorage(`streamerbotToolbox__eventHistory`)?.excludeObsStudio === true) return
         if (data?.event?.source === `Raw` && data?.event?.type === `Action` && loadDataFromStorage(`streamerbotToolbox__eventHistory`)?.excludeActions === true) return
@@ -3292,6 +3382,30 @@ async function connectws() {
       $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
 
       console.log(`%c[Streamer.bot Requests]%c Fetching all events with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
+    }
+
+    function SB__GetCodeTriggers(id = "StreamerbotActionPackage") {
+      let jsonBody = {
+        request: `GetCodeTriggers`,
+        id: id
+      }
+
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
+
+      console.log(`%c[Streamer.bot Requests]%c Fetching all code triggers with a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
+    }
+
+    function SB__ExecuteCodeTrigger(triggerName, args = {}, id = "ExecuteCodeTrigger") {
+      let jsonBody = {
+        request: `ExecuteCodeTrigger`,
+        triggerName,
+        args,
+        id
+      }
+
+      $StreamerbotToolbox.streamerbot_ws.send(JSON.stringify(jsonBody))
+
+      console.log(`%c[Streamer.bot Requests]%c Running trigger "${triggerName}" with the args ${JSON.stringify(args)} and a ws request id of "${id}"`, `color: #8c75fa;`, `color: white;`)
     }
 
     function SB__GetInfo(id = "StreamerbotActionPackage") {
