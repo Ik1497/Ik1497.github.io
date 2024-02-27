@@ -1,10 +1,12 @@
 //////////////////////
 /// Default Values ///
 //////////////////////
+window.musicData = {}
+
 let artistNameDefault = `for this widget to work!`
 let songNameDefault = `Play a Song`
 let albumArtDefault = `./placeholder.png`
-let animationTime = 8000
+window.musicData.animationTime = 8000
 
 //////////////////////
 /// Websocket Code ///
@@ -15,12 +17,11 @@ function connectws() {
   if ("WebSocket" in window) {
     let wsServerUrl = new URLSearchParams(window.location.search).get("ws") || "ws://localhost:8080/";
     const ws = new WebSocket(wsServerUrl);
-    console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Trying to connect to Streamer.bot...");
+    consoleLog(`Trying to connect to Streamer.bot...`)
 
     ws.onclose = function () {
       setTimeout(connectws, 10000);
-      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "No connection found to Streamer.bot, reconnecting every 10s...");
-
+      consoleLog(`No connection found to Streamer.bot, reconnecting every 10s...`)
     };
 
     ws.onopen = function () {
@@ -33,13 +34,17 @@ function connectws() {
           id: "123",
         })
       );
-      console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Connected to Streamer.bot");
+      consoleLog(`Connected to Streamer.bot`);
     };
 
     ws.addEventListener("message", (event) => {
       if (!event.data) return
       const data = JSON.parse(event.data)
-      if (JSON.stringify(data) === '{"id":"123","status":"ok"}') { console.log("[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " + "Subscribed to the Events/Requests"); return; };
+      if (JSON.stringify(data) === '{"id":"123","status":"ok"}') {
+        consoleLog(`Subscribed to the Events/Requests`)
+        return
+      };
+
       console.log(data)
 
       let songName = data?.data?.songName
@@ -54,8 +59,7 @@ function connectws() {
       let theme = new URLSearchParams(window.location.search).get(`theme`) || `default`
       document.body.setAttribute(`data-theme`, theme)
 
-      
-      if (theme === `minimal`) {
+      if (theme === `default`) {
         document.body.insertAdjacentHTML(`afterbegin`, `
         <div class="container">
           <img class="album-cover" alt="Music Album Cover" src="${albumArt}">
@@ -89,7 +93,7 @@ function connectws() {
         
                   }, 750);
                 }, 750);
-              }, animationTime + 750);
+              }, window.musicData.animationTime || 8000 + 750);
             }, 750);
           }, 750);
         }, 50);
@@ -111,36 +115,36 @@ var root = document.body
 const params = new URLSearchParams(window.location.search)
 
 // Font
-let fontFamily = params.get(`font-family`)
-root.style.setProperty(`--font-family`, fontFamily)
-
-let fontStyle = params.get(`font-style`)
-root.style.setProperty(`--font-style`, fontStyle)
-
-let fontSize = params.get(`font-size`)
-root.style.setProperty(`--font-size`, fontSize)
+urlParam(`font-family`)
+urlParam(`font-style`)
+urlParam(`font-size`)
 
 // Misc
 let imageSize = params.get(`image-size`) || `8em`
 root.style.setProperty(`--image-size`, imageSize)
 root.style.setProperty(`--image-size-minus`, `-` + imageSize)
 
-let borderRadiusAlbumCover = params.get(`border-radius-album-cover`)
-root.style.setProperty(`--border-radius-album-cover`, borderRadiusAlbumCover)
-
-let borderRadiusTextsBackground = params.get(`border-radius-texts-background`)
-root.style.setProperty(`--border-radius-texts-background`, borderRadiusTextsBackground)
+urlParam(`border-radius-album-cover`)
+urlParam(`border-radius-texts-background`)
 
 // Colors
-let colorPrimary = params.get(`color-primary`)
-root.style.setProperty(`--color-primary`, colorPrimary)
-
-let colorAccent = params.get(`color-accent`)
-root.style.setProperty(`--color-accent`, colorAccent)
+urlParam(`color-primary`)
+urlParam(`color-accent`)
 
 // Background
-let background = params.get(`background`)
-root.style.setProperty(`--background`, background)
+urlParam(`background`)
+urlParam(`alt-background`)
 
-let altBackgroundColor = params.get(`alt-background`)
-root.style.setProperty(`--alt-background`, altBackgroundColor)
+// Animation
+window.musicData.animationTime = params.get(`animation-time`) || window.musicData.animationTime
+
+function urlParam(name) {
+  document.body.style.setProperty(`--${name}`, params.get(name))
+}
+
+function consoleLog(message) {
+  console.log(
+    "[" + new Date().getHours() + ":" +  new Date().getMinutes() + ":" +  new Date().getSeconds() + "] " +
+    message
+  );
+}

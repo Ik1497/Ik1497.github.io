@@ -1,6 +1,6 @@
 @import url(/assets/fonts/font.css);
 
-body[data-theme="minimal"] {
+body[data-theme="default"] {
   --image-size-minus: -8em;
   --border-radius-album-cover: 1em;
   --border-radius-texts-background: 1.25em;
@@ -21,13 +21,13 @@ body[data-theme="minimal"] {
   padding: 0;
 }
 
-body[data-theme="minimal"] {
+body[data-theme="default"] {
   font-size: var(--font-size);
   font-family: var(--font-family);
   font-style: var(--font-style);
 }
 
-body[data-theme="minimal"] .container {
+body[data-theme="default"] .container {
   display: flex;
   align-items: center;
   position: fixed;
@@ -36,7 +36,7 @@ body[data-theme="minimal"] .container {
   bottom: 0;
 }
 
-body[data-theme="minimal"] .container .album-cover {
+body[data-theme="default"] .container .album-cover {
   height: var(--image-size);
   aspect-ratio: 1;
   object-fit: cover;
@@ -45,7 +45,7 @@ body[data-theme="minimal"] .container .album-cover {
   transition: all 0.5s ease 0s;
 }
 
-body[data-theme="minimal"] .container .bottom-container {
+body[data-theme="default"] .container .bottom-container {
   z-index: -1;
   transition: all 0.5s ease 0.5s;
   height: fit-content;
@@ -56,7 +56,7 @@ body[data-theme="minimal"] .container .bottom-container {
   grid-template-areas: ". texts";
 }
 
-body[data-theme="minimal"] .container .bottom-container .texts {
+body[data-theme="default"] .container .bottom-container .texts {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -68,33 +68,33 @@ body[data-theme="minimal"] .container .bottom-container .texts {
   overflow: hidden;
 }
 
-body[data-theme="minimal"] .container .bottom-container .texts .songName {
+body[data-theme="default"] .container .bottom-container .texts .songName {
   font-weight: 600;
   color: var(--color-primary);
   font-size: 3em;
 }
 
-body[data-theme="minimal"] .container .bottom-container .texts .artistName {
+body[data-theme="default"] .container .bottom-container .texts .artistName {
   font-weight: 300;
   color: var(--color-accent);
   font-size: 2em;
 }
 
-body[data-theme="minimal"] .container .bottom-container,
-body[data-theme="minimal"] .container .bottom-container .texts,
-body[data-theme="minimal"] .container .album-cover {
+body[data-theme="default"] .container .bottom-container,
+body[data-theme="default"] .container .bottom-container .texts,
+body[data-theme="default"] .container .album-cover {
   transition: all 0.5s ease;
 }
 
-body[data-theme="minimal"] .container[data-state="closing-1"] .bottom-container .texts,
-body[data-theme="minimal"] .container[data-state="closing-2"] .bottom-container .texts,
-body[data-theme="minimal"] .container[data-state="closed"] .bottom-container .texts,
-body[data-theme="minimal"] .container:not([data-state="opened"]):not([data-state="opening-2"]) .bottom-container .texts {
+body[data-theme="default"] .container[data-state="closing-1"] .bottom-container .texts,
+body[data-theme="default"] .container[data-state="closing-2"] .bottom-container .texts,
+body[data-theme="default"] .container[data-state="closed"] .bottom-container .texts,
+body[data-theme="default"] .container:not([data-state="opened"]):not([data-state="opening-2"]) .bottom-container .texts {
   transform: translateX(calc(-100% - var(--image-size)));
 }
 
-body[data-theme="minimal"] .container[data-state="closing-2"] .album-cover,
-body[data-theme="minimal"] .container[data-state="closed"] .album-cover,
-body[data-theme="minimal"] .container:not([data-state="opened"]):not([data-state="opening-1"]):not([data-state="opening-2"]):not([data-state="closing-1"]) .album-cover {
+body[data-theme="default"] .container[data-state="closing-2"] .album-cover,
+body[data-theme="default"] .container[data-state="closed"] .album-cover,
+body[data-theme="default"] .container:not([data-state="opened"]):not([data-state="opening-1"]):not([data-state="opening-2"]):not([data-state="closing-1"]) .album-cover {
   transform: translateY(100%);
 }
