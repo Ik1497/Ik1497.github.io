@@ -1,62 +1,168 @@
-<script>
-  var date = "18/11/2022";
-  var time = "8:30";
-  var next = null;
-  var previous = null;
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta property="og:title" content="Music Widget">
-    <title>Music Widget | Streamer.bot Actions</title>
-
     <meta name="og:site_name" content="Streamer.bot Actions">
-    <meta
-      property="og:image"
-      content="https://ik1497.github.io/assets/images/favicon.png"
-   >
+    <meta property="og:image" content="https://ik1497.github.io/assets/images/favicon.png">
     <meta name="theme-color" content="#B80086">
-
-    <meta property="og:description" content="Music Widget for Spotify">
-
+    
     <link rel="stylesheet" href="/assets/css/style.css">
     <script src="/assets/js/head.js"></script>
+    <script src="/assets/js/main.js" defer></script>
+    
+    <meta property="og:title" content="Music Widget Minimal">
+    <meta property="og:description" content="Music Widget for Spotify">
+
+    <title>Music Widget Minimal | Streamer.bot Actions</title>
   </head>
   <body>
     <main>
       <header class="page-info">
-        <p class="title">Music Widget</p>
+        <p class="title">Music Widget Minimal</p>
         <p class="description">Music Widget for Spotify</p>
       </header>
-      <h2>Widgets</h2>
-      <p class="subtitle">Choose your favorite widget here!</p>
-      <ul class="button-grid">
-        <a href="./Widget/Docs">
-          <li>
-            <i class="mdi mdi-spotify"></i>
-            <strong>
-              Default Widget
-            </strong>
-          </li>
-        </a>
-      </ul>
-      <img class="img-400" src="./Widget/overview.gif" alt="overview.gif">
+      <h2>Configuration</h2>
+      <h3>Streamer.bot</h3>
+      <p>
+        1. Make sure that the <code>Server/Clients</code> <code>--></code>
+        <code>Websocket Server</code> is enabled.<br>
+        2. You don't have to import any action and/or connect something to
+        events, this the only thing!
+      </p>
+      <h3>OBS Studio</h3>
+      1. Make a browser source in OBS Studio with the settings:
+      <code>Width = 1920</code>, <code>Height = 1080</code>.<br>
+      2. Put the URL of the widget in the Browser Source, find URL
+      <a href="#widget">here</a>.<br>
 
-      <hr>
-
-      <ul class="button-grid">
-        <a href="./Minimal/Docs">
-          <li>
-            <i class="mdi mdi-spotify"></i>
-            <strong>
-              Minimal widget
-            </strong>
-          </li>
-        </a>
-      </ul>
-      <img class="img-400" src="./Minimal/overview.gif" alt="overview.gif">
-    </main>
-    <script src="/assets/js/main.js"></script>
+      <h2>Widget</h2>
+      <p>
+        Put this URL into OBS:
+        <a href="https://ik1497.github.io/Extensions/Music/"
+          >https://ik1497.github.io/Extensions/Music/</a>
+      </p>
+      <img class="img-400" src="./overview.gif" alt="overview.gif">
+      <h2>URL Parameters</h2>
+      <h3>Font</h3>
+        <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>font-family</code></td>
+            <td class="table-left">
+              The Font Family <strong>Case Sensitive</strong>
+              <code>Default: Uni Sans CAPS</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-style</code></td>
+            <td class="table-left">
+              The font style, <code>default: normal</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>font-size</code></td>
+            <td class="table-left">
+              The font size, <code>default: 1em</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Misc</h3>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>ws</code></td>
+            <td class="table-left">
+              The websocket server of streamer.bot
+              <code>default: ws://localhost:8080/</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>border-radius-album-cover</code></td>
+            <td class="table-left">
+              The border radius on the album cover
+              <code>default: 1em</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>border-radius-texts-background</code></td>
+            <td class="table-left">
+              The border radius of the background from the texts
+              <code>default: 1.5em</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Colors</h3>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>color-primary</code></td>
+            <td class="table-left">
+              The primary text color, used for song title <code>default: hsl(0, 0%, 100%)</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>color-accent</code></td>
+            <td class="table-left">
+              The accent text color, used for song artist <code>default: hsla(0, 0%, 100%, 0.7)</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Background</h3>
+      <table>
+        <thead>
+          <tr>
+            <td class="table-right">Name</td>
+            <td class="table-left">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-right"><code>background</code></td>
+            <td class="table-left">The background behind the texts
+            <code>default: hsl(0, 0%, 0%, 0.7)</code>.
+            </td>
+          </tr>
+          <tr>
+            <td class="table-right"><code>alt-background</code></td>
+            <td class="table-left">
+              The background of the album cover
+              <code>default: hsl(240, 5%, 11%)</code>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Make it your own with URL Parameters! This example image below uses:<br>
+        <code>https://ik1497.github.io/Extensions/Music/?font-style=italic&border-radius-album-cover=0&border-radius-texts-background=0&background=hsl(0, 0%, 100%, 0.7)&color-primary=hsl(0, 0%, 0%)&color-accent=hsla(0, 0%, 0%, 0.7)</code>
+      </p>
+    <img
+      class="img-400 margin-top"
+      src="./overview-url-parameters.png"
+      alt="overview-url-parameters.png">
+    <p>
+      For any suggestions about this widget or any theme feel free to send me
+      a DM on discord or open an <a href="/Links/Issues">issue</a>.
+    </p>
+  </main>
 </body>
 </html>
